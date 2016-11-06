@@ -1,0 +1,4 @@
+NetgenInformationCollectionBundle
+=================================
+
+Work in progress...
