@@ -1,0 +1,2 @@
+parameters:
+    netgen_information_collection.form.use_csrf: true
