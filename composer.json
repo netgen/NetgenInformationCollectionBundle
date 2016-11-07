@@ -1,0 +1,21 @@
+{
+    "name": "netgen/information-collection-bundle",
+    "description": "Information collection alike feature for eZ Publish 5/eZ Platform",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "http://www.netgenlabs.com"
+        }
+    ],
+    "require": {
+        "ezsystems/ezpublish-kernel": "*",
+        "netgen/ez-forms-bundle": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": { "Netgen\\Bundle\\InformationCollectionBundle\\": "" }
+    }
+}
