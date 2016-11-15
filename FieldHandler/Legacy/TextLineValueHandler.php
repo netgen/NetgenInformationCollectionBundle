@@ -30,4 +30,11 @@ class TextLineValueHandler implements LegacyFieldHandlerInterface
         );
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function toString(Value $value, FieldDefinition $fieldDefinition)
+    {
+        return '';
+    }
 }

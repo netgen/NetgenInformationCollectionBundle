@@ -10,8 +10,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class FullViewController
+class InformationCollectionController
 {
+    const VIEW_TYPE = 'full';
+
     /**
      * @var FormBuilder
      */
@@ -28,18 +30,28 @@ class FullViewController
      * @param FormBuilder $builder
      * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct(FormBuilder $builder, EventDispatcherInterface $dispatcher)
+    public function __construct(
+        FormBuilder $builder,
+        EventDispatcherInterface $dispatcher
+    )
     {
         $this->builder = $builder;
         $this->dispatcher = $dispatcher;
     }
+
     public function displayAndHandleInformationCollector(ContentView $view, Request $request)
     {
+        $useAjax = false;
         $isValid = false;
+
+        if (self::VIEW_TYPE !== $view->getViewType()) {
+            $useAjax = true;
+        }
 
         $location = $view->getLocation();
         /** @var FormBuilderInterface $formBuilder */
-        $form = $this->builder->createFormForLocation($location);
+        $form = $this->builder->createFormForLocation($location, $useAjax)
+            ->getForm();
 
         $form->handleRequest($request);
 

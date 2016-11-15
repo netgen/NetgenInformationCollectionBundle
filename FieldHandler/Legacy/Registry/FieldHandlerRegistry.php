@@ -45,11 +45,30 @@ class FieldHandlerRegistry
      */
     public function handleField(Value $value, FieldDefinition $fieldDefinition)
     {
-        dump($this->fieldHandlers);
         foreach ($this->fieldHandlers as $fieldHandler) {
 
             if ($fieldHandler->supports($value)) {
                 return $fieldHandler->getValue($value, $fieldDefinition);
+            }
+        }
+
+        throw new \RuntimeException('LegacyFieldHandler for field not found in FieldHandlerRegistry');
+    }
+
+    /**
+     * @param Value $value
+     * @param FieldDefinition $fieldDefinition
+     *
+     * @return LegacyHandledFieldValue
+     *
+     * @throws \RuntimeException
+     */
+    public function toStringHandle(Value $value, FieldDefinition $fieldDefinition)
+    {
+        foreach ($this->fieldHandlers as $fieldHandler) {
+
+            if ($fieldHandler->supports($value)) {
+                return $fieldHandler->toString($value, $fieldDefinition);
             }
         }
 

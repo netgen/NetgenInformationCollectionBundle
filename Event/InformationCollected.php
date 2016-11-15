@@ -6,6 +6,7 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\EzPlatformSiteApi\API\Values\Content;
 use Symfony\Component\EventDispatcher\Event;
 
 class InformationCollected extends Event
@@ -16,13 +17,20 @@ class InformationCollected extends Event
     protected $data;
 
     /**
+     * @var Content
+     */
+    protected $additionalContent;
+
+    /**
      * InformationCollected constructor.
      *
      * @param DataWrapper $data
+     * @param Content $additionalContent
      */
-    public function __construct(DataWrapper $data)
+    public function __construct(DataWrapper $data, Content $additionalContent = null)
     {
         $this->data = $data;
+        $this->additionalContent = $additionalContent;
     }
 
     /**
@@ -53,5 +61,15 @@ class InformationCollected extends Event
     public function getLocation()
     {
         return $this->data->target;
+    }
+
+    /**
+     * Returns additional content
+     *
+     * @return Content
+     */
+    public function getAdditionalContent()
+    {
+        return $this->additionalContent;
     }
 }

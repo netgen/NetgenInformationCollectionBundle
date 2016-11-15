@@ -32,6 +32,14 @@ class PersistToDatabaseAction implements ActionInterface
      */
     protected $repository;
 
+    /**
+     * PersistToDatabaseAction constructor.
+     *
+     * @param FieldHandlerRegistry $fieldHandlerRegistry
+     * @param EzInfoCollectionRepository $infoCollectionRepository
+     * @param EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository
+     * @param Repository $repository
+     */
     public function __construct(
         FieldHandlerRegistry $fieldHandlerRegistry,
         EzInfoCollectionRepository $infoCollectionRepository,
@@ -83,8 +91,6 @@ class PersistToDatabaseAction implements ActionInterface
             $ezInfoAttribute->setDataInt($value->getDataInt());
             $ezInfoAttribute->setDataFloat($value->getDataFloat());
             $ezInfoAttribute->setDataText($value->getDataText());
-
-            dump($ezInfoAttribute);
 
             $this->infoCollectionAttributeRepository->save($ezInfoAttribute);
         }

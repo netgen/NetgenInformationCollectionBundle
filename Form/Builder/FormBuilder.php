@@ -2,10 +2,11 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form\Builder;
 
-use eZ\Publish\API\Repository\ContentTypeService;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Routing\RouterInterface;
 use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\API\Repository\ContentTypeService;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 
@@ -29,27 +30,40 @@ class FormBuilder
     protected $contentTypeService;
 
     /**
+     * @var RouterInterface
+     */
+    protected $router;
+
+    /**
      * FormBuilder constructor.
      *
      * @param FormFactoryInterface $formFactory
      * @param ContentTypeService $contentTypeService
-     * @param boolean $useCsrf
+     * @param RouterInterface $router
+     * @param bool $useCsrf
      */
-    public function __construct(FormFactoryInterface $formFactory, ContentTypeService $contentTypeService, $useCsrf)
+    public function __construct(
+        FormFactoryInterface $formFactory,
+        ContentTypeService $contentTypeService,
+        RouterInterface $router,
+        $useCsrf
+    )
     {
         $this->formFactory = $formFactory;
         $this->useCsrf = $useCsrf;
         $this->contentTypeService = $contentTypeService;
+        $this->router = $router;
     }
 
     /**
      * Creates Information collection Form object for given Location object
      *
      * @param Location $location
+     * @param bool $useAjax
      *
-     * @return FormInterface
+     * @return FormBuilderInterface
      */
-    public function createFormForLocation(Location $location)
+    public function createFormForLocation(Location $location, $useAjax = false)
     {
         $contentInfo = $location->contentInfo;
 
@@ -66,6 +80,10 @@ class FormBuilder
                 ]
             );
 
-        return $formBuilder->getForm();
+        if ($useAjax) {
+            $formBuilder->setAction($this->router->generate('netgen_information_collection_handle_ajax', ['location' => $location->id]));
+        }
+
+        return $formBuilder;
     }
 }

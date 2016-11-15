@@ -1,3 +1,5 @@
-netgen_information_collection_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: NetgenInformationCollectionBundle:Default:index }
+netgen_information_collection_handle_ajax:
+    path:     /information/collection/handle/{location}
+    defaults: { _controller: netgen_information_collection.controller:handleInformationCollectorViaAjax }
+    methods:
+        - POST

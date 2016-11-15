@@ -29,4 +29,12 @@ class EnhancedSelectionValueHandler implements LegacyFieldHandlerInterface
             (string)$value
         );
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function toString(Value $value, FieldDefinition $fieldDefinition)
+    {
+        return '';
+    }
 }

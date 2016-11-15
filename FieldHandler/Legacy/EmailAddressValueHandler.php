@@ -30,4 +30,11 @@ class EmailAddressValueHandler implements LegacyFieldHandlerInterface
         );
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function toString(Value $value, FieldDefinition $fieldDefinition)
+    {
+        return '';
+    }
 }

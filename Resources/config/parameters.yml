@@ -1,2 +1,6 @@
 parameters:
-    netgen_information_collection.form.use_csrf: true
+    netgen.default.information_collection.form.use_csrf: true
+    netgen.default.information_collection.email.recipient: 'mario.b@netgen.hr'
+    netgen.default.information_collection.email.subject: 'Test'
+    netgen.default.information_collection.email.sender: 'mario.b@netgen.hr'
+    netgen.default.information_collection.email.template: 'NetgenInformationCollectionBundle:email:email.html.twig'

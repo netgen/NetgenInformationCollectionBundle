@@ -26,4 +26,14 @@ interface LegacyFieldHandlerInterface
      * @return LegacyHandledFieldValue
      */
     public function getValue(Value $value, FieldDefinition $fieldDefinition);
+
+    /**
+     * Transforms field value object to string
+     *
+     * @param Value $value
+     * @param FieldDefinition $fieldDefinition
+     *
+     * @return string
+     */
+    public function toString(Value $value, FieldDefinition $fieldDefinition);
 }
