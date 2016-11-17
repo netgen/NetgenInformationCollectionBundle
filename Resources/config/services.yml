@@ -12,7 +12,7 @@ parameters:
     netgen_information_collection.entity.ez_info_collection_attribute.class: Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute
     # END of Doctrine parameters
 
-    netgen_information_collection.action.aggregate.class: Netgen\Bundle\InformationCollectionBundle\Action\ActionAggregate
+    netgen_information_collection.action.registry.class: Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry
     netgen_information_collection.action.db.class: Netgen\Bundle\InformationCollectionBundle\Action\PersistToDatabaseAction
     netgen_information_collection.action.email.class: Netgen\Bundle\InformationCollectionBundle\Action\SendEmailAction
 
@@ -48,8 +48,10 @@ services:
         arguments: [ "%netgen_information_collection.entity.ez_info_collection_attribute.class%" ]
     # END of Info collection repositories
 
-    netgen_information_collection.action.aggregate:
-        class: '%netgen_information_collection.action.aggregate.class%'
+    netgen_information_collection.action.registry:
+        class: '%netgen_information_collection.action.registry.class%'
+        arguments:
+            - "$actions_configuration;netgen_information_collection$"
 
     netgen_information_collection.action.db:
         class: '%netgen_information_collection.action.db.class%'
@@ -75,7 +77,7 @@ services:
     netgen_information_collection.listener:
         class: '%netgen_information_collection.listener.class%'
         arguments:
-            - '@netgen_information_collection.action.aggregate'
+            - '@netgen_information_collection.action.registry'
         tags:
             - { name: kernel.event_subscriber }
 

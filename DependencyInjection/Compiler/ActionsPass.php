@@ -13,11 +13,11 @@ class ActionsPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('netgen_information_collection.action.aggregate')) {
+        if (!$container->hasDefinition('netgen_information_collection.action.registry')) {
             return;
         }
 
-        $actionAggregate = $container->getDefinition('netgen_information_collection.action.aggregate');
+        $actionAggregate = $container->getDefinition('netgen_information_collection.action.registry');
 
         foreach ($container->findTaggedServiceIds('netgen_information_collection.action') as $id => $attributes) {
             $actionAggregate->addMethodCall('addAction', [new Reference($id)]);

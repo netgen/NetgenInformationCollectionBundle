@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Listener;
 
-use Netgen\Bundle\InformationCollectionBundle\Action\ActionAggregate;
+use Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -10,16 +10,16 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class InformationCollectedListener implements EventSubscriberInterface
 {
     /**
-     * @var ActionAggregate
+     * @var ActionRegistry
      */
     protected $actionAggregate;
 
     /**
      * InformationCollectedListener constructor.
      *
-     * @param ActionAggregate $actionAggregate
+     * @param ActionRegistry $actionAggregate
      */
-    public function __construct(ActionAggregate $actionAggregate)
+    public function __construct(ActionRegistry $actionAggregate)
     {
         $this->actionAggregate = $actionAggregate;
     }

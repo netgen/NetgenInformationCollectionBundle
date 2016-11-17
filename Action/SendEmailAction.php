@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
 use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Legacy\Registry\FieldHandlerRegistry;
@@ -57,7 +58,6 @@ class SendEmailAction implements ActionInterface
      */
     public function act(InformationCollected $event)
     {
-        dump($event->getInformationCollectionStruct()->getCollectedFields());
         $location = $event->getLocation();
         $contentType = $event->getContentType();
         $content = $this->contentService->loadContent($location->contentId);
@@ -82,4 +82,14 @@ class SendEmailAction implements ActionInterface
 
         return $this->mailer->send( $message );
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return 'email';
+    }
+
+
 }
