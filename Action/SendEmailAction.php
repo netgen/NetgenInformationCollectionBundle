@@ -75,6 +75,7 @@ class SendEmailAction implements ActionInterface
                     'content' => $content,
                     'contentType' => $contentType,
                     'params' => $event->getInformationCollectionStruct()->getCollectedFields(),
+                    'additional_content' => $event->getAdditionalContent(),
                 ]
             ),
             'text/html'
