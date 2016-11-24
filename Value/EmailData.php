@@ -40,21 +40,33 @@ class EmailData
         $this->sender = $sender;
     }
 
+    /**
+     * @return string
+     */
     public function getRecipient()
     {
         return $this->recipient;
     }
 
+    /**
+     * @return string
+     */
     public function getSubject()
     {
         return $this->subject;
     }
 
+    /**
+     * @return string
+     */
     public function getSender()
     {
         return $this->sender;
     }
 
+    /**
+     * @return string
+     */
     public function getTemplate()
     {
         return $this->template;
