@@ -17,7 +17,7 @@ class InformationCollected extends Event
     protected $data;
 
     /**
-     * @var Content
+     * @var Content|null
      */
     protected $additionalContent;
 
@@ -27,7 +27,7 @@ class InformationCollected extends Event
      * @param DataWrapper $data
      * @param Content $additionalContent
      */
-    public function __construct(DataWrapper $data, Content $additionalContent = null)
+    public function __construct(DataWrapper $data, $additionalContent = null)
     {
         $this->data = $data;
         $this->additionalContent = $additionalContent;
@@ -65,8 +65,7 @@ class InformationCollected extends Event
 
     /**
      * Returns additional content
-     *
-     * @return Content
+     * This can be ez content or site api content
      */
     public function getAdditionalContent()
     {
