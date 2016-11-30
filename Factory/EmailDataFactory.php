@@ -25,6 +25,13 @@ class EmailDataFactory
      */
     protected $fieldHelper;
 
+    /**
+     * EmailDataFactory constructor.
+     *
+     * @param ConfigResolverInterface $configResolver
+     * @param TranslationHelper $translationHelper
+     * @param FieldHelper $fieldHelper
+     */
     public function __construct(
         ConfigResolverInterface $configResolver,
         TranslationHelper $translationHelper,
@@ -36,6 +43,13 @@ class EmailDataFactory
         $this->fieldHelper = $fieldHelper;
     }
 
+    /**
+     * Factory method
+     *
+     * @param Content $content
+     *
+     * @return EmailData
+     */
     public function build(Content $content)
     {
         return new EmailData(
@@ -46,6 +60,15 @@ class EmailDataFactory
         );
     }
 
+    /**
+     * Returns resolved parameter
+     *
+     * @param Content $content
+     * @param string $field
+     * @param string $property
+     *
+     * @return mixed
+     */
     protected function resolve(Content $content, $field, $property = 'text')
     {
         if (
@@ -63,6 +86,11 @@ class EmailDataFactory
         }
     }
 
+    /**
+     * Returns resolved template name
+     *
+     * @return string
+     */
     protected function resolveTemplate()
     {
         return $this->configResolver->getParameter('information_collection.email.template', 'netgen');

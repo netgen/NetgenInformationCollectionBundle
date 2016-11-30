@@ -11,7 +11,7 @@ use Swift_Mailer;
 use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine;
 
-class SendEmailAction implements ActionInterface
+class EmailAction implements ActionInterface
 {
     /**
      * @var FieldHandlerRegistry
@@ -38,6 +38,15 @@ class SendEmailAction implements ActionInterface
      */
     protected $emailDataFactory;
 
+    /**
+     * SendEmailAction constructor.
+     *
+     * @param FieldHandlerRegistry $fieldHandlerRegistry
+     * @param EmailDataFactory $emailDataFactory
+     * @param Swift_Mailer $mailer
+     * @param DelegatingEngine $template
+     * @param ContentService $contentService
+     */
     public function __construct(
         FieldHandlerRegistry $fieldHandlerRegistry,
         EmailDataFactory $emailDataFactory,
@@ -73,7 +82,7 @@ class SendEmailAction implements ActionInterface
             $this->template->render( $emailData->getTemplate(),
                 [
                     'content' => $content,
-                    'contentType' => $contentType,
+                    'content_type' => $contentType,
                     'params' => $event->getInformationCollectionStruct()->getCollectedFields(),
                     'additional_content' => $event->getAdditionalContent(),
                 ]
@@ -91,6 +100,4 @@ class SendEmailAction implements ActionInterface
     {
         return 'email';
     }
-
-
 }

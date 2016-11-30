@@ -1,3 +1,16 @@
-{% for field_identifier, value in params %}
-    <p>{{ ez_field_name(content, field_identifier) }}: -> {{ value }}</p>
-{% endfor %}
+{% set vars =
+    {
+        'content': content,
+        'content_type': content_type,
+        'params': params,
+        'additional_content': additional_content
+    }
+%}
+
+{%
+    include ezpublish.configResolver.hasParameter( 'information_collection.email.' ~ content_type.identifier, 'netgen' ) ?
+        ezpublish.configResolver.getParameter( 'information_collection.email.' ~ content_type.identifier, 'netgen' ) :
+        ezpublish.configResolver.getParameter( 'information_collection.email.default', 'netgen' )
+    with vars
+%}
+

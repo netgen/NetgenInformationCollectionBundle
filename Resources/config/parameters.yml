@@ -4,3 +4,4 @@ parameters:
     netgen.default.information_collection.email.subject: 'Test'
     netgen.default.information_collection.email.sender: 'mario.b@netgen.hr'
     netgen.default.information_collection.email.template: 'NetgenInformationCollectionBundle:email:email.html.twig'
+    netgen.default.information_collection.email.default: 'NetgenInformationCollectionBundle:email:default.html.twig'

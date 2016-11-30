@@ -10,7 +10,7 @@ use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttribu
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyHandledFieldValue;
 
-class PersistToDatabaseAction implements ActionInterface
+class DatabaseAction implements ActionInterface
 {
     /**
      * @var FieldHandlerRegistry
@@ -103,6 +103,4 @@ class PersistToDatabaseAction implements ActionInterface
     {
         return 'database';
     }
-
-
 }

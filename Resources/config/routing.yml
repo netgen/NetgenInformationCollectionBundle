@@ -1,5 +1,1 @@
-netgen_information_collection_handle_ajax:
-    path:     /information/collection/handle/{location}
-    defaults: { _controller: netgen_information_collection.controller:handleInformationCollectorViaAjax }
-    methods:
-        - POST
+

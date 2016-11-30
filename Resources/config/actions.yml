@@ -1,0 +1,31 @@
+parameters:
+    netgen_information_collection.action.registry.class: Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry
+    netgen_information_collection.action.db.class: Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction
+    netgen_information_collection.action.email.class: Netgen\Bundle\InformationCollectionBundle\Action\EmailAction
+
+services:
+    netgen_information_collection.action.registry:
+        class: '%netgen_information_collection.action.registry.class%'
+        arguments:
+            - "$actions_configuration;netgen_information_collection$"
+
+    netgen_information_collection.action.db:
+        class: '%netgen_information_collection.action.db.class%'
+        arguments:
+            - '@netgen_information_collection.field_handler.legacy.registry'
+            - '@netgen_information_collection.repository.ez_info_collection'
+            - '@netgen_information_collection.repository.ez_info_collection_attribute'
+            - '@ezpublish.api.repository'
+        tags:
+            - { name: netgen_information_collection.action }
+
+    netgen_information_collection.action.email:
+        class: '%netgen_information_collection.action.email.class%'
+        arguments:
+            - '@netgen_information_collection.field_handler.legacy.registry'
+            - '@netgen_information_collection.factory.email_data'
+            - '@mailer'
+            - '@templating'
+            - '@ezpublish.api.service.content'
+        tags:
+            - { name: netgen_information_collection.action }
