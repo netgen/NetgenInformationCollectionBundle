@@ -14,7 +14,7 @@ Installation steps
 
 Run the following from your website root folder to install Netgen InformationCollection Bundle:
 
-```
+```bash
 $ composer require netgen/information-collection-bundle
 ```
 
@@ -37,7 +37,7 @@ public function registerBundles()
 Here is sample configuration for actions, the developer will need to define a list of actions to be run depending on the content type.
 Configuration needs to be added in `app/config/config.yml` or `app/config/ezplatform.yml`:
 
-```yml
+```yaml
 netgen_information_collection:
    system:
        default:
@@ -53,7 +53,7 @@ netgen_information_collection:
 
 Define fallback values for email, in case if content type does not have them defined:
 
-```
+```yaml
 netgen.default.information_collection.email.recipient: 'recipient@example.com'
 netgen.default.information_collection.email.subject: 'Subject'
 netgen.default.information_collection.email.sender: 'sender@example.com'
@@ -61,14 +61,14 @@ netgen.default.information_collection.email.sender: 'sender@example.com'
 
 Also define email templates for content types:
 
-```
+```yaml
 netgen.default.information_collection.email.ng_feedback_form: 'AcmeBundle:email:ng_feedback_form.html.twig'
 netgen.default.information_collection.email.some_other_form: 'AcmeBundle:email:some_other_form.html.twig'
 ```
 
 And fallback email template:
 
-```
+```yaml
 netgen.default.information_collection.email.default: 'AcmeBundle:email:default.html.twig'
 ```
 
