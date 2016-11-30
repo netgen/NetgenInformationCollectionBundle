@@ -32,6 +32,46 @@ public function registerBundles()
 }
 ```
 
+### Set siteaccess aware configuration
+
+Here is sample configuration for actions, the developer will need to define a list of actions to be run depending on the content type.
+Configuration needs to be added in `app/config/config.yml` or `app/config/ezplatform.yml`:
+
+```yml
+netgen_information_collection:
+   system:
+       default:
+           actions_configuration:
+               ng_feedback_form:
+                   - action: email
+                   - action: database
+               other_form:
+                   - action: database
+               some_other_form:
+                   - action: email
+```
+
+Define fallback values for email, in case if content type does not have them defined:
+
+```
+netgen.default.information_collection.email.recipient: 'recipient@example.com'
+netgen.default.information_collection.email.subject: 'Subject'
+netgen.default.information_collection.email.sender: 'sender@example.com'
+```
+
+Also define email templates for content types:
+
+```
+netgen.default.information_collection.email.ng_feedback_form: 'AcmeBundle:email:ng_feedback_form.html.twig'
+netgen.default.information_collection.email.some_other_form: 'AcmeBundle:email:some_other_form.html.twig'
+```
+
+And fallback email template:
+
+```
+netgen.default.information_collection.email.default: 'AcmeBundle:email:default.html.twig'
+```
+
 ### Clear the caches
 
 Clear the eZ Publish caches with the following command:
