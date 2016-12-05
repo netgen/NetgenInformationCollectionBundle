@@ -3,16 +3,16 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Value;
 
 use PHPUnit_Framework_TestCase;
-use Netgen\Bundle\InformationCollectionBundle\Value\LegacyHandledFieldValue;
+use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
 
-class LegacyHandledFieldValueTest extends PHPUnit_Framework_TestCase
+class LegacyDataTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider legacyDataProvider
      */
     public function testGetters($contentClassAttributeId, $dataFloat, $dataInt, $dataText)
     {
-        $legacyData = new LegacyHandledFieldValue($contentClassAttributeId, $dataFloat, $dataInt, $dataText);
+        $legacyData = new LegacyData($contentClassAttributeId, $dataFloat, $dataInt, $dataText);
 
         $this->assertEquals($contentClassAttributeId, $legacyData->getContentClassAttributeId());
         $this->assertEquals($dataFloat, $legacyData->getDataFloat());

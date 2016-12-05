@@ -5,17 +5,18 @@ namespace Netgen\Bundle\InformationCollectionBundle\Action;
 use eZ\Publish\API\Repository\Repository;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Legacy\Registry\FieldHandlerRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
-use Netgen\Bundle\InformationCollectionBundle\Value\LegacyHandledFieldValue;
+use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
 
 class DatabaseAction implements ActionInterface
 {
     /**
-     * @var FieldHandlerRegistry
+     * @var FieldDataFactory
      */
-    protected $fieldHandlerRegistry;
+    protected $factory;
 
     /**
      * @var EzInfoCollectionRepository
@@ -35,19 +36,19 @@ class DatabaseAction implements ActionInterface
     /**
      * PersistToDatabaseAction constructor.
      *
-     * @param FieldHandlerRegistry $fieldHandlerRegistry
+     * @param FieldDataFactory $factory
      * @param EzInfoCollectionRepository $infoCollectionRepository
      * @param EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository
      * @param Repository $repository
      */
     public function __construct(
-        FieldHandlerRegistry $fieldHandlerRegistry,
+        FieldDataFactory $factory,
         EzInfoCollectionRepository $infoCollectionRepository,
         EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository,
         Repository $repository
     )
     {
-        $this->fieldHandlerRegistry = $fieldHandlerRegistry;
+        $this->factory = $factory;
         $this->infoCollectionRepository = $infoCollectionRepository;
         $this->infoCollectionAttributeRepository = $infoCollectionAttributeRepository;
         $this->repository = $repository;
@@ -79,8 +80,8 @@ class DatabaseAction implements ActionInterface
 
         foreach($struct->getCollectedFields() as $fieldDefIdentifier => $value)
         {
-            /** @var LegacyHandledFieldValue $value */
-            $value = $this->fieldHandlerRegistry->handleField($value, $contentType->getFieldDefinition($fieldDefIdentifier));
+            /** @var LegacyData $value */
+            $value = $this->factory->getLegacyValue($value, $contentType->getFieldDefinition($fieldDefIdentifier));
 
             $ezInfoAttribute = $this->infoCollectionAttributeRepository->getInstance();
 

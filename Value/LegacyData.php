@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Value;
 
-class LegacyHandledFieldValue
+class LegacyData
 {
     /**
      * @var int
@@ -25,7 +25,7 @@ class LegacyHandledFieldValue
     protected $dataText;
 
     /**
-     * LegacyHandledFieldValue constructor.
+     * LegacyData constructor.
      *
      * @param int $contentClassAttributeId
      * @param float $dataFloat

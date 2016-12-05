@@ -3,7 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle;
 
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\ActionsPass;
-use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\LegacyFieldHandlersPass;
+use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\CustomFieldHandlersPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -17,6 +17,6 @@ class NetgenInformationCollectionBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new ActionsPass());
-        $container->addCompilerPass(new LegacyFieldHandlersPass());
+        $container->addCompilerPass(new CustomFieldHandlersPass());
     }
 }

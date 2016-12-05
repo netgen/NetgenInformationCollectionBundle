@@ -1,12 +1,12 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\FieldHandler\Legacy;
+namespace Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom;
 
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\FieldType\Value;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyHandledFieldValue;
 
-interface LegacyFieldHandlerInterface
+interface CustomFieldHandlerInterface
 {
     /**
      * Checks if given Value can be handled
@@ -16,16 +16,6 @@ interface LegacyFieldHandlerInterface
      * @return boolean
      */
     public function supports(Value $value);
-
-    /**
-     * Extract field value as string from Value object
-     *
-     * @param Value $value
-     * @param FieldDefinition $fieldDefinition
-     *
-     * @return LegacyHandledFieldValue
-     */
-    public function getValue(Value $value, FieldDefinition $fieldDefinition);
 
     /**
      * Transforms field value object to string
