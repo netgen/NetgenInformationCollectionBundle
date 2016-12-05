@@ -95,12 +95,4 @@ class DatabaseAction implements ActionInterface
             $this->infoCollectionAttributeRepository->save($ezInfoAttribute);
         }
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function getName()
-    {
-        return 'database';
-    }
 }

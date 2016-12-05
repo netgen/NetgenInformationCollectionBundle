@@ -14,11 +14,4 @@ interface ActionInterface
      * @return mixed
      */
     public function act(InformationCollected $event);
-
-    /**
-     * Returns Action identifier
-     *
-     * @return string
-     */
-    public function getName();
 }

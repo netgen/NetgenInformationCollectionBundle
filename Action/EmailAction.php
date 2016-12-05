@@ -92,12 +92,4 @@ class EmailAction implements ActionInterface
 
         return $this->mailer->send( $message );
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function getName()
-    {
-        return 'email';
-    }
 }
