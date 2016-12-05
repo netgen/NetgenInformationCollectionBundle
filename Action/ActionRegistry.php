@@ -77,15 +77,15 @@ class ActionRegistry
     /**
      * Check if given action can act
      *
-     * @param $action
+     * @param string $name
      * @param array $config
      *
      * @return bool
      */
-    protected function canActionAct($action, array $config)
+    protected function canActionAct($name, array $config)
     {
-        foreach ($config as $actionConfig) {
-            if ($actionConfig['action'] === $action) {
+        foreach ($config['actions'] as $action) {
+            if ($name === $action) {
                 return true;
             }
         }
