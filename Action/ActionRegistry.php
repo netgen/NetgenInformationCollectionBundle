@@ -30,11 +30,12 @@ class ActionRegistry
     /**
      * Adds action to stack
      *
+     * @param string $name
      * @param ActionInterface $action
      */
-    public function addAction(ActionInterface $action)
+    public function addAction($name, ActionInterface $action)
     {
-        $this->actions[] = $action;
+        $this->actions[$name] = $action;
     }
 
     /**
@@ -43,7 +44,7 @@ class ActionRegistry
     public function act(InformationCollected $event)
     {
         /** @var ActionInterface $action */
-        foreach ($this->actions as $action) {
+        foreach ($this->actions as $name => $action) {
 
             $config = $this->getConfigForContentType($event->getContentType()->identifier);
 
@@ -51,12 +52,19 @@ class ActionRegistry
                 continue;
             }
 
-            if ($this->canActionAct($action->getName(), $config)) {
+            if ($this->canActionAct($name, $config)) {
                 $action->act($event);
             }
         }
     }
 
+    /**
+     * Returns configuration for given content type identifier
+     *
+     * @param $contentTypeIdentifier
+     *
+     * @return mixed|null
+     */
     protected function getConfigForContentType($contentTypeIdentifier)
     {
         if (array_key_exists($contentTypeIdentifier, $this->config)) {
@@ -66,6 +74,14 @@ class ActionRegistry
         return null;
     }
 
+    /**
+     * Check if given action can act
+     *
+     * @param $action
+     * @param array $config
+     *
+     * @return bool
+     */
     protected function canActionAct($action, array $config)
     {
         foreach ($config as $actionConfig) {
