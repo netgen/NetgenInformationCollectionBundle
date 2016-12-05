@@ -19,6 +19,7 @@
                 <directory>Tests</directory>
                 <directory>vendor</directory>
                 <file>NetgenInformationCollectionBundle.php</file>
+                <file>Events.php</file>
             </exclude>
         </whitelist>
     </filter>
