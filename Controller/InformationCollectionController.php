@@ -39,18 +39,21 @@ class InformationCollectionController
         $this->dispatcher = $dispatcher;
     }
 
-    public function displayAndHandleInformationCollector(ContentView $view, Request $request)
+    /**
+     * Displays and handles information collection
+     *
+     * @param ContentView $view
+     * @param Request $request
+     *
+     * @return ContentView
+     */
+    public function displayAndHandle(ContentView $view, Request $request)
     {
-        $useAjax = false;
         $isValid = false;
-
-        if (self::VIEW_TYPE !== $view->getViewType()) {
-            $useAjax = true;
-        }
 
         $location = $view->getLocation();
         /** @var FormBuilderInterface $formBuilder */
-        $form = $this->builder->createFormForLocation($location, $useAjax)
+        $form = $this->builder->createFormForLocation($location, false)
             ->getForm();
 
         $form->handleRequest($request);

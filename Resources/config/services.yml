@@ -33,6 +33,9 @@ services:
             - '@netgen_information_collection.form.builder'
             - '@event_dispatcher'
 
+    information_collection:
+        alias: 'netgen_information_collection.controller'
+
     netgen_information_collection.form.builder:
         class: '%netgen_information_collection.form.builder.class%'
         arguments:
