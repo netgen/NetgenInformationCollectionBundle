@@ -3,8 +3,6 @@
 namespace Netgen\Bundle\InformationCollectionBundle\FieldHandler;
 
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\API\Repository\Values\Content\Field;
 use eZ\Publish\Core\FieldType\Value;
 
 class FieldHandlerRegistry
