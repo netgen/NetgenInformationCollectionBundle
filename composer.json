@@ -10,10 +10,11 @@
     ],
     "require": {
         "ezsystems/ezpublish-kernel": "*",
-        "netgen/ez-forms-bundle": "*"
+        "netgen/ez-forms-bundle": "^1.2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "swiftmailer/swiftmailer": "*"
     },
     "autoload": {
         "psr-4": { "Netgen\\Bundle\\InformationCollectionBundle\\": "" }
