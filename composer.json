@@ -14,7 +14,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "*",
-        "swiftmailer/swiftmailer": "*"
+        "swiftmailer/swiftmailer": "*",
+        "doctrine/orm": "*"
     },
     "autoload": {
         "psr-4": { "Netgen\\Bundle\\InformationCollectionBundle\\": "" }
