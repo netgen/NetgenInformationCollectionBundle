@@ -43,12 +43,15 @@ netgen_information_collection:
        default:
            actions_configuration:
                ng_feedback_form:
-                   - action: email
-                   - action: database
+                   actions:
+                       - email
+                       - database
                other_form:
-                   - action: database
+                   actions:
+                       - database
                some_other_form:
-                   - action: email
+                   actions: 
+                       - email
 ```
 
 Define fallback values for email, in case if content type does not have them defined:
