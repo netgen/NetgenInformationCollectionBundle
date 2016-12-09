@@ -1,4 +1,12 @@
 NetgenInformationCollectionBundle
 =================================
 
-Work in progress...
+## Actions
+
+### Available actions
+
+### Creating custom actions
+
+## Field handlers
+
+### Creating custom field handlers
