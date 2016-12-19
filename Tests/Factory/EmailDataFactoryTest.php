@@ -2,8 +2,12 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Factory;
 
+use eZ\Publish\Core\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Field;
 use eZ\Publish\Core\Repository\Values\Content\Content;
+use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
+use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
 use eZ\Publish\Core\FieldType\EmailAddress\Value as EmailValue;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
@@ -36,6 +40,21 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
      */
     protected $fieldHelper;
 
+    /**
+     * @var PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $contentTypeService;
+
+    /**
+     * @var ContentType
+     */
+    protected $contentType;
+
+    /**
+     * @var VersionInfo
+     */
+    protected $versionInfo;
+
     public function setUp()
     {
         $this->configResolver = $this->getMockBuilder(ConfigResolverInterface::class)
@@ -53,7 +72,25 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
             ->setMethods(['isFieldEmpty'])
             ->getMock();
 
-        $this->factory = new EmailDataFactory($this->configResolver, $this->translationHelper, $this->fieldHelper);
+        $this->contentTypeService = $this->getMockBuilder(ContentTypeService::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['loadContentType'])
+            ->getMock();
+
+        $this->contentType = new ContentType([
+            'identifier' => 'test_content_type',
+            'fieldDefinitions' => [],
+        ]);
+
+        $this->versionInfo = new VersionInfo([
+            'contentInfo' => new ContentInfo([
+                'contentTypeId' => 123,
+            ])
+        ]);
+
+        $this->factory = new EmailDataFactory(
+            $this->configResolver, $this->translationHelper, $this->fieldHelper, $this->contentTypeService
+        );
         parent::setUp();
     }
 
@@ -81,6 +118,7 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
             'internalFields' => [
                 $recipientField, $senderField, $subjectField,
             ],
+            'versionInfo' => $this->versionInfo,
         ]);
 
         $this->fieldHelper->expects($this->exactly(3))
@@ -105,10 +143,21 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
             ->with($content, 'subject')
             ->willReturn($subjectField);
 
+        $this->contentTypeService->expects($this->once())
+            ->method('loadContentType')
+            ->with(123)
+            ->willReturn($this->contentType);
+
+        $this->configResolver->expects($this->any())
+            ->method('hasParameter')
+            ->with('information_collection.email.test_content_type', 'netgen')
+            ->willReturn(true);
+
         $this->configResolver->expects($this->any())
             ->method('getParameter')
-            ->with('information_collection.email.template', 'netgen')
+            ->with('information_collection.email.test_content_type', 'netgen')
             ->willReturn('template');
+
 
         $value = $this->factory->build($content);
 
@@ -143,6 +192,7 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
             'internalFields' => [
                 $recipientField, $senderField, $subjectField,
             ],
+            'versionInfo' => $this->versionInfo,
         ]);
 
         $this->fieldHelper->expects($this->never())
@@ -173,10 +223,19 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
             ->with('information_collection.email.subject', 'netgen')
             ->willReturn('subject test');
 
+        $this->contentTypeService->expects($this->once())
+            ->method('loadContentType')
+            ->with(123)
+            ->willReturn($this->contentType);
 
         $this->configResolver->expects($this->at(3))
+            ->method('hasParameter')
+            ->with('information_collection.email.test_content_type', 'netgen')
+            ->willReturn(true);
+
+        $this->configResolver->expects($this->at(4))
             ->method('getParameter')
-            ->with('information_collection.email.template', 'netgen')
+            ->with('information_collection.email.test_content_type', 'netgen')
             ->willReturn('template');
 
         $value = $this->factory->build($content);

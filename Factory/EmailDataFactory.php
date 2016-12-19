@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Factory;
 
+use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
@@ -26,21 +27,29 @@ class EmailDataFactory
     protected $fieldHelper;
 
     /**
+     * @var ContentTypeService
+     */
+    protected $contentTypeService;
+
+    /**
      * EmailDataFactory constructor.
      *
      * @param ConfigResolverInterface $configResolver
      * @param TranslationHelper $translationHelper
      * @param FieldHelper $fieldHelper
+     * @param ContentTypeService $contentTypeService
      */
     public function __construct(
         ConfigResolverInterface $configResolver,
         TranslationHelper $translationHelper,
-        FieldHelper $fieldHelper
+        FieldHelper $fieldHelper,
+        ContentTypeService $contentTypeService
     )
     {
         $this->configResolver = $configResolver;
         $this->translationHelper = $translationHelper;
         $this->fieldHelper = $fieldHelper;
+        $this->contentTypeService = $contentTypeService;
     }
 
     /**
@@ -56,7 +65,7 @@ class EmailDataFactory
             $this->resolve($content, 'recipient', 'email'),
             $this->resolve($content, 'sender', 'email'),
             $this->resolve($content, 'subject'),
-            $this->resolveTemplate()
+            $this->resolveTemplate($content)
         );
     }
 
@@ -89,10 +98,22 @@ class EmailDataFactory
     /**
      * Returns resolved template name
      *
+     * @param Content $content
+     *
      * @return string
      */
-    protected function resolveTemplate()
+    protected function resolveTemplate($content)
     {
-        return $this->configResolver->getParameter('information_collection.email.template', 'netgen');
+        $contentType = $this->contentTypeService->loadContentType($content->contentInfo->contentTypeId);
+
+        $contentTypeIdentifier = $contentType->identifier;
+
+        if ($this->configResolver->hasParameter('information_collection.email.' . $contentTypeIdentifier, 'netgen')) {
+
+            return $this->configResolver->getParameter('information_collection.email.' . $contentTypeIdentifier, 'netgen');
+
+        }
+
+        return $this->configResolver->getParameter('information_collection.email.default', 'netgen');
     }
 }
