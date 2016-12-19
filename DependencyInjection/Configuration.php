@@ -21,19 +21,25 @@ class Configuration extends SiteAccessConfiguration
         $rootNode = $treeBuilder->root("netgen_information_collection");
 
         $this->generateScopeBaseNode($rootNode)
-            ->arrayNode('actions_configuration')
-                ->useAttributeAsKey('content_type')
+                ->arrayNode('actions')
+                ->isRequired()
                 ->normalizeKeys(false)
-                ->prototype('array')
                     ->children()
-                        ->arrayNode('actions')
+                        ->arrayNode('default')
+                            ->isRequired()
                             ->prototype('scalar')
+                            ->end()
+                        ->end()
+
+                        ->arrayNode('content_type')
+                            ->prototype('array')
+                                ->prototype('scalar')
+                                ->end()
                             ->end()
                         ->end()
                     ->end()
                 ->end()
             ->end();
-
 
         return $treeBuilder;
     }

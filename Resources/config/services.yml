@@ -1,18 +1,12 @@
 imports:
     - { resource: actions.yml }
+    - { resource: storage.yml }
 
 parameters:
     # Controllers
     netgen_information_collection.controller.class: Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController
     netgen_information_collection.form.builder.class: Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder
     # END of Controllers
-
-    # Doctrine parameteters for information collection
-    netgen_information_collection.repository.ez_info_collection.class: Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository
-    netgen_information_collection.entity.ez_info_collection.class: Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection
-    netgen_information_collection.repository.ez_info_collection_attribute.class: Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository
-    netgen_information_collection.entity.ez_info_collection_attribute.class: Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute
-    # END of Doctrine parameters
 
     # Listeners
     netgen_information_collection.listener.class: Netgen\Bundle\InformationCollectionBundle\Listener\InformationCollectedListener
@@ -43,18 +37,6 @@ services:
             - '@ezpublish.api.service.content_type'
             - '@router'
             - '%netgen.default.information_collection.form.use_csrf%'
-
-    # Info collection repositories
-    netgen_information_collection.repository.ez_info_collection:
-        class: "%netgen_information_collection.repository.ez_info_collection.class%"
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments: [ "%netgen_information_collection.entity.ez_info_collection.class%" ]
-
-    netgen_information_collection.repository.ez_info_collection_attribute:
-        class: "%netgen_information_collection.repository.ez_info_collection_attribute.class%"
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments: [ "%netgen_information_collection.entity.ez_info_collection_attribute.class%" ]
-    # END of Info collection repositories
 
     netgen_information_collection.listener:
         class: '%netgen_information_collection.listener.class%'

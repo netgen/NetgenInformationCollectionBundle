@@ -7,7 +7,7 @@ services:
     netgen_information_collection.action.registry:
         class: '%netgen_information_collection.action.registry.class%'
         arguments:
-            - "$actions_configuration;netgen_information_collection$"
+            - "$actions;netgen_information_collection$"
 
     netgen_information_collection.action.db:
         class: '%netgen_information_collection.action.db.class%'

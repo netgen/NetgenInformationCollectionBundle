@@ -43,35 +43,15 @@ class ActionRegistry
      */
     public function act(InformationCollected $event)
     {
+        $config = $this->prepareConfig($event->getContentType()->identifier);
+
         /** @var ActionInterface $action */
         foreach ($this->actions as $name => $action) {
-
-            $config = $this->getConfigForContentType($event->getContentType()->identifier);
-
-            if (empty($config)) {
-                continue;
-            }
 
             if ($this->canActionAct($name, $config)) {
                 $action->act($event);
             }
         }
-    }
-
-    /**
-     * Returns configuration for given content type identifier
-     *
-     * @param $contentTypeIdentifier
-     *
-     * @return mixed|null
-     */
-    protected function getConfigForContentType($contentTypeIdentifier)
-    {
-        if (array_key_exists($contentTypeIdentifier, $this->config)) {
-            return $this->config[$contentTypeIdentifier];
-        }
-
-        return null;
     }
 
     /**
@@ -84,12 +64,32 @@ class ActionRegistry
      */
     protected function canActionAct($name, array $config)
     {
-        foreach ($config['actions'] as $action) {
-            if ($name === $action) {
-                return true;
-            }
+        return in_array($name, $config, true);
+    }
+
+    /**
+     * Returns configuration for given content type identifier
+     * plus default one merged into single array
+     *
+     * @param string $contentTypeIdentifier
+     *
+     * @return array
+     */
+    protected function prepareConfig($contentTypeIdentifier)
+    {
+        $preparedConfig = [];
+
+        if (!empty($this->config['default'])) {
+            $preparedConfig = $this->config['default'];
         }
 
-        return false;
+        if (!empty($this->config['content_type'][$contentTypeIdentifier])) {
+            $preparedConfig = array_merge(
+                $preparedConfig,
+                $this->config['content_type'][$contentTypeIdentifier]
+            );
+        }
+
+        return array_unique($preparedConfig);
     }
 }
