@@ -18,9 +18,29 @@ class ActionRegistryTest extends PHPUnit_Framework_TestCase
     protected $registry;
 
     /**
+     * @var ActionRegistry
+     */
+    protected $registryWithEmptyConf;
+
+    /**
+     * @var ActionRegistry
+     */
+    protected $registryWithOnlyDefaultConf;
+
+    /**
      * @var array
      */
     protected $config;
+
+    /**
+     * @var array
+     */
+    protected $onlyDefaultConfig;
+
+    /**
+     * @var array
+     */
+    protected $emptyConfig;
 
     /**
      * @var PHPUnit_Framework_MockObject_MockObject
@@ -55,6 +75,17 @@ class ActionRegistryTest extends PHPUnit_Framework_TestCase
             ]
         ];
 
+        $this->emptyConfig = [
+            'default',
+        ];
+
+        $this->onlyDefaultConfig = [
+            'default' => [
+                'database',
+                'email',
+            ]
+        ];
+
         $this->action1 = $this->getMockBuilder(ActionInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['act'])
@@ -66,6 +97,8 @@ class ActionRegistryTest extends PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->registry = new ActionRegistry($this->config);
+        $this->registryWithEmptyConf = new ActionRegistry($this->emptyConfig);
+        $this->registryWithOnlyDefaultConf = new ActionRegistry($this->onlyDefaultConfig);
 
         $contentType = new ContentType([
             'identifier' => 'ng_feedback_form',
@@ -121,5 +154,33 @@ class ActionRegistryTest extends PHPUnit_Framework_TestCase
             ->method('act');
 
         $this->registry->act($this->event2);
+    }
+
+    public function testActWithDefaultConfigOnly()
+    {
+        $this->registryWithOnlyDefaultConf->addAction('database', $this->action1);
+        $this->registryWithOnlyDefaultConf->addAction('email', $this->action2);
+
+        $this->action1->expects($this->once())
+            ->method('act');
+
+        $this->action2->expects($this->once())
+            ->method('act');
+
+        $this->registryWithOnlyDefaultConf->act($this->event2);
+    }
+
+    public function testActWithEmptyConfig()
+    {
+        $this->registryWithEmptyConf->addAction('database', $this->action1);
+        $this->registryWithEmptyConf->addAction('email', $this->action2);
+
+        $this->action1->expects($this->never())
+            ->method('act');
+
+        $this->action2->expects($this->never())
+            ->method('act');
+
+        $this->registryWithEmptyConf->act($this->event2);
     }
 }
