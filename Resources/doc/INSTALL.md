@@ -41,16 +41,16 @@ Configuration needs to be added in `app/config/config.yml` or `app/config/ezplat
 netgen_information_collection:
    system:
        default:
-           actions_configuration:
-               ng_feedback_form:
-                   actions:
+           actions:
+               default:
+                   - database
+               content_type:
+                   ng_feedback_form:
                        - email
                        - database
-               other_form:
-                   actions:
+                   other_form:
                        - database
-               some_other_form:
-                   actions: 
+                   some_other_form: 
                        - email
 ```
 

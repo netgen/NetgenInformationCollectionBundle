@@ -76,9 +76,12 @@ Configuration:
 netgen_information_collection:
    system:
        default:
-           actions_configuration:
-               my_content_type:
-                   actions:
+           actions:
+               default:
+                   - email
+                   - database
+               content_type:
+                   my_content_type:
                        - email
                        - database
                        - custom_action
