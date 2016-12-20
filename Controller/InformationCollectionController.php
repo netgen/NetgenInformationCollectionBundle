@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class InformationCollectionController
 {
-    const VIEW_TYPE = 'full';
-
     /**
      * @var FormBuilder
      */
