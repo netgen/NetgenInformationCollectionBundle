@@ -18,7 +18,7 @@ class Configuration extends SiteAccessConfiguration
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root("netgen_information_collection");
+        $rootNode = $treeBuilder->root(ConfigurationConstants::SETTINGS_ROOT);
 
         $this->generateScopeBaseNode($rootNode)
                 ->arrayNode(ConfigurationConstants::ACTIONS)
@@ -28,11 +28,17 @@ class Configuration extends SiteAccessConfiguration
                         ->arrayNode('default')
                             ->isRequired()
                             ->prototype('scalar')
+                                ->isRequired()
+                                ->cannotBeEmpty()
                             ->end()
                         ->end()
 
-                        ->arrayNode('content_type')
-                            ->children()
+                        ->arrayNode('content_types')
+                            ->prototype('array')
+                                ->prototype('scalar')
+                                    ->isRequired()
+                                    ->cannotBeEmpty()
+                                ->end()
                             ->end()
                         ->end()
 
@@ -43,17 +49,14 @@ class Configuration extends SiteAccessConfiguration
                 ->isRequired()
                 ->normalizeKeys(false)
                     ->children()
-                        ->arrayNode('default')
+                        ->scalarNode('default')
                             ->isRequired()
-                            ->prototype('scalar')
-                            ->end()
+                            ->cannotBeEmpty()
                         ->end()
-                        ->arrayNode('content_type')
-                            ->prototype('array')
-                                ->scalarNode('template')
-                                    ->isRequired()
-                                    ->cannotBeEmpty()
-                                ->end()
+                        ->arrayNode('content_types')
+                            ->prototype('scalar')
+                                ->isRequired()
+                                ->cannotBeEmpty()
                             ->end()
                         ->end()
                     ->end()

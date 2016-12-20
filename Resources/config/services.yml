@@ -54,6 +54,7 @@ services:
             - '@ezpublish.config.resolver'
             - '@ezpublish.translation_helper'
             - '@ezpublish.field_helper'
+            - '@ezpublish.api.service.content_type'
 
     netgen_information_collection.factory.field_data:
         class: '%netgen_information_collection.factory.field_data.class%'
