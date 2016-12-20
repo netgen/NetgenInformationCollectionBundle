@@ -27,16 +27,22 @@ class NetgenInformationCollectionExtension extends Extension
         $loader->load('services.yml');
         $loader->load('parameters.yml');
 
-        $processor = new ConfigurationProcessor($container, 'netgen_information_collection');
-        $configArrays = array('actions');
-        $scopes = array_merge(array('default'), $container->getParameter('ezpublish.siteaccess.list'));
+        $processor = new ConfigurationProcessor($container, ConfigurationConstants::SETTINGS_ROOT);
+        $configArrays = [
+            ConfigurationConstants::ACTIONS,
+            ConfigurationConstants::TEMPLATES,
+            ConfigurationConstants::FALLBACK_VALUES,
+        ];
+
+        $scopes = array_merge(['default'], $container->getParameter('ezpublish.siteaccess.list'));
+
         foreach ($configArrays as $configArray) {
             $processor->mapConfigArray($configArray, $config);
             foreach ($scopes as $scope) {
-                $scopeConfig = $container->getParameter('netgen_information_collection.' . $scope . '.' . $configArray);
-                foreach ($scopeConfig as $key => $value) {
+                $scopeConfig = $container->getParameter(ConfigurationConstants::SETTINGS_ROOT . '.' . $scope . '.' . $configArray);
+                foreach ((array)$scopeConfig as $key => $value) {
                     $container->setParameter(
-                        'netgen_information_collection.' . $scope . '.' . $configArray . '.' . $key,
+                        ConfigurationConstants::SETTINGS_ROOT . '.' . $scope . '.' . $configArray . '.' . $key,
                         $value
                     );
                 }
