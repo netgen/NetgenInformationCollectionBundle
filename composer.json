@@ -16,7 +16,8 @@
         "phpunit/phpunit": "*",
         "swiftmailer/swiftmailer": "*",
         "doctrine/orm": "*",
-        "matthiasnoback/symfony-config-test": "*"
+        "matthiasnoback/symfony-config-test": "*",
+        "matthiasnoback/symfony-dependency-injection-test": "*"
     },
     "autoload": {
         "psr-4": { "Netgen\\Bundle\\InformationCollectionBundle\\": "" }

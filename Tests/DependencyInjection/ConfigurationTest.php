@@ -3,7 +3,6 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\DependencyInjection;
 
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
-use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
 use PHPUnit_Framework_TestCase;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Configuration;
 

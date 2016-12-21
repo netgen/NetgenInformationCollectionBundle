@@ -15,7 +15,6 @@
         <whitelist>
             <directory>.</directory>
             <exclude>
-                <directory>DependencyInjection</directory>
                 <directory>Repository</directory>
                 <directory>Resources</directory>
                 <directory>Tests</directory>
