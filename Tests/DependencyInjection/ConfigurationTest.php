@@ -63,7 +63,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
     public function testConfigurationIsInvalidForDefaultTemplateValue()
     {
-        $this->assertConfigurationIsValid(
+        $this->assertConfigurationIsInvalid(
             [
                 'netgen_information_collection' => [
                     'system' => [
@@ -103,13 +103,14 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
                         ],
                     ],
                 ],
-            ]
+            ],
+            'netgen_information_collection.system.default.action_config.email.templates.default'
         );
     }
 
     public function testConfigurationIsInvalidForDefaultActionsValue()
     {
-        $this->assertConfigurationIsValid(
+        $this->assertConfigurationIsInvalid(
             [
                 'netgen_information_collection' => [
                     'system' => [
@@ -148,7 +149,8 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
                         ],
                     ],
                 ],
-            ]
+            ],
+            'netgen_information_collection.system.default.actions.default'
         );
     }
 }
