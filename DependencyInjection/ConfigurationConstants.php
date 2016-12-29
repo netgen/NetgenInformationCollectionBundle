@@ -6,9 +6,11 @@ class ConfigurationConstants
 {
     const ACTIONS = 'actions';
 
+    const ACTION_CONFIG = 'action_config';
+
     const TEMPLATES = 'templates';
 
-    const FALLBACK_VALUES = 'fallback_values';
+    const DEFAULT_VARIABLES = 'default_variables';
 
     const SETTINGS_ROOT = 'netgen_information_collection';
 }

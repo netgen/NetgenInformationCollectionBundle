@@ -25,15 +25,24 @@ class NetgenInformationCollectionExtensionTest extends AbstractExtensionTestCase
         return [
             'system' => [
                 'default' => [
-                    'templates'       => [
-                        'default'       => 'template',
-                        'content_types' => [
-                            'content_type1' => 'content_type1_template',
-                            'content_type2' => 'content_type2_template',
+                    'action_config' => [
+                        'email' => [
+                            'templates' => [
+                                'default' => 'some_template',
+                                'content_types' => [
+                                    'content_type1' => 'content_type1_template',
+                                    'content_type2' => 'content_type2_template',
+                                ],
+                            ],
+                            'default_variables' => [
+                                'sender' => 'sender',
+                                'recipient' => 'recipient',
+                                'subject' => 'subject',
+                            ],
                         ],
                     ],
-                    'actions'         => [
-                        'default'       => [
+                    'actions' => [
+                        'default' => [
                             'action1',
                             'action2',
                         ],
@@ -47,11 +56,6 @@ class NetgenInformationCollectionExtensionTest extends AbstractExtensionTestCase
                                 'action6',
                             ],
                         ],
-                    ],
-                    'fallback_values' => [
-                        'sender'    => 'sender',
-                        'recipient' => 'recipient',
-                        'subject'   => 'subject',
                     ],
                 ],
             ],

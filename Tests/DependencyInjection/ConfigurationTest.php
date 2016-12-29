@@ -22,11 +22,20 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
                 'netgen_information_collection' => [
                     'system' => [
                         'default' => [
-                            'templates' => [
-                                'default' => 'some_template',
-                                'content_types' => [
-                                    'content_type1' => 'content_type1_template',
-                                    'content_type2' => 'content_type2_template',
+                            'action_config' => [
+                                'email' => [
+                                    'templates' => [
+                                        'default' => 'some_template',
+                                        'content_types' => [
+                                            'content_type1' => 'content_type1_template',
+                                            'content_type2' => 'content_type2_template',
+                                        ],
+                                    ],
+                                    'default_variables' => [
+                                        'sender' => 'sender',
+                                        'recipient' => 'recipient',
+                                        'subject' => 'subject',
+                                    ],
                                 ],
                             ],
                             'actions' => [
@@ -44,11 +53,6 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
                                         'action6',
                                     ],
                                 ],
-                            ],
-                            'fallback_values' => [
-                                'sender' => 'sender',
-                                'recipient' => 'recipient',
-                                'subject' => 'subject',
                             ],
                         ],
                     ],
@@ -59,20 +63,29 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
     public function testConfigurationIsInvalidForDefaultTemplateValue()
     {
-        $this->assertConfigurationIsInvalid(
+        $this->assertConfigurationIsValid(
             [
                 'netgen_information_collection' => [
                     'system' => [
                         'default' => [
-                            'templates'       => [
-                                'default'       => '',
-                                'content_types' => [
-                                    'content_type1' => 'content_type1_template',
-                                    'content_type2' => 'content_type2_template',
+                            'action_config' => [
+                                'email' => [
+                                    'templates' => [
+                                        'default' => '',
+                                        'content_types' => [
+                                            'content_type1' => 'content_type1_template',
+                                            'content_type2' => 'content_type2_template',
+                                        ],
+                                    ],
+                                    'default_variables' => [
+                                        'sender' => 'sender',
+                                        'recipient' => 'recipient',
+                                        'subject' => 'subject',
+                                    ],
                                 ],
                             ],
-                            'actions'         => [
-                                'default'       => [
+                            'actions' => [
+                                'default' => [
                                     'action1',
                                     'action2',
                                 ],
@@ -87,36 +100,39 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
                                     ],
                                 ],
                             ],
-                            'fallback_values' => [
-                                'sender'    => 'sender',
-                                'recipient' => 'recipient',
-                                'subject'   => 'subject',
-                            ],
                         ],
                     ],
                 ],
-            ],
-            'netgen_information_collection.system.default.templates.default'
+            ]
         );
     }
 
     public function testConfigurationIsInvalidForDefaultActionsValue()
     {
-        $this->assertConfigurationIsInvalid(
+        $this->assertConfigurationIsValid(
             [
                 'netgen_information_collection' => [
                     'system' => [
                         'default' => [
-                            'templates' => [
-                                'default' => 'some_default_template',
-                                'content_types' => [
-                                    'content_type1' => 'content_type1_template',
-                                    'content_type2' => 'content_type2_template',
+                            'action_config' => [
+                                'email' => [
+                                    'templates' => [
+                                        'default' => 'some_template',
+                                        'content_types' => [
+                                            'content_type1' => 'content_type1_template',
+                                            'content_type2' => 'content_type2_template',
+                                        ],
+                                    ],
+                                    'default_variables' => [
+                                        'sender' => 'sender',
+                                        'recipient' => 'recipient',
+                                        'subject' => 'subject',
+                                    ],
                                 ],
                             ],
                             'actions' => [
                                 'default' => [
-                                    ''
+                                    '',
                                 ],
                                 'content_types' => [
                                     'content_type1' => [
@@ -129,16 +145,10 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
                                     ],
                                 ],
                             ],
-                            'fallback_values' => [
-                                'sender' => 'sender',
-                                'recipient' => 'recipient',
-                                'subject' => 'subject',
-                            ],
                         ],
                     ],
                 ],
-            ],
-            'netgen_information_collection.system.default.actions.default'
+            ]
         );
     }
 }

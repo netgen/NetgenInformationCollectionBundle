@@ -30,8 +30,7 @@ class NetgenInformationCollectionExtension extends Extension
         $processor = new ConfigurationProcessor($container, ConfigurationConstants::SETTINGS_ROOT);
         $configArrays = [
             ConfigurationConstants::ACTIONS,
-            ConfigurationConstants::TEMPLATES,
-            ConfigurationConstants::FALLBACK_VALUES,
+            ConfigurationConstants::ACTION_CONFIG,
         ];
 
         $scopes = array_merge(['default'], $container->getParameter('ezpublish.siteaccess.list'));
