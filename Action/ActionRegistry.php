@@ -68,8 +68,8 @@ class ActionRegistry
     }
 
     /**
-     * Returns configuration for given content type identifier
-     * plus default one merged into single array
+     * Returns configuration for given content type identifier if exists
+     * or default one
      *
      * @param string $contentTypeIdentifier
      *
@@ -77,19 +77,18 @@ class ActionRegistry
      */
     protected function prepareConfig($contentTypeIdentifier)
     {
-        $preparedConfig = [];
+        if (!empty($this->config['content_type'][$contentTypeIdentifier])) {
+
+            return $this->config['content_type'][$contentTypeIdentifier];
+
+        }
 
         if (!empty($this->config['default'])) {
-            $preparedConfig = $this->config['default'];
+
+            return  $this->config['default'];
+
         }
 
-        if (!empty($this->config['content_type'][$contentTypeIdentifier])) {
-            $preparedConfig = array_merge(
-                $preparedConfig,
-                $this->config['content_type'][$contentTypeIdentifier]
-            );
-        }
-
-        return array_unique($preparedConfig);
+        return [];
     }
 }

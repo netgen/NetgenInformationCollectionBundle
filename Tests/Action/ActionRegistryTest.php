@@ -66,7 +66,7 @@ class ActionRegistryTest extends PHPUnit_Framework_TestCase
     {
         $this->config = [
             'default' => [
-                'database',
+                'email',
             ],
             'content_type' => [
                 'ng_feedback_form' => [
@@ -147,10 +147,10 @@ class ActionRegistryTest extends PHPUnit_Framework_TestCase
         $this->registry->addAction('database', $this->action1);
         $this->registry->addAction('email', $this->action2);
 
-        $this->action1->expects($this->once())
+        $this->action1->expects($this->never())
             ->method('act');
 
-        $this->action2->expects($this->never())
+        $this->action2->expects($this->once())
             ->method('act');
 
         $this->registry->act($this->event2);
