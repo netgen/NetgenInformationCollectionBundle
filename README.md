@@ -22,8 +22,8 @@ License, docs and installation instructions
 
 [License](LICENSE)
 
-[Installation instructions](Resources/doc/INSTALL.md)
+[Installation instructions](doc/INSTALL.md)
 
-[Documentation](Resources/doc/DOC.md)
+[Documentation](doc/DOC.md)
 
-[Changelogs](Resources/doc/CHANGELOG.md)
+[Changelogs](doc/CHANGELOG.md)
