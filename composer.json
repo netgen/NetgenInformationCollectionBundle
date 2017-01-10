@@ -1,6 +1,13 @@
 {
     "name": "netgen/information-collection-bundle",
     "description": "Information collection alike feature for eZ Publish 5/eZ Platform",
+    "type": "symfony-bundle",
+    "keywords": [
+        "ezpublish",
+        "ezplatform",
+        "information collection"
+    ],
+    "homepage": "https://github.com/netgen/NetgenInformationCollectionBundle",
     "license": "GPL-2.0",
     "authors": [
         {
@@ -17,9 +24,25 @@
         "swiftmailer/swiftmailer": "*",
         "doctrine/orm": "*",
         "matthiasnoback/symfony-config-test": "*",
-        "matthiasnoback/symfony-dependency-injection-test": "*"
+        "matthiasnoback/symfony-dependency-injection-test": "*",
+        "squizlabs/php_codesniffer": "^2.3"
     },
     "autoload": {
-        "psr-4": { "Netgen\\Bundle\\InformationCollectionBundle\\": "" }
+        "psr-4": {
+            "Netgen\\Bundle\\InformationCollectionBundle\\": "bundle"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\Bundle\\InformationCollectionBundle\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 bundle tests",
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 bundle tests"
+    },
+    "config": {
+        "sort-packages": true
     }
 }

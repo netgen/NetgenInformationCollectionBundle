@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         colors="true"
+         verbose="true"
+         processIsolation="false"
+         stopOnFailure="false"
+>
+    <testsuites>
+        <testsuite name="Netgen\InformationCollection\Tests">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">bundle</directory>
+            <exclude>
+                <directory>bundle/Repository</directory>
+                <directory>bundle/Resources</directory>
+                <file>bundle/NetgenInformationCollectionBundle.php</file>
+                <file>bundle/Events.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="junit" target="build/report.junit.xml"/>
+        <log type="coverage-html" target="build/coverage" charset="UTF-8" yui="true" highlight="true"/>
+        <log type="coverage-text" target="build/coverage.txt"/>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
+</phpunit>
