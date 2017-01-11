@@ -5,7 +5,9 @@
     "keywords": [
         "ezpublish",
         "ezplatform",
-        "information collection"
+        "information collection",
+        "netgen",
+        "information-collection-bundle"
     ],
     "homepage": "https://github.com/netgen/NetgenInformationCollectionBundle",
     "license": "GPL-2.0",
