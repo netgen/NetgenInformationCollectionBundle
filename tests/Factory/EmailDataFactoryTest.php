@@ -10,7 +10,6 @@ use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
 use eZ\Publish\Core\FieldType\EmailAddress\Value as EmailValue;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Helper\FieldHelper;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
@@ -26,9 +25,9 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
     protected $factory;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var array
      */
-    protected $configResolver;
+    protected $config;
 
     /**
      * @var PHPUnit_Framework_MockObject_MockObject
@@ -51,16 +50,28 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
     protected $contentType;
 
     /**
+     * @var ContentType
+     */
+    protected $contentType2;
+
+    /**
      * @var VersionInfo
      */
     protected $versionInfo;
 
     public function setUp()
     {
-        $this->configResolver = $this->getMockBuilder(ConfigResolverInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getParameter', 'hasParameter', 'setDefaultNamespace', 'getDefaultNamespace'])
-            ->getMock();
+        $this->config = [
+            'templates' => [
+                'default' => 'AcmeBundle::email.html.twig',
+                'test_content_type' => 'AcmeBundle::test_content_type.html.twig',
+            ],
+            'default_variables' => [
+                'sender' => 'sender@example.com',
+                'recipient' => 'recipient@example.com',
+                'subject' => 'subject',
+            ],
+        ];
 
         $this->translationHelper = $this->getMockBuilder(TranslationHelper::class)
             ->disableOriginalConstructor()
@@ -82,6 +93,11 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
             'fieldDefinitions' => [],
         ]);
 
+        $this->contentType2 = new ContentType([
+            'identifier' => 'test_content_type2',
+            'fieldDefinitions' => [],
+        ]);
+
         $this->versionInfo = new VersionInfo([
             'contentInfo' => new ContentInfo([
                 'contentTypeId' => 123,
@@ -89,7 +105,7 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
         ]);
 
         $this->factory = new EmailDataFactory(
-            $this->configResolver,
+            $this->config,
             $this->translationHelper,
             $this->fieldHelper,
             $this->contentTypeService
@@ -97,7 +113,7 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
         parent::setUp();
     }
 
-    public function testBuild()
+    public function testBuildingWithSenderRecipientAndSubjectFromContent()
     {
         $recipientField = new Field([
             'value' => new EmailValue('recipient@test.com'),
@@ -151,44 +167,32 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
             ->with(123)
             ->willReturn($this->contentType);
 
-        $this->configResolver->expects($this->any())
-            ->method('hasParameter')
-            ->with('information_collection.email.test_content_type', 'netgen')
-            ->willReturn(true);
-
-        $this->configResolver->expects($this->any())
-            ->method('getParameter')
-            ->with('information_collection.email.test_content_type', 'netgen')
-            ->willReturn('template');
-
-
         $value = $this->factory->build($content);
 
         $this->assertInstanceOf(EmailData::class, $value);
         $this->assertEquals('recipient@test.com', $value->getRecipient());
         $this->assertEquals('sender@test.com', $value->getSender());
         $this->assertEquals('subject test', $value->getSubject());
-        $this->assertEquals('template', $value->getTemplate());
     }
 
-    public function testBuildWithFieldMissingInContent()
+    public function testBuildingWithSenderRecipientAndSubjectFromConfiguration()
     {
         $recipientField = new Field([
             'value' => new EmailValue('recipient@test.com'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'test1'
+            'fieldDefIdentifier' => 'recipient'
         ]);
 
         $senderField = new Field([
             'value' => new EmailValue('sender@test.com'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'test2'
+            'fieldDefIdentifier' => 'sender'
         ]);
 
         $subjectField = new Field([
             'value' => new TextLineValue('subject test'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'test3',
+            'fieldDefIdentifier' => 'subject',
         ]);
 
         $content = new Content([
@@ -198,76 +202,55 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
             'versionInfo' => $this->versionInfo,
         ]);
 
-        $this->fieldHelper->expects($this->never())
-            ->method('isFieldEmpty');
+        $this->fieldHelper->expects($this->exactly(3))
+            ->method('isFieldEmpty')
+            ->withAnyParameters()
+            ->willReturn(true);
+
 
         $this->translationHelper->expects($this->never())
-            ->method('getTranslatedField');
-
-
-        $this->translationHelper->expects($this->never())
-            ->method('getTranslatedField');
+            ->method('getTranslatedField')
+            ->with($content, 'recipient');
 
         $this->translationHelper->expects($this->never())
-            ->method('getTranslatedField');
+            ->method('getTranslatedField')
+            ->with($content, 'sender');
 
-        $this->configResolver->expects($this->at(0))
-            ->method('getParameter')
-            ->with('information_collection.email.recipient', 'netgen')
-            ->willReturn('recipient@test.com');
-
-        $this->configResolver->expects($this->at(1))
-            ->method('getParameter')
-            ->with('information_collection.email.sender', 'netgen')
-            ->willReturn('sender@test.com');
-
-        $this->configResolver->expects($this->at(2))
-            ->method('getParameter')
-            ->with('information_collection.email.subject', 'netgen')
-            ->willReturn('subject test');
+        $this->translationHelper->expects($this->never())
+            ->method('getTranslatedField')
+            ->with($content, 'subject');
 
         $this->contentTypeService->expects($this->once())
             ->method('loadContentType')
             ->with(123)
             ->willReturn($this->contentType);
 
-        $this->configResolver->expects($this->at(3))
-            ->method('hasParameter')
-            ->with('information_collection.email.test_content_type', 'netgen')
-            ->willReturn(true);
-
-        $this->configResolver->expects($this->at(4))
-            ->method('getParameter')
-            ->with('information_collection.email.test_content_type', 'netgen')
-            ->willReturn('template');
-
         $value = $this->factory->build($content);
 
         $this->assertInstanceOf(EmailData::class, $value);
-        $this->assertEquals('recipient@test.com', $value->getRecipient());
-        $this->assertEquals('sender@test.com', $value->getSender());
-        $this->assertEquals('subject test', $value->getSubject());
-        $this->assertEquals('template', $value->getTemplate());
+        $this->assertEquals($this->config['default_variables']['recipient'], $value->getRecipient());
+        $this->assertEquals($this->config['default_variables']['sender'], $value->getSender());
+        $this->assertEquals($this->config['default_variables']['subject'], $value->getSubject());
     }
 
-    public function testBuildWhenTemplateCheckReturnsFalse()
+    public function testBuildingWithDefaultTemplate()
     {
         $recipientField = new Field([
             'value' => new EmailValue('recipient@test.com'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'test1'
+            'fieldDefIdentifier' => 'recipient'
         ]);
 
         $senderField = new Field([
             'value' => new EmailValue('sender@test.com'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'test2'
+            'fieldDefIdentifier' => 'sender'
         ]);
 
         $subjectField = new Field([
             'value' => new TextLineValue('subject test'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'test3',
+            'fieldDefIdentifier' => 'subject',
         ]);
 
         $content = new Content([
@@ -277,55 +260,96 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
             'versionInfo' => $this->versionInfo,
         ]);
 
-        $this->fieldHelper->expects($this->never())
-            ->method('isFieldEmpty');
-
-        $this->translationHelper->expects($this->never())
-            ->method('getTranslatedField');
-
-
-        $this->translationHelper->expects($this->never())
-            ->method('getTranslatedField');
-
-        $this->translationHelper->expects($this->never())
-            ->method('getTranslatedField');
-
-        $this->configResolver->expects($this->at(0))
-            ->method('getParameter')
-            ->with('information_collection.email.recipient', 'netgen')
-            ->willReturn('recipient@test.com');
-
-        $this->configResolver->expects($this->at(1))
-            ->method('getParameter')
-            ->with('information_collection.email.sender', 'netgen')
-            ->willReturn('sender@test.com');
-
-        $this->configResolver->expects($this->at(2))
-            ->method('getParameter')
-            ->with('information_collection.email.subject', 'netgen')
-            ->willReturn('subject test');
-
-        $this->contentTypeService->expects($this->once())
-            ->method('loadContentType')
-            ->with(123)
-            ->willReturn($this->contentType);
-
-        $this->configResolver->expects($this->at(3))
-            ->method('hasParameter')
-            ->with('information_collection.email.test_content_type', 'netgen')
+        $this->fieldHelper->expects($this->exactly(3))
+            ->method('isFieldEmpty')
+            ->withAnyParameters()
             ->willReturn(false);
 
-        $this->configResolver->expects($this->at(4))
-            ->method('getParameter')
-            ->with('information_collection.email.default', 'netgen')
-            ->willReturn('template_default');
+
+        $this->translationHelper->expects($this->at(0))
+            ->method('getTranslatedField')
+            ->with($content, 'recipient')
+            ->willReturn($recipientField);
+
+
+        $this->translationHelper->expects($this->at(1))
+            ->method('getTranslatedField')
+            ->with($content, 'sender')
+            ->willReturn($senderField);
+
+        $this->translationHelper->expects($this->at(2))
+            ->method('getTranslatedField')
+            ->with($content, 'subject')
+            ->willReturn($subjectField);
+
+        $this->contentTypeService->expects($this->once())
+            ->method('loadContentType')
+            ->with(123)
+            ->willReturn($this->contentType2);
 
         $value = $this->factory->build($content);
 
         $this->assertInstanceOf(EmailData::class, $value);
-        $this->assertEquals('recipient@test.com', $value->getRecipient());
-        $this->assertEquals('sender@test.com', $value->getSender());
-        $this->assertEquals('subject test', $value->getSubject());
-        $this->assertEquals('template_default', $value->getTemplate());
+        $this->assertEquals($this->config['templates']['default'], $value->getTemplate());
+    }
+
+    public function testBuildingWithTemplateResolvedByContentType()
+    {
+        $recipientField = new Field([
+            'value' => new EmailValue('recipient@test.com'),
+            'languageCode' => 'eng_GB',
+            'fieldDefIdentifier' => 'recipient'
+        ]);
+
+        $senderField = new Field([
+            'value' => new EmailValue('sender@test.com'),
+            'languageCode' => 'eng_GB',
+            'fieldDefIdentifier' => 'sender'
+        ]);
+
+        $subjectField = new Field([
+            'value' => new TextLineValue('subject test'),
+            'languageCode' => 'eng_GB',
+            'fieldDefIdentifier' => 'subject',
+        ]);
+
+        $content = new Content([
+            'internalFields' => [
+                $recipientField, $senderField, $subjectField,
+            ],
+            'versionInfo' => $this->versionInfo,
+        ]);
+
+        $this->fieldHelper->expects($this->exactly(3))
+            ->method('isFieldEmpty')
+            ->withAnyParameters()
+            ->willReturn(false);
+
+
+        $this->translationHelper->expects($this->at(0))
+            ->method('getTranslatedField')
+            ->with($content, 'recipient')
+            ->willReturn($recipientField);
+
+
+        $this->translationHelper->expects($this->at(1))
+            ->method('getTranslatedField')
+            ->with($content, 'sender')
+            ->willReturn($senderField);
+
+        $this->translationHelper->expects($this->at(2))
+            ->method('getTranslatedField')
+            ->with($content, 'subject')
+            ->willReturn($subjectField);
+
+        $this->contentTypeService->expects($this->once())
+            ->method('loadContentType')
+            ->with(123)
+            ->willReturn($this->contentType);
+
+        $value = $this->factory->build($content);
+
+        $this->assertInstanceOf(EmailData::class, $value);
+        $this->assertEquals($this->config['templates']['test_content_type'], $value->getTemplate());
     }
 }
