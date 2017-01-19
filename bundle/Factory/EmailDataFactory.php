@@ -12,9 +12,9 @@ use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 class EmailDataFactory
 {
     /**
-     * @var ConfigResolverInterface
+     * @var array
      */
-    protected $configResolver;
+    protected $config;
 
     /**
      * @var TranslationHelper
@@ -34,19 +34,19 @@ class EmailDataFactory
     /**
      * EmailDataFactory constructor.
      *
-     * @param ConfigResolverInterface $configResolver
+     * @param array $config
      * @param TranslationHelper $translationHelper
      * @param FieldHelper $fieldHelper
      * @param ContentTypeService $contentTypeService
      */
     public function __construct(
-        ConfigResolverInterface $configResolver,
+        array $config,
         TranslationHelper $translationHelper,
         FieldHelper $fieldHelper,
         ContentTypeService $contentTypeService
     ) {
     
-        $this->configResolver = $configResolver;
+        $this->config = $config;
         $this->translationHelper = $translationHelper;
         $this->fieldHelper = $fieldHelper;
         $this->contentTypeService = $contentTypeService;
@@ -87,7 +87,7 @@ class EmailDataFactory
 
             return $fieldValue->value->$property;
         } else {
-            return $this->configResolver->getParameter('information_collection.email.' . $field, 'netgen');
+            return $this->config['default_variables'][$field];
         }
     }
 
@@ -104,10 +104,12 @@ class EmailDataFactory
 
         $contentTypeIdentifier = $contentType->identifier;
 
-        if ($this->configResolver->hasParameter('information_collection.email.' . $contentTypeIdentifier, 'netgen')) {
-            return $this->configResolver->getParameter('information_collection.email.' . $contentTypeIdentifier, 'netgen');
+        if (array_key_exists($contentTypeIdentifier, $this->config['templates'])) {
+
+            return $this->config['templates'][$contentTypeIdentifier];
+
         }
 
-        return $this->configResolver->getParameter('information_collection.email.default', 'netgen');
+        return $this->config['templates']['default'];
     }
 }

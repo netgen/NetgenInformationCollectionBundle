@@ -51,7 +51,7 @@ services:
     netgen_information_collection.factory.email_data:
         class: '%netgen_information_collection.factory.email_data.class%'
         arguments:
-            - '@ezpublish.config.resolver'
+            - "$action_config.email;netgen_information_collection$"
             - '@ezpublish.translation_helper'
             - '@ezpublish.field_helper'
             - '@ezpublish.api.service.content_type'
