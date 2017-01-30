@@ -4,7 +4,10 @@ namespace Netgen\Bundle\InformationCollectionBundle;
 
 class Events
 {
-    const FORM_CREATED = 'netgen_information_collection.events.form_created';
-
+    /**
+     * The INFORMATION_COLLECTED event occurs just after the information collection has been submitted.
+     *
+     * The event listener method receives a \Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected
+     */
     const INFORMATION_COLLECTED = 'netgen_information_collection.events.information_collected';
 }
