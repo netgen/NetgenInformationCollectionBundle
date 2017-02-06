@@ -22,7 +22,7 @@
         "netgen/ez-forms-bundle": "^1.2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "*",
+        "phpunit/phpunit": "~5.0",
         "swiftmailer/swiftmailer": "*",
         "doctrine/orm": "*",
         "matthiasnoback/symfony-config-test": "*",
