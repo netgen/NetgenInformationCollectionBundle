@@ -23,7 +23,8 @@ before_install:
 
 # install dependencies
 install:
-    - travis_wait composer install
+    - composer install
+    - travis_result
 
 # execute phpunit as the script command
 script:
