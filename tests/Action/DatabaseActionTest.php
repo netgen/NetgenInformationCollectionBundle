@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Action;
 
+use Doctrine\DBAL\DBALException;
 use eZ\Publish\API\Repository\Values\Content\Field;
 use eZ\Publish\Core\Repository\ContentService;
 use eZ\Publish\Core\Repository\Repository;
@@ -10,6 +11,7 @@ use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
+use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
@@ -220,6 +222,150 @@ class DatabaseActionTest extends PHPUnit_Framework_TestCase
 
         $this->secondRepository->expects($this->exactly(3))
             ->method('save');
+
+        $this->action->act($event);
+    }
+
+    /**
+     * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
+     */
+    public function testActWithExceptionOnInformationCollectionRepository()
+    {
+        $location = new Location([
+            'contentInfo' => new ContentInfo([
+                'id' => 123,
+            ]),
+        ]);
+
+        $content = new Content([
+            'internalFields' => $this->fields,
+            'versionInfo' => new VersionInfo([
+                'contentInfo' => new ContentInfo([
+                    'mainLanguageCode' => 'eng_GB'
+                ]),
+            ]),
+        ]);
+
+        $dataWrapper = new DataWrapper($this->struct, $this->contentType, $location);
+        $event = new InformationCollected($dataWrapper);
+
+        $user = new User([
+            'content' => new Content([
+                'versionInfo' => new VersionInfo([
+                    'contentInfo' => new ContentInfo([
+                        'id' => 123,
+                    ]),
+                ]),
+            ]),
+            'login' => 'login',
+        ]);
+
+        $ezInfoCollection = new EzInfoCollection();
+
+        $this->ezRepository->expects($this->once())
+            ->method('getContentService')
+            ->willReturn($this->contentService);
+
+        $this->contentService->expects($this->once())
+            ->method('loadContent')
+            ->with(123)
+            ->willReturn($content);
+
+        $this->ezRepository->expects($this->once())
+            ->method('getCurrentUser')
+            ->willReturn($user);
+
+        $this->repository->expects($this->once())
+            ->method('getInstance')
+            ->willReturn($ezInfoCollection);
+
+        $this->repository->expects($this->once())
+            ->method('save')
+            ->with($ezInfoCollection)
+            ->willThrowException(new DBALException());
+
+        $this->factory->expects($this->never())
+            ->method('getLegacyValue');
+
+        $this->secondRepository->expects($this->never())
+            ->method('getInstance');
+
+        $this->secondRepository->expects($this->never())
+            ->method('save');
+
+        $this->action->act($event);
+    }
+
+    /**
+     * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
+     */
+    public function testActWithExceptionOnInformationCollectionAttributeRepository()
+    {
+        $location = new Location([
+            'contentInfo' => new ContentInfo([
+                'id' => 123,
+            ]),
+        ]);
+
+        $content = new Content([
+            'internalFields' => $this->fields,
+            'versionInfo' => new VersionInfo([
+                'contentInfo' => new ContentInfo([
+                    'mainLanguageCode' => 'eng_GB'
+                ]),
+            ]),
+        ]);
+
+        $dataWrapper = new DataWrapper($this->struct, $this->contentType, $location);
+        $event = new InformationCollected($dataWrapper);
+
+        $user = new User([
+            'content' => new Content([
+                'versionInfo' => new VersionInfo([
+                    'contentInfo' => new ContentInfo([
+                        'id' => 123,
+                    ]),
+                ]),
+            ]),
+            'login' => 'login',
+        ]);
+
+        $ezInfoCollection = new EzInfoCollection();
+        $ezInfoCollectionAttribute = new EzInfoCollectionAttribute();
+
+        $this->ezRepository->expects($this->once())
+            ->method('getContentService')
+            ->willReturn($this->contentService);
+
+        $this->contentService->expects($this->once())
+            ->method('loadContent')
+            ->with(123)
+            ->willReturn($content);
+
+        $this->ezRepository->expects($this->once())
+            ->method('getCurrentUser')
+            ->willReturn($user);
+
+        $this->repository->expects($this->once())
+            ->method('getInstance')
+            ->willReturn($ezInfoCollection);
+
+        $this->repository->expects($this->once())
+            ->method('save')
+            ->with($ezInfoCollection);
+
+        $this->factory->expects($this->exactly(1))
+            ->method('getLegacyValue')
+            ->withAnyParameters()
+            ->willReturn($this->legacyData);
+
+        $this->secondRepository->expects($this->exactly(1))
+            ->method('getInstance')
+            ->willReturn($ezInfoCollectionAttribute);
+
+        $this->secondRepository->expects($this->once())
+            ->method('save')
+            ->willThrowException(new DBALException());
 
         $this->action->act($event);
     }

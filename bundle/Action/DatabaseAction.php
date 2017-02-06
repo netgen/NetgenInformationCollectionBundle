@@ -2,11 +2,12 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
+use Doctrine\DBAL\DBALException;
 use eZ\Publish\API\Repository\Repository;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
-use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Legacy\Registry\FieldHandlerRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
@@ -76,7 +77,11 @@ class DatabaseAction implements ActionInterface
         $ezInfo->setCreated($dt->getTimestamp());
         $ezInfo->setModified($dt->getTimestamp());
 
-        $this->infoCollectionRepository->save($ezInfo);
+        try {
+            $this->infoCollectionRepository->save($ezInfo);
+        } catch (DBALException $e) {
+            throw new ActionFailedException();
+        }
 
         foreach ($struct->getCollectedFields() as $fieldDefIdentifier => $value) {
             /** @var LegacyData $value */
@@ -92,7 +97,11 @@ class DatabaseAction implements ActionInterface
             $ezInfoAttribute->setDataFloat($value->getDataFloat());
             $ezInfoAttribute->setDataText($value->getDataText());
 
-            $this->infoCollectionAttributeRepository->save($ezInfoAttribute);
+            try {
+                $this->infoCollectionAttributeRepository->save($ezInfoAttribute);
+            } catch (DBALException $e) {
+                throw new ActionFailedException();
+            }
         }
     }
 }

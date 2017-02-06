@@ -3,6 +3,8 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
+use Psr\Log\LoggerInterface;
 
 class ActionRegistry
 {
@@ -17,14 +19,21 @@ class ActionRegistry
     protected $actions;
 
     /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * ActionAggregate constructor.
      *
      * @param array $config
+     * @param LoggerInterface $logger
      */
-    public function __construct($config)
+    public function __construct($config, LoggerInterface $logger)
     {
         $this->config = $config;
         $this->actions = [];
+        $this->logger = $logger;
     }
 
     /**
@@ -48,7 +57,14 @@ class ActionRegistry
         /** @var ActionInterface $action */
         foreach ($this->actions as $name => $action) {
             if ($this->canActionAct($name, $config)) {
-                $action->act($event);
+
+                try {
+                    $action->act($event);
+                } catch(ActionFailedException $e) {
+                    $this->logger->error(
+                        sprintf("Error occured while acting on action %s.", $name)
+                    );
+                }
             }
         }
     }

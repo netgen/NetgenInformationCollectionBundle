@@ -8,6 +8,7 @@ services:
         class: '%netgen_information_collection.action.registry.class%'
         arguments:
             - "$actions;netgen_information_collection$"
+            - "@logger"
 
     netgen_information_collection.action.db:
         class: '%netgen_information_collection.action.db.class%'

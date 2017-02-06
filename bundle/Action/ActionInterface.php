@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 
 interface ActionInterface
 {
@@ -11,7 +12,7 @@ interface ActionInterface
      *
      * @param InformationCollected $event
      *
-     * @return mixed
+     * @throws ActionFailedException
      */
     public function act(InformationCollected $event);
 }

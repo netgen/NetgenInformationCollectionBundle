@@ -134,7 +134,60 @@ class EmailActionTest extends PHPUnit_Framework_TestCase
             ->method('render');
 
         $this->mailer->expects($this->once())
-            ->method('send');
+            ->method('send')
+            ->willReturn(1);
+
+        $this->action->act($event);
+    }
+
+    /**
+     * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
+     */
+    public function testActWithException()
+    {
+        $informationCollectionStruct = new InformationCollectionStruct();
+        $location = new Location([
+            'contentInfo' => new ContentInfo([
+                'id' => 123,
+            ]),
+        ]);
+
+        $content = new Content();
+        $dataWrapper = new DataWrapper($informationCollectionStruct, $this->contentType, $location);
+        $event = new InformationCollected($dataWrapper);
+
+        $this->contentService->expects($this->once())
+            ->method('loadContent')
+            ->with(123)
+            ->willReturn($content);
+
+        $this->emailData->expects($this->once())
+            ->method('getSubject')
+            ->willReturn('subject');
+
+        $this->emailData->expects($this->once())
+            ->method('getRecipient')
+            ->willReturn('recipient@test.com');
+
+        $this->emailData->expects($this->once())
+            ->method('getSender')
+            ->willReturn('sender@test.com');
+
+        $this->emailData->expects($this->once())
+            ->method('getTemplate')
+            ->willReturn('template');
+
+        $this->factory->expects($this->once())
+            ->method('build')
+            ->with($content)
+            ->willReturn($this->emailData);
+
+        $this->template->expects($this->once())
+            ->method('render');
+
+        $this->mailer->expects($this->once())
+            ->method('send')
+            ->willReturn(false);
 
         $this->action->act($event);
     }

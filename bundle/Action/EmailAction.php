@@ -4,6 +4,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
 use eZ\Publish\API\Repository\ContentService;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
 use Swift_Mailer;
 use Swift_Message;
@@ -81,6 +82,8 @@ class EmailAction implements ActionInterface
             'text/html'
         );
 
-        return $this->mailer->send($message);
+        if (!$this->mailer->send($message)) {
+            throw new ActionFailedException();
+        }
     }
 }

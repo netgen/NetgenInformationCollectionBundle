@@ -7,8 +7,10 @@ use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Action\ActionInterface;
 use Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use PHPUnit_Framework_TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
+use Psr\Log\LoggerInterface;
 
 class ActionRegistryTest extends PHPUnit_Framework_TestCase
 {
@@ -51,6 +53,11 @@ class ActionRegistryTest extends PHPUnit_Framework_TestCase
      * @var PHPUnit_Framework_MockObject_MockObject
      */
     protected $action2;
+
+    /**
+     * @var PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $logger;
 
     /**
      * @var InformationCollected
@@ -96,9 +103,14 @@ class ActionRegistryTest extends PHPUnit_Framework_TestCase
             ->setMethods(['act'])
             ->getMock();
 
-        $this->registry = new ActionRegistry($this->config);
-        $this->registryWithEmptyConf = new ActionRegistry($this->emptyConfig);
-        $this->registryWithOnlyDefaultConf = new ActionRegistry($this->onlyDefaultConfig);
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['error', 'emergency', 'alert', 'debug', 'critical', 'notice', 'info', 'warning', 'log'])
+            ->getMock();
+
+        $this->registry = new ActionRegistry($this->config, $this->logger);
+        $this->registryWithEmptyConf = new ActionRegistry($this->emptyConfig, $this->logger);
+        $this->registryWithOnlyDefaultConf = new ActionRegistry($this->onlyDefaultConfig, $this->logger);
 
         $contentType = new ContentType([
             'identifier' => 'ng_feedback_form',
@@ -182,5 +194,24 @@ class ActionRegistryTest extends PHPUnit_Framework_TestCase
             ->method('act');
 
         $this->registryWithEmptyConf->act($this->event2);
+    }
+
+    public function testActWithActionFailedException()
+    {
+        $this->registry->addAction('database', $this->action1);
+        $this->registry->addAction('email', $this->action2);
+
+        $this->logger->expects($this->once())
+            ->method('error')
+            ->with('Error occured while acting on action database.');
+
+        $this->action1->expects($this->once())
+            ->method('act')
+            ->willThrowException(new ActionFailedException());
+
+        $this->action2->expects($this->never())
+            ->method('act');
+
+        $this->registry->act($this->event);
     }
 }
