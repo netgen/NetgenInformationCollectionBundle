@@ -4,6 +4,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
 use Doctrine\DBAL\DBALException;
 use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
@@ -63,6 +64,7 @@ class DatabaseAction implements ActionInterface
         $contentType = $event->getContentType();
         $location = $event->getLocation();
 
+        /** @var Content $content */
         $content = $this->repository->getContentService()->loadContent($location->contentInfo->id);
 
         $currentUser = $this->repository->getCurrentUser();
@@ -83,12 +85,17 @@ class DatabaseAction implements ActionInterface
             throw new ActionFailedException();
         }
 
+        /**
+         * @var string $fieldDefIdentifier
+         * @var \eZ\Publish\Core\FieldType\Value $value
+         */
         foreach ($struct->getCollectedFields() as $fieldDefIdentifier => $value) {
-            /** @var LegacyData $value */
+
             $value = $this->factory->getLegacyValue($value, $contentType->getFieldDefinition($fieldDefIdentifier));
 
             $ezInfoAttribute = $this->infoCollectionAttributeRepository->getInstance();
 
+            /** @var LegacyData $value */
             $ezInfoAttribute->setContentObjectId($location->getContentInfo()->id);
             $ezInfoAttribute->setInformationCollectionId($ezInfo->getId());
             $ezInfoAttribute->setContentClassAttributeId($value->getContentClassAttributeId());

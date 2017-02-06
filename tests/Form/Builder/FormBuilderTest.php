@@ -5,7 +5,6 @@ namespace Netgen\Bundle\InformationCollectionBundle\Tests\FieldHandler;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\ContentTypeService;
 use eZ\Publish\Core\Repository\Values\Content\Location;
-use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use PHPUnit_Framework_TestCase;
 use PHPUnit_Framework_MockObject_MockObject;

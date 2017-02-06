@@ -4,7 +4,6 @@ namespace Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom;
 
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\FieldType\Value;
-use Netgen\Bundle\InformationCollectionBundle\Value\LegacyHandledFieldValue;
 
 interface CustomFieldHandlerInterface
 {

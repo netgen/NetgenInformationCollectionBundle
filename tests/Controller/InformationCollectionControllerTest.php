@@ -6,7 +6,6 @@ use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController;
-use Netgen\Bundle\InformationCollectionBundle\Events;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;

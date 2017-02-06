@@ -5,7 +5,6 @@ namespace Netgen\Bundle\InformationCollectionBundle\Factory;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 

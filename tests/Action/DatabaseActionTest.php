@@ -11,7 +11,6 @@ use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
-use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
