@@ -24,7 +24,6 @@ before_install:
 # install dependencies
 install:
     - composer install
-    - travis_result
 
 # execute phpunit as the script command
 script:
