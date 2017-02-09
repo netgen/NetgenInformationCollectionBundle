@@ -13,12 +13,11 @@ use Netgen\Bundle\InformationCollectionBundle\Action\EmailAction;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine;
 use Swift_Mailer;
 
-class EmailActionTest extends PHPUnit_Framework_TestCase
+class EmailActionTest extends TestCase
 {
     /**
      * @var EmailAction
@@ -26,32 +25,32 @@ class EmailActionTest extends PHPUnit_Framework_TestCase
     protected $action;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $factory;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $template;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $contentService;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $mailer;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $contentType;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $emailData;
 

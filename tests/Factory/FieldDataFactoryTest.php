@@ -7,10 +7,9 @@ use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHan
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry;
 use eZ\Publish\Core\FieldType\TextLine\Value as TextValue;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\TestCase;
 
-class FieldDataFactoryTest extends PHPUnit_Framework_TestCase
+class FieldDataFactoryTest extends TestCase
 {
     /**
      * @var FieldDataFactory
@@ -18,7 +17,7 @@ class FieldDataFactoryTest extends PHPUnit_Framework_TestCase
     protected $factory;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $registry;
 

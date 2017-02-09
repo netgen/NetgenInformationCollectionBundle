@@ -6,13 +6,12 @@ use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\ContentTypeService;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
 
-class FormBuilderTest extends PHPUnit_Framework_TestCase
+class FormBuilderTest extends TestCase
 {
     /**
      * @var FormBuilder
@@ -20,22 +19,22 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase
     protected $formBuilder;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $formFactory;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $contentTypeService;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $router;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $innerFormBuilder;
 

@@ -14,10 +14,9 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Helper\FieldHelper;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\TestCase;
 
-class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
+class EmailDataFactoryTest extends TestCase
 {
     /**
      * @var EmailDataFactory
@@ -30,17 +29,17 @@ class EmailDataFactoryTest extends PHPUnit_Framework_TestCase
     protected $config;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $translationHelper;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $fieldHelper;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $contentTypeService;
 

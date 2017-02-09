@@ -22,11 +22,11 @@
         "netgen/ez-forms-bundle": "^1.2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~5.0",
+        "phpunit/phpunit": "^5.7 <6.0",
         "swiftmailer/swiftmailer": "*",
         "doctrine/orm": "*",
-        "matthiasnoback/symfony-config-test": "*",
-        "matthiasnoback/symfony-dependency-injection-test": "*",
+        "matthiasnoback/symfony-config-test": "~2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "~1.0",
         "squizlabs/php_codesniffer": "^2.3"
     },
     "autoload": {

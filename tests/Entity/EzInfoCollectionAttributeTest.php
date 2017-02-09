@@ -3,9 +3,9 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Entity;
 
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class EzInfoCollectionAttributeTest extends PHPUnit_Framework_TestCase
+class EzInfoCollectionAttributeTest extends TestCase
 {
     /**
      * @var EzInfoCollectionAttribute

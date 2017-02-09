@@ -8,11 +8,10 @@ use Netgen\Bundle\InformationCollectionBundle\Action\ActionInterface;
 use Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
-class ActionRegistryTest extends PHPUnit_Framework_TestCase
+class ActionRegistryTest extends TestCase
 {
     /**
      * @var ActionRegistry
@@ -45,17 +44,17 @@ class ActionRegistryTest extends PHPUnit_Framework_TestCase
     protected $emptyConfig;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $action1;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $action2;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $logger;
 

@@ -24,10 +24,9 @@ use eZ\Publish\Core\Repository\Values\User\User;
 use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\TestCase;
 
-class DatabaseActionTest extends PHPUnit_Framework_TestCase
+class DatabaseActionTest extends TestCase
 {
     /**
      * @var DatabaseAction
@@ -35,32 +34,32 @@ class DatabaseActionTest extends PHPUnit_Framework_TestCase
     protected $action;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $factory;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $repository;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $secondRepository;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $ezRepository;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $contentType;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $contentService;
 

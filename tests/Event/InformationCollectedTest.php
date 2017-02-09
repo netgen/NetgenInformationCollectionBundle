@@ -4,9 +4,9 @@ namespace Netgen\Bundle\InformationCollectionBundle\Tests\Event;
 
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class InformationCollectedTest extends PHPUnit_Framework_TestCase
+class InformationCollectedTest extends TestCase
 {
     /**
      * @var InformationCollected

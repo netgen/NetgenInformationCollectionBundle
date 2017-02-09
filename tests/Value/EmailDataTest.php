@@ -3,9 +3,9 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Value;
 
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class EmailDataTest extends PHPUnit_Framework_TestCase
+class EmailDataTest extends TestCase
 {
     /**
      * @dataProvider emailDataProvider

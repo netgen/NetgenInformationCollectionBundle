@@ -5,9 +5,9 @@ namespace Netgen\Bundle\InformationCollectionBundle\Tests\FieldHandler;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry;
 use eZ\Publish\Core\FieldType\Integer\Value as TestValue;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class FieldHandlerRegistryTest extends PHPUnit_Framework_TestCase
+class FieldHandlerRegistryTest extends TestCase
 {
     /**
      * @var FieldHandlerRegistry

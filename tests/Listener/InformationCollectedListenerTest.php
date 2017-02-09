@@ -7,9 +7,9 @@ use Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Events;
 use Netgen\Bundle\InformationCollectionBundle\Listener\InformationCollectedListener;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class InformationCollectedListenerTest extends PHPUnit_Framework_TestCase
+class InformationCollectedListenerTest extends TestCase
 {
     /**
      * @var InformationCollectedListener

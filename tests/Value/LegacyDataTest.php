@@ -2,10 +2,10 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Value;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
 
-class LegacyDataTest extends PHPUnit_Framework_TestCase
+class LegacyDataTest extends TestCase
 {
     /**
      * @dataProvider legacyDataProvider
