@@ -64,3 +64,5 @@ Clear the eZ Publish caches with the following command:
 ```bash
 $ php app/console cache:clear
 ```
+
+For more detailed configuration, please check [documentation](DOC.md).

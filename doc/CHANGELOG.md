@@ -6,9 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- documentation update
-- every action throws ActionFailedException on failure
+- documentation update.
+- every action throws ActionFailedException on failure.
 - Start following [SemVer](http://semver.org) properly.
+- Changelog.
 - Project cleanup.
 
 ## [0.7.1] - 2017-22-01
@@ -17,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.7.0] - 2016-29-12
 ### Added
-- New configuration for actions
+- New configuration for actions.
 
 ### Changed
 - Tweaked action registry.
