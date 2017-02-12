@@ -41,39 +41,21 @@ Configuration needs to be added in `app/config/config.yml` or `app/config/ezplat
 netgen_information_collection:
    system:
        default:
+           action_config:
+              email:
+                  templates:
+                      default: 'AcmeBundle:email:default.html.twig'
+                  default_variables:
+                      sender: 'sender@example.com'
+                      recipient: 'recipient@example.com'
+                      subject: 'Subject'
            actions:
-               default:
-                   - database
-               content_type:
-                   ng_feedback_form:
-                       - email
-                       - database
-                   other_form:
-                       - database
-                   some_other_form: 
-                       - email
+              default:
+                  - email
+                  - database
 ```
 
-Define fallback values for email, in case if content type does not have them defined:
-
-```yaml
-netgen.default.information_collection.email.recipient: 'recipient@example.com'
-netgen.default.information_collection.email.subject: 'Subject'
-netgen.default.information_collection.email.sender: 'sender@example.com'
-```
-
-Also define email templates for content types:
-
-```yaml
-netgen.default.information_collection.email.ng_feedback_form: 'AcmeBundle:email:ng_feedback_form.html.twig'
-netgen.default.information_collection.email.some_other_form: 'AcmeBundle:email:some_other_form.html.twig'
-```
-
-And fallback email template:
-
-```yaml
-netgen.default.information_collection.email.default: 'AcmeBundle:email:default.html.twig'
-```
+Don't forget to create default email template. 
 
 ### Clear the caches
 
