@@ -26,4 +26,4 @@ License, docs and installation instructions
 
 [Documentation](doc/DOC.md)
 
-[Changelogs](doc/CHANGELOG.md)
+[Changelog](doc/CHANGELOG.md)
