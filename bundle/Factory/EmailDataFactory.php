@@ -7,6 +7,7 @@ use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
+use Netgen\Bundle\InformationCollectionBundle\Constants;
 
 class EmailDataFactory
 {
@@ -61,9 +62,9 @@ class EmailDataFactory
     public function build(Content $content)
     {
         return new EmailData(
-            $this->resolve($content, 'recipient', 'email'),
-            $this->resolve($content, 'sender', 'email'),
-            $this->resolve($content, 'subject'),
+            $this->resolve($content, Constants::FIELD_RECIPIENT, Constants::FIELD_TYPE_EMAIL),
+            $this->resolve($content, Constants::FIELD_SENDER, Constants::FIELD_TYPE_EMAIL),
+            $this->resolve($content, Constants::FIELD_SUBJECT),
             $this->resolveTemplate($content)
         );
     }
@@ -75,9 +76,9 @@ class EmailDataFactory
      * @param string $field
      * @param string $property
      *
-     * @return mixed
+     * @return string
      */
-    protected function resolve(Content $content, $field, $property = 'text')
+    protected function resolve(Content $content, $field, $property = Constants::FIELD_TYPE_TEXT)
     {
         if (array_key_exists($field, $content->fields) &&
             !$this->fieldHelper->isFieldEmpty($content, $field)
