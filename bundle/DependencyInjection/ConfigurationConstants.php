@@ -13,4 +13,6 @@ class ConfigurationConstants
     const DEFAULT_VARIABLES = 'default_variables';
 
     const SETTINGS_ROOT = 'netgen_information_collection';
+
+    const SETTINGS_DEFAULT = 'default';
 }

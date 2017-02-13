@@ -6,6 +6,7 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\API\Repository\Values\Content\Content;
+use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 use Netgen\Bundle\InformationCollectionBundle\Constants;
 
@@ -87,7 +88,7 @@ class EmailDataFactory
 
             return $fieldValue->value->$property;
         } else {
-            return $this->config['default_variables'][$field];
+            return $this->config[ConfigurationConstants::DEFAULT_VARIABLES][$field];
         }
     }
 
@@ -104,12 +105,12 @@ class EmailDataFactory
 
         $contentTypeIdentifier = $contentType->identifier;
 
-        if (array_key_exists($contentTypeIdentifier, $this->config['templates'])) {
+        if (array_key_exists($contentTypeIdentifier, $this->config[ConfigurationConstants::TEMPLATES])) {
 
-            return $this->config['templates'][$contentTypeIdentifier];
+            return $this->config[ConfigurationConstants::TEMPLATES][$contentTypeIdentifier];
 
         }
 
-        return $this->config['templates']['default'];
+        return $this->config[ConfigurationConstants::TEMPLATES][ConfigurationConstants::SETTINGS_DEFAULT];
     }
 }

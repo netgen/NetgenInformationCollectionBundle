@@ -35,7 +35,7 @@ class FieldHandlerRegistry
     /**
      * @param Value $value
      *
-     * @return string
+     * @return CustomFieldHandlerInterface|null
      */
     public function handle(Value $value)
     {
