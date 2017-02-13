@@ -7,7 +7,9 @@ use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
+use Netgen\Bundle\InformationCollectionBundle\Tests\ContentViewStub;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,8 +51,18 @@ class InformationCollectionControllerTest extends TestCase
      */
     protected $form;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $container;
+
     public function setUp()
     {
+        $this->container = $this->getMockBuilder(ContainerInterface::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['get', 'getParameter', 'has', 'hasParameter', 'initialized', 'set', 'setParameter'])
+            ->getMock();
+
         $this->builder = $this->getMockBuilder(FormBuilder::class)
             ->disableOriginalConstructor()
             ->setMethods(['createFormForLocation'])
@@ -58,7 +70,7 @@ class InformationCollectionControllerTest extends TestCase
 
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['dispatch', 'addListener', 'addSubscriber', 'removeListener', 'removeSubscriber', 'getListeners', 'hasListeners'])
+            ->setMethods(['dispatch', 'addListener', 'addSubscriber', 'removeListener', 'removeSubscriber', 'getListeners', 'hasListeners', 'getListenerPriority'])
             ->getMock();
 
         $this->contentView = $this->getMockBuilder(ContentView::class)
@@ -81,13 +93,23 @@ class InformationCollectionControllerTest extends TestCase
             ->setMethods(['handleRequest', 'isSubmitted', 'isValid', 'getData', 'createView'])
             ->getMock();
 
-        $this->controller = new InformationCollectionController($this->builder, $this->dispatcher);
+        $this->controller = new InformationCollectionController();
+        $this->controller->setContainer($this->container);
+
         parent::setUp();
     }
 
     public function testDisplayAndHandleWithValidFormSubmission()
     {
         $location = new Location();
+
+        $this->container->expects($this->exactly(2))
+            ->method('get')
+            ->with($this->logicalOr(
+                $this->equalTo('netgen_information_collection.form.builder'),
+                $this->equalTo('event_dispatcher')
+            ))
+            ->will($this->returnCallback([$this, 'getService']));
 
         $this->contentView->expects($this->once())
             ->method('getLocation')
@@ -134,6 +156,11 @@ class InformationCollectionControllerTest extends TestCase
     {
         $location = new Location();
 
+        $this->container->expects($this->once())
+            ->method('get')
+            ->with('netgen_information_collection.form.builder')
+            ->willReturn($this->builder);
+
         $this->contentView->expects($this->once())
             ->method('getLocation')
             ->willReturn($location);
@@ -152,10 +179,6 @@ class InformationCollectionControllerTest extends TestCase
             ->with($this->request);
 
         $this->form->expects($this->once())
-            ->method('isSubmitted')
-            ->willReturn(true);
-
-        $this->form->expects($this->once())
             ->method('isValid')
             ->willReturn(false);
 
@@ -172,5 +195,29 @@ class InformationCollectionControllerTest extends TestCase
             ->method('addParameters');
 
         $this->controller->displayAndHandle($this->contentView, $this->request);
+    }
+
+    /**
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage eZ view needs to implement LocationValueView interface
+     */
+    public function testIfLocationValueViewIsNotProvidedThrowBadMethodCallException()
+    {
+        $this->container->expects($this->never())
+            ->method('get')
+            ->with('netgen_information_collection.form.builder')
+            ->willReturn($this->builder);
+
+        $this->controller->displayAndHandle(new ContentViewStub(), $this->request);
+    }
+
+    public function getService($id)
+    {
+        switch ($id) {
+            case 'netgen_information_collection.form.builder':
+                return $this->builder;
+            case 'event_dispatcher':
+                return $this->dispatcher;
+        }
     }
 }
