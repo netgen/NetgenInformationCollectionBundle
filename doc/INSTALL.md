@@ -1,5 +1,5 @@
-NetgenInformationCollectionBundle installation instructions
-===========================================================
+Installation instructions
+=========================
 
 Requirements
 ------------
@@ -12,7 +12,7 @@ Installation steps
 
 ### Use Composer
 
-Run the following from your website root folder to install Netgen InformationCollection Bundle:
+Run the following from your website root folder to install NetgenInformationCollectionBundle:
 
 ```bash
 $ composer require netgen/information-collection-bundle

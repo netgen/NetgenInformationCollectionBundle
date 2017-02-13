@@ -1,4 +1,5 @@
-# Actions
+Actions
+=======
 
 ### Available actions
 
@@ -8,23 +9,14 @@ This bundle has some already developed actions:
 
 Database action stores form data to database, to be specific, to `ezinfocollection` and `ezinfocollection_attribute` tables.
 
+For advanced configuration please refer to [configuration](CONFIGURATION.md) part.
+
 #### Email
 
 Email action sends email with form data to configured email address, that may be set in content type or configuration.
 For every content type different Twig template can be applied. Default template for emails must be specified.
 
-Per content type email template configuration example:
-
-```yaml
-netgen.default.information_collection.email.ng_feedback_form: 'AcmeBundle:email:ng_feedback_form.html.twig'
-netgen.default.information_collection.email.some_other_form: 'AcmeBundle:email:some_other_form.html.twig'
-```
-
-Default email template configuration example:
-
-```yaml
-netgen.default.information_collection.email.default: 'AcmeBundle:email:default.html.twig'
-```
+For advanced configuration please refer to [configuration](CONFIGURATION.md) part.
 
 ### Creating custom actions
 
@@ -74,9 +66,8 @@ netgen_information_collection:
                default:
                    - email
                    - database
-               content_type:
-                   my_content_type:
-                       - email
-                       - database
-                       - custom_action
+               my_content_type:
+                   - email
+                   - database
+                   - custom_action
 ```

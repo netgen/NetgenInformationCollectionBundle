@@ -1,5 +1,5 @@
-NetgenInformationCollectionBundle
-=================================
+Documentation
+=============
 
 ## How it works
 
