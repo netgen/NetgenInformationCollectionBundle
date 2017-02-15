@@ -17,12 +17,12 @@ class EmailData
     /**
      * @var string
      */
-    protected $template;
+    protected $sender;
 
     /**
      * @var string
      */
-    protected $sender;
+    protected $body;
 
     /**
      * EmailData constructor.
@@ -30,14 +30,14 @@ class EmailData
      * @param string $recipient
      * @param string $sender
      * @param string $subject
-     * @param string $template
+     * @param string $body
      */
-    public function __construct($recipient, $sender, $subject, $template)
+    public function __construct($recipient, $sender, $subject, $body)
     {
         $this->recipient = $recipient;
         $this->subject = $subject;
-        $this->template = $template;
         $this->sender = $sender;
+        $this->body = $body;
     }
 
     /**
@@ -67,8 +67,8 @@ class EmailData
     /**
      * @return string
      */
-    public function getTemplate()
+    public function getBody()
     {
-        return $this->template;
+        return $this->body;
     }
 }

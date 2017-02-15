@@ -76,7 +76,6 @@ class Configuration extends SiteAccessConfiguration
                                             ->cannotBeEmpty()
                                         ->end()
                                         ->scalarNode('subject')
-                                            ->isRequired()
                                             ->cannotBeEmpty()
                                         ->end()
                                     ->end()

@@ -2,54 +2,33 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
-use eZ\Publish\API\Repository\ContentService;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
+use Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
-use Swift_Mailer;
-use Swift_Message;
-use Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine;
+use Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface;
 
 class EmailAction implements ActionInterface
 {
     /**
-     * @var Swift_Mailer
+     * @var \Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface
      */
     protected $mailer;
 
     /**
-     * @var DelegatingEngine
-     */
-    protected $template;
-
-    /**
-     * @var ContentService
-     */
-    protected $contentService;
-
-    /**
-     * @var EmailDataFactory
+     * @var \Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory
      */
     protected $factory;
 
     /**
      * SendEmailAction constructor.
      *
-     * @param EmailDataFactory $factory
-     * @param Swift_Mailer $mailer
-     * @param DelegatingEngine $template
-     * @param ContentService $contentService
+     * @param \Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory $factory
+     * @param \Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface $mailer
      */
-    public function __construct(
-        EmailDataFactory $factory,
-        Swift_Mailer $mailer,
-        DelegatingEngine $template,
-        ContentService $contentService
-    ) {
-    
+    public function __construct(EmailDataFactory $factory, MailerInterface $mailer)
+    {
         $this->mailer = $mailer;
-        $this->template = $template;
-        $this->contentService = $contentService;
         $this->factory = $factory;
     }
 
@@ -58,32 +37,22 @@ class EmailAction implements ActionInterface
      */
     public function act(InformationCollected $event)
     {
-        $location = $event->getLocation();
-        $contentType = $event->getContentType();
-        $content = $this->contentService->loadContent($location->contentId);
+        $emailData = $this->factory->build($event);
 
-        $emailData = $this->factory->build($content);
-
-        $message = Swift_Message::newInstance();
+        $message = $this->mailer->createMessage();
         $message->setSubject($emailData->getSubject());
         $message->setTo($emailData->getRecipient());
         $message->setFrom($emailData->getSender());
+        $message->setBody($emailData->getBody(), 'text/html');
 
-        $message->setBody(
-            $this->template->render(
-                $emailData->getTemplate(),
-                [
-                    'content' => $content,
-                    'content_type' => $contentType,
-                    'params' => $event->getInformationCollectionStruct()->getCollectedFields(),
-                    'additional_content' => $event->getAdditionalContent(),
-                ]
-            ),
-            'text/html'
-        );
+        try {
 
-        if (!$this->mailer->send($message)) {
+            $this->mailer->sendMessage($message);
+
+        } catch (EmailNotSentException $e) {
+
             throw new ActionFailedException();
+
         }
     }
 }

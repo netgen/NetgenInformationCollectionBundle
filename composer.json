@@ -19,7 +19,8 @@
     ],
     "require": {
         "ezsystems/ezpublish-kernel": "*",
-        "netgen/ez-forms-bundle": "^1.2.0"
+        "netgen/ez-forms-bundle": "^1.2.0",
+        "twig/twig": ">=1.28"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7 <6.0",
