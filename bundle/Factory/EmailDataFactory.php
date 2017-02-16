@@ -2,10 +2,10 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Factory;
 
+use Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailBlockException;
 use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
 use Twig_Environment;
 use eZ\Publish\API\Repository\ContentService;
-use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
@@ -21,44 +21,38 @@ class EmailDataFactory
     protected $config;
 
     /**
-     * @var TranslationHelper
+     * @var \eZ\Publish\Core\Helper\TranslationHelper
      */
     protected $translationHelper;
 
     /**
-     * @var FieldHelper
+     * @var \eZ\Publish\Core\Helper\FieldHelper
      */
     protected $fieldHelper;
 
     /**
-     * @var ContentTypeService
-     */
-    protected $contentTypeService;
-
-    /**
-     * @var ContentService
+     * @var \eZ\Publish\API\Repository\ContentService
      */
     protected $contentService;
+
     /**
-     * @var Twig_Environment
+     * @var \Twig_Environment
      */
-    private $twig;
+    protected $twig;
 
     /**
      * EmailDataFactory constructor.
      *
      * @param array $config
-     * @param TranslationHelper $translationHelper
-     * @param FieldHelper $fieldHelper
-     * @param ContentTypeService $contentTypeService
-     * @param ContentService $contentService
-     * @param Twig_Environment $twig
+     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
+     * @param \eZ\Publish\Core\Helper\FieldHelper $fieldHelper
+     * @param \eZ\Publish\API\Repository\ContentService $contentService
+     * @param \Twig_Environment $twig
      */
     public function __construct(
         array $config,
         TranslationHelper $translationHelper,
         FieldHelper $fieldHelper,
-        ContentTypeService $contentTypeService,
         ContentService $contentService,
         Twig_Environment $twig
     ) {
@@ -66,7 +60,6 @@ class EmailDataFactory
         $this->config = $config;
         $this->translationHelper = $translationHelper;
         $this->fieldHelper = $fieldHelper;
-        $this->contentTypeService = $contentTypeService;
         $this->contentService = $contentService;
         $this->twig = $twig;
     }
@@ -109,12 +102,16 @@ class EmailDataFactory
     protected function resolve(TemplateData $data, $field, $property = Constants::FIELD_TYPE_TEXT)
     {
         if ($data->getTemplateWrapper()->hasBlock($field)) {
-            return $data->getTemplateWrapper()->render(
+
+            $rendered = $data->getTemplateWrapper()->renderBlock(
+                $field,
                 [
                     'event' => $data->getEvent(),
                     'content' => $data->getContent(),
                 ]
             );
+
+            return trim($rendered);
         }
 
         $content = $data->getContent();
@@ -153,15 +150,27 @@ class EmailDataFactory
      * @param TemplateData $data
      *
      * @return string
+     *
+     * @throws MissingEmailBlockException
      */
     protected function resolveBody(TemplateData $data)
     {
-        return $data->getTemplateWrapper()
-            ->render(
-                [
-                    'event' => $data->getEvent(),
-                    'content' => $data->getContent(),
-                ]
-            );
+        if ($data->getTemplateWrapper()->hasBlock(Constants::BLOCK_EMAIL)) {
+
+            return $data->getTemplateWrapper()
+                ->renderBlock(
+                    Constants::BLOCK_EMAIL,
+                    [
+                        'event' => $data->getEvent(),
+                        'content' => $data->getContent(),
+                        'default_variables' => $this->config[ConfigurationConstants::DEFAULT_VARIABLES],
+                    ]
+                );
+        }
+
+        throw new MissingEmailBlockException(
+            $data->getTemplateWrapper()->getSourceContext()->getName(),
+            $data->getTemplateWrapper()->getBlockNames()
+        );
     }
 }

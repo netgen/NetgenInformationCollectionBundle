@@ -39,19 +39,13 @@ class EmailAction implements ActionInterface
     {
         $emailData = $this->factory->build($event);
 
-        $message = $this->mailer->createMessage();
-        $message->setSubject($emailData->getSubject());
-        $message->setTo($emailData->getRecipient());
-        $message->setFrom($emailData->getSender());
-        $message->setBody($emailData->getBody(), 'text/html');
-
         try {
 
-            $this->mailer->sendMessage($message);
+            $this->mailer->createAndSendMessage($emailData);
 
         } catch (EmailNotSentException $e) {
 
-            throw new ActionFailedException();
+            throw new ActionFailedException('email', $e->getMessage());
 
         }
     }

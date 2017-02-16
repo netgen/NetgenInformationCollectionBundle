@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle;
 
-class Events
+final class Events
 {
     /**
      * The INFORMATION_COLLECTED event occurs just after the information collection has been submitted.

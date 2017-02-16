@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Mailer;
 
 use Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException;
+use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 
 class Mailer implements MailerInterface
 {
@@ -24,18 +25,35 @@ class Mailer implements MailerInterface
     /**
      * @inheritdoc
      */
-    public function createMessage()
+    public function createAndSendMessage(EmailData $data)
     {
-        return \Swift_Message::newInstance();
-    }
+        $message = \Swift_Message::newInstance();
 
-    /**
-     * @inheritdoc
-     */
-    public function sendMessage(\Swift_Mime_Message $message)
-    {
+        try {
+
+            $message->setTo($data->getRecipient());
+
+        } catch (\Swift_RfcComplianceException $e) {
+
+            throw new EmailNotSentException("recipient", $e->getMessage());
+
+        }
+
+        try {
+
+            $message->setFrom($data->getSender());
+
+        } catch (\Swift_RfcComplianceException $e) {
+
+            throw new EmailNotSentException("sender", $e->getMessage());
+
+        }
+
+        $message->setSubject($data->getSubject());
+        $message->setBody($data->getBody(), 'text/html');
+
         if (!$this->internalMailer->send($message)) {
-            throw new EmailNotSentException();
+            throw new EmailNotSentException("send", "invalid mailer configuration?");
         }
     }
 }

@@ -28,4 +28,9 @@ class Constants
      * Text field type
      */
     const FIELD_TYPE_TEXT = 'text';
+
+    /**
+     * Block email
+     */
+    const BLOCK_EMAIL = 'email';
 }

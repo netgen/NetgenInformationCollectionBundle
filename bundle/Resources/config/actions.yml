@@ -24,8 +24,6 @@ services:
         class: '%netgen_information_collection.action.email.class%'
         arguments:
             - '@netgen_information_collection.factory.email_data'
-            - '@mailer'
-            - '@templating'
-            - '@ezpublish.api.service.content'
+            - '@netgen_information_collection.mailer'
         tags:
             - { name: netgen_information_collection.action, alias: email }

@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [dev]
+### Added
+- ability to render recipient, sender and subject from template
+- more descriptive exception classes
+- more descriptive error logging
+- extracted mailer to a separate class
+- Events class is set as final
+- factory classes moved to separate services .yml file
+- InformationCollectionTrait
+- EmailDataFactory does not require ContentTypeService anymore
+- InformationCollectionController implements ContainerAwareInterface
+
 ## [0.8] - 2017-13-02
 ### Added
 - documentation update.

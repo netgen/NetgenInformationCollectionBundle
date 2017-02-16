@@ -1,3 +1,11 @@
+{# event \Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected #}
+{# content \eZ\Publish\API\Repository\Values\Content\Content #}
+
+{% block email %}
+
+{% set params = event.informationCollectionStruct.collectedFields %}
+{% set content_type = event.contentType %}
+
 {% for field_name, field_value in params %}
     {% if content.fields[field_name] is defined and content.fields[field_name] is not empty %}
         <div class="data-group attr-{{ field_name }}">
@@ -23,3 +31,5 @@
         </div>
     {% endif %}
 {% endfor %}
+
+{% endblock %}

@@ -2,17 +2,16 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Mailer;
 
+use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
+
 interface MailerInterface
 {
     /**
-     * @return \Swift_Mime_Message
-     */
-    public function createMessage();
-
-    /**
-     * @param \Swift_Mime_Message $message
+     * Creates and sends email message
+     *
+     * @param EmailData $data
      *
      * @throws \Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException
      */
-    public function sendMessage(\Swift_Mime_Message $message);
+    public function createAndSendMessage(EmailData $data);
 }

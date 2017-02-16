@@ -17,16 +17,14 @@ parameters:
     netgen_information_collection.field_handler.registry.class: Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry
     # END of Handler registry
 
-    # Factories
-    netgen_information_collection.factory.email_data.class: Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory
-    netgen_information_collection.factory.field_data.class: Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory
-    # END of Factories
+    # Mailer
+    netgen_information_collection.mailer.class: Netgen\Bundle\InformationCollectionBundle\Mailer\Mailer
+    # END of Mailer
 services:
     netgen_information_collection.controller:
         class: '%netgen_information_collection.controller.class%'
-        arguments:
-            - '@netgen_information_collection.form.builder'
-            - '@event_dispatcher'
+        calls:
+            - [setContainer, ['@service_container']]
 
     information_collection:
         alias: 'netgen_information_collection.controller'
@@ -49,15 +47,7 @@ services:
     netgen_information_collection.field_handler.registry:
         class: '%netgen_information_collection.field_handler.registry.class%'
 
-    netgen_information_collection.factory.email_data:
-        class: '%netgen_information_collection.factory.email_data.class%'
+    netgen_information_collection.mailer:
+        class: '%netgen_information_collection.mailer.class%'
         arguments:
-            - "$action_config.email;netgen_information_collection$"
-            - '@ezpublish.translation_helper'
-            - '@ezpublish.field_helper'
-            - '@ezpublish.api.service.content_type'
-
-    netgen_information_collection.factory.field_data:
-        class: '%netgen_information_collection.factory.field_data.class%'
-        arguments:
-            - '@netgen_information_collection.field_handler.registry'
+            - '@mailer'

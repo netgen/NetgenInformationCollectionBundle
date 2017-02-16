@@ -2,11 +2,12 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Netgen\Bundle\InformationCollectionBundle\InformationCollectionTrait;
 use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
+use Netgen\Bundle\InformationCollectionBundle\InformationCollectionTrait;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\HttpFoundation\Request;
 
-class InformationCollectionController
+class InformationCollectionController implements ContainerAwareInterface
 {
     use InformationCollectionTrait;
 

@@ -61,9 +61,8 @@ class ActionRegistry
                 try {
                     $action->act($event);
                 } catch(ActionFailedException $e) {
-                    $this->logger->error(
-                        sprintf("Error occured while acting on action %s.", $name)
-                    );
+                    $this->logger
+                        ->error($e->getMessage());
                 }
             }
         }
