@@ -82,7 +82,7 @@ class DatabaseAction implements ActionInterface
         try {
             $this->infoCollectionRepository->save($ezInfo);
         } catch (DBALException $e) {
-            throw new ActionFailedException();
+            throw new ActionFailedException('database', $e->getMessage());
         }
 
         /**
@@ -107,7 +107,7 @@ class DatabaseAction implements ActionInterface
             try {
                 $this->infoCollectionAttributeRepository->save($ezInfoAttribute);
             } catch (DBALException $e) {
-                throw new ActionFailedException();
+                throw new ActionFailedException('database', $e->getMessage());
             }
         }
     }

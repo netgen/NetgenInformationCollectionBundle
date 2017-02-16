@@ -11,7 +11,9 @@ use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Action\EmailAction;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
+use Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine;
@@ -32,22 +34,7 @@ class EmailActionTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $template;
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $contentService;
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
     protected $mailer;
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $contentType;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -61,132 +48,59 @@ class EmailActionTest extends TestCase
             ->setMethods(['build'])
             ->getMock();
 
-        $this->template = $this->getMockBuilder(DelegatingEngine::class)
+        $this->mailer = $this->getMockBuilder(MailerInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['render'])
-            ->getMock();
-
-        $this->contentService = $this->getMockBuilder(ContentService::class)
-            ->disableOriginalConstructor()
-            ->setMethods([])
-            ->getMock();
-
-        $this->mailer = $this->getMockBuilder(Swift_Mailer::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['send'])
-            ->getMock();
-
-        $this->contentType = $this->getMockBuilder(ContentType::class)
-            ->disableOriginalConstructor()
-            ->setMethods([])
+            ->setMethods(['createAndSendMessage'])
             ->getMock();
 
         $this->emailData = $this->getMockBuilder(EmailData::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getSubject', 'getRecipient', 'getSender', 'getTemplate'])
+            ->setMethods(['getSubject', 'getRecipient', 'getSender', 'getBody'])
             ->getMock();
 
-        $this->action = new EmailAction($this->factory, $this->mailer, $this->template, $this->contentService);
+        $this->action = new EmailAction($this->factory, $this->mailer);
         parent::setUp();
     }
 
     public function testAct()
     {
         $informationCollectionStruct = new InformationCollectionStruct();
-        $location = new Location([
-            'contentInfo' => new ContentInfo([
-                'id' => 123,
-            ]),
-        ]);
-
-        $content = new Content();
-        $dataWrapper = new DataWrapper($informationCollectionStruct, $this->contentType, $location);
+        $dataWrapper = new DataWrapper($informationCollectionStruct, null, null);
         $event = new InformationCollected($dataWrapper);
-
-        $this->contentService->expects($this->once())
-            ->method('loadContent')
-            ->with(123)
-            ->willReturn($content);
-
-        $this->emailData->expects($this->once())
-            ->method('getSubject')
-            ->willReturn('subject');
-
-        $this->emailData->expects($this->once())
-            ->method('getRecipient')
-            ->willReturn('recipient@test.com');
-
-        $this->emailData->expects($this->once())
-            ->method('getSender')
-            ->willReturn('sender@test.com');
-
-        $this->emailData->expects($this->once())
-            ->method('getTemplate')
-            ->willReturn('template');
 
         $this->factory->expects($this->once())
             ->method('build')
-            ->with($content)
+            ->with($event)
             ->willReturn($this->emailData);
 
-        $this->template->expects($this->once())
-            ->method('render');
-
         $this->mailer->expects($this->once())
-            ->method('send')
-            ->willReturn(1);
+            ->method('createAndSendMessage')
+            ->with($this->emailData);
 
         $this->action->act($event);
     }
 
     /**
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
+     * @expectedExceptionMessage Error occurred while trying to send email: test@example.com failed with error invalid email address
      */
     public function testActWithException()
     {
         $informationCollectionStruct = new InformationCollectionStruct();
-        $location = new Location([
-            'contentInfo' => new ContentInfo([
-                'id' => 123,
-            ]),
-        ]);
-
-        $content = new Content();
-        $dataWrapper = new DataWrapper($informationCollectionStruct, $this->contentType, $location);
+        $dataWrapper = new DataWrapper($informationCollectionStruct, null, null);
         $event = new InformationCollected($dataWrapper);
-
-        $this->contentService->expects($this->once())
-            ->method('loadContent')
-            ->with(123)
-            ->willReturn($content);
-
-        $this->emailData->expects($this->once())
-            ->method('getSubject')
-            ->willReturn('subject');
-
-        $this->emailData->expects($this->once())
-            ->method('getRecipient')
-            ->willReturn('recipient@test.com');
-
-        $this->emailData->expects($this->once())
-            ->method('getSender')
-            ->willReturn('sender@test.com');
-
-        $this->emailData->expects($this->once())
-            ->method('getTemplate')
-            ->willReturn('template');
 
         $this->factory->expects($this->once())
             ->method('build')
-            ->with($content)
+            ->with($event)
             ->willReturn($this->emailData);
 
-        $this->template->expects($this->once())
-            ->method('render');
+        $exception = new EmailNotSentException('test@example.com', 'invalid email address');
 
         $this->mailer->expects($this->once())
-            ->method('send')
-            ->willReturn(false);
+            ->method('createAndSendMessage')
+            ->with($this->emailData)
+            ->willThrowException($exception);
 
         $this->action->act($event);
     }

@@ -202,11 +202,13 @@ class ActionRegistryTest extends TestCase
 
         $this->logger->expects($this->once())
             ->method('error')
-            ->with('Error occured while acting on action database.');
+            ->with('InformationCollection action database failed with reason cannot write to database');
+
+        $exception = new ActionFailedException('database', 'cannot write to database');
 
         $this->action1->expects($this->once())
             ->method('act')
-            ->willThrowException(new ActionFailedException());
+            ->willThrowException($exception);
 
         $this->action2->expects($this->never())
             ->method('act');
