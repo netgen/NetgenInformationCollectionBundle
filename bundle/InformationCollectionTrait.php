@@ -2,7 +2,6 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle;
 
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
@@ -10,8 +9,6 @@ use eZ\Publish\Core\MVC\Symfony\View\LocationValueView;
 
 trait InformationCollectionTrait
 {
-    use ContainerAwareTrait;
-
     /**
      * Builds Form, checks if Form is valid and dispatches InformationCollected event
      *
