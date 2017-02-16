@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - InformationCollectionController implements ContainerAwareInterface
 - Actions priority
 - Action can be marked as crucial with CrucialActionInterface
+- eZ 5 compatibility (InformationCollectionLegacyController and InformationCollectionLegacyTrait)
 
 ## [0.8] - 2017-13-02
 ### Added
