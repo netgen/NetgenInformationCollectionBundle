@@ -1,6 +1,7 @@
 imports:
     - { resource: actions.yml }
     - { resource: storage.yml }
+    - { resource: factories.yml }
 
 parameters:
     # Controllers

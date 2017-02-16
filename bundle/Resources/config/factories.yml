@@ -1,0 +1,18 @@
+parameters:
+    netgen_information_collection.factory.email_data.class: Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory
+    netgen_information_collection.factory.field_data.class: Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory
+
+services:
+    netgen_information_collection.factory.email_data:
+        class: '%netgen_information_collection.factory.email_data.class%'
+        arguments:
+            - "$action_config.email;netgen_information_collection$"
+            - '@ezpublish.translation_helper'
+            - '@ezpublish.field_helper'
+            - '@ezpublish.api.service.content'
+            - '@twig'
+
+    netgen_information_collection.factory.field_data:
+        class: '%netgen_information_collection.factory.field_data.class%'
+        arguments:
+            - '@netgen_information_collection.field_handler.registry'
