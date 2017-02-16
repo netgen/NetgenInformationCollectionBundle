@@ -4,27 +4,13 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller;
 
 use Netgen\Bundle\InformationCollectionBundle\InformationCollectionLegacyTrait;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 class InformationCollectionLegacyController implements ContainerAwareInterface
 {
     use InformationCollectionLegacyTrait;
-
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * Sets the container.
-     *
-     * @param ContainerInterface|null $container A ContainerInterface instance or null
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
+    use ContainerAwareTrait;
 
     /**
      * Displays and handles information collection
