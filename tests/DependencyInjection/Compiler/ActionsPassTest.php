@@ -21,7 +21,7 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
         $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
 
         $action = new Definition();
-        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action']);
+        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action', 'priority' => 100]);
         $this->setDefinition('my_action', $action);
 
         $this->compile();
@@ -32,9 +32,11 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
             [
                 'custom_action',
                 new Reference('my_action'),
+                100
             ]
         );
     }
+
     /**
      * @expectedException \Symfony\Component\DependencyInjection\Exception\LogicException
      * @expectedExceptionMessage 'netgen_information_collection.action' service tag needs an 'alias' attribute to identify the action. None given.
@@ -55,6 +57,80 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
             'addAction',
             [
                 new Reference('my_action'),
+            ]
+        );
+    }
+
+    /**
+     * @expectedException \Symfony\Component\DependencyInjection\Exception\LogicException
+     * @expectedExceptionMessage Service my_action uses priority less than 1. Priority must be positive integer.
+     */
+    public function testCompilerWithServicePriorityLessThanOne()
+    {
+        $actionsRegistry = new Definition();
+        $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
+
+        $action = new Definition();
+        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action', 'priority' => -1]);
+        $this->setDefinition('my_action', $action);
+
+        $this->compile();
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'netgen_information_collection.action.registry',
+            'addAction',
+            [
+                'custom_action',
+                new Reference('my_action'),
+                -1
+            ]
+        );
+    }
+
+    /**
+     * @expectedException \Symfony\Component\DependencyInjection\Exception\LogicException
+     * @expectedExceptionMessage Service my_action uses top priority. Only database can use priority 1, please lower down priority for given service.
+     */
+    public function testCompilerWithServicePriorityEqualsOne()
+    {
+        $actionsRegistry = new Definition();
+        $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
+
+        $action = new Definition();
+        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action', 'priority' => 1]);
+        $this->setDefinition('my_action', $action);
+
+        $this->compile();
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'netgen_information_collection.action.registry',
+            'addAction',
+            [
+                'custom_action',
+                new Reference('my_action'),
+                1
+            ]
+        );
+    }
+
+    public function testCompilerWithServiceThatIsMissingPriority()
+    {
+        $actionsRegistry = new Definition();
+        $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
+
+        $action = new Definition();
+        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action']);
+        $this->setDefinition('my_action', $action);
+
+        $this->compile();
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'netgen_information_collection.action.registry',
+            'addAction',
+            [
+                'custom_action',
+                new Reference('my_action'),
+                100
             ]
         );
     }

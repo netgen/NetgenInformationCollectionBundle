@@ -4,6 +4,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
+use Netgen\Bundle\InformationCollectionBundle\Priority;
 use Psr\Log\LoggerInterface;
 
 class ActionRegistry
@@ -41,10 +42,15 @@ class ActionRegistry
      *
      * @param string $name
      * @param ActionInterface $action
+     * @param int $priority
      */
-    public function addAction($name, ActionInterface $action)
+    public function addAction($name, ActionInterface $action, $priority = Priority::DEFAULT_PRIORITY)
     {
-        $this->actions[$name] = $action;
+        $this->actions[] = [
+            'name' => $name,
+            'action' => $action,
+            'priority' => $priority,
+        ];
     }
 
     /**
@@ -52,17 +58,21 @@ class ActionRegistry
      */
     public function act(InformationCollected $event)
     {
+        $this->prepareActions();
         $config = $this->prepareConfig($event->getContentType()->identifier);
 
-        /** @var ActionInterface $action */
-        foreach ($this->actions as $name => $action) {
-            if ($this->canActionAct($name, $config)) {
+        foreach ($this->actions as $action) {
+            if ($this->canActionAct($action['name'], $config)) {
 
                 try {
-                    $action->act($event);
+                    $action['action']->act($event);
                 } catch(ActionFailedException $e) {
                     $this->logger
                         ->error($e->getMessage());
+
+                    if ($action['action'] instanceof CrucialActionInterface) {
+                        break;
+                    }
                 }
             }
         }
@@ -100,5 +110,15 @@ class ActionRegistry
         }
 
         return [];
+    }
+
+    /**
+     * Sorts actions by priority
+     */
+    protected function prepareActions()
+    {
+        usort($this->actions, function($one, $two) {
+            return $one['priority'] - $two['priority'];
+        });
     }
 }

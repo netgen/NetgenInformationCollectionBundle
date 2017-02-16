@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - InformationCollectionTrait
 - EmailDataFactory does not require ContentTypeService anymore
 - InformationCollectionController implements ContainerAwareInterface
+- Actions priority
+- Action can be marked as crucial with CrucialActionInterface
 
 ## [0.8] - 2017-13-02
 ### Added

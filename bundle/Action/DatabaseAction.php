@@ -13,7 +13,7 @@ use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttribu
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
 
-class DatabaseAction implements ActionInterface
+class DatabaseAction implements ActionInterface, CrucialActionInterface
 {
     /**
      * @var FieldDataFactory

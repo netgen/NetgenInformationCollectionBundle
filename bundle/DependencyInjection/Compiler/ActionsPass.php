@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler;
 
+use Netgen\Bundle\InformationCollectionBundle\Priority;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -29,11 +30,30 @@ class ActionsPass implements CompilerPassInterface
                     );
                 }
 
+                if (!isset($attribute['priority'])) {
+                    $attribute['priority'] = Priority::DEFAULT_PRIORITY;
+                }
+
+                if ($attribute['priority'] === 1) {
+                    throw new LogicException(
+                        "Service {$id} uses top priority. " .
+                        "Only database can use priority 1, please lower down priority for given service."
+                    );
+                }
+
+                if ($attribute['priority'] < 1) {
+                    throw new LogicException(
+                        "Service {$id} uses priority less than 1. " .
+                        "Priority must be positive integer."
+                    );
+                }
+
                 $actionAggregate->addMethodCall(
                     'addAction',
                     [
                         $attribute['alias'],
                         new Reference($id),
+                        $attribute['priority']
                     ]
                 );
             }

@@ -134,14 +134,14 @@ class ActionRegistryTest extends TestCase
 
     public function testAddingActions()
     {
-        $this->registry->addAction('database', $this->action1);
-        $this->registry->addAction('email', $this->action2);
+        $this->registry->addAction('database', $this->action1, 1);
+        $this->registry->addAction('email', $this->action2, 100);
     }
 
     public function testAct()
     {
-        $this->registry->addAction('database', $this->action1);
-        $this->registry->addAction('email', $this->action2);
+        $this->registry->addAction('database', $this->action1, 1);
+        $this->registry->addAction('email', $this->action2, 2);
 
         $this->action1->expects($this->once())
             ->method('act')
@@ -155,8 +155,8 @@ class ActionRegistryTest extends TestCase
 
     public function testActWithContentTypeThatDoesNotHaveConfiguration()
     {
-        $this->registry->addAction('database', $this->action1);
-        $this->registry->addAction('email', $this->action2);
+        $this->registry->addAction('database', $this->action1, 1);
+        $this->registry->addAction('email', $this->action2, 2);
 
         $this->action1->expects($this->never())
             ->method('act');
@@ -169,8 +169,8 @@ class ActionRegistryTest extends TestCase
 
     public function testActWithDefaultConfigOnly()
     {
-        $this->registryWithOnlyDefaultConf->addAction('database', $this->action1);
-        $this->registryWithOnlyDefaultConf->addAction('email', $this->action2);
+        $this->registryWithOnlyDefaultConf->addAction('database', $this->action1, 1);
+        $this->registryWithOnlyDefaultConf->addAction('email', $this->action2, 2);
 
         $this->action1->expects($this->once())
             ->method('act');
@@ -183,8 +183,8 @@ class ActionRegistryTest extends TestCase
 
     public function testActWithEmptyConfig()
     {
-        $this->registryWithEmptyConf->addAction('database', $this->action1);
-        $this->registryWithEmptyConf->addAction('email', $this->action2);
+        $this->registryWithEmptyConf->addAction('database', $this->action1, 1);
+        $this->registryWithEmptyConf->addAction('email', $this->action2, 2);
 
         $this->action1->expects($this->never())
             ->method('act');
@@ -197,8 +197,8 @@ class ActionRegistryTest extends TestCase
 
     public function testActWithActionFailedException()
     {
-        $this->registry->addAction('database', $this->action1);
-        $this->registry->addAction('email', $this->action2);
+        $this->registry->addAction('database', $this->action1, 1);
+        $this->registry->addAction('email', $this->action2, 2);
 
         $this->logger->expects($this->once())
             ->method('error')
