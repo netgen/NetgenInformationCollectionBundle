@@ -3,10 +3,11 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Controller;
 
 use Netgen\Bundle\InformationCollectionBundle\InformationCollectionLegacyTrait;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class InformationCollectionLegacyController
+class InformationCollectionLegacyController implements ContainerAwareInterface
 {
     use InformationCollectionLegacyTrait;
 

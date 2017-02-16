@@ -2,24 +2,23 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Controller;
 
-use eZ\Publish\Core\MVC\Symfony\View\ContentView;
+use eZ\Publish\Core\MVC\Symfony\Controller\Content\ViewController;
+use eZ\Publish\Core\Repository\LocationService;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
-use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
-use Netgen\Bundle\InformationCollectionBundle\Tests\ContentViewStub;
 use PHPUnit\Framework\TestCase;
+use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionLegacyController;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
 
-class InformationCollectionControllerTest extends TestCase
+class InformationCollectionLegacyControllerTest extends TestCase
 {
     /**
-     * @var InformationCollectionController
+     * @var \Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionLegacyController
      */
     protected $controller;
 
@@ -36,7 +35,7 @@ class InformationCollectionControllerTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $contentView;
+    protected $locationService;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -56,14 +55,15 @@ class InformationCollectionControllerTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
+    protected $ezContent;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     protected $container;
 
     public function setUp()
     {
-        if (!class_exists(ContentValueView::class)) {
-            $this->markTestSkipped();
-        }
-
         $this->container = $this->getMockBuilder(ContainerInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['get', 'getParameter', 'has', 'hasParameter', 'initialized', 'set', 'setParameter', 'addScope', 'enterScope', 'hasScope', 'isScopeActive', 'leaveScope'])
@@ -79,9 +79,9 @@ class InformationCollectionControllerTest extends TestCase
             ->setMethods(['dispatch', 'addListener', 'addSubscriber', 'removeListener', 'removeSubscriber', 'getListeners', 'hasListeners', 'getListenerPriority'])
             ->getMock();
 
-        $this->contentView = $this->getMockBuilder(ContentView::class)
+        $this->locationService = $this->getMockBuilder(LocationService::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getLocation', 'addParameters'])
+            ->setMethods(['loadLocation'])
             ->getMock();
 
         $this->request = $this->getMockBuilder(Request::class)
@@ -94,12 +94,17 @@ class InformationCollectionControllerTest extends TestCase
             ->setMethods(['getForm'])
             ->getMock();
 
+        $this->ezContent = $this->getMockBuilder(ViewController::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['viewLocation'])
+            ->getMock();
+
         $this->form = $this->getMockBuilder(Form::class)
             ->disableOriginalConstructor()
             ->setMethods(['handleRequest', 'isSubmitted', 'isValid', 'getData', 'createView'])
             ->getMock();
 
-        $this->controller = new InformationCollectionController();
+        $this->controller = new InformationCollectionLegacyController();
         $this->controller->setContainer($this->container);
 
         parent::setUp();
@@ -112,18 +117,21 @@ class InformationCollectionControllerTest extends TestCase
 
     public function testDisplayAndHandleWithValidFormSubmission()
     {
-        $location = new Location();
+        $location = new Location(['id' => 123]);
 
-        $this->container->expects($this->exactly(2))
+        $this->container->expects($this->exactly(4))
             ->method('get')
             ->with($this->logicalOr(
                 $this->equalTo('netgen_information_collection.form.builder'),
-                $this->equalTo('event_dispatcher')
+                $this->equalTo('event_dispatcher'),
+                $this->equalTo('ezpublish.api.service.location'),
+                $this->equalTo('ez_content')
             ))
             ->will($this->returnCallback([$this, 'getService']));
 
-        $this->contentView->expects($this->once())
-            ->method('getLocation')
+        $this->locationService->expects($this->once())
+            ->method('loadLocation')
+            ->with($location->id)
             ->willReturn($location);
 
         $this->formBuilder->expects($this->once())
@@ -157,23 +165,26 @@ class InformationCollectionControllerTest extends TestCase
         $this->dispatcher->expects($this->once())
             ->method('dispatch');
 
-        $this->contentView->expects($this->once())
-            ->method('addParameters');
-
-        $this->controller->displayAndHandle($this->contentView, $this->request);
+        $this->controller->displayAndHandle($this->request, $location->id, 'full');
     }
 
     public function testDisplayAndHandleWithInvalidFormSubmission()
     {
-        $location = new Location();
+        $location = new Location(['id' => 123]);
 
-        $this->container->expects($this->once())
+        $this->container->expects($this->exactly(3))
             ->method('get')
-            ->with('netgen_information_collection.form.builder')
-            ->willReturn($this->builder);
+            ->with($this->logicalOr(
+                $this->equalTo('netgen_information_collection.form.builder'),
+                $this->equalTo('event_dispatcher'),
+                $this->equalTo('ezpublish.api.service.location'),
+                $this->equalTo('ez_content')
+            ))
+            ->will($this->returnCallback([$this, 'getService']));
 
-        $this->contentView->expects($this->once())
-            ->method('getLocation')
+        $this->locationService->expects($this->once())
+            ->method('loadLocation')
+            ->with($location->id)
             ->willReturn($location);
 
         $this->formBuilder->expects($this->once())
@@ -189,6 +200,9 @@ class InformationCollectionControllerTest extends TestCase
             ->method('handleRequest')
             ->with($this->request);
 
+        $this->form->expects($this->never())
+            ->method('isSubmitted');
+
         $this->form->expects($this->once())
             ->method('isValid')
             ->willReturn(false);
@@ -196,30 +210,13 @@ class InformationCollectionControllerTest extends TestCase
         $this->form->expects($this->never())
             ->method('getData');
 
-        $this->dispatcher->expects($this->never())
-            ->method('dispatch');
-
         $this->form->expects($this->once())
             ->method('createView');
 
-        $this->contentView->expects($this->once())
-            ->method('addParameters');
+        $this->dispatcher->expects($this->never())
+            ->method('dispatch');
 
-        $this->controller->displayAndHandle($this->contentView, $this->request);
-    }
-
-    /**
-     * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage eZ view needs to implement LocationValueView interface
-     */
-    public function testIfLocationValueViewIsNotProvidedThrowBadMethodCallException()
-    {
-        $this->container->expects($this->never())
-            ->method('get')
-            ->with('netgen_information_collection.form.builder')
-            ->willReturn($this->builder);
-
-        $this->controller->displayAndHandle(new ContentViewStub(), $this->request);
+        $this->controller->displayAndHandle($this->request, $location->id, 'full');
     }
 
     public function getService($id)
@@ -229,6 +226,10 @@ class InformationCollectionControllerTest extends TestCase
                 return $this->builder;
             case 'event_dispatcher':
                 return $this->dispatcher;
+            case 'ezpublish.api.service.location':
+                return $this->locationService;
+            case 'ez_content':
+                return $this->ezContent;
         }
     }
 }
