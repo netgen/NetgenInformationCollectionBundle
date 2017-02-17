@@ -21,8 +21,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Action can be marked as crucial with CrucialActionInterface
 - eZ 5 compatibility (InformationCollectionLegacyController and InformationCollectionLegacyTrait)
 - exposed collected data to email and full view template
-- disabled http cache in controllers
-- CSRF token enabled by default
+- disabled http cache in controllers (thanks @emodric)
+- CSRF token enabled by default (thanks @emodric)
 - ActionRegistry relies on kernel.debug parameter to throw or ignore exceptions
 
 ## [0.8] - 2017-13-02
