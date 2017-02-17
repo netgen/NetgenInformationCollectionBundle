@@ -1,2 +1,2 @@
 parameters:
-    netgen.default.information_collection.form.use_csrf: false
+    netgen.default.information_collection.form.use_csrf: true
