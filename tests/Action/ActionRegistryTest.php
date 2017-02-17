@@ -307,4 +307,55 @@ class ActionRegistryTest extends TestCase
 
         $this->assertEquals($prioritizedActions, $actions->getValue($this->registryForPriority));
     }
+
+    public function testActionsAreExecutedByPriorityWithSamePriorities()
+    {
+        $prioritizedActions = [
+            [
+                'name' => 'email2',
+                'action' => $this->action4,
+                'priority' => 100,
+            ],
+            [
+                'name' => 'database',
+                'action' => $this->action1,
+                'priority' => 44,
+            ],
+            [
+                'name' => 'database2',
+                'action' => $this->action3,
+                'priority' => 11,
+            ],
+            [
+                'name' => 'email',
+                'action' => $this->action2,
+                'priority' => 11,
+            ]
+        ];
+
+        $this->registryForPriority->addAction('database', $this->action1, 44);
+        $this->registryForPriority->addAction('database2', $this->action3, 11);
+        $this->registryForPriority->addAction('email', $this->action2, 11);
+        $this->registryForPriority->addAction('email2', $this->action4, 100);
+
+        $this->action4->expects($this->once())
+            ->method('act');
+
+        $this->action1->expects($this->once())
+            ->method('act');
+
+        $this->action2->expects($this->once())
+            ->method('act');
+
+        $this->action3->expects($this->once())
+            ->method('act');
+
+        $this->registryForPriority->act($this->event);
+
+        $registryReflection = new ReflectionObject($this->registryForPriority);
+        $actions = $registryReflection->getProperty('actions');
+        $actions->setAccessible(true);
+
+        $this->assertEquals($prioritizedActions, $actions->getValue($this->registryForPriority));
+    }
 }
