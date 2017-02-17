@@ -18,7 +18,7 @@ services:
             - '@netgen_information_collection.repository.ez_info_collection_attribute'
             - '@ezpublish.api.repository'
         tags:
-            - { name: netgen_information_collection.action, alias: database }
+            - { name: netgen_information_collection.action, alias: database, priority: 300 }
 
     netgen_information_collection.action.email:
         class: '%netgen_information_collection.action.email.class%'

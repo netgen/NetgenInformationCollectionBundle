@@ -30,21 +30,20 @@ class ActionsPass implements CompilerPassInterface
                     );
                 }
 
-                if (!isset($attribute['priority'])) {
-                    $attribute['priority'] = Priority::DEFAULT_PRIORITY;
-                }
+                $priority = isset($attribute['priority']) ? $attribute['priority'] : Priority::DEFAULT_PRIORITY;
 
-                if ($attribute['priority'] === 1) {
+
+                if ($priority > Priority::MAX_PRIORITY && $attribute['alias'] !== 'database') {
                     throw new LogicException(
-                        "Service {$id} uses top priority. " .
-                        "Only database can use priority 1, please lower down priority for given service."
+                        "Service {$id} uses priority greater than allowed. " .
+                        "Priority must be lower than or equal to " . Priority::MAX_PRIORITY . "."
                     );
                 }
 
-                if ($attribute['priority'] < 1) {
+                if ($priority < Priority::MIN_PRIORITY) {
                     throw new LogicException(
-                        "Service {$id} uses priority less than 1. " .
-                        "Priority must be positive integer."
+                        "Service {$id} uses priority less than allowed. " .
+                        "Priority must be greater than or equal to " . Priority::MIN_PRIORITY . "."
                     );
                 }
 
@@ -53,7 +52,7 @@ class ActionsPass implements CompilerPassInterface
                     [
                         $attribute['alias'],
                         new Reference($id),
-                        $attribute['priority']
+                        $priority
                     ]
                 );
             }

@@ -65,7 +65,9 @@ class ActionRegistry
             if ($this->canActionAct($action['name'], $config)) {
 
                 try {
+
                     $action['action']->act($event);
+
                 } catch(ActionFailedException $e) {
                     $this->logger
                         ->error($e->getMessage());
@@ -118,7 +120,11 @@ class ActionRegistry
     protected function prepareActions()
     {
         usort($this->actions, function($one, $two) {
-            return $one['priority'] - $two['priority'];
+            if ($one['priority'] == $two['priority']) {
+                return 0;
+            }
+
+            return ($one['priority'] > $two['priority']) ? -1 : 1;
         });
     }
 }

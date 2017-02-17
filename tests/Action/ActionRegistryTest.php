@@ -10,6 +10,7 @@ use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use ReflectionObject;
 
 class ActionRegistryTest extends TestCase
 {
@@ -17,6 +18,11 @@ class ActionRegistryTest extends TestCase
      * @var ActionRegistry
      */
     protected $registry;
+
+    /**
+     * @var ActionRegistry
+     */
+    protected $registryForPriority;
 
     /**
      * @var ActionRegistry
@@ -32,6 +38,11 @@ class ActionRegistryTest extends TestCase
      * @var array
      */
     protected $config;
+
+    /**
+     * @var array
+     */
+    protected $config2;
 
     /**
      * @var array
@@ -52,6 +63,16 @@ class ActionRegistryTest extends TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $action2;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $action3;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $action4;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -81,6 +102,15 @@ class ActionRegistryTest extends TestCase
             ]
         ];
 
+        $this->config2 = [
+            'default' => [
+                'email',
+                'database',
+                'email2',
+                'database2',
+            ],
+        ];
+
         $this->emptyConfig = [
             'default',
         ];
@@ -102,12 +132,23 @@ class ActionRegistryTest extends TestCase
             ->setMethods(['act'])
             ->getMock();
 
+        $this->action3 = $this->getMockBuilder(ActionInterface::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['act'])
+            ->getMock();
+
+        $this->action4 = $this->getMockBuilder(ActionInterface::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['act'])
+            ->getMock();
+
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['error', 'emergency', 'alert', 'debug', 'critical', 'notice', 'info', 'warning', 'log'])
             ->getMock();
 
         $this->registry = new ActionRegistry($this->config, $this->logger);
+        $this->registryForPriority = new ActionRegistry($this->config2, $this->logger);
         $this->registryWithEmptyConf = new ActionRegistry($this->emptyConfig, $this->logger);
         $this->registryWithOnlyDefaultConf = new ActionRegistry($this->onlyDefaultConfig, $this->logger);
 
@@ -214,5 +255,56 @@ class ActionRegistryTest extends TestCase
             ->method('act');
 
         $this->registry->act($this->event);
+    }
+
+    public function testActionsAreExecutedByPriority()
+    {
+        $prioritizedActions = [
+            [
+                'name' => 'email2',
+                'action' => $this->action4,
+                'priority' => 100,
+            ],
+            [
+                'name' => 'database',
+                'action' => $this->action1,
+                'priority' => 44,
+            ],
+            [
+                'name' => 'email',
+                'action' => $this->action2,
+                'priority' => 22,
+            ],
+            [
+                'name' => 'database2',
+                'action' => $this->action3,
+                'priority' => 11,
+            ]
+        ];
+
+        $this->registryForPriority->addAction('database', $this->action1, 44);
+        $this->registryForPriority->addAction('database2', $this->action3, 11);
+        $this->registryForPriority->addAction('email', $this->action2, 22);
+        $this->registryForPriority->addAction('email2', $this->action4, 100);
+
+        $this->action4->expects($this->once())
+            ->method('act');
+
+        $this->action1->expects($this->once())
+            ->method('act');
+
+        $this->action2->expects($this->once())
+            ->method('act');
+
+        $this->action3->expects($this->once())
+            ->method('act');
+
+        $this->registryForPriority->act($this->event);
+
+        $registryReflection = new ReflectionObject($this->registryForPriority);
+        $actions = $registryReflection->getProperty('actions');
+        $actions->setAccessible(true);
+
+        $this->assertEquals($prioritizedActions, $actions->getValue($this->registryForPriority));
     }
 }

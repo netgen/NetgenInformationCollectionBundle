@@ -4,6 +4,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Tests\DependencyInjection\Co
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\ActionsPass;
+use Netgen\Bundle\InformationCollectionBundle\Priority;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -63,15 +64,16 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
 
     /**
      * @expectedException \Symfony\Component\DependencyInjection\Exception\LogicException
-     * @expectedExceptionMessage Service my_action uses priority less than 1. Priority must be positive integer.
+     * @expectedExceptionMessage Service my_action uses priority less than allowed. Priority must be greater than or equal to -255.
      */
-    public function testCompilerWithServicePriorityLessThanOne()
+    public function testCompilerWithServicePriorityLessThanAllowed()
     {
         $actionsRegistry = new Definition();
         $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
+        $priority = Priority::MIN_PRIORITY - 1;
 
         $action = new Definition();
-        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action', 'priority' => -1]);
+        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action', 'priority' => $priority]);
         $this->setDefinition('my_action', $action);
 
         $this->compile();
@@ -82,22 +84,23 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
             [
                 'custom_action',
                 new Reference('my_action'),
-                -1
+                $priority
             ]
         );
     }
 
     /**
      * @expectedException \Symfony\Component\DependencyInjection\Exception\LogicException
-     * @expectedExceptionMessage Service my_action uses top priority. Only database can use priority 1, please lower down priority for given service.
+     * @expectedExceptionMessage Service my_action uses priority greater than allowed. Priority must be lower than or equal to 255.
      */
-    public function testCompilerWithServicePriorityEqualsOne()
+    public function testCompilerWithServicePriorityGreaterThanAllowed()
     {
         $actionsRegistry = new Definition();
         $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
+        $priority = Priority::MAX_PRIORITY + 1;
 
         $action = new Definition();
-        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action', 'priority' => 1]);
+        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action', 'priority' => $priority]);
         $this->setDefinition('my_action', $action);
 
         $this->compile();
@@ -108,7 +111,7 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
             [
                 'custom_action',
                 new Reference('my_action'),
-                1
+                $priority
             ]
         );
     }
@@ -130,7 +133,29 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
             [
                 'custom_action',
                 new Reference('my_action'),
-                100
+                Priority::DEFAULT_PRIORITY
+            ]
+        );
+    }
+
+    public function testCompilerWithDatabasePriority()
+    {
+        $actionsRegistry = new Definition();
+        $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
+
+        $action = new Definition();
+        $action->addTag('netgen_information_collection.action', ['alias' => 'database', 'priority' => 300]);
+        $this->setDefinition('my_action', $action);
+
+        $this->compile();
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'netgen_information_collection.action.registry',
+            'addAction',
+            [
+                'database',
+                new Reference('my_action'),
+                300
             ]
         );
     }
