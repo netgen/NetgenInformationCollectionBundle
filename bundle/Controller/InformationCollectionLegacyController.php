@@ -29,7 +29,7 @@ class InformationCollectionLegacyController implements ContainerAwareInterface
 
         $params += $parameters;
 
-        return $this->container
+        $response = $this->container
             ->get('ez_content')
             ->viewLocation(
                 $locationId,
@@ -37,5 +37,9 @@ class InformationCollectionLegacyController implements ContainerAwareInterface
                 $layout,
                 $params
             );
+
+        $response->setPrivate();
+
+        return $response;
     }
 }
