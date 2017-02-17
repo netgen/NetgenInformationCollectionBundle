@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Actions priority
 - Action can be marked as crucial with CrucialActionInterface
 - eZ 5 compatibility (InformationCollectionLegacyController and InformationCollectionLegacyTrait)
+- exposed collected data to email and full view template
 
 ## [0.8] - 2017-13-02
 ### Added

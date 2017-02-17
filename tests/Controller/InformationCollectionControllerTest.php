@@ -5,6 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Tests\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use Netgen\Bundle\InformationCollectionBundle\Tests\ContentViewStub;
@@ -147,9 +148,9 @@ class InformationCollectionControllerTest extends TestCase
             ->method('isValid')
             ->willReturn(true);
 
-        $this->form->expects($this->once())
+        $this->form->expects($this->exactly(2))
             ->method('getData')
-            ->willReturn(new DataWrapper('payload'));
+            ->willReturn(new DataWrapper(new InformationCollectionStruct()));
 
         $this->form->expects($this->once())
             ->method('createView');
@@ -193,8 +194,9 @@ class InformationCollectionControllerTest extends TestCase
             ->method('isValid')
             ->willReturn(false);
 
-        $this->form->expects($this->never())
-            ->method('getData');
+        $this->form->expects($this->exactly(1))
+            ->method('getData')
+            ->willReturn(new DataWrapper(new InformationCollectionStruct()));
 
         $this->dispatcher->expects($this->never())
             ->method('dispatch');

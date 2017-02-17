@@ -14,6 +14,7 @@ use eZ\Publish\Core\FieldType\EmailAddress\Value as EmailValue;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Helper\FieldHelper;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
@@ -218,7 +219,7 @@ class EmailDataFactoryTest extends TestCase
             'fieldDefinitions' => [],
         ]);
 
-        $event = new InformationCollected(new DataWrapper('test', $contentType, $location));
+        $event = new InformationCollected(new DataWrapper(new InformationCollectionStruct(), $contentType, $location));
 
         $this->twig->expects($this->once())
             ->method('load')
@@ -308,7 +309,7 @@ TEMPLATE;
             'fieldDefinitions' => [],
         ]);
 
-        $event = new InformationCollected(new DataWrapper('test', $contentType, $location));
+        $event = new InformationCollected(new DataWrapper(new InformationCollectionStruct(), $contentType, $location));
 
         $this->twig->expects($this->once())
             ->method('load')
@@ -387,7 +388,7 @@ TEMPLATE;
             'fieldDefinitions' => [],
         ]);
 
-        $event = new InformationCollected(new DataWrapper('test', $contentType, $location));
+        $event = new InformationCollected(new DataWrapper(new InformationCollectionStruct(), $contentType, $location));
 
         $this->twig->expects($this->once())
             ->method('load')
@@ -474,7 +475,7 @@ TEMPLATE;
             'fieldDefinitions' => [],
         ]);
 
-        $event = new InformationCollected(new DataWrapper('test', $contentType, $location));
+        $event = new InformationCollected(new DataWrapper(new InformationCollectionStruct(), $contentType, $location));
 
         $this->twig->expects($this->once())
             ->method('load')
