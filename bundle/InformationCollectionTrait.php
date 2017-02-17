@@ -49,6 +49,7 @@ trait InformationCollectionTrait
         return [
             'is_valid' => $isValid,
             'form' => $form->createView(),
+            'collected_fields' => $form->getData()->payload->getCollectedFields(),
         ];
     }
 }
