@@ -109,6 +109,7 @@ class EmailDataFactory
                 $field,
                 [
                     'event' => $data->getEvent(),
+                    'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
                     'content' => $data->getContent(),
                 ]
             );
@@ -164,6 +165,7 @@ class EmailDataFactory
                     Constants::BLOCK_EMAIL,
                     [
                         'event' => $data->getEvent(),
+                        'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
                         'content' => $data->getContent(),
                         'default_variables' => $this->config[ConfigurationConstants::DEFAULT_VARIABLES],
                     ]
