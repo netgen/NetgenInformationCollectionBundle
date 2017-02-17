@@ -25,6 +25,11 @@ class ActionRegistry
     protected $logger;
 
     /**
+     * @var boolean
+     */
+    protected $debug = false;
+
+    /**
      * ActionAggregate constructor.
      *
      * @param array $config
@@ -72,12 +77,26 @@ class ActionRegistry
                     $this->logger
                         ->error($e->getMessage());
 
+                    if ($this->debug) {
+                        throw $e;
+                    }
+
                     if ($action['action'] instanceof CrucialActionInterface) {
                         break;
                     }
                 }
             }
         }
+    }
+
+    /**
+     * Sets debug variable based on kernel.debug param
+     *
+     * @param boolean $debug
+     */
+    public function setDebug($debug)
+    {
+        $this->debug = $debug;
     }
 
     /**

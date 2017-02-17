@@ -358,4 +358,47 @@ class ActionRegistryTest extends TestCase
 
         $this->assertEquals($prioritizedActions, $actions->getValue($this->registryForPriority));
     }
+
+    public function testSetDebugMethod()
+    {
+        $this->registryForPriority->addAction('database', $this->action1, 44);
+
+        $this->action1->expects($this->never())
+            ->method('act');
+
+        $this->registryForPriority->setDebug(true);
+
+        $registryReflection = new ReflectionObject($this->registryForPriority);
+        $debug = $registryReflection->getProperty('debug');
+        $debug->setAccessible(true);
+
+        $this->assertTrue($debug->getValue($this->registryForPriority));
+    }
+
+    /**
+     * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
+     * @expectedExceptionMessage InformationCollection action database failed with reason cannot write to database
+
+     */
+    public function testThrowExceptionWhenDebugIsTrue()
+    {
+        $this->registry->addAction('database', $this->action1, 1);
+        $this->registry->addAction('email', $this->action2, 2);
+
+        $this->logger->expects($this->once())
+            ->method('error')
+            ->with('InformationCollection action database failed with reason cannot write to database');
+
+        $exception = new ActionFailedException('database', 'cannot write to database');
+
+        $this->action1->expects($this->once())
+            ->method('act')
+            ->willThrowException($exception);
+
+        $this->action2->expects($this->never())
+            ->method('act');
+
+        $this->registry->setDebug(true);
+        $this->registry->act($this->event);
+    }
 }

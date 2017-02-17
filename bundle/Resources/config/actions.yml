@@ -9,6 +9,8 @@ services:
         arguments:
             - "$actions;netgen_information_collection$"
             - "@logger"
+        calls:
+            - [setDebug, ['%kernel.debug%']]
 
     netgen_information_collection.action.db:
         class: '%netgen_information_collection.action.db.class%'

@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class InformationCollectionLegacyControllerTest extends TestCase
 {
@@ -63,6 +64,11 @@ class InformationCollectionLegacyControllerTest extends TestCase
      */
     protected $container;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $response;
+
     public function setUp()
     {
         $this->container = $this->getMockBuilder(ContainerInterface::class)
@@ -103,6 +109,11 @@ class InformationCollectionLegacyControllerTest extends TestCase
         $this->form = $this->getMockBuilder(Form::class)
             ->disableOriginalConstructor()
             ->setMethods(['handleRequest', 'isSubmitted', 'isValid', 'getData', 'createView'])
+            ->getMock();
+
+        $this->response = $this->getMockBuilder(Response::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['setPrivate'])
             ->getMock();
 
         $this->controller = new InformationCollectionLegacyController();
@@ -166,6 +177,13 @@ class InformationCollectionLegacyControllerTest extends TestCase
         $this->dispatcher->expects($this->once())
             ->method('dispatch');
 
+        $this->response->expects($this->once())
+            ->method('setPrivate');
+
+        $this->ezContent->expects($this->once())
+            ->method('viewLocation')
+            ->willReturn($this->response);
+
         $this->controller->displayAndHandle($this->request, $location->id, 'full');
     }
 
@@ -217,6 +235,13 @@ class InformationCollectionLegacyControllerTest extends TestCase
 
         $this->dispatcher->expects($this->never())
             ->method('dispatch');
+
+        $this->response->expects($this->once())
+            ->method('setPrivate');
+
+        $this->ezContent->expects($this->once())
+            ->method('viewLocation')
+            ->willReturn($this->response);
 
         $this->controller->displayAndHandle($this->request, $location->id, 'full');
     }
