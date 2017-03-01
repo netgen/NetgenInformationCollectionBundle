@@ -7,7 +7,15 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * EzInfoCollectionAttribute
  *
- * @ORM\Table(name="ezinfocollection_attribute")
+ * @ORM\Table(
+ *     name="ezinfocollection_attribute",
+ *     indexes={
+ *          @ORM\Index(name="ezinfocollection_attr_cca_id", columns={"contentclass_attribute_id"}),
+ *          @ORM\Index(name="ezinfocollection_attr_co_id", columns={"contentobject_id"}),
+ *          @ORM\Index(name="ezinfocollection_attr_coa_id", columns={"contentobject_attribute_id"}),
+ *          @ORM\Index(name="ezinfocollection_attr_ic_id", columns={"informationcollection_id"})
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository")
  */
 class EzInfoCollectionAttribute
