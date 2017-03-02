@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [master]
 ### Added
 - `ezinfocollection` and `ezinfocollection_attribute` table indexes inside Entity classes
+- bundle now requires `doctrine/orm` by default
+- updated install doc
 
 ## [1.0] - 2017-17-02
 ### Added

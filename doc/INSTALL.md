@@ -20,17 +20,29 @@ $ composer require netgen/information-collection-bundle
 
 ### Activate the bundle
 
-Activate the bundle in `app/AppKernel.php` file by adding it to the `$bundles` array in `registerBundles` method:
+Activate required bundles in `app/AppKernel.php` file by adding them to the `$bundles` array in `registerBundles` method:
 
 ```php
 public function registerBundles()
 {
     ...
+    $bundles[] = new Netgen\Bundle\EzFormsBundle\NetgenEzFormsBundle();
     $bundles[] = new Netgen\Bundle\InformationCollectionBundle\NetgenInformationCollectionBundle();
 
     return $bundles;
 }
 ```
+
+### Enable auto_mapping for Doctrine
+
+Add this to `config.yml`, it will make Doctrine automatically load the mappings from our bundle:
+
+```yaml
+doctrine:
+    orm:
+        auto_mapping: true
+```
+
 
 ### Set siteaccess aware configuration
 
