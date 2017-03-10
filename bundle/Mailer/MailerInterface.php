@@ -2,16 +2,14 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Mailer;
 
-use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
-
 interface MailerInterface
 {
     /**
      * Creates and sends email message
      *
-     * @param EmailData $data
+     * @param \Netgen\Bundle\InformationCollectionBundle\Value\EmailData $data
      *
      * @throws \Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException
      */
-    public function createAndSendMessage(EmailData $data);
+    public function createAndSendMessage(\Netgen\Bundle\InformationCollectionBundle\Value\EmailData $data);
 }

@@ -15,6 +15,11 @@ class FieldDataFactory
      */
     protected $registry;
 
+    /**
+     * FieldDataFactory constructor.
+     *
+     * @param FieldHandlerRegistry $registry
+     */
     public function __construct(FieldHandlerRegistry $registry)
     {
         $this->registry = $registry;
