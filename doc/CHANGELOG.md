@@ -6,9 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [master]
+## [1.0.2] - 2017-04-18
 ### Added
 - marked bundle as `ezplatform-bundle` in composer.json
+
+### Changed
+- allowed eZ Forms Bundle 2.0 to be installed
 
 ## [1.0.1] - 2017-02-03
 ### Added
