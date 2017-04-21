@@ -2,8 +2,10 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form\Builder;
 
+use Netgen\Bundle\EzFormsBundle\Form\Type\InformationCollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouterInterface;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\ContentTypeService;
@@ -12,8 +14,6 @@ use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 
 class FormBuilder
 {
-    const EZFORMS_INFORMATION_COLLECTION = 'ezforms_information_collection';
-
     /**
      * @var FormFactoryInterface
      */
@@ -48,7 +48,6 @@ class FormBuilder
         RouterInterface $router,
         $useCsrf
     ) {
-    
         $this->formFactory = $formFactory;
         $this->useCsrf = $useCsrf;
         $this->contentTypeService = $contentTypeService;
@@ -73,7 +72,9 @@ class FormBuilder
 
         $formBuilder = $this->formFactory
             ->createBuilder(
-                self::EZFORMS_INFORMATION_COLLECTION,
+                Kernel::VERSION_ID < 20800 ?
+                    'ezforms_information_collection' :
+                    InformationCollectionType::class,
                 $data,
                 [
                     'csrf_protection' => $this->useCsrf,
