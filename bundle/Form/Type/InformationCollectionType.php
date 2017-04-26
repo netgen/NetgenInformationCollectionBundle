@@ -43,7 +43,7 @@ class InformationCollectionType extends AbstractContentType
      */
     public function getBlockPrefix()
     {
-        return 'ezforms_information_collection';
+        return 'netgen_information_collection';
     }
 
     /**
@@ -65,7 +65,7 @@ class InformationCollectionType extends AbstractContentType
 
         if (!$payload instanceof InformationCollectionStruct) {
             throw new RuntimeException(
-                'Data payload must be an instance of Netgen\\Bundle\\EzFormsBundle\\Form\\Payload\\InformationCollectionStruct'
+                'Data payload must be an instance of Netgen\\Bundle\\InformationCollectionBundle\\Form\\Payload\\InformationCollectionStruct'
             );
         }
 

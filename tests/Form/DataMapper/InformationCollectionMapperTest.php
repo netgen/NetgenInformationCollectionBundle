@@ -8,8 +8,9 @@ use Netgen\Bundle\InformationCollectionBundle\Form\DataMapper\InformationCollect
 use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
 use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use PHPUnit\Framework\TestCase;
 
-class InformationCollectionMapperTest extends \PHPUnit_Framework_TestCase
+class InformationCollectionMapperTest extends TestCase
 {
     /**
      * @var InformationCollectionMapper

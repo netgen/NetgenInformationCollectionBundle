@@ -15,7 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
 
 class InformationCollectionControllerTest extends TestCase
 {
@@ -61,7 +60,7 @@ class InformationCollectionControllerTest extends TestCase
 
     public function setUp()
     {
-        if (!class_exists(ContentValueView::class)) {
+        if (!class_exists(ContentView::class)) {
             $this->markTestSkipped();
         }
 

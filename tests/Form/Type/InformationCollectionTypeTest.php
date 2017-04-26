@@ -9,12 +9,13 @@ use Netgen\Bundle\EzFormsBundle\Form\FieldTypeHandler;
 use Netgen\Bundle\EzFormsBundle\Form\FieldTypeHandlerRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Form\Type\InformationCollectionType;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\FormBuilder;
 
 
-class InformationCollectionTypeTest extends \PHPUnit_Framework_TestCase
+class InformationCollectionTypeTest extends TestCase
 {
     public function testItExtendsAbstractType()
     {
@@ -40,7 +41,7 @@ class InformationCollectionTypeTest extends \PHPUnit_Framework_TestCase
 
         $infoCollectionType = new InformationCollectionType($handlerRegistry, $dataMapper);
 
-        $this->assertEquals('ezforms_information_collection', $infoCollectionType->getName());
+        $this->assertEquals('netgen_information_collection', $infoCollectionType->getName());
     }
 
     /**
@@ -69,7 +70,7 @@ class InformationCollectionTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage Data payload must be an instance of Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct
+     * @expectedExceptionMessage Data payload must be an instance of Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct
      */
     public function testBuildFormDataWrapperPayloadMustBeInformationCollectionStruct()
     {
