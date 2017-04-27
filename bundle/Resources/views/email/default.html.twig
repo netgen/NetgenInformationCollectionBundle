@@ -3,10 +3,9 @@
 
 {% block email %}
 
-{% set params = event.informationCollectionStruct.collectedFields %}
 {% set content_type = event.contentType %}
 
-{% for field_name, field_value in params %}
+{% for field_name, field_value in collected_fields %}
     {% if content.fields[field_name] is defined and content.fields[field_name] is not empty %}
         <div class="data-group attr-{{ field_name }}">
             <div class="label">
