@@ -2,11 +2,11 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Factory;
 
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
+use eZ\Publish\Core\FieldType\Value;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\FieldType\Value;
 
 class FieldDataFactory
 {
@@ -26,7 +26,7 @@ class FieldDataFactory
     }
 
     /**
-     * Returns value object that represents legacy value
+     * Returns value object that represents legacy value.
      *
      * @param Value $value
      * @param FieldDefinition $fieldDefinition
@@ -38,7 +38,7 @@ class FieldDataFactory
         /** @var CustomFieldHandlerInterface $handler */
         $handler = $this->registry->handle($value);
 
-        if (!is_null($handler)) {
+        if (null !== $handler) {
             $value = $handler->toString($value, $fieldDefinition);
         }
 
@@ -46,7 +46,7 @@ class FieldDataFactory
             $fieldDefinition->id,
             0,
             0,
-            (string)$value
+            (string) $value
         );
     }
 }

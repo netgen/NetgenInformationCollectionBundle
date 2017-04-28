@@ -16,11 +16,11 @@ class MissingEmailBlockException extends RuntimeException
     {
         $blocksCount = count($blocks);
         $verb = 'is';
-        $blocks = implode(", ", $blocks);
+        $blocks = implode(', ', $blocks);
 
         if ($blocksCount > 1) {
             $verb = 'are';
-        } else if ($blocksCount < 1) {
+        } elseif ($blocksCount < 1) {
             $blocks = 'none';
         }
 

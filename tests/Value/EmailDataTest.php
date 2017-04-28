@@ -9,6 +9,11 @@ class EmailDataTest extends TestCase
 {
     /**
      * @dataProvider emailDataProvider
+     *
+     * @param mixed $recipient
+     * @param mixed $sender
+     * @param mixed $subject
+     * @param mixed $body
      */
     public function testGetters($recipient, $sender, $subject, $body)
     {
@@ -19,13 +24,14 @@ class EmailDataTest extends TestCase
         $this->assertEquals($subject, $emailData->getSubject());
         $this->assertEquals($body, $emailData->getBody());
     }
+
     public function emailDataProvider()
     {
-        return [
-            ['recipient@example.com', 'sender@example.com', 'Test subject', 'Email body'],
-            ['recipient1@example.com', 'sender1@example.com', 'Test subject 1', 'Email body 1'],
-            ['recipient2@example.com', 'sender1@example.com', 'Test subject 2', 'Email body 2'],
-            ['recipient3@example.com', 'sender1@example.com', 'Test subject 3', 'Email body 3'],
-        ];
+        return array(
+            array('recipient@example.com', 'sender@example.com', 'Test subject', 'Email body'),
+            array('recipient1@example.com', 'sender1@example.com', 'Test subject 1', 'Email body 1'),
+            array('recipient2@example.com', 'sender1@example.com', 'Test subject 2', 'Email body 2'),
+            array('recipient3@example.com', 'sender1@example.com', 'Test subject 3', 'Email body 3'),
+        );
     }
 }

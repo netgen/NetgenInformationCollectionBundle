@@ -7,9 +7,9 @@ use eZ\Publish\Core\Repository\LocationService;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionLegacyController;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use PHPUnit\Framework\TestCase;
-use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionLegacyController;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -73,47 +73,47 @@ class InformationCollectionLegacyControllerTest extends TestCase
     {
         $this->container = $this->getMockBuilder(ContainerInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['get', 'getParameter', 'has', 'hasParameter', 'initialized', 'set', 'setParameter', 'addScope', 'enterScope', 'hasScope', 'isScopeActive', 'leaveScope'])
+            ->setMethods(array('get', 'getParameter', 'has', 'hasParameter', 'initialized', 'set', 'setParameter', 'addScope', 'enterScope', 'hasScope', 'isScopeActive', 'leaveScope'))
             ->getMock();
 
         $this->builder = $this->getMockBuilder(FormBuilder::class)
             ->disableOriginalConstructor()
-            ->setMethods(['createFormForLocation'])
+            ->setMethods(array('createFormForLocation'))
             ->getMock();
 
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['dispatch', 'addListener', 'addSubscriber', 'removeListener', 'removeSubscriber', 'getListeners', 'hasListeners', 'getListenerPriority'])
+            ->setMethods(array('dispatch', 'addListener', 'addSubscriber', 'removeListener', 'removeSubscriber', 'getListeners', 'hasListeners', 'getListenerPriority'))
             ->getMock();
 
         $this->locationService = $this->getMockBuilder(LocationService::class)
             ->disableOriginalConstructor()
-            ->setMethods(['loadLocation'])
+            ->setMethods(array('loadLocation'))
             ->getMock();
 
         $this->request = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
-            ->setMethods([])
+            ->setMethods(array())
             ->getMock();
 
         $this->formBuilder = $this->getMockBuilder(\Symfony\Component\Form\FormBuilder::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getForm'])
+            ->setMethods(array('getForm'))
             ->getMock();
 
         $this->ezContent = $this->getMockBuilder(ViewController::class)
             ->disableOriginalConstructor()
-            ->setMethods(['viewLocation'])
+            ->setMethods(array('viewLocation'))
             ->getMock();
 
         $this->form = $this->getMockBuilder(Form::class)
             ->disableOriginalConstructor()
-            ->setMethods(['handleRequest', 'isSubmitted', 'isValid', 'getData', 'createView'])
+            ->setMethods(array('handleRequest', 'isSubmitted', 'isValid', 'getData', 'createView'))
             ->getMock();
 
         $this->response = $this->getMockBuilder(Response::class)
             ->disableOriginalConstructor()
-            ->setMethods(['setPrivate'])
+            ->setMethods(array('setPrivate'))
             ->getMock();
 
         $this->controller = new InformationCollectionLegacyController();
@@ -129,7 +129,7 @@ class InformationCollectionLegacyControllerTest extends TestCase
 
     public function testDisplayAndHandleWithValidFormSubmission()
     {
-        $location = new Location(['id' => 123]);
+        $location = new Location(array('id' => 123));
 
         $this->container->expects($this->exactly(4))
             ->method('get')
@@ -139,7 +139,7 @@ class InformationCollectionLegacyControllerTest extends TestCase
                 $this->equalTo('ezpublish.api.service.location'),
                 $this->equalTo('ez_content')
             ))
-            ->will($this->returnCallback([$this, 'getService']));
+            ->will($this->returnCallback(array($this, 'getService')));
 
         $this->locationService->expects($this->once())
             ->method('loadLocation')
@@ -189,7 +189,7 @@ class InformationCollectionLegacyControllerTest extends TestCase
 
     public function testDisplayAndHandleWithInvalidFormSubmission()
     {
-        $location = new Location(['id' => 123]);
+        $location = new Location(array('id' => 123));
 
         $this->container->expects($this->exactly(3))
             ->method('get')
@@ -199,7 +199,7 @@ class InformationCollectionLegacyControllerTest extends TestCase
                 $this->equalTo('ezpublish.api.service.location'),
                 $this->equalTo('ez_content')
             ))
-            ->will($this->returnCallback([$this, 'getService']));
+            ->will($this->returnCallback(array($this, 'getService')));
 
         $this->locationService->expects($this->once())
             ->method('loadLocation')

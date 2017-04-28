@@ -7,9 +7,9 @@ use eZ\Publish\Core\Repository\ContentTypeService;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Routing\Router;
-use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
 
 class FormBuilderTest extends TestCase
 {
@@ -42,23 +42,23 @@ class FormBuilderTest extends TestCase
     {
         $this->formFactory = $this->getMockBuilder(FormFactory::class)
             ->disableOriginalConstructor()
-            ->setMethods(['createBuilder', 'setAction'])
+            ->setMethods(array('createBuilder', 'setAction'))
             ->getMock();
 
         $this->contentTypeService = $this->getMockBuilder(ContentTypeService::class)
             ->disableOriginalConstructor()
-            ->setMethods(['loadContentType'])
+            ->setMethods(array('loadContentType'))
             ->getMock();
 
         $this->router = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
-            ->setMethods(['generate'])
+            ->setMethods(array('generate'))
             ->getMock();
 
         $this->formBuilder = new FormBuilder($this->formFactory, $this->contentTypeService, $this->router, true);
         $this->innerFormBuilder = $this->getMockBuilder(SymfonyFormBuilder::class)
             ->disableOriginalConstructor()
-            ->setMethods([])
+            ->setMethods(array())
             ->getMock();
 
         parent::setUp();
@@ -66,11 +66,11 @@ class FormBuilderTest extends TestCase
 
     public function testFormBuildUp()
     {
-        $location = new Location([
-            'contentInfo' => new ContentInfo([
+        $location = new Location(array(
+            'contentInfo' => new ContentInfo(array(
                 'contentTypeId' => 123,
-            ]),
-        ]);
+            )),
+        ));
 
         $this->contentTypeService->expects($this->once())
             ->method('loadContentType')
@@ -90,11 +90,11 @@ class FormBuilderTest extends TestCase
 
     public function testFormBuildUpWithCustomURL()
     {
-        $location = new Location([
-            'contentInfo' => new ContentInfo([
+        $location = new Location(array(
+            'contentInfo' => new ContentInfo(array(
                 'contentTypeId' => 123,
-            ]),
-        ]);
+            )),
+        ));
 
         $this->contentTypeService->expects($this->once())
             ->method('loadContentType')

@@ -5,13 +5,13 @@ namespace Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler
 use Netgen\Bundle\InformationCollectionBundle\Priority;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
+use Symfony\Component\DependencyInjection\Reference;
 
 class ActionsPass implements CompilerPassInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
@@ -32,28 +32,27 @@ class ActionsPass implements CompilerPassInterface
 
                 $priority = isset($attribute['priority']) ? $attribute['priority'] : Priority::DEFAULT_PRIORITY;
 
-
                 if ($priority > Priority::MAX_PRIORITY && $attribute['alias'] !== 'database') {
                     throw new LogicException(
                         "Service {$id} uses priority greater than allowed. " .
-                        "Priority must be lower than or equal to " . Priority::MAX_PRIORITY . "."
+                        'Priority must be lower than or equal to ' . Priority::MAX_PRIORITY . '.'
                     );
                 }
 
                 if ($priority < Priority::MIN_PRIORITY) {
                     throw new LogicException(
                         "Service {$id} uses priority less than allowed. " .
-                        "Priority must be greater than or equal to " . Priority::MIN_PRIORITY . "."
+                        'Priority must be greater than or equal to ' . Priority::MIN_PRIORITY . '.'
                     );
                 }
 
                 $actionAggregate->addMethodCall(
                     'addAction',
-                    [
+                    array(
                         $attribute['alias'],
                         new Reference($id),
-                        $priority
-                    ]
+                        $priority,
+                    )
                 );
             }
         }

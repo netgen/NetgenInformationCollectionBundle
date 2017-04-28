@@ -2,17 +2,17 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Factory;
 
-use eZ\Publish\Core\Repository\ContentService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Field;
+use eZ\Publish\Core\FieldType\EmailAddress\Value as EmailValue;
+use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
+use eZ\Publish\Core\Helper\FieldHelper;
+use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\Core\Repository\ContentService;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
-use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
-use eZ\Publish\Core\FieldType\EmailAddress\Value as EmailValue;
-use eZ\Publish\Core\Helper\TranslationHelper;
-use eZ\Publish\Core\Helper\FieldHelper;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
@@ -77,53 +77,53 @@ class EmailDataFactoryTest extends TestCase
 
     public function setUp()
     {
-        $this->config = [
-            'templates' => [
+        $this->config = array(
+            'templates' => array(
                 'default' => 'AcmeBundle::email.html.twig',
                 'test_content_type' => 'AcmeBundle::test_content_type.html.twig',
-            ],
-            'default_variables' => [
+            ),
+            'default_variables' => array(
                 'sender' => 'sender@example.com',
                 'recipient' => 'recipient@example.com',
                 'subject' => 'subject',
-            ],
-        ];
+            ),
+        );
 
         $this->translationHelper = $this->getMockBuilder(TranslationHelper::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getTranslatedField'])
+            ->setMethods(array('getTranslatedField'))
             ->getMock();
 
         $this->fieldHelper = $this->getMockBuilder(FieldHelper::class)
             ->disableOriginalConstructor()
-            ->setMethods(['isFieldEmpty'])
+            ->setMethods(array('isFieldEmpty'))
             ->getMock();
 
         $this->contentService = $this->getMockBuilder(ContentService::class)
             ->disableOriginalConstructor()
-            ->setMethods(['loadContent'])
+            ->setMethods(array('loadContent'))
             ->getMock();
 
         $this->twig = $this->getMockBuilder(\Twig_Environment::class)
             ->disableOriginalConstructor()
-            ->setMethods(['load'])
+            ->setMethods(array('load'))
             ->getMock();
 
-        $this->contentType = new ContentType([
+        $this->contentType = new ContentType(array(
             'identifier' => 'test_content_type',
-            'fieldDefinitions' => [],
-        ]);
+            'fieldDefinitions' => array(),
+        ));
 
-        $this->contentType2 = new ContentType([
+        $this->contentType2 = new ContentType(array(
             'identifier' => 'test_content_type2',
-            'fieldDefinitions' => [],
-        ]);
+            'fieldDefinitions' => array(),
+        ));
 
-        $this->versionInfo = new VersionInfo([
-            'contentInfo' => new ContentInfo([
+        $this->versionInfo = new VersionInfo(array(
+            'contentInfo' => new ContentInfo(array(
                 'contentTypeId' => 123,
-            ])
-        ]);
+            )),
+        ));
 
         $this->factory = new EmailDataFactory(
             $this->config,
@@ -139,9 +139,9 @@ class EmailDataFactoryTest extends TestCase
     {
         $twig = new Twig_Environment(
             new Twig_Loader_Array(
-                [
+                array(
                     'index' => '{% block email %}{{ "email body" }}{% endblock %}',
-                ]
+                )
             )
         );
 
@@ -155,42 +155,40 @@ class EmailDataFactoryTest extends TestCase
             $this->twig
         );
 
-        $recipientField = new Field([
+        $recipientField = new Field(array(
             'value' => new EmailValue('recipient@test.com'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'recipient'
-        ]);
+            'fieldDefIdentifier' => 'recipient',
+        ));
 
-        $senderField = new Field([
+        $senderField = new Field(array(
             'value' => new EmailValue('sender@test.com'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'sender'
-        ]);
+            'fieldDefIdentifier' => 'sender',
+        ));
 
-        $subjectField = new Field([
+        $subjectField = new Field(array(
             'value' => new TextLineValue('subject test'),
             'languageCode' => 'eng_GB',
             'fieldDefIdentifier' => 'subject',
-        ]);
+        ));
 
-        $content = new Content([
-            'internalFields' => [
+        $content = new Content(array(
+            'internalFields' => array(
                 $recipientField, $senderField, $subjectField,
-            ],
+            ),
             'versionInfo' => $this->versionInfo,
-        ]);
+        ));
 
         $this->fieldHelper->expects($this->exactly(3))
             ->method('isFieldEmpty')
             ->withAnyParameters()
             ->willReturn(false);
 
-
         $this->translationHelper->expects($this->at(0))
             ->method('getTranslatedField')
             ->with($content, 'recipient')
             ->willReturn($recipientField);
-
 
         $this->translationHelper->expects($this->at(1))
             ->method('getTranslatedField')
@@ -208,16 +206,16 @@ class EmailDataFactoryTest extends TestCase
             ->willReturn($content);
 
         $location = new Location(
-            [
+            array(
                 'id' => 12345,
-                'contentInfo' => new ContentInfo(['id' => 123])
-            ]
+                'contentInfo' => new ContentInfo(array('id' => 123)),
+            )
         );
 
-        $contentType = new ContentType([
+        $contentType = new ContentType(array(
             'identifier' => 'test',
-            'fieldDefinitions' => [],
-        ]);
+            'fieldDefinitions' => array(),
+        ));
 
         $event = new InformationCollected(new DataWrapper(new InformationCollectionStruct(), $contentType, $location));
 
@@ -245,9 +243,9 @@ TEMPLATE;
 
         $twig = new Twig_Environment(
             new Twig_Loader_Array(
-                [
+                array(
                     'index' => $template,
-                ]
+                )
             )
         );
 
@@ -261,30 +259,30 @@ TEMPLATE;
             $this->twig
         );
 
-        $recipientField = new Field([
+        $recipientField = new Field(array(
             'value' => new EmailValue('recipient@test.com'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'recipient'
-        ]);
+            'fieldDefIdentifier' => 'recipient',
+        ));
 
-        $senderField = new Field([
+        $senderField = new Field(array(
             'value' => new EmailValue('sender@test.com'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'sender'
-        ]);
+            'fieldDefIdentifier' => 'sender',
+        ));
 
-        $subjectField = new Field([
+        $subjectField = new Field(array(
             'value' => new TextLineValue('subject test'),
             'languageCode' => 'eng_GB',
             'fieldDefIdentifier' => 'subject',
-        ]);
+        ));
 
-        $content = new Content([
-            'internalFields' => [
+        $content = new Content(array(
+            'internalFields' => array(
                 $recipientField, $senderField, $subjectField,
-            ],
+            ),
             'versionInfo' => $this->versionInfo,
-        ]);
+        ));
 
         $this->fieldHelper->expects($this->never())
             ->method('isFieldEmpty');
@@ -298,16 +296,16 @@ TEMPLATE;
             ->willReturn($content);
 
         $location = new Location(
-            [
+            array(
                 'id' => 12345,
-                'contentInfo' => new ContentInfo(['id' => 123])
-            ]
+                'contentInfo' => new ContentInfo(array('id' => 123)),
+            )
         );
 
-        $contentType = new ContentType([
+        $contentType = new ContentType(array(
             'identifier' => 'test_content_type',
-            'fieldDefinitions' => [],
-        ]);
+            'fieldDefinitions' => array(),
+        ));
 
         $event = new InformationCollected(new DataWrapper(new InformationCollectionStruct(), $contentType, $location));
 
@@ -332,38 +330,38 @@ TEMPLATE;
     {
         $twig = new Twig_Environment(
             new Twig_Loader_Array(
-                [
+                array(
                     'index' => '{% block foo %}{% endblock %}',
-                ]
+                )
             )
         );
 
         $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
 
-        $recipientField = new Field([
+        $recipientField = new Field(array(
             'value' => new EmailValue('recipient@test.com'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'recipient'
-        ]);
+            'fieldDefIdentifier' => 'recipient',
+        ));
 
-        $senderField = new Field([
+        $senderField = new Field(array(
             'value' => new EmailValue('sender@test.com'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'sender'
-        ]);
+            'fieldDefIdentifier' => 'sender',
+        ));
 
-        $subjectField = new Field([
+        $subjectField = new Field(array(
             'value' => new TextLineValue('subject test'),
             'languageCode' => 'eng_GB',
             'fieldDefIdentifier' => 'subject',
-        ]);
+        ));
 
-        $content = new Content([
-            'internalFields' => [
+        $content = new Content(array(
+            'internalFields' => array(
                 $recipientField, $senderField, $subjectField,
-            ],
+            ),
             'versionInfo' => $this->versionInfo,
-        ]);
+        ));
 
         $this->fieldHelper->expects($this->never())
             ->method('isFieldEmpty');
@@ -377,16 +375,16 @@ TEMPLATE;
             ->willReturn($content);
 
         $location = new Location(
-            [
+            array(
                 'id' => 12345,
-                'contentInfo' => new ContentInfo(['id' => 123])
-            ]
+                'contentInfo' => new ContentInfo(array('id' => 123)),
+            )
         );
 
-        $contentType = new ContentType([
+        $contentType = new ContentType(array(
             'identifier' => 'test',
-            'fieldDefinitions' => [],
-        ]);
+            'fieldDefinitions' => array(),
+        ));
 
         $event = new InformationCollected(new DataWrapper(new InformationCollectionStruct(), $contentType, $location));
 
@@ -407,44 +405,43 @@ TEMPLATE;
     {
         $twig = new Twig_Environment(
             new Twig_Loader_Array(
-                [
+                array(
                     'index' => '{% block email %}{% endblock %}',
-                ]
+                )
             )
         );
 
         $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
 
-        $recipientField = new Field([
+        $recipientField = new Field(array(
             'value' => new EmailValue('recipient@test.com'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'recipient'
-        ]);
+            'fieldDefIdentifier' => 'recipient',
+        ));
 
-        $senderField = new Field([
+        $senderField = new Field(array(
             'value' => new EmailValue('sender@test.com'),
             'languageCode' => 'eng_GB',
-            'fieldDefIdentifier' => 'sender'
-        ]);
+            'fieldDefIdentifier' => 'sender',
+        ));
 
-        $subjectField = new Field([
+        $subjectField = new Field(array(
             'value' => new TextLineValue('subject test'),
             'languageCode' => 'eng_GB',
             'fieldDefIdentifier' => 'subject',
-        ]);
+        ));
 
-        $content = new Content([
-            'internalFields' => [
+        $content = new Content(array(
+            'internalFields' => array(
                 $recipientField, $senderField, $subjectField,
-            ],
+            ),
             'versionInfo' => $this->versionInfo,
-        ]);
+        ));
 
         $this->fieldHelper->expects($this->exactly(3))
             ->method('isFieldEmpty')
             ->withAnyParameters()
             ->willReturn(true);
-
 
         $this->translationHelper->expects($this->never())
             ->method('getTranslatedField')
@@ -464,16 +461,16 @@ TEMPLATE;
             ->willReturn($content);
 
         $location = new Location(
-            [
+            array(
                 'id' => 12345,
-                'contentInfo' => new ContentInfo(['id' => 123])
-            ]
+                'contentInfo' => new ContentInfo(array('id' => 123)),
+            )
         );
 
-        $contentType = new ContentType([
+        $contentType = new ContentType(array(
             'identifier' => 'test',
-            'fieldDefinitions' => [],
-        ]);
+            'fieldDefinitions' => array(),
+        ));
 
         $event = new InformationCollected(new DataWrapper(new InformationCollectionStruct(), $contentType, $location));
 

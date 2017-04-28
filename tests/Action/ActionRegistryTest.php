@@ -91,60 +91,60 @@ class ActionRegistryTest extends TestCase
 
     public function setUp()
     {
-        $this->config = [
-            'default' => [
+        $this->config = array(
+            'default' => array(
                 'email',
-            ],
-            'content_type' => [
-                'ng_feedback_form' => [
+            ),
+            'content_type' => array(
+                'ng_feedback_form' => array(
                     'database',
-                ],
-            ]
-        ];
+                ),
+            ),
+        );
 
-        $this->config2 = [
-            'default' => [
+        $this->config2 = array(
+            'default' => array(
                 'email',
                 'database',
                 'email2',
                 'database2',
-            ],
-        ];
+            ),
+        );
 
-        $this->emptyConfig = [
+        $this->emptyConfig = array(
             'default',
-        ];
+        );
 
-        $this->onlyDefaultConfig = [
-            'default' => [
+        $this->onlyDefaultConfig = array(
+            'default' => array(
                 'database',
                 'email',
-            ]
-        ];
+            ),
+        );
 
         $this->action1 = $this->getMockBuilder(ActionInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['act'])
+            ->setMethods(array('act'))
             ->getMock();
 
         $this->action2 = $this->getMockBuilder(ActionInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['act'])
+            ->setMethods(array('act'))
             ->getMock();
 
         $this->action3 = $this->getMockBuilder(ActionInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['act'])
+            ->setMethods(array('act'))
             ->getMock();
 
         $this->action4 = $this->getMockBuilder(ActionInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['act'])
+            ->setMethods(array('act'))
             ->getMock();
 
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['error', 'emergency', 'alert', 'debug', 'critical', 'notice', 'info', 'warning', 'log'])
+            ->setMethods(array('error', 'emergency', 'alert', 'debug', 'critical', 'notice', 'info', 'warning', 'log'))
             ->getMock();
 
         $this->registry = new ActionRegistry($this->config, $this->logger);
@@ -152,15 +152,15 @@ class ActionRegistryTest extends TestCase
         $this->registryWithEmptyConf = new ActionRegistry($this->emptyConfig, $this->logger);
         $this->registryWithOnlyDefaultConf = new ActionRegistry($this->onlyDefaultConfig, $this->logger);
 
-        $contentType = new ContentType([
+        $contentType = new ContentType(array(
             'identifier' => 'ng_feedback_form',
-            'fieldDefinitions' => [],
-        ]);
+            'fieldDefinitions' => array(),
+        ));
 
-        $contentType2 = new ContentType([
+        $contentType2 = new ContentType(array(
             'identifier' => 'ng_feedback_form2',
-            'fieldDefinitions' => [],
-        ]);
+            'fieldDefinitions' => array(),
+        ));
 
         $this->event = new InformationCollected(
             new DataWrapper('payload', $contentType, 'target')
@@ -259,28 +259,28 @@ class ActionRegistryTest extends TestCase
 
     public function testActionsAreExecutedByPriority()
     {
-        $prioritizedActions = [
-            [
+        $prioritizedActions = array(
+            array(
                 'name' => 'email2',
                 'action' => $this->action4,
                 'priority' => 100,
-            ],
-            [
+            ),
+            array(
                 'name' => 'database',
                 'action' => $this->action1,
                 'priority' => 44,
-            ],
-            [
+            ),
+            array(
                 'name' => 'email',
                 'action' => $this->action2,
                 'priority' => 22,
-            ],
-            [
+            ),
+            array(
                 'name' => 'database2',
                 'action' => $this->action3,
                 'priority' => 11,
-            ]
-        ];
+            ),
+        );
 
         $this->registryForPriority->addAction('database', $this->action1, 44);
         $this->registryForPriority->addAction('database2', $this->action3, 11);
@@ -310,28 +310,28 @@ class ActionRegistryTest extends TestCase
 
     public function testActionsAreExecutedByPriorityWithSamePriorities()
     {
-        $prioritizedActions = [
-            [
+        $prioritizedActions = array(
+            array(
                 'name' => 'email2',
                 'action' => $this->action4,
                 'priority' => 100,
-            ],
-            [
+            ),
+            array(
                 'name' => 'database',
                 'action' => $this->action1,
                 'priority' => 44,
-            ],
-            [
+            ),
+            array(
                 'name' => 'database2',
                 'action' => $this->action3,
                 'priority' => 11,
-            ],
-            [
+            ),
+            array(
                 'name' => 'email',
                 'action' => $this->action2,
                 'priority' => 11,
-            ]
-        ];
+            ),
+        );
 
         $this->registryForPriority->addAction('database', $this->action1, 44);
         $this->registryForPriority->addAction('database2', $this->action3, 11);

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 trait InformationCollectionLegacyTrait
 {
     /**
-     * Builds Form, checks if Form is valid and dispatches InformationCollected event
+     * Builds Form, checks if Form is valid and dispatches InformationCollected event.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $locationId
@@ -44,10 +44,10 @@ trait InformationCollectionLegacyTrait
             $dispatcher->dispatch(Events::INFORMATION_COLLECTED, $event);
         }
 
-        return [
+        return array(
             'is_valid' => $isValid,
             'form' => $form->createView(),
             'collected_fields' => $form->getData()->payload->getCollectedFields(),
-        ];
+        );
     }
 }

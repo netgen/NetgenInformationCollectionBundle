@@ -7,7 +7,7 @@ use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
 class ContentViewStub implements ContentValueView
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getContent()
     {

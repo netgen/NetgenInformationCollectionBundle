@@ -2,11 +2,6 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Action;
 
-use eZ\Publish\Core\Repository\ContentService;
-use eZ\Publish\Core\Repository\Values\Content\Location;
-use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
-use eZ\Publish\SPI\Persistence\Content\ContentInfo;
-use eZ\Publish\Core\Repository\Values\Content\Content;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Action\EmailAction;
@@ -16,8 +11,6 @@ use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine;
-use Swift_Mailer;
 
 class EmailActionTest extends TestCase
 {
@@ -45,17 +38,17 @@ class EmailActionTest extends TestCase
     {
         $this->factory = $this->getMockBuilder(EmailDataFactory::class)
             ->disableOriginalConstructor()
-            ->setMethods(['build'])
+            ->setMethods(array('build'))
             ->getMock();
 
         $this->mailer = $this->getMockBuilder(MailerInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['createAndSendMessage'])
+            ->setMethods(array('createAndSendMessage'))
             ->getMock();
 
         $this->emailData = $this->getMockBuilder(EmailData::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getSubject', 'getRecipient', 'getSender', 'getBody'])
+            ->setMethods(array('getSubject', 'getRecipient', 'getSender', 'getBody'))
             ->getMock();
 
         $this->action = new EmailAction($this->factory, $this->mailer);

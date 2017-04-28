@@ -37,9 +37,9 @@ class TemplateDataTest extends TestCase
     {
         $twig = new Twig_Environment(
             new Twig_Loader_Array(
-                [
+                array(
                     'index' => '{% block foo %}{% endblock %}',
-                ]
+                )
             )
         );
 

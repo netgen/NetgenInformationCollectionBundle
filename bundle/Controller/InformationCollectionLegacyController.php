@@ -13,7 +13,7 @@ class InformationCollectionLegacyController implements ContainerAwareInterface
     use ContainerAwareTrait;
 
     /**
-     * Displays and handles information collection
+     * Displays and handles information collection.
      *
      * @param Request $request
      * @param int $locationId
@@ -23,7 +23,7 @@ class InformationCollectionLegacyController implements ContainerAwareInterface
      *
      * @return mixed
      */
-    public function displayAndHandle(Request $request, $locationId, $viewType, $layout = false, array $params = [])
+    public function displayAndHandle(Request $request, $locationId, $viewType, $layout = false, array $params = array())
     {
         $parameters = $this->collectInformation($request, $locationId);
 

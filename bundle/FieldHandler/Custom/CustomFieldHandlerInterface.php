@@ -8,16 +8,16 @@ use eZ\Publish\Core\FieldType\Value;
 interface CustomFieldHandlerInterface
 {
     /**
-     * Checks if given Value can be handled
+     * Checks if given Value can be handled.
      *
      * @param Value $value
      *
-     * @return boolean
+     * @return bool
      */
     public function supports(Value $value);
 
     /**
-     * Transforms field value object to string
+     * Transforms field value object to string.
      *
      * @param Value $value
      * @param FieldDefinition $fieldDefinition

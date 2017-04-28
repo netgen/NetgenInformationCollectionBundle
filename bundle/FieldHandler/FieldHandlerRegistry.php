@@ -2,8 +2,8 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\FieldHandler;
 
-use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
 use eZ\Publish\Core\FieldType\Value;
+use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
 
 class FieldHandlerRegistry
 {
@@ -17,13 +17,13 @@ class FieldHandlerRegistry
      *
      * @param array $handlers
      */
-    public function __construct(array $handlers = [])
+    public function __construct(array $handlers = array())
     {
         $this->handlers = $handlers;
     }
 
     /**
-     * Adds new handler
+     * Adds new handler.
      *
      * @param CustomFieldHandlerInterface $handler
      */

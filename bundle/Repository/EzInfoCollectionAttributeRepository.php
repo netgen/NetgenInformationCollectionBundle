@@ -8,7 +8,7 @@ use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
 class EzInfoCollectionAttributeRepository extends EntityRepository
 {
     /**
-     * Get new EzInfoCollectionAttribute instance
+     * Get new EzInfoCollectionAttribute instance.
      *
      * @return EzInfoCollectionAttribute
      */
@@ -18,7 +18,7 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
     }
 
     /**
-     * Save object
+     * Save object.
      *
      * @param EzInfoCollectionAttribute $infoCollectionAttribute
      */

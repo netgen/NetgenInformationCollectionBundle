@@ -2,9 +2,9 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\FieldHandler;
 
+use eZ\Publish\Core\FieldType\Integer\Value as TestValue;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry;
-use eZ\Publish\Core\FieldType\Integer\Value as TestValue;
 use PHPUnit\Framework\TestCase;
 
 class FieldHandlerRegistryTest extends TestCase
@@ -29,12 +29,12 @@ class FieldHandlerRegistryTest extends TestCase
         $this->registry = new FieldHandlerRegistry();
         $this->customHandler1 = $this->getMockBuilder(CustomFieldHandlerInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['supports', 'toString'])
+            ->setMethods(array('supports', 'toString'))
             ->getMock();
 
         $this->customHandler2 = $this->getMockBuilder(CustomFieldHandlerInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['supports', 'toString'])
+            ->setMethods(array('supports', 'toString'))
             ->getMock();
 
         parent::setUp();

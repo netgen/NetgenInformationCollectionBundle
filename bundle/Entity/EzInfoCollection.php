@@ -5,7 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * EzInfoCollection
+ * EzInfoCollection.
  *
  * @ORM\Table(name="ezinfocollection", indexes={@ORM\Index(name="ezinfocollection_co_id_created", columns={"contentobject_id", "created"})})
  * @ORM\Entity(repositoryClass="Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository")
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class EzInfoCollection
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,28 +22,28 @@ class EzInfoCollection
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="contentobject_id", type="integer", nullable=false, options={"default"=0})
      */
     private $contentObjectId;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="created", type="integer", nullable=false, options={"default"=0})
      */
     private $created;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="creator_id", type="integer", nullable=false, options={"default"=0})
      */
     private $creatorId;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="modified", type="integer", nullable=true, options={"default"=0})
      */

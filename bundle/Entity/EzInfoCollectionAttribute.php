@@ -5,7 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * EzInfoCollectionAttribute
+ * EzInfoCollectionAttribute.
  *
  * @ORM\Table(
  *     name="ezinfocollection_attribute",
@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 class EzInfoCollectionAttribute
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -30,21 +30,21 @@ class EzInfoCollectionAttribute
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="contentclass_attribute_id", type="integer", nullable=false, options={"default"=0})
      */
     private $contentClassAttributeId;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="contentobject_attribute_id", type="integer", nullable=true)
      */
     private $contentObjectAttributeId;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="contentobject_id", type="integer", nullable=true)
      */
@@ -58,7 +58,7 @@ class EzInfoCollectionAttribute
     private $dataFloat;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="data_int", type="integer", nullable=true)
      */
@@ -72,7 +72,7 @@ class EzInfoCollectionAttribute
     private $dataText;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="informationcollection_id", type="integer", nullable=false, options={"default"=0})
      */

@@ -3,107 +3,102 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\DependencyInjection;
 
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
-use PHPUnit\Framework\TestCase;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Configuration;
+use PHPUnit\Framework\TestCase;
 
 class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
-    protected function getConfiguration()
-    {
-        return new Configuration();
-    }
-
     public function testConfigurationValuesAreOkAndValid()
     {
         $this->assertConfigurationIsValid(
-            [
-                'netgen_information_collection' => [
-                    'system' => [
-                        'default' => [
-                            'action_config' => [
-                                'email' => [
-                                    'templates' => [
+            array(
+                'netgen_information_collection' => array(
+                    'system' => array(
+                        'default' => array(
+                            'action_config' => array(
+                                'email' => array(
+                                    'templates' => array(
                                         'default' => 'some_template',
-                                        'content_types' => [
+                                        'content_types' => array(
                                             'content_type1' => 'content_type1_template',
                                             'content_type2' => 'content_type2_template',
-                                        ],
-                                    ],
-                                    'default_variables' => [
+                                        ),
+                                    ),
+                                    'default_variables' => array(
                                         'sender' => 'sender',
                                         'recipient' => 'recipient',
                                         'subject' => 'subject',
-                                    ],
-                                ],
-                            ],
-                            'actions' => [
-                                'default' => [
+                                    ),
+                                ),
+                            ),
+                            'actions' => array(
+                                'default' => array(
                                     'action1',
                                     'action2',
-                                ],
-                                'content_types' => [
-                                    'content_type1' => [
+                                ),
+                                'content_types' => array(
+                                    'content_type1' => array(
                                         'action3',
                                         'action4',
-                                    ],
-                                    'content_type2' => [
+                                    ),
+                                    'content_type2' => array(
                                         'action5',
                                         'action6',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ]
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            )
         );
     }
 
     public function testConfigurationIsInvalidForDefaultTemplateValue()
     {
         $this->assertConfigurationIsInvalid(
-            [
-                'netgen_information_collection' => [
-                    'system' => [
-                        'default' => [
-                            'action_config' => [
-                                'email' => [
-                                    'templates' => [
+            array(
+                'netgen_information_collection' => array(
+                    'system' => array(
+                        'default' => array(
+                            'action_config' => array(
+                                'email' => array(
+                                    'templates' => array(
                                         'default' => '',
-                                        'content_types' => [
+                                        'content_types' => array(
                                             'content_type1' => 'content_type1_template',
                                             'content_type2' => 'content_type2_template',
-                                        ],
-                                    ],
-                                    'default_variables' => [
+                                        ),
+                                    ),
+                                    'default_variables' => array(
                                         'sender' => 'sender',
                                         'recipient' => 'recipient',
                                         'subject' => 'subject',
-                                    ],
-                                ],
-                            ],
-                            'actions' => [
-                                'default' => [
+                                    ),
+                                ),
+                            ),
+                            'actions' => array(
+                                'default' => array(
                                     'action1',
                                     'action2',
-                                ],
-                                'content_types' => [
-                                    'content_type1' => [
+                                ),
+                                'content_types' => array(
+                                    'content_type1' => array(
                                         'action3',
                                         'action4',
-                                    ],
-                                    'content_type2' => [
+                                    ),
+                                    'content_type2' => array(
                                         'action5',
                                         'action6',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
             'netgen_information_collection.system.default.action_config.email.templates.default'
         );
     }
@@ -111,46 +106,51 @@ class ConfigurationTest extends TestCase
     public function testConfigurationIsInvalidForDefaultActionsValue()
     {
         $this->assertConfigurationIsInvalid(
-            [
-                'netgen_information_collection' => [
-                    'system' => [
-                        'default' => [
-                            'action_config' => [
-                                'email' => [
-                                    'templates' => [
+            array(
+                'netgen_information_collection' => array(
+                    'system' => array(
+                        'default' => array(
+                            'action_config' => array(
+                                'email' => array(
+                                    'templates' => array(
                                         'default' => 'some_template',
-                                        'content_types' => [
+                                        'content_types' => array(
                                             'content_type1' => 'content_type1_template',
                                             'content_type2' => 'content_type2_template',
-                                        ],
-                                    ],
-                                    'default_variables' => [
+                                        ),
+                                    ),
+                                    'default_variables' => array(
                                         'sender' => 'sender',
                                         'recipient' => 'recipient',
                                         'subject' => 'subject',
-                                    ],
-                                ],
-                            ],
-                            'actions' => [
-                                'default' => [
+                                    ),
+                                ),
+                            ),
+                            'actions' => array(
+                                'default' => array(
                                     '',
-                                ],
-                                'content_types' => [
-                                    'content_type1' => [
+                                ),
+                                'content_types' => array(
+                                    'content_type1' => array(
                                         'action3',
                                         'action4',
-                                    ],
-                                    'content_type2' => [
+                                    ),
+                                    'content_type2' => array(
                                         'action5',
                                         'action6',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
             'netgen_information_collection.system.default.actions.default'
         );
+    }
+
+    protected function getConfiguration()
+    {
+        return new Configuration();
     }
 }

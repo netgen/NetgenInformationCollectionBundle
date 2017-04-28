@@ -2,15 +2,15 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form\Builder;
 
+use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Values\Content\Location;
+use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\EzFormsBundle\Form\Type\InformationCollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouterInterface;
-use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\ContentTypeService;
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
-use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 
 class FormBuilder
 {
@@ -20,7 +20,7 @@ class FormBuilder
     protected $formFactory;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $useCsrf;
 
@@ -55,7 +55,7 @@ class FormBuilder
     }
 
     /**
-     * Creates Information collection Form object for given Location object
+     * Creates Information collection Form object for given Location object.
      *
      * @param Location $location
      * @param bool $useAjax
@@ -76,13 +76,13 @@ class FormBuilder
                     'ezforms_information_collection' :
                     InformationCollectionType::class,
                 $data,
-                [
+                array(
                     'csrf_protection' => $this->useCsrf,
-                ]
+                )
             );
 
         if ($useAjax) {
-            $formBuilder->setAction($this->router->generate('netgen_information_collection_handle_ajax', ['location' => $location->id]));
+            $formBuilder->setAction($this->router->generate('netgen_information_collection_handle_ajax', array('location' => $location->id)));
         }
 
         return $formBuilder;

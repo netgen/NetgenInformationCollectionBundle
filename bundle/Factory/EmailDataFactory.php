@@ -2,16 +2,16 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Factory;
 
-use Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailBlockException;
-use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
-use Twig_Environment;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use Netgen\Bundle\InformationCollectionBundle\Constants;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailBlockException;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
-use Netgen\Bundle\InformationCollectionBundle\Constants;
+use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
+use Twig_Environment;
 
 class EmailDataFactory
 {
@@ -56,7 +56,6 @@ class EmailDataFactory
         ContentService $contentService,
         Twig_Environment $twig
     ) {
-    
         $this->config = $config;
         $this->translationHelper = $translationHelper;
         $this->fieldHelper = $fieldHelper;
@@ -65,7 +64,7 @@ class EmailDataFactory
     }
 
     /**
-     * Factory method
+     * Factory method.
      *
      * @param InformationCollected $value
      *
@@ -93,7 +92,7 @@ class EmailDataFactory
     }
 
     /**
-     * Returns resolved parameter
+     * Returns resolved parameter.
      *
      * @param TemplateData $data
      * @param string $field
@@ -104,14 +103,13 @@ class EmailDataFactory
     protected function resolve(TemplateData $data, $field, $property = Constants::FIELD_TYPE_TEXT)
     {
         if ($data->getTemplateWrapper()->hasBlock($field)) {
-
             $rendered = $data->getTemplateWrapper()->renderBlock(
                 $field,
-                [
+                array(
                     'event' => $data->getEvent(),
                     'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
                     'content' => $data->getContent(),
-                ]
+                )
             );
 
             return trim($rendered);
@@ -130,7 +128,7 @@ class EmailDataFactory
     }
 
     /**
-     * Returns resolved template name
+     * Returns resolved template name.
      *
      * @param string $contentTypeIdentifier
      *
@@ -139,36 +137,33 @@ class EmailDataFactory
     protected function resolveTemplate($contentTypeIdentifier)
     {
         if (array_key_exists($contentTypeIdentifier, $this->config[ConfigurationConstants::TEMPLATES])) {
-
             return $this->config[ConfigurationConstants::TEMPLATES][$contentTypeIdentifier];
-
         }
 
         return $this->config[ConfigurationConstants::TEMPLATES][ConfigurationConstants::SETTINGS_DEFAULT];
     }
 
     /**
-     * Renders email template
+     * Renders email template.
      *
      * @param TemplateData $data
      *
-     * @return string
-     *
      * @throws MissingEmailBlockException
+     *
+     * @return string
      */
     protected function resolveBody(TemplateData $data)
     {
         if ($data->getTemplateWrapper()->hasBlock(Constants::BLOCK_EMAIL)) {
-
             return $data->getTemplateWrapper()
                 ->renderBlock(
                     Constants::BLOCK_EMAIL,
-                    [
+                    array(
                         'event' => $data->getEvent(),
                         'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
                         'content' => $data->getContent(),
                         'default_variables' => $this->config[ConfigurationConstants::DEFAULT_VARIABLES],
-                    ]
+                    )
                 );
         }
 

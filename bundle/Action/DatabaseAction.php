@@ -49,14 +49,14 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
         EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository,
         Repository $repository
     ) {
-    
         $this->factory = $factory;
         $this->infoCollectionRepository = $infoCollectionRepository;
         $this->infoCollectionAttributeRepository = $infoCollectionAttributeRepository;
         $this->repository = $repository;
     }
+
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function act(InformationCollected $event)
     {
@@ -86,16 +86,15 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
         }
 
         /**
-         * @var string $fieldDefIdentifier
+         * @var string
          * @var \eZ\Publish\Core\FieldType\Value $value
          */
         foreach ($struct->getCollectedFields() as $fieldDefIdentifier => $value) {
-
             $value = $this->factory->getLegacyValue($value, $contentType->getFieldDefinition($fieldDefIdentifier));
 
             $ezInfoAttribute = $this->infoCollectionAttributeRepository->getInstance();
 
-            /** @var LegacyData $value */
+            /* @var LegacyData $value */
             $ezInfoAttribute->setContentObjectId($location->getContentInfo()->id);
             $ezInfoAttribute->setInformationCollectionId($ezInfo->getId());
             $ezInfoAttribute->setContentClassAttributeId($value->getContentClassAttributeId());

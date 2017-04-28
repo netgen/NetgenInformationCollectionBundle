@@ -5,7 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Mailer;
 interface MailerInterface
 {
     /**
-     * Creates and sends email message
+     * Creates and sends email message.
      *
      * @param \Netgen\Bundle\InformationCollectionBundle\Value\EmailData $data
      *

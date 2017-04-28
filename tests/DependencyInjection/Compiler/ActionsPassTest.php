@@ -11,18 +11,13 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class ActionsPassTest extends AbstractCompilerPassTestCase
 {
-    protected function registerCompilerPass(ContainerBuilder $container)
-    {
-        $container->addCompilerPass(new ActionsPass());
-    }
-
     public function testCompilerPassCollectsValidServices()
     {
         $actionsRegistry = new Definition();
         $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
 
         $action = new Definition();
-        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action', 'priority' => 100]);
+        $action->addTag('netgen_information_collection.action', array('alias' => 'custom_action', 'priority' => 100));
         $this->setDefinition('my_action', $action);
 
         $this->compile();
@@ -30,11 +25,11 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'netgen_information_collection.action.registry',
             'addAction',
-            [
+            array(
                 'custom_action',
                 new Reference('my_action'),
-                100
-            ]
+                100,
+            )
         );
     }
 
@@ -56,9 +51,9 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'netgen_information_collection.action.registry',
             'addAction',
-            [
+            array(
                 new Reference('my_action'),
-            ]
+            )
         );
     }
 
@@ -73,7 +68,7 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
         $priority = Priority::MIN_PRIORITY - 1;
 
         $action = new Definition();
-        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action', 'priority' => $priority]);
+        $action->addTag('netgen_information_collection.action', array('alias' => 'custom_action', 'priority' => $priority));
         $this->setDefinition('my_action', $action);
 
         $this->compile();
@@ -81,11 +76,11 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'netgen_information_collection.action.registry',
             'addAction',
-            [
+            array(
                 'custom_action',
                 new Reference('my_action'),
-                $priority
-            ]
+                $priority,
+            )
         );
     }
 
@@ -100,7 +95,7 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
         $priority = Priority::MAX_PRIORITY + 1;
 
         $action = new Definition();
-        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action', 'priority' => $priority]);
+        $action->addTag('netgen_information_collection.action', array('alias' => 'custom_action', 'priority' => $priority));
         $this->setDefinition('my_action', $action);
 
         $this->compile();
@@ -108,11 +103,11 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'netgen_information_collection.action.registry',
             'addAction',
-            [
+            array(
                 'custom_action',
                 new Reference('my_action'),
-                $priority
-            ]
+                $priority,
+            )
         );
     }
 
@@ -122,7 +117,7 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
         $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
 
         $action = new Definition();
-        $action->addTag('netgen_information_collection.action', ['alias' => 'custom_action']);
+        $action->addTag('netgen_information_collection.action', array('alias' => 'custom_action'));
         $this->setDefinition('my_action', $action);
 
         $this->compile();
@@ -130,11 +125,11 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'netgen_information_collection.action.registry',
             'addAction',
-            [
+            array(
                 'custom_action',
                 new Reference('my_action'),
-                Priority::DEFAULT_PRIORITY
-            ]
+                Priority::DEFAULT_PRIORITY,
+            )
         );
     }
 
@@ -144,7 +139,7 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
         $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
 
         $action = new Definition();
-        $action->addTag('netgen_information_collection.action', ['alias' => 'database', 'priority' => 300]);
+        $action->addTag('netgen_information_collection.action', array('alias' => 'database', 'priority' => 300));
         $this->setDefinition('my_action', $action);
 
         $this->compile();
@@ -152,11 +147,16 @@ class ActionsPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'netgen_information_collection.action.registry',
             'addAction',
-            [
+            array(
                 'database',
                 new Reference('my_action'),
-                300
-            ]
+                300,
+            )
         );
+    }
+
+    protected function registerCompilerPass(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new ActionsPass());
     }
 }

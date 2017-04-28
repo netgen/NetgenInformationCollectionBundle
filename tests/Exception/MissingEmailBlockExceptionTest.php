@@ -13,7 +13,7 @@ class MissingEmailBlockExceptionTest extends TestCase
      */
     public function testExceptionWithNoBlocks()
     {
-        throw new MissingEmailBlockException('AcmeBundle::email.html.twig', []);
+        throw new MissingEmailBlockException('AcmeBundle::email.html.twig', array());
     }
 
     /**
@@ -22,7 +22,7 @@ class MissingEmailBlockExceptionTest extends TestCase
      */
     public function testExceptionWithSingleBlock()
     {
-        throw new MissingEmailBlockException('AcmeBundle::email.html.twig', ['email']);
+        throw new MissingEmailBlockException('AcmeBundle::email.html.twig', array('email'));
     }
 
     /**
@@ -31,6 +31,6 @@ class MissingEmailBlockExceptionTest extends TestCase
      */
     public function testExceptionWithMultipleBlocks()
     {
-        throw new MissingEmailBlockException('AcmeBundle::email.html.twig', ['recipient', 'email']);
+        throw new MissingEmailBlockException('AcmeBundle::email.html.twig', array('recipient', 'email'));
     }
 }

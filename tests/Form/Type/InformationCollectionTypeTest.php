@@ -14,7 +14,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\FormBuilder;
 
-
 class InformationCollectionTypeTest extends TestCase
 {
     public function testItExtendsAbstractType()

@@ -2,12 +2,12 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Event;
 
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Symfony\Component\EventDispatcher\Event;
-use eZ\Publish\API\Repository\Values\Content\Content;
 
 class InformationCollected extends Event
 {
@@ -34,17 +34,17 @@ class InformationCollected extends Event
     }
 
     /**
-     * Return collected data
+     * Return collected data.
      *
      * @return InformationCollectionStruct
      */
     public function getInformationCollectionStruct()
     {
-         return $this->data->payload;
+        return $this->data->payload;
     }
 
     /**
-     * Return ContentType
+     * Return ContentType.
      *
      * @return ContentType
      */
@@ -54,7 +54,7 @@ class InformationCollected extends Event
     }
 
     /**
-     * Return Location
+     * Return Location.
      *
      * @return Location|null
      */
@@ -65,7 +65,7 @@ class InformationCollected extends Event
 
     /**
      * Returns additional content
-     * This can be ez content or site api content
+     * This can be ez content or site api content.
      *
      * @return Content
      */

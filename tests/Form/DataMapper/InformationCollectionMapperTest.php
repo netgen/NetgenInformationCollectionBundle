@@ -2,12 +2,12 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Form\DataMapper;
 
+use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
-use Netgen\Bundle\InformationCollectionBundle\Form\DataMapper\InformationCollectionMapper;
-use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
-use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\InformationCollectionBundle\Form\DataMapper\InformationCollectionMapper;
+use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
 use PHPUnit\Framework\TestCase;
 
 class InformationCollectionMapperTest extends TestCase
@@ -50,16 +50,6 @@ class InformationCollectionMapperTest extends TestCase
             ->getMock();
 
         $this->mapper = new InformationCollectionMapper($this->registry, $this->propertyAccessor);
-    }
-
-    private function getForm()
-    {
-        $form = $this->getMockBuilder('Symfony\Component\Form\Form')
-            ->disableOriginalConstructor()
-            ->setMethods(array('getData', 'setData', 'getPropertyPath', 'getConfig', 'isSubmitted', 'isSynchronized', 'isDisabled'))
-            ->getMock();
-
-        return $form;
     }
 
     public function testInstanceOfDataMapper()
@@ -328,5 +318,15 @@ class InformationCollectionMapperTest extends TestCase
             ->method('getPropertyPath');
 
         $this->mapper->mapDataToForms($data, array($form));
+    }
+
+    private function getForm()
+    {
+        $form = $this->getMockBuilder('Symfony\Component\Form\Form')
+            ->disableOriginalConstructor()
+            ->setMethods(array('getData', 'setData', 'getPropertyPath', 'getConfig', 'isSubmitted', 'isSynchronized', 'isDisabled'))
+            ->getMock();
+
+        return $form;
     }
 }

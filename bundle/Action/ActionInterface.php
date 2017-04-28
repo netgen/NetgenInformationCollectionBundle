@@ -5,7 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Action;
 interface ActionInterface
 {
     /**
-     * Act on InformationCollected event
+     * Act on InformationCollected event.
      *
      * @param \Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected $event
      *

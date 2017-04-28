@@ -22,7 +22,7 @@ class MailerTest extends TestCase
     {
         $this->swiftMailer = $this->getMockBuilder(\Swift_Mailer::class)
             ->disableOriginalConstructor()
-            ->setMethods(['createMessage', 'send'])
+            ->setMethods(array('createMessage', 'send'))
             ->getMock();
 
         $this->mailer = new Mailer($this->swiftMailer);

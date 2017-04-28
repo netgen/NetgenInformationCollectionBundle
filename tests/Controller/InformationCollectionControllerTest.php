@@ -66,37 +66,37 @@ class InformationCollectionControllerTest extends TestCase
 
         $this->container = $this->getMockBuilder(ContainerInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['get', 'getParameter', 'has', 'hasParameter', 'initialized', 'set', 'setParameter', 'addScope', 'enterScope', 'hasScope', 'isScopeActive', 'leaveScope'])
+            ->setMethods(array('get', 'getParameter', 'has', 'hasParameter', 'initialized', 'set', 'setParameter', 'addScope', 'enterScope', 'hasScope', 'isScopeActive', 'leaveScope'))
             ->getMock();
 
         $this->builder = $this->getMockBuilder(FormBuilder::class)
             ->disableOriginalConstructor()
-            ->setMethods(['createFormForLocation'])
+            ->setMethods(array('createFormForLocation'))
             ->getMock();
 
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['dispatch', 'addListener', 'addSubscriber', 'removeListener', 'removeSubscriber', 'getListeners', 'hasListeners', 'getListenerPriority'])
+            ->setMethods(array('dispatch', 'addListener', 'addSubscriber', 'removeListener', 'removeSubscriber', 'getListeners', 'hasListeners', 'getListenerPriority'))
             ->getMock();
 
         $this->contentView = $this->getMockBuilder(ContentView::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getLocation', 'addParameters'])
+            ->setMethods(array('getLocation', 'addParameters'))
             ->getMock();
 
         $this->request = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
-            ->setMethods([])
+            ->setMethods(array())
             ->getMock();
 
         $this->formBuilder = $this->getMockBuilder(\Symfony\Component\Form\FormBuilder::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getForm'])
+            ->setMethods(array('getForm'))
             ->getMock();
 
         $this->form = $this->getMockBuilder(Form::class)
             ->disableOriginalConstructor()
-            ->setMethods(['handleRequest', 'isSubmitted', 'isValid', 'getData', 'createView'])
+            ->setMethods(array('handleRequest', 'isSubmitted', 'isValid', 'getData', 'createView'))
             ->getMock();
 
         $this->controller = new InformationCollectionController();
@@ -120,7 +120,7 @@ class InformationCollectionControllerTest extends TestCase
                 $this->equalTo('netgen_information_collection.form.builder'),
                 $this->equalTo('event_dispatcher')
             ))
-            ->will($this->returnCallback([$this, 'getService']));
+            ->will($this->returnCallback(array($this, 'getService')));
 
         $this->contentView->expects($this->once())
             ->method('getLocation')

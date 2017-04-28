@@ -25,7 +25,7 @@ class ActionRegistry
     protected $logger;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $debug = false;
 
@@ -38,12 +38,12 @@ class ActionRegistry
     public function __construct($config, LoggerInterface $logger)
     {
         $this->config = $config;
-        $this->actions = [];
+        $this->actions = array();
         $this->logger = $logger;
     }
 
     /**
-     * Adds action to stack
+     * Adds action to stack.
      *
      * @param string $name
      * @param ActionInterface $action
@@ -51,16 +51,13 @@ class ActionRegistry
      */
     public function addAction($name, ActionInterface $action, $priority = Priority::DEFAULT_PRIORITY)
     {
-        $this->actions[] = [
+        $this->actions[] = array(
             'name' => $name,
             'action' => $action,
             'priority' => $priority,
-        ];
+        );
     }
 
-    /**
-     * @inheritDoc
-     */
     public function act(InformationCollected $event)
     {
         $this->prepareActions();
@@ -68,12 +65,9 @@ class ActionRegistry
 
         foreach ($this->actions as $action) {
             if ($this->canActionAct($action['name'], $config)) {
-
                 try {
-
                     $action['action']->act($event);
-
-                } catch(ActionFailedException $e) {
+                } catch (ActionFailedException $e) {
                     $this->logger
                         ->error($e->getMessage());
 
@@ -90,9 +84,9 @@ class ActionRegistry
     }
 
     /**
-     * Sets debug variable based on kernel.debug param
+     * Sets debug variable based on kernel.debug param.
      *
-     * @param boolean $debug
+     * @param bool $debug
      */
     public function setDebug($debug)
     {
@@ -100,7 +94,7 @@ class ActionRegistry
     }
 
     /**
-     * Check if given action can act
+     * Check if given action can act.
      *
      * @param string $name
      * @param array $config
@@ -114,7 +108,7 @@ class ActionRegistry
 
     /**
      * Returns configuration for given content type identifier if exists
-     * or default one
+     * or default one.
      *
      * @param string $contentTypeIdentifier
      *
@@ -130,16 +124,16 @@ class ActionRegistry
             return  $this->config['default'];
         }
 
-        return [];
+        return array();
     }
 
     /**
-     * Sorts actions by priority
+     * Sorts actions by priority.
      */
     protected function prepareActions()
     {
-        usort($this->actions, function($one, $two) {
-            if ($one['priority'] == $two['priority']) {
+        usort($this->actions, function ($one, $two) {
+            if ($one['priority'] === $two['priority']) {
                 return 0;
             }
 

@@ -23,37 +23,29 @@ class Mailer implements MailerInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function createAndSendMessage(EmailData $data)
     {
         $message = \Swift_Message::newInstance();
 
         try {
-
             $message->setTo($data->getRecipient());
-
         } catch (\Swift_RfcComplianceException $e) {
-
-            throw new EmailNotSentException("recipient", $e->getMessage());
-
+            throw new EmailNotSentException('recipient', $e->getMessage());
         }
 
         try {
-
             $message->setFrom($data->getSender());
-
         } catch (\Swift_RfcComplianceException $e) {
-
-            throw new EmailNotSentException("sender", $e->getMessage());
-
+            throw new EmailNotSentException('sender', $e->getMessage());
         }
 
         $message->setSubject($data->getSubject());
         $message->setBody($data->getBody(), 'text/html');
 
         if (!$this->internalMailer->send($message)) {
-            throw new EmailNotSentException("send", "invalid mailer configuration?");
+            throw new EmailNotSentException('send', 'invalid mailer configuration?');
         }
     }
 }

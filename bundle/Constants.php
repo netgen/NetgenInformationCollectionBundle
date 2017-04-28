@@ -5,32 +5,32 @@ namespace Netgen\Bundle\InformationCollectionBundle;
 class Constants
 {
     /**
-     * Recipient field identifier
+     * Recipient field identifier.
      */
     const FIELD_RECIPIENT = 'recipient';
 
     /**
-     * Sender field identifier
+     * Sender field identifier.
      */
     const FIELD_SENDER = 'sender';
 
     /**
-     * Subject field identifier
+     * Subject field identifier.
      */
     const FIELD_SUBJECT = 'subject';
 
     /**
-     * Email field type
+     * Email field type.
      */
     const FIELD_TYPE_EMAIL = 'email';
 
     /**
-     * Text field type
+     * Text field type.
      */
     const FIELD_TYPE_TEXT = 'text';
 
     /**
-     * Block email
+     * Block email.
      */
     const BLOCK_EMAIL = 'email';
 }

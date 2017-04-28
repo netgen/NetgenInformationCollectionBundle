@@ -2,9 +2,9 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Value;
 
-use Twig_TemplateWrapper;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Twig_TemplateWrapper;
 
 class TemplateData
 {

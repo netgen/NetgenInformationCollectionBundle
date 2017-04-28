@@ -12,7 +12,7 @@ class CustomFieldHandlersPass implements CompilerPassInterface
     const FIELD_HANDLER = 'netgen_information_collection.field_handler.custom';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
@@ -25,9 +25,9 @@ class CustomFieldHandlersPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds(self::FIELD_HANDLER) as $id => $attributes) {
             $actionAggregate->addMethodCall(
                 'addHandler',
-                [
+                array(
                     new Reference($id),
-                ]
+                )
             );
         }
     }

@@ -25,17 +25,17 @@ class InformationCollectedListener implements EventSubscriberInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
-        return [
+        return array(
             Events::INFORMATION_COLLECTED => 'onInformationCollected',
-        ];
+        );
     }
 
     /**
-     * Run all actions
+     * Run all actions.
      *
      * @param InformationCollected $event
      */

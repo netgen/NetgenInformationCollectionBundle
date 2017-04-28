@@ -33,20 +33,16 @@ class EmailAction implements ActionInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function act(InformationCollected $event)
     {
         $emailData = $this->factory->build($event);
 
         try {
-
             $this->mailer->createAndSendMessage($emailData);
-
         } catch (EmailNotSentException $e) {
-
             throw new ActionFailedException('email', $e->getMessage());
-
         }
     }
 }

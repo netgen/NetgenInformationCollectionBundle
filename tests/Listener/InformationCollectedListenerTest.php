@@ -25,7 +25,7 @@ class InformationCollectedListenerTest extends TestCase
     {
         $this->registry = $this->getMockBuilder(ActionRegistry::class)
             ->disableOriginalConstructor()
-            ->setMethods(['act'])
+            ->setMethods(array('act'))
             ->getMock();
 
         $this->listener = new InformationCollectedListener($this->registry);
@@ -36,7 +36,7 @@ class InformationCollectedListenerTest extends TestCase
     public function testListenerConfiguration()
     {
         $this->assertEquals(
-            [Events::INFORMATION_COLLECTED => 'onInformationCollected'],
+            array(Events::INFORMATION_COLLECTED => 'onInformationCollected'),
             InformationCollectedListener::getSubscribedEvents()
         );
     }
