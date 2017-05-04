@@ -19,7 +19,7 @@
     ],
     "require": {
         "ezsystems/ezpublish-kernel": "*",
-        "netgen/ez-forms-bundle": "^1.2.0|^2.0",
+        "netgen/ez-forms-bundle": "^1.3.2|^2.0",
         "twig/twig": "^1.28|^2.0",
         "doctrine/orm": "^2.5"
     },
