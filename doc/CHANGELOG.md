@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - InformationCollectionMapper, InformationCollectionStruct and InformationCollectionType
 - Bundle requires EzFormsBundle in version 1.3.2 or greater
+- Enabled Scrutinizer service
 
 ## [1.0.3] - 2017-04-21
 ### Added
