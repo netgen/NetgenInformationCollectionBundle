@@ -6,7 +6,7 @@ NetgenInformationCollectionBundle
 [![Quality Score](https://img.shields.io/scrutinizer/g/netgen/NetgenInformationCollectionBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/netgen/NetgenInformationCollectionBundle)
 [![Downloads](https://img.shields.io/packagist/dt/netgen/information-collection-bundle.svg?style=flat-square)](https://packagist.org/packages/netgen/information-collection-bundle/stats)
 [![Latest stable](https://img.shields.io/packagist/v/netgen/information-collection-bundle.svg?style=flat-square)](https://packagist.org/packages/netgen/information-collection-bundle)
-[![License](https://img.shields.io/packagist/l/netgen/information-collection-bundle.svg?style=flat-square)](https://packagist.org/packages/netgen/information-collection-bundle)
+[![License](https://img.shields.io/packagist/l/netgen/information-collection-bundle.svg?style=flat-square)](LICENSE)
 
 The information collection feature makes it possible to gather user input when a node referencing an information collector object is viewed. 
 It is typically useful when it comes to the creation of feedback forms, polls, etc.
