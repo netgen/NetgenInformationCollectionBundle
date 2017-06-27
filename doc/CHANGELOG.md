@@ -6,11 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [master]
+## [1.0.4] - 2017-06-27 
 ### Added
 - InformationCollectionMapper, InformationCollectionStruct and InformationCollectionType
 - Bundle requires EzFormsBundle in version 1.3.2 or greater
 - Enabled Scrutinizer service
+- Fixed problem with action configuration by content type
 
 ## [1.0.3] - 2017-04-21
 ### Added
