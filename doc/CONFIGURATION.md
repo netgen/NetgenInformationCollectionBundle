@@ -21,8 +21,9 @@ actions:
     default:
         - email
         - database
-    my_content_type:
-        - email
+    content_types:
+        my_content_type:
+            - email
 ```
 
 Or to execute only *database* action for *my_content_type_2*:
@@ -32,10 +33,11 @@ actions:
     default:
         - email
         - database
-    my_content_type:
-        - email
-    my_content_type_2:
-        - database
+    content_types:
+        my_content_type:
+            - email
+        my_content_type_2:
+            - database
 ```
 
 ## Specifiying which email templates to use per content type

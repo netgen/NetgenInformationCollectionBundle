@@ -128,8 +128,9 @@ netgen_information_collection:
                default:
                    - email
                    - database
-               my_content_type:
-                   - email
-                   - database
-                   - custom_action
+               content_types:
+                   my_content_type:
+                       - email
+                       - database
+                       - custom_action
 ```
