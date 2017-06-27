@@ -95,7 +95,7 @@ class ActionRegistryTest extends TestCase
             'default' => array(
                 'email',
             ),
-            'content_type' => array(
+            'content_types' => array(
                 'ng_feedback_form' => array(
                     'database',
                 ),

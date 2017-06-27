@@ -116,8 +116,8 @@ class ActionRegistry
      */
     protected function prepareConfig($contentTypeIdentifier)
     {
-        if (!empty($this->config['content_type'][$contentTypeIdentifier])) {
-            return $this->config['content_type'][$contentTypeIdentifier];
+        if (!empty($this->config['content_types'][$contentTypeIdentifier])) {
+            return $this->config['content_types'][$contentTypeIdentifier];
         }
 
         if (!empty($this->config['default'])) {
