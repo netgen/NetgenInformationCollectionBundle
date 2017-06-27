@@ -47,6 +47,7 @@ action_config:
     email:
         templates:
             default: 'AcmeBundle:email:default.html.twig'
-            my_content_type: 'AcmeBundle:email:my_content_type.html.twig'
-            my_content_type2: 'AcmeBundle:email:my_content_type2.html.twig'
+            content_types:
+                my_content_type: 'AcmeBundle:email:my_content_type.html.twig'
+                my_content_type2: 'AcmeBundle:email:my_content_type2.html.twig'
 ```
