@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
+use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use Netgen\Bundle\InformationCollectionBundle\Priority;
@@ -116,8 +117,8 @@ class ActionRegistry
      */
     protected function prepareConfig($contentTypeIdentifier)
     {
-        if (!empty($this->config['content_types'][$contentTypeIdentifier])) {
-            return $this->config['content_types'][$contentTypeIdentifier];
+        if (!empty($this->config[ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier])) {
+            return $this->config[ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier];
         }
 
         if (!empty($this->config['default'])) {
