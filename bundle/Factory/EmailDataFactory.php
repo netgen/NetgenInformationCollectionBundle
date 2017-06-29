@@ -136,8 +136,8 @@ class EmailDataFactory
      */
     protected function resolveTemplate($contentTypeIdentifier)
     {
-        if (array_key_exists($contentTypeIdentifier, $this->config[ConfigurationConstants::TEMPLATES])) {
-            return $this->config[ConfigurationConstants::TEMPLATES][$contentTypeIdentifier];
+        if (array_key_exists($contentTypeIdentifier, $this->config[ConfigurationConstants::TEMPLATES][ConfigurationConstants::CONTENT_TYPES])) {
+            return $this->config[ConfigurationConstants::TEMPLATES][ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier];
         }
 
         return $this->config[ConfigurationConstants::TEMPLATES][ConfigurationConstants::SETTINGS_DEFAULT];

@@ -33,7 +33,7 @@ class Configuration extends SiteAccessConfiguration
                             ->end()
                         ->end()
 
-                        ->arrayNode('content_types')
+                        ->arrayNode(ConfigurationConstants::CONTENT_TYPES)
                             ->prototype('array')
                                 ->prototype('scalar')
                                     ->isRequired()
@@ -57,7 +57,7 @@ class Configuration extends SiteAccessConfiguration
                                             ->isRequired()
                                             ->cannotBeEmpty()
                                         ->end()
-                                        ->arrayNode('content_types')
+                                        ->arrayNode(ConfigurationConstants::CONTENT_TYPES)
                                             ->prototype('scalar')
                                                 ->isRequired()
                                                 ->cannotBeEmpty()
