@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.5] - 2017-06-29 
+### Added
+- Email templates were not properly resolved
+
 ## [1.0.4] - 2017-06-27 
 ### Added
 - InformationCollectionMapper, InformationCollectionStruct and InformationCollectionType
