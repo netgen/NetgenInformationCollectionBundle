@@ -3,7 +3,10 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\API\Repository\Values\User\User;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
+use DateTime;
 
 class EzInfoCollectionRepository extends EntityRepository
 {
@@ -26,5 +29,25 @@ class EzInfoCollectionRepository extends EntityRepository
     {
         $this->_em->persist($informationCollection);
         $this->_em->flush($informationCollection);
+    }
+
+    /**
+     * @param Location $location
+     * @param User $user
+     *
+     * @return EzInfoCollection
+     */
+    public function createWithValues(Location $location, User $user)
+    {
+        $dt = new DateTime();
+        $ezInfo = $this->getInstance();
+
+        $ezInfo->setContentObjectId($location->getContentInfo()->id);
+        $ezInfo->setUserIdentifier($user->login);
+        $ezInfo->setCreatorId($user->id);
+        $ezInfo->setCreated($dt->getTimestamp());
+        $ezInfo->setModified($dt->getTimestamp());
+
+        return $ezInfo;
     }
 }

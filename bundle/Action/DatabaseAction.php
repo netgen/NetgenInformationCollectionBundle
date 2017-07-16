@@ -4,6 +4,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
 use Doctrine\DBAL\DBALException;
 use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
@@ -67,17 +68,11 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
         /** @var Content $content */
         $content = $this->repository->getContentService()->loadContent($location->contentInfo->id);
 
+        /** @var User $currentUser */
         $currentUser = $this->repository->getCurrentUser();
-        $dt = new \DateTime();
 
         /** @var EzInfoCollection $ezInfo */
-        $ezInfo = $this->infoCollectionRepository->getInstance();
-
-        $ezInfo->setContentObjectId($location->getContentInfo()->id);
-        $ezInfo->setUserIdentifier($currentUser->login);
-        $ezInfo->setCreatorId($currentUser->id);
-        $ezInfo->setCreated($dt->getTimestamp());
-        $ezInfo->setModified($dt->getTimestamp());
+        $ezInfo = $this->infoCollectionRepository->createWithValues($location, $currentUser);
 
         try {
             $this->infoCollectionRepository->save($ezInfo);
@@ -90,18 +85,11 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
          * @var \eZ\Publish\Core\FieldType\Value $value
          */
         foreach ($struct->getCollectedFields() as $fieldDefIdentifier => $value) {
+            /** @var LegacyData $value */
             $value = $this->factory->getLegacyValue($value, $contentType->getFieldDefinition($fieldDefIdentifier));
 
-            $ezInfoAttribute = $this->infoCollectionAttributeRepository->getInstance();
-
-            /* @var LegacyData $value */
-            $ezInfoAttribute->setContentObjectId($location->getContentInfo()->id);
-            $ezInfoAttribute->setInformationCollectionId($ezInfo->getId());
-            $ezInfoAttribute->setContentClassAttributeId($value->getContentClassAttributeId());
-            $ezInfoAttribute->setContentObjectAttributeId($content->getField($fieldDefIdentifier)->id);
-            $ezInfoAttribute->setDataInt($value->getDataInt());
-            $ezInfoAttribute->setDataFloat($value->getDataFloat());
-            $ezInfoAttribute->setDataText($value->getDataText());
+            $ezInfoAttribute = $this->infoCollectionAttributeRepository
+                ->createWithValues($location, $ezInfo, $content->getField($fieldDefIdentifier)->id, $value);
 
             try {
                 $this->infoCollectionAttributeRepository->save($ezInfoAttribute);
