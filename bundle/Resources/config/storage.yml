@@ -6,6 +6,11 @@ parameters:
     netgen_information_collection.entity.ez_info_collection_attribute.class: Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute
 
 services:
+    netgen_information_collection.repository_aggregate:
+        class: Netgen\Bundle\InformationCollectionBundle\Repository\RepositoryAggregate
+        arguments:
+            - "@netgen_information_collection.repository.ez_info_collection"
+            - "@netgen_information_collection.repository.ez_info_collection_attribute"
 
     netgen_information_collection.repository.ez_info_collection:
         class: "%netgen_information_collection.repository.ez_info_collection.class%"

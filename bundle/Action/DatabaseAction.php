@@ -10,8 +10,7 @@ use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
+use Netgen\Bundle\InformationCollectionBundle\Repository\RepositoryAggregate;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
 
 class DatabaseAction implements ActionInterface, CrucialActionInterface
@@ -22,38 +21,30 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
     protected $factory;
 
     /**
-     * @var EzInfoCollectionRepository
-     */
-    protected $infoCollectionRepository;
-
-    /**
-     * @var EzInfoCollectionAttributeRepository
-     */
-    protected $infoCollectionAttributeRepository;
-
-    /**
      * @var Repository
      */
     protected $repository;
 
     /**
+     * @var RepositoryAggregate
+     */
+    protected $repositoryAggregate;
+
+    /**
      * PersistToDatabaseAction constructor.
      *
      * @param FieldDataFactory $factory
-     * @param EzInfoCollectionRepository $infoCollectionRepository
-     * @param EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository
+     * @param RepositoryAggregate $repositoryAggregate
      * @param Repository $repository
      */
     public function __construct(
         FieldDataFactory $factory,
-        EzInfoCollectionRepository $infoCollectionRepository,
-        EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository,
+        RepositoryAggregate $repositoryAggregate,
         Repository $repository
     ) {
         $this->factory = $factory;
-        $this->infoCollectionRepository = $infoCollectionRepository;
-        $this->infoCollectionAttributeRepository = $infoCollectionAttributeRepository;
         $this->repository = $repository;
+        $this->repositoryAggregate = $repositoryAggregate;
     }
 
     /**
@@ -71,28 +62,20 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
         /** @var User $currentUser */
         $currentUser = $this->repository->getCurrentUser();
 
-        /** @var EzInfoCollection $ezInfo */
-        $ezInfo = $this->infoCollectionRepository->createWithValues($location, $currentUser);
-
         try {
-            $this->infoCollectionRepository->save($ezInfo);
+            /** @var EzInfoCollection $ezInfo */
+            $ezInfo = $this->repositoryAggregate->createMain($location, $currentUser);
         } catch (DBALException $e) {
             throw new ActionFailedException('database', $e->getMessage());
         }
 
-        /**
-         * @var string
-         * @var \eZ\Publish\Core\FieldType\Value $value
-         */
         foreach ($struct->getCollectedFields() as $fieldDefIdentifier => $value) {
             /** @var LegacyData $value */
             $value = $this->factory->getLegacyValue($value, $contentType->getFieldDefinition($fieldDefIdentifier));
 
-            $ezInfoAttribute = $this->infoCollectionAttributeRepository
-                ->createWithValues($location, $ezInfo, $content->getField($fieldDefIdentifier)->id, $value);
-
             try {
-                $this->infoCollectionAttributeRepository->save($ezInfoAttribute);
+                $this->repositoryAggregate
+                    ->createChild($location, $ezInfo, $content->getField($fieldDefIdentifier)->id, $value);
             } catch (DBALException $e) {
                 throw new ActionFailedException('database', $e->getMessage());
             }

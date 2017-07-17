@@ -21,8 +21,7 @@ use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
+use Netgen\Bundle\InformationCollectionBundle\Repository\RepositoryAggregate;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
 use PHPUnit\Framework\TestCase;
 
@@ -42,11 +41,6 @@ class DatabaseActionTest extends TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $repository;
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $secondRepository;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -85,14 +79,9 @@ class DatabaseActionTest extends TestCase
             ->setMethods(array('getLegacyValue'))
             ->getMock();
 
-        $this->repository = $this->getMockBuilder(EzInfoCollectionRepository::class)
+        $this->repository = $this->getMockBuilder(RepositoryAggregate::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('getInstance', 'save'))
-            ->getMock();
-
-        $this->secondRepository = $this->getMockBuilder(EzInfoCollectionAttributeRepository::class)
-            ->disableOriginalConstructor()
-            ->setMethods(array('getInstance', 'save'))
+            ->setMethods(array('createChild', 'createMain'))
             ->getMock();
 
         $this->ezRepository = $this->getMockBuilder(Repository::class)
@@ -150,7 +139,7 @@ class DatabaseActionTest extends TestCase
 
         $this->legacyData = new LegacyData(123, 0, 0.0, 'some value');
 
-        $this->action = new DatabaseAction($this->factory, $this->repository, $this->secondRepository, $this->ezRepository);
+        $this->action = new DatabaseAction($this->factory, $this->repository, $this->ezRepository);
         parent::setUp();
     }
 
@@ -202,24 +191,17 @@ class DatabaseActionTest extends TestCase
             ->willReturn($user);
 
         $this->repository->expects($this->once())
-            ->method('getInstance')
+            ->method('createMain')
             ->willReturn($ezInfoCollection);
-
-        $this->repository->expects($this->once())
-            ->method('save')
-            ->with($ezInfoCollection);
 
         $this->factory->expects($this->exactly(3))
             ->method('getLegacyValue')
             ->withAnyParameters()
             ->willReturn($this->legacyData);
 
-        $this->secondRepository->expects($this->exactly(3))
-            ->method('getInstance')
+        $this->repository->expects($this->exactly(3))
+            ->method('createChild')
             ->willReturn($ezInfoCollectionAttribute);
-
-        $this->secondRepository->expects($this->exactly(3))
-            ->method('save');
 
         $this->action->act($event);
     }
@@ -274,22 +256,14 @@ class DatabaseActionTest extends TestCase
             ->willReturn($user);
 
         $this->repository->expects($this->once())
-            ->method('getInstance')
-            ->willReturn($ezInfoCollection);
-
-        $this->repository->expects($this->once())
-            ->method('save')
-            ->with($ezInfoCollection)
+            ->method('createMain')
             ->willThrowException(new DBALException());
 
         $this->factory->expects($this->never())
             ->method('getLegacyValue');
 
-        $this->secondRepository->expects($this->never())
-            ->method('getInstance');
-
-        $this->secondRepository->expects($this->never())
-            ->method('save');
+        $this->repository->expects($this->never())
+            ->method('createChild');
 
         $this->action->act($event);
     }
@@ -345,24 +319,16 @@ class DatabaseActionTest extends TestCase
             ->willReturn($user);
 
         $this->repository->expects($this->once())
-            ->method('getInstance')
+            ->method('createMain')
             ->willReturn($ezInfoCollection);
-
-        $this->repository->expects($this->once())
-            ->method('save')
-            ->with($ezInfoCollection);
 
         $this->factory->expects($this->exactly(1))
             ->method('getLegacyValue')
             ->withAnyParameters()
             ->willReturn($this->legacyData);
 
-        $this->secondRepository->expects($this->exactly(1))
-            ->method('getInstance')
-            ->willReturn($ezInfoCollectionAttribute);
-
-        $this->secondRepository->expects($this->once())
-            ->method('save')
+        $this->repository->expects($this->once())
+            ->method('createChild')
             ->willThrowException(new DBALException());
 
         $this->action->act($event);
