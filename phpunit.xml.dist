@@ -22,8 +22,6 @@
                 <directory>bundle/Repository</directory>
                 <directory>bundle/Resources</directory>
                 <file>bundle/NetgenInformationCollectionBundle.php</file>
-                <file>bundle/Controller/InformationCollectionController.php</file>
-                <file>bundle/InformationCollectionTrait.php</file>
                 <file>bundle/Events.php</file>
             </exclude>
         </whitelist>

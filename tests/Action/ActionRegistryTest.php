@@ -75,6 +75,11 @@ class ActionRegistryTest extends TestCase
     protected $action4;
 
     /**
+     * @var CrucialActionStub
+     */
+    protected $action5;
+
+    /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $logger;
@@ -97,7 +102,7 @@ class ActionRegistryTest extends TestCase
             ),
             'content_types' => array(
                 'ng_feedback_form' => array(
-                    'database',
+                    'database', 'crucial',
                 ),
             ),
         );
@@ -141,6 +146,8 @@ class ActionRegistryTest extends TestCase
             ->disableOriginalConstructor()
             ->setMethods(array('act'))
             ->getMock();
+
+        $this->action5 = new CrucialActionStub();
 
         $this->logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
@@ -378,7 +385,6 @@ class ActionRegistryTest extends TestCase
     /**
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
      * @expectedExceptionMessage InformationCollection action database failed with reason cannot write to database
-
      */
     public function testThrowExceptionWhenDebugIsTrue()
     {
@@ -399,6 +405,22 @@ class ActionRegistryTest extends TestCase
             ->method('act');
 
         $this->registry->setDebug(true);
+        $this->registry->act($this->event);
+    }
+
+    public function testThrowExceptionWhenDebugIsFalse()
+    {
+        $this->registry->addAction('crucial', $this->action5, 1);
+        $this->registry->addAction('email', $this->action2, 2);
+
+        $this->logger->expects($this->once())
+            ->method('error')
+            ->with('InformationCollection action crucial failed with reason test');
+
+        $this->action2->expects($this->never())
+            ->method('act');
+
+        $this->registry->setDebug(false);
         $this->registry->act($this->event);
     }
 }

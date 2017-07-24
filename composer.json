@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": "~5.6|~7.0|~7.1",
-        "ezsystems/ezpublish-kernel": "^6.0",
+        "ezsystems/ezpublish-kernel": "^6.7",
         "netgen/ez-forms-bundle": "^2.0",
         "twig/twig": "^1.28|^2.0",
         "doctrine/orm": "^2.5"
@@ -43,6 +43,7 @@
     },
     "scripts": {
         "test": "@php vendor/bin/phpunit --colors=always",
+        "coverage": "@php -dzend_extension=xdebug.so vendor/bin/phpunit --colors=always",
         "fix": "@php vendor/bin/php-cs-fixer fix"
     },
     "config": {

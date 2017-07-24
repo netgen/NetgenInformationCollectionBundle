@@ -9,7 +9,6 @@ use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollection
 use Netgen\Bundle\InformationCollectionBundle\Form\Type\InformationCollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouterInterface;
 
 class FormBuilder
@@ -72,9 +71,7 @@ class FormBuilder
 
         $formBuilder = $this->formFactory
             ->createBuilder(
-                Kernel::VERSION_ID < 20800 ?
-                    InformationCollectionType::NAME :
-                    InformationCollectionType::class,
+                InformationCollectionType::class,
                 $data,
                 array(
                     'csrf_protection' => $this->useCsrf,

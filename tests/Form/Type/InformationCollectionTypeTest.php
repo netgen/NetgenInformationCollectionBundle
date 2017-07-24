@@ -282,7 +282,10 @@ class InformationCollectionTypeTest extends TestCase
             array(
                 'id' => 123,
                 'mainLanguageCode' => 'eng-GB',
-                'names' => array('fre-FR' => 'fre-FR'),
+                'names' => array(
+                    'fre-FR' => 'fre-FR',
+                    'fre-CH' => 'fre-CH',
+                    ),
                 'fieldDefinitions' => array(
                     new FieldDefinition(
                         array(
