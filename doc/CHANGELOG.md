@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0]
+### Changed
+- Dropped support for eZ 5
+- Dropped support for `netgen/ez-forms-bundle` v1
+
 ## [1.0.5] - 2017-06-29 
 ### Added
 - Email templates were not properly resolved
