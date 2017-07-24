@@ -11,6 +11,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class InformationCollectionType extends AbstractContentType
 {
+    const NAME = 'netgen_ezforms_information_collection';
+
     /**
      * @var array
      */

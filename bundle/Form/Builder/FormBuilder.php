@@ -5,8 +5,8 @@ namespace Netgen\Bundle\InformationCollectionBundle\Form\Builder;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
-use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
-use Netgen\Bundle\EzFormsBundle\Form\Type\InformationCollectionType;
+use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\Bundle\InformationCollectionBundle\Form\Type\InformationCollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -73,7 +73,7 @@ class FormBuilder
         $formBuilder = $this->formFactory
             ->createBuilder(
                 Kernel::VERSION_ID < 20800 ?
-                    'ezforms_information_collection' :
+                    InformationCollectionType::NAME :
                     InformationCollectionType::class,
                 $data,
                 array(
