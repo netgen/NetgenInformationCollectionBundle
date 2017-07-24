@@ -82,7 +82,7 @@ class EmailDataFactoryTest extends TestCase
                 'default' => 'AcmeBundle::email.html.twig',
                 'content_types' => array(
                     'test_content_type' => 'AcmeBundle::test_content_type.html.twig',
-                )
+                ),
             ),
             'default_variables' => array(
                 'sender' => 'sender@example.com',

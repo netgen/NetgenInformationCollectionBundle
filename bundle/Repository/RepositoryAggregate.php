@@ -29,14 +29,13 @@ class RepositoryAggregate
     public function __construct(
         EzInfoCollectionRepository $infoCollectionRepository,
         EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository
-    )
-    {
+    ) {
         $this->infoCollectionRepository = $infoCollectionRepository;
         $this->infoCollectionAttributeRepository = $infoCollectionAttributeRepository;
     }
 
     /**
-     * Creates EzInfoCollection instance
+     * Creates EzInfoCollection instance.
      *
      * @param Location $location
      * @param User $currentUser
@@ -53,7 +52,7 @@ class RepositoryAggregate
     }
 
     /**
-     * Creates EzInfoCollectionAttribute instance
+     * Creates EzInfoCollectionAttribute instance.
      *
      * @param Location $location
      * @param EzInfoCollection $ezInfoCollection

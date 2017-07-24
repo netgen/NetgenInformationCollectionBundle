@@ -2,11 +2,11 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Repository;
 
+use DateTime;
 use Doctrine\ORM\EntityRepository;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\User\User;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
-use DateTime;
 
 class EzInfoCollectionRepository extends EntityRepository
 {

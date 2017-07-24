@@ -3,7 +3,6 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
