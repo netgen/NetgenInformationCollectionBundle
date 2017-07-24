@@ -5,7 +5,6 @@ Requirements
 ------------
 
 * eZ Platform 1.0+
-* eZ Publish 5
 
 Installation steps
 ------------------
