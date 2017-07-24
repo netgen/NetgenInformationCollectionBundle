@@ -1,11 +1,6 @@
-parameters:
-    netgen_information_collection.action.registry.class: Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry
-    netgen_information_collection.action.db.class: Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction
-    netgen_information_collection.action.email.class: Netgen\Bundle\InformationCollectionBundle\Action\EmailAction
-
 services:
     netgen_information_collection.action.registry:
-        class: '%netgen_information_collection.action.registry.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry
         arguments:
             - "$actions;netgen_information_collection$"
             - "@logger"
@@ -13,7 +8,7 @@ services:
             - [setDebug, ['%kernel.debug%']]
 
     netgen_information_collection.action.db:
-        class: '%netgen_information_collection.action.db.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction
         arguments:
             - '@netgen_information_collection.factory.field_data'
             - '@netgen_information_collection.repository.ez_info_collection'
@@ -23,7 +18,7 @@ services:
             - { name: netgen_information_collection.action, alias: database, priority: 300 }
 
     netgen_information_collection.action.email:
-        class: '%netgen_information_collection.action.email.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Action\EmailAction
         arguments:
             - '@netgen_information_collection.factory.email_data'
             - '@netgen_information_collection.mailer'

@@ -1,10 +1,3 @@
-parameters:
-
-    netgen_information_collection.repository.ez_info_collection.class: Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository
-    netgen_information_collection.entity.ez_info_collection.class: Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection
-    netgen_information_collection.repository.ez_info_collection_attribute.class: Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository
-    netgen_information_collection.entity.ez_info_collection_attribute.class: Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute
-
 services:
     netgen_information_collection.repository_aggregate:
         class: Netgen\Bundle\InformationCollectionBundle\Repository\RepositoryAggregate
@@ -13,11 +6,13 @@ services:
             - "@netgen_information_collection.repository.ez_info_collection_attribute"
 
     netgen_information_collection.repository.ez_info_collection:
-        class: "%netgen_information_collection.repository.ez_info_collection.class%"
+        class: Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments: [ "%netgen_information_collection.entity.ez_info_collection.class%" ]
+        arguments:
+            - Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection
 
     netgen_information_collection.repository.ez_info_collection_attribute:
-        class: "%netgen_information_collection.repository.ez_info_collection_attribute.class%"
+        class: Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments: [ "%netgen_information_collection.entity.ez_info_collection_attribute.class%" ]
+        arguments:
+            - Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute

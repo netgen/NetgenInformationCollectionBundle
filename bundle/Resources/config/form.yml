@@ -1,0 +1,15 @@
+services:
+    netgen_information_collection.form.data_mapper.info_collection:
+        class: Netgen\Bundle\InformationCollectionBundle\Form\DataMapper\InformationCollectionMapper
+        arguments:
+            - "@netgen.ezforms.form.fieldtype_handler_registry"
+
+    netgen_information_collection.form.type.info_collection:
+        class: Netgen\Bundle\InformationCollectionBundle\Form\Type\InformationCollectionType
+        arguments:
+            - "@netgen.ezforms.form.fieldtype_handler_registry"
+            - "@netgen.ezforms.form.data_mapper.info_collection"
+        calls:
+            - [setLanguages, [$languages$]]
+        tags:
+            - { name: form.type, alias: netgen_ezforms_information_collection }
