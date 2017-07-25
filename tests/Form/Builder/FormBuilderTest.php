@@ -110,7 +110,7 @@ class FormBuilderTest extends TestCase
         $this->router->expects($this->once())
             ->method('generate');
 
-        $builder = $this->formBuilder->createFormForLocation($location, true);
+        $builder = $this->formBuilder->createFormForLocationWithAjax($location);
 
         $this->assertSame($this->innerFormBuilder, $builder);
     }

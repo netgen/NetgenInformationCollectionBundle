@@ -57,16 +57,41 @@ class FormBuilder
      * Creates Information collection Form object for given Location object.
      *
      * @param Location $location
-     * @param bool $useAjax
      *
      * @return FormBuilderInterface
      */
-    public function createFormForLocation(Location $location, $useAjax = false)
+    public function createFormForLocation(Location $location)
+    {
+        return $this->createBuilder($location);
+    }
+
+    /**
+     * Creates Information collection Form object for given Location object.
+     * Form handling is supposed to be done by Ajax.
+     *
+     * @param Location $location
+     *
+     * @return FormBuilderInterface
+     */
+    public function createFormForLocationWithAjax(Location $location)
+    {
+        $formBuilder = $this->createBuilder($location);
+        $formBuilder->setAction($this->router->generate('netgen_information_collection_handle_ajax', array('location' => $location->id)));
+
+        return $formBuilder;
+    }
+
+    /**
+     * Creates FormBuilder with default settings
+     *
+     * @param Location $location
+     *
+     * @return FormBuilderInterface
+     */
+    protected function createBuilder(Location $location)
     {
         $contentInfo = $location->contentInfo;
-
         $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
-
         $data = new DataWrapper(new InformationCollectionStruct(), $contentType, $location);
 
         $formBuilder = $this->formFactory
@@ -77,10 +102,6 @@ class FormBuilder
                     'csrf_protection' => $this->useCsrf,
                 )
             );
-
-        if ($useAjax) {
-            $formBuilder->setAction($this->router->generate('netgen_information_collection_handle_ajax', array('location' => $location->id)));
-        }
 
         return $formBuilder;
     }

@@ -132,7 +132,7 @@ class InformationCollectionControllerTest extends TestCase
 
         $this->builder->expects($this->once())
             ->method('createFormForLocation')
-            ->with($location, false)
+            ->with($location)
             ->willReturn($this->formBuilder);
 
         $this->form->expects($this->once())
@@ -182,7 +182,7 @@ class InformationCollectionControllerTest extends TestCase
 
         $this->builder->expects($this->once())
             ->method('createFormForLocation')
-            ->with($location, false)
+            ->with($location)
             ->willReturn($this->formBuilder);
 
         $this->form->expects($this->once())
