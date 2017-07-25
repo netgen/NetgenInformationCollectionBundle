@@ -13,12 +13,12 @@ class RepositoryAggregate
     /**
      * @var EzInfoCollectionRepository
      */
-    protected $infoCollectionRepository;
+    protected $repository;
 
     /**
      * @var EzInfoCollectionAttributeRepository
      */
-    protected $infoCollectionAttributeRepository;
+    protected $attributeRepository;
 
     /**
      * RepositoryAggregate constructor.
@@ -27,11 +27,11 @@ class RepositoryAggregate
      * @param EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository
      */
     public function __construct(
-        EzInfoCollectionRepository $infoCollectionRepository,
-        EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository
+        EzInfoCollectionRepository $repository,
+        EzInfoCollectionAttributeRepository $attributeRepository
     ) {
-        $this->infoCollectionRepository = $infoCollectionRepository;
-        $this->infoCollectionAttributeRepository = $infoCollectionAttributeRepository;
+        $this->repository = $repository;
+        $this->attributeRepository = $attributeRepository;
     }
 
     /**
@@ -44,9 +44,9 @@ class RepositoryAggregate
      */
     public function createMain(Location $location, User $currentUser)
     {
-        $main = $this->infoCollectionRepository->createWithValues($location, $currentUser);
+        $main = $this->repository->createWithValues($location, $currentUser);
 
-        $this->infoCollectionRepository->save($main);
+        $this->repository->save($main);
 
         return $main;
     }
@@ -63,10 +63,10 @@ class RepositoryAggregate
      */
     public function createChild(Location $location, EzInfoCollection $ezInfoCollection, $fieldId, LegacyData $value)
     {
-        $child = $this->infoCollectionAttributeRepository
+        $child = $this->attributeRepository
             ->createWithValues($location, $ezInfoCollection, $fieldId, $value);
 
-        $this->infoCollectionAttributeRepository->save($child);
+        $this->attributeRepository->save($child);
 
         return $child;
     }
