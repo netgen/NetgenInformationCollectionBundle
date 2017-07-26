@@ -18,7 +18,7 @@ engines:
       file_extensions: "php"
       rulesets: "cleancode,controversial,design,codesize,unusedcode,ic_ruleset.xml"
   duplication:
-    enable: true
+    enabled: true
     config:
       languages:
         php:
