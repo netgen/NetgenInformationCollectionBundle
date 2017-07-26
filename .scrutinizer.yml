@@ -1,4 +1,6 @@
 filter:
+    paths:
+        - "bundle/*"
     excluded_paths:
         - 'tests/'
         - 'doc/'
