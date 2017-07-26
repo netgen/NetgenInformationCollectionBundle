@@ -1,11 +1,15 @@
+# Mark analysis for PHP only
 PHP: true
 
+# skip irrelevant directories
 exclude_paths:
  - "**/vendor/"
  - "build/"
  - "doc/"
  - "tests/"
 
+# PHP code anlysis engine
+# PHPCodeSniffer, PHPMD and CodeClimate duplication engine
 engines:
   phpcodesniffer:
     enabled: true
@@ -23,6 +27,8 @@ engines:
       languages:
         php:
           mass_threshold: 25
+
+# Rate only PHP files
 ratings:
   paths:
   - "**.php"
