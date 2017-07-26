@@ -16,6 +16,7 @@ engines:
     enabled: true
     config:
       file_extensions: "php"
+      rulesets: "cleancode,controversial,design,codesize,unusedcode,ic_ruleset.xml"
 
 ratings:
   paths:
