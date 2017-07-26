@@ -23,8 +23,8 @@ class RepositoryAggregate
     /**
      * RepositoryAggregate constructor.
      *
-     * @param EzInfoCollectionRepository $infoCollectionRepository
-     * @param EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository
+     * @param EzInfoCollectionRepository $repository
+     * @param EzInfoCollectionAttributeRepository $attributeRepository
      */
     public function __construct(
         EzInfoCollectionRepository $repository,

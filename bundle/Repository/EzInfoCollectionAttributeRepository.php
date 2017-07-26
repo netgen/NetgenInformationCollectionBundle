@@ -34,7 +34,7 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
     /**
      * @param Location $location
      * @param EzInfoCollection $ezInfoCollection
-     * @param $fieldId
+     * @param int $fieldId
      * @param LegacyData $value
      *
      * @return EzInfoCollectionAttribute
@@ -44,11 +44,11 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
         $ezInfoAttribute = $this->getInstance();
         $ezInfoAttribute->setContentObjectId($location->getContentInfo()->id);
         $ezInfoAttribute->setInformationCollectionId($ezInfoCollection->getId());
-        $ezInfoAttribute->setContentClassAttributeId($value->getContentClassAttributeId());
+        $ezInfoAttribute->setContentClassAttributeId($value->contentClassAttributeId);
         $ezInfoAttribute->setContentObjectAttributeId($fieldId);
-        $ezInfoAttribute->setDataInt($value->getDataInt());
-        $ezInfoAttribute->setDataFloat($value->getDataFloat());
-        $ezInfoAttribute->setDataText($value->getDataText());
+        $ezInfoAttribute->setDataInt($value->dataInt);
+        $ezInfoAttribute->setDataFloat($value->dataFloat);
+        $ezInfoAttribute->setDataText($value->dataText);
 
         return $ezInfoAttribute;
     }
