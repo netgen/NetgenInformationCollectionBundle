@@ -17,12 +17,19 @@ class EmailDataTest extends TestCase
      */
     public function testGetters($recipient, $sender, $subject, $body)
     {
-        $emailData = new EmailData($recipient, $sender, $subject, $body);
+        $emailData = new EmailData(
+            array(
+                'recipient' => $recipient,
+                'sender' => $sender,
+                'subject' => $subject,
+                'body' => $body,
+            )
+        );
 
-        $this->assertEquals($recipient, $emailData->getRecipient());
-        $this->assertEquals($sender, $emailData->getSender());
-        $this->assertEquals($subject, $emailData->getSubject());
-        $this->assertEquals($body, $emailData->getBody());
+        $this->assertEquals($recipient, $emailData->recipient);
+        $this->assertEquals($sender, $emailData->sender);
+        $this->assertEquals($subject, $emailData->subject);
+        $this->assertEquals($body, $emailData->body);
     }
 
     public function emailDataProvider()

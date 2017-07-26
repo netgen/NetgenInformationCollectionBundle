@@ -46,13 +46,14 @@ class FieldDataFactoryTest extends TestCase
             ->with($value)
             ->willReturn(null);
 
+        /** @var LegacyData $data */
         $data = $this->factory->getLegacyValue($value, $definition);
 
         $this->assertInstanceOf(LegacyData::class, $data);
-        $this->assertEquals(123, $data->getContentClassAttributeId());
-        $this->assertEquals(0.0, $data->getDataFloat());
-        $this->assertEquals(0, $data->getDataInt());
-        $this->assertEquals((string) $value, $data->getDataText());
+        $this->assertEquals(123, $data->contentClassAttributeId);
+        $this->assertEquals(0.0, $data->dataFloat);
+        $this->assertEquals(0, $data->dataInt);
+        $this->assertEquals((string) $value, $data->dataText);
     }
 
     public function testGetLegacyValueWithCustomHandler()
@@ -77,12 +78,13 @@ class FieldDataFactoryTest extends TestCase
             ->with($value)
             ->willReturn($handler);
 
+        /** @var LegacyData $data */
         $data = $this->factory->getLegacyValue($value, $definition);
 
         $this->assertInstanceOf(LegacyData::class, $data);
-        $this->assertEquals(123, $data->getContentClassAttributeId());
-        $this->assertEquals(0.0, $data->getDataFloat());
-        $this->assertEquals(0, $data->getDataInt());
-        $this->assertEquals((string) $value, $data->getDataText());
+        $this->assertEquals(123, $data->contentClassAttributeId);
+        $this->assertEquals(0.0, $data->dataFloat);
+        $this->assertEquals(0, $data->dataInt);
+        $this->assertEquals((string) $value, $data->dataText);
     }
 }

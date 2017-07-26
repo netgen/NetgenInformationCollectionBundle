@@ -47,13 +47,19 @@ class TemplateDataTest extends TestCase
         $this->content = new Content();
         $this->templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
 
-        $this->templateData = new TemplateData($this->event, $this->content, $this->templateWrapper);
+        $this->templateData = new TemplateData(
+            array(
+                'event' => $this->event,
+                'content' => $this->content,
+                'templateWrapper' => $this->templateWrapper,
+            )
+        );
     }
 
     public function testGetters()
     {
-        $this->assertEquals($this->event, $this->templateData->getEvent());
-        $this->assertEquals($this->content, $this->templateData->getContent());
-        $this->assertEquals($this->templateWrapper, $this->templateData->getTemplateWrapper());
+        $this->assertEquals($this->event, $this->templateData->event);
+        $this->assertEquals($this->content, $this->templateData->content);
+        $this->assertEquals($this->templateWrapper, $this->templateData->templateWrapper);
     }
 }

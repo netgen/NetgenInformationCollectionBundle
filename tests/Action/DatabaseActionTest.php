@@ -137,7 +137,14 @@ class DatabaseActionTest extends TestCase
             $this->struct->setCollectedFieldValue($field->fieldDefIdentifier, $field->value);
         }
 
-        $this->legacyData = new LegacyData(123, 0, 0.0, 'some value');
+        $this->legacyData = new LegacyData(
+            array(
+                'contentClassAttributeId' => 123,
+                'dataInt' => 0,
+                'dataFloat' => 0.0,
+                'dataText' => 'some value',
+            )
+        );
 
         $this->action = new DatabaseAction($this->factory, $this->repository, $this->ezRepository);
         parent::setUp();

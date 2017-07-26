@@ -8,7 +8,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Value;
  * @property int $dataInt
  * @property string $dataText
  */
-class LegacyData
+class LegacyData extends ValueObject
 {
     /**
      * @var int

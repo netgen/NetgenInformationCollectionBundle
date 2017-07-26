@@ -34,7 +34,14 @@ class MailerTest extends TestCase
      */
     public function testCreateAndSendMessageWithWrongRecipient()
     {
-        $data = new EmailData('[][][]][]', 'sender@example.com', 'Test', 'Body');
+        $data = new EmailData(
+            array(
+                'recipient' => '[][][]][]',
+                'sender' => 'sender@example.com',
+                'subject' => 'Test',
+                'body' => 'Body',
+            )
+        );
 
         $this->swiftMailer->expects($this->never())
             ->method('send');
@@ -48,7 +55,14 @@ class MailerTest extends TestCase
      */
     public function testCreateAndSendMessageWithWrongSender()
     {
-        $data = new EmailData('recipient@example.com', '[][][]][]', 'Test', 'Body');
+        $data = new EmailData(
+            array(
+                'sender' => '[][][]][]',
+                'recipient' => 'sender@example.com',
+                'subject' => 'Test',
+                'body' => 'Body',
+            )
+        );
 
         $this->swiftMailer->expects($this->never())
             ->method('send');
@@ -62,7 +76,14 @@ class MailerTest extends TestCase
      */
     public function testCreateAndSendMessageWithErrorFromInternalMailer()
     {
-        $data = new EmailData('recipient@example.com', 'sender@example.com', 'Test', 'Body');
+        $data = new EmailData(
+            array(
+                'recipient' => 'recipient@example.com',
+                'sender' => 'sender@example.com',
+                'subject' => 'Test',
+                'body' => 'Body',
+            )
+        );
 
         $this->swiftMailer->expects($this->once())
             ->method('send')
@@ -73,7 +94,14 @@ class MailerTest extends TestCase
 
     public function testCreateAndSendMessage()
     {
-        $data = new EmailData('recipient@example.com', 'sender@example.com', 'Test', 'Body');
+        $data = new EmailData(
+            array(
+                'recipient' => 'recipient@example.com',
+                'sender' => 'sender@example.com',
+                'subject' => 'Test',
+                'body' => 'Body',
+            )
+        );
 
         $this->swiftMailer->expects($this->once())
             ->method('send')

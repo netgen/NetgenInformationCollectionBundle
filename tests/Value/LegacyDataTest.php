@@ -17,12 +17,19 @@ class LegacyDataTest extends TestCase
      */
     public function testGetters($contentClassAttributeId, $dataFloat, $dataInt, $dataText)
     {
-        $legacyData = new LegacyData($contentClassAttributeId, $dataFloat, $dataInt, $dataText);
+        $legacyData = new LegacyData(
+            array(
+                'contentClassAttributeId' => $contentClassAttributeId,
+                'dataFloat' => $dataFloat,
+                'dataInt' => $dataInt,
+                'dataText' => $dataText,
+            )
+        );
 
-        $this->assertEquals($contentClassAttributeId, $legacyData->getContentClassAttributeId());
-        $this->assertEquals($dataFloat, $legacyData->getDataFloat());
-        $this->assertEquals($dataInt, $legacyData->getDataInt());
-        $this->assertEquals($dataText, $legacyData->getDataText());
+        $this->assertEquals($contentClassAttributeId, $legacyData->contentClassAttributeId);
+        $this->assertEquals($dataFloat, $legacyData->dataFloat);
+        $this->assertEquals($dataInt, $legacyData->dataInt);
+        $this->assertEquals($dataText, $legacyData->dataText);
     }
 
     public function legacyDataProvider()

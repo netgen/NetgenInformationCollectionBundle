@@ -30,19 +30,19 @@ class Mailer implements MailerInterface
         $message = new \Swift_Message();
 
         try {
-            $message->setTo($data->getRecipient());
+            $message->setTo($data->recipient);
         } catch (\Swift_RfcComplianceException $e) {
             throw new EmailNotSentException('recipient', $e->getMessage());
         }
 
         try {
-            $message->setFrom($data->getSender());
+            $message->setFrom($data->sender);
         } catch (\Swift_RfcComplianceException $e) {
             throw new EmailNotSentException('sender', $e->getMessage());
         }
 
-        $message->setSubject($data->getSubject());
-        $message->setBody($data->getBody(), 'text/html');
+        $message->setSubject($data->subject);
+        $message->setBody($data->body, 'text/html');
 
         if (!$this->internalMailer->send($message)) {
             throw new EmailNotSentException('send', 'invalid mailer configuration?');

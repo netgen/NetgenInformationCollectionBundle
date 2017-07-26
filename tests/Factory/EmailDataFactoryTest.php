@@ -225,13 +225,14 @@ class EmailDataFactoryTest extends TestCase
             ->method('load')
             ->willReturn($templateWrapper);
 
+        /** @var EmailData $value */
         $value = $this->factory->build($event);
 
         $this->assertInstanceOf(EmailData::class, $value);
-        $this->assertEquals('recipient@test.com', $value->getRecipient());
-        $this->assertEquals('sender@test.com', $value->getSender());
-        $this->assertEquals('subject test', $value->getSubject());
-        $this->assertEquals('email body', $value->getBody());
+        $this->assertEquals('recipient@test.com', $value->recipient);
+        $this->assertEquals('sender@test.com', $value->sender);
+        $this->assertEquals('subject test', $value->subject);
+        $this->assertEquals('email body', $value->body);
     }
 
     public function testBuildingWithSenderRecipientAndSubjectFromTemplate()
@@ -315,13 +316,14 @@ TEMPLATE;
             ->method('load')
             ->willReturn($templateWrapper);
 
+        /** @var EmailData $value */
         $value = $this->factory->build($event);
 
         $this->assertInstanceOf(EmailData::class, $value);
-        $this->assertEquals('recipient@template.com', $value->getRecipient());
-        $this->assertEquals('sender@template.com', $value->getSender());
-        $this->assertEquals('My custom subject', $value->getSubject());
-        $this->assertEquals('My email body', $value->getBody());
+        $this->assertEquals('recipient@template.com', $value->recipient);
+        $this->assertEquals('sender@template.com', $value->sender);
+        $this->assertEquals('My custom subject', $value->subject);
+        $this->assertEquals('My email body', $value->body);
     }
 
     /**
@@ -394,13 +396,14 @@ TEMPLATE;
             ->method('load')
             ->willReturn($templateWrapper);
 
+        /** @var EmailData $value */
         $value = $this->factory->build($event);
 
         $this->assertInstanceOf(EmailData::class, $value);
-        $this->assertEquals('recipient@test.com', $value->getRecipient());
-        $this->assertEquals('sender@test.com', $value->getSender());
-        $this->assertEquals('subject test', $value->getSubject());
-        $this->assertEquals('body test', $value->getBody());
+        $this->assertEquals('recipient@test.com', $value->recipient);
+        $this->assertEquals('sender@test.com', $value->sender);
+        $this->assertEquals('subject test', $value->subject);
+        $this->assertEquals('body test', $value->body);
     }
 
     public function testBuildingWithSenderRecipientAndSubjectFromConfiguration()
@@ -480,11 +483,12 @@ TEMPLATE;
             ->method('load')
             ->willReturn($templateWrapper);
 
+        /** @var EmailData $value */
         $value = $this->factory->build($event);
 
         $this->assertInstanceOf(EmailData::class, $value);
-        $this->assertEquals($this->config['default_variables']['recipient'], $value->getRecipient());
-        $this->assertEquals($this->config['default_variables']['sender'], $value->getSender());
-        $this->assertEquals($this->config['default_variables']['subject'], $value->getSubject());
+        $this->assertEquals($this->config['default_variables']['recipient'], $value->recipient);
+        $this->assertEquals($this->config['default_variables']['sender'], $value->sender);
+        $this->assertEquals($this->config['default_variables']['subject'], $value->subject);
     }
 }
