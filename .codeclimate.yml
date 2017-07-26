@@ -1,10 +1,10 @@
 PHP: true
 
 exclude_paths:
- - "/vendor/*"
- - "/build/*"
- - "/doc/*"
- - "/tests/*"
+ - "**/vendor/"
+ - "build/"
+ - "doc/"
+ - "tests/"
 
 engines:
   phpcodesniffer:
