@@ -45,7 +45,7 @@ class InformationCollectionTypeTest extends TestCase
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage Data must be an instance of Netgen\EzFormsBundle\Form\DataWrapper
+     * @expectedExceptionMessage Data must be an instance of Netgen\Bundle\EzFormsBundle\Form\DataWrapper
      */
     public function testBuildFormWithoutDataWrapperMustThrowException()
     {

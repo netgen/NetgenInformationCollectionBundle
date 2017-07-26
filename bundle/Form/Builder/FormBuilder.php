@@ -76,7 +76,9 @@ class FormBuilder
     public function createFormForLocationWithAjax(Location $location)
     {
         $formBuilder = $this->createBuilder($location);
-        $formBuilder->setAction($this->router->generate('netgen_information_collection_handle_ajax', array('location' => $location->id)));
+        $formBuilder->setAction(
+            $this->router->generate('netgen_information_collection_handle_ajax', array('location' => $location->id))
+        );
 
         return $formBuilder;
     }

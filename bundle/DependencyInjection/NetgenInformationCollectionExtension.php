@@ -38,7 +38,9 @@ class NetgenInformationCollectionExtension extends Extension
         foreach ($configArrays as $configArray) {
             $processor->mapConfigArray($configArray, $config);
             foreach ($scopes as $scope) {
-                $scopeConfig = $container->getParameter(ConfigurationConstants::SETTINGS_ROOT . '.' . $scope . '.' . $configArray);
+                $scopeConfig = $container->getParameter(
+                    ConfigurationConstants::SETTINGS_ROOT . '.' . $scope . '.' . $configArray
+                );
                 foreach ((array) $scopeConfig as $key => $value) {
                     $container->setParameter(
                         ConfigurationConstants::SETTINGS_ROOT . '.' . $scope . '.' . $configArray . '.' . $key,

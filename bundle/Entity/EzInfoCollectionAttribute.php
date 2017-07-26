@@ -16,7 +16,9 @@ use Doctrine\ORM\Mapping as ORM;
  *          @ORM\Index(name="ezinfocollection_attr_ic_id", columns={"informationcollection_id"})
  *     }
  * )
- * @ORM\Entity(repositoryClass="Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository")
+ * @ORM\Entity(
+ *     repositoryClass="Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository"
+ * )
  */
 class EzInfoCollectionAttribute
 {

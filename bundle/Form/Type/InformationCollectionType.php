@@ -56,7 +56,7 @@ class InformationCollectionType extends AbstractContentType
 
         if (!$dataWrapper instanceof DataWrapper) {
             throw new RuntimeException(
-                'Data must be an instance of Netgen\\EzFormsBundle\\Form\\DataWrapper'
+                sprintf("Data must be an instance of %s", DataWrapper::class)
             );
         }
 
@@ -65,7 +65,7 @@ class InformationCollectionType extends AbstractContentType
 
         if (!$payload instanceof InformationCollectionStruct) {
             throw new RuntimeException(
-                'Data payload must be an instance of Netgen\\Bundle\\InformationCollectionBundle\\Form\\Payload\\InformationCollectionStruct'
+                sprintf("Data payload must be an instance of %s", InformationCollectionStruct::class)
             );
         }
 
@@ -74,7 +74,7 @@ class InformationCollectionType extends AbstractContentType
 
         if (!$contentType instanceof ContentType) {
             throw new RuntimeException(
-                'Data definition must be an instance of eZ\\Publish\\API\\Repository\\Values\\ContentType\\ContentType'
+                sprintf("Data definition must be an instance of %s", ContentType::class)
             );
         }
 

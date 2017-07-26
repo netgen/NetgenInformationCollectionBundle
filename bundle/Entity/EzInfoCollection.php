@@ -7,8 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * EzInfoCollection.
  *
- * @ORM\Table(name="ezinfocollection", indexes={@ORM\Index(name="ezinfocollection_co_id_created", columns={"contentobject_id", "created"})})
- * @ORM\Entity(repositoryClass="Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository")
+ * @ORM\Table(
+ *     name="ezinfocollection",
+ *     indexes={@ORM\Index(name="ezinfocollection_co_id_created", columns={"contentobject_id", "created"})}
+ * )
+ * @ORM\Entity(
+ *     repositoryClass="Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository"
+ * )
  */
 class EzInfoCollection
 {
