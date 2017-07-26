@@ -8,7 +8,14 @@ filter:
 checks:
     php: true
 
+build:
+    tests:
+        override:
+            -
+                command: 'vendor/bin/phpunit --coverage-clover=coverage'
+                coverage:
+                    file: 'coverage'
+                    format: 'clover'
+
 tools:
-    external_code_coverage:
-        timeout: 600
-        runs: 3
+    external_code_coverage: false
