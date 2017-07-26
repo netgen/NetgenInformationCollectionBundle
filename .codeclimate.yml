@@ -17,7 +17,12 @@ engines:
     config:
       file_extensions: "php"
       rulesets: "cleancode,controversial,design,codesize,unusedcode,ic_ruleset.xml"
-
+  duplication:
+    enable: true
+    config:
+      languages:
+        php:
+          mass_threshold: 25
 ratings:
   paths:
   - "**.php"
