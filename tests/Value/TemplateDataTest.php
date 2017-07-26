@@ -62,4 +62,31 @@ class TemplateDataTest extends TestCase
         $this->assertEquals($this->content, $this->templateData->content);
         $this->assertEquals($this->templateWrapper, $this->templateData->templateWrapper);
     }
+
+    /**
+     * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\PropertyNotFoundException
+     * @expectedExceptionMessage Property 'test' not found on class 'Netgen\Bundle\InformationCollectionBundle\Value\TemplateData'
+     */
+    public function testExceptionShouldBeThrownInCaseOfAccessingNonExistingProperty()
+    {
+        $this->templateData->test;
+    }
+
+    /**
+     * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\PropertyReadOnlyException
+     * @expectedExceptionMessage Property 'event' is readonly on class 'Netgen\Bundle\InformationCollectionBundle\Value\TemplateData'
+     */
+    public function testExceptionShouldBeThrownInCaseOfSettingPropertyValue()
+    {
+        $this->templateData->event = 'event';
+    }
+
+    /**
+     * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\PropertyNotFoundException
+     * @expectedExceptionMessage Property 'test' not found on class 'Netgen\Bundle\InformationCollectionBundle\Value\TemplateData'
+     */
+    public function testExceptionShouldBeThrownInCaseOfSettingPropertyValueOfNonExistingProperty()
+    {
+        $this->templateData->test = 'test';
+    }
 }
