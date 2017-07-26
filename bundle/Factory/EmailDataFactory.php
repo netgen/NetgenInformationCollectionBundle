@@ -79,15 +79,21 @@ class EmailDataFactory
         $template = $this->resolveTemplate($contentType->identifier);
 
         $templateWrapper = $this->twig->load($template);
-        $data = new TemplateData($value, $content, $templateWrapper);
+        $data = new TemplateData(array(
+            'event' => $value,
+            'content' => $content,
+            'templateWrapper' => $templateWrapper,
+        ));
 
         $body = $this->resolveBody($data);
 
         return new EmailData(
-            $this->resolve($data, Constants::FIELD_RECIPIENT, Constants::FIELD_TYPE_EMAIL),
-            $this->resolve($data, Constants::FIELD_SENDER, Constants::FIELD_TYPE_EMAIL),
-            $this->resolve($data, Constants::FIELD_SUBJECT),
-            $body
+            array(
+                'recipient' => $this->resolve($data, Constants::FIELD_RECIPIENT, Constants::FIELD_TYPE_EMAIL),
+                'sender' => $this->resolve($data, Constants::FIELD_SENDER, Constants::FIELD_TYPE_EMAIL),
+                'subject' => $this->resolve($data, Constants::FIELD_SUBJECT),
+                'body' => $body,
+            )
         );
     }
 
@@ -102,20 +108,20 @@ class EmailDataFactory
      */
     protected function resolve(TemplateData $data, $field, $property = Constants::FIELD_TYPE_TEXT)
     {
-        if ($data->getTemplateWrapper()->hasBlock($field)) {
-            $rendered = $data->getTemplateWrapper()->renderBlock(
+        if ($data->templateWrapper->hasBlock($field)) {
+            $rendered = $data->templateWrapper->renderBlock(
                 $field,
                 array(
-                    'event' => $data->getEvent(),
-                    'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
-                    'content' => $data->getContent(),
+                    'event' => $data->event,
+                    'collected_fields' => $data->event->getInformationCollectionStruct()->getCollectedFields(),
+                    'content' => $data->content,
                 )
             );
 
             return trim($rendered);
         }
 
-        $content = $data->getContent();
+        $content = $data->content;
         if (array_key_exists($field, $content->fields) &&
             !$this->fieldHelper->isFieldEmpty($content, $field)
         ) {
@@ -157,22 +163,23 @@ class EmailDataFactory
      */
     protected function resolveBody(TemplateData $data)
     {
-        if ($data->getTemplateWrapper()->hasBlock(Constants::BLOCK_EMAIL)) {
-            return $data->getTemplateWrapper()
+        $templateWrapper = $data->templateWrapper;
+        if ($templateWrapper->hasBlock(Constants::BLOCK_EMAIL)) {
+            return $templateWrapper
                 ->renderBlock(
                     Constants::BLOCK_EMAIL,
                     array(
-                        'event' => $data->getEvent(),
-                        'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
-                        'content' => $data->getContent(),
+                        'event' => $data->event,
+                        'collected_fields' => $data->event->getInformationCollectionStruct()->getCollectedFields(),
+                        'content' => $data->content,
                         'default_variables' => $this->config[ConfigurationConstants::DEFAULT_VARIABLES],
                     )
                 );
         }
 
         throw new MissingEmailBlockException(
-            $data->getTemplateWrapper()->getSourceContext()->getName(),
-            $data->getTemplateWrapper()->getBlockNames()
+            $templateWrapper->getSourceContext()->getName(),
+            $templateWrapper->getBlockNames()
         );
     }
 }

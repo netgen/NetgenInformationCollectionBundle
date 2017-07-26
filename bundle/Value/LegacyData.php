@@ -2,6 +2,12 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Value;
 
+/**
+ * @property int $contentClassAttributeId
+ * @property float $dataFloat
+ * @property int $dataInt
+ * @property string $dataText
+ */
 class LegacyData
 {
     /**
@@ -23,52 +29,4 @@ class LegacyData
      * @var string
      */
     protected $dataText;
-
-    /**
-     * LegacyData constructor.
-     *
-     * @param int $contentClassAttributeId
-     * @param float $dataFloat
-     * @param int $dataInt
-     * @param string $dataText
-     */
-    public function __construct($contentClassAttributeId, $dataFloat, $dataInt, $dataText)
-    {
-        $this->contentClassAttributeId = $contentClassAttributeId;
-        $this->dataFloat = $dataFloat;
-        $this->dataInt = $dataInt;
-        $this->dataText = $dataText;
-    }
-
-    /**
-     * @return int
-     */
-    public function getContentClassAttributeId()
-    {
-        return $this->contentClassAttributeId;
-    }
-
-    /**
-     * @return float
-     */
-    public function getDataFloat()
-    {
-        return $this->dataFloat;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDataInt()
-    {
-        return $this->dataInt;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDataText()
-    {
-        return $this->dataText;
-    }
 }

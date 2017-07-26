@@ -43,10 +43,12 @@ class FieldDataFactory
         }
 
         return new LegacyData(
-            $fieldDefinition->id,
-            0,
-            0,
-            (string) $value
+            array(
+                'contentClassAttributeId' => $fieldDefinition->id,
+                'dataInt' => 0,
+                'dataFloat' => 0,
+                'dataText' => (string) $value,
+            )
         );
     }
 }
