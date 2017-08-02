@@ -1,0 +1,11 @@
+admin_contenttypeView:
+    path: /pjax/contenttype/view/{contentTypeId}/{languageCode}
+    defaults:
+        _controller: netgen_information_collection.controller.content_type:viewContentTypeAction
+        languageCode: ~
+
+admin_contenttypeUpdate:
+    path: /pjax/contenttype/update/{contentTypeId}/{languageCode}
+    defaults:
+        _controller: netgen_information_collection.controller.content_type:updateContentTypeAction
+        languageCode: ~

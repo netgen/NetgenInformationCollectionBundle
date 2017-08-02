@@ -35,3 +35,17 @@ services:
         class: Netgen\Bundle\InformationCollectionBundle\Mailer\Mailer
         arguments:
             - '@mailer'
+
+    netgen_information_collection.controller.content_type:
+        class: Netgen\Bundle\InformationCollectionBundle\Controller\ContentTypeController
+        parent: ezsystems.platformui.controller.content_type
+
+    netgen.field_definition.form_type_extension:
+        class: Netgen\Bundle\InformationCollectionBundle\Form\Extension\FieldDefinitionTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: "%ezrepoforms.field_definition.form_type.class%" }
+
+    netgen.content_type.update.form_type_extension:
+        class: Netgen\Bundle\InformationCollectionBundle\Form\Extension\ContentTypeUpdateTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: "%ezrepoforms.content_type.update.form_type.class%" }
