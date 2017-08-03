@@ -11,8 +11,7 @@ services:
         class: Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction
         arguments:
             - '@netgen_information_collection.factory.field_data'
-            - '@netgen_information_collection.repository.ez_info_collection'
-            - '@netgen_information_collection.repository.ez_info_collection_attribute'
+            - '@netgen_information_collection.repository_aggregate'
             - '@ezpublish.api.repository'
         tags:
             - { name: netgen_information_collection.action, alias: database, priority: 300 }
