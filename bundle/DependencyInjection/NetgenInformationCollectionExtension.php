@@ -38,14 +38,14 @@ class NetgenInformationCollectionExtension extends Extension
         foreach ($configArrays as $configArray) {
             $processor->mapConfigArray($configArray, $config);
             foreach ($scopes as $scope) {
-                $scopeConfig = $container->getParameter(
-                    ConfigurationConstants::SETTINGS_ROOT . '.' . $scope . '.' . $configArray
-                );
+                $paramName = ConfigurationConstants::SETTINGS_ROOT . '.' . $scope . '.' . $configArray;
+                if (!$container->hasParameter($paramName)) {
+                    continue;
+                }
+
+                $scopeConfig = $container->getParameter($paramName);
                 foreach ((array) $scopeConfig as $key => $value) {
-                    $container->setParameter(
-                        ConfigurationConstants::SETTINGS_ROOT . '.' . $scope . '.' . $configArray . '.' . $key,
-                        $value
-                    );
+                    $container->setParameter($paramName . '.' . $key, $value);
                 }
             }
         }
