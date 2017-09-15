@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.0] - 2017-09-15
+### Added
+- Implemented custom field handlers for checkbox, integer and float field value handlers
+- Created `CustomLegacyFieldHandlerInterface` for customizing field values
+ 
+## [1.0.6] - 2017-08-17
+### Added
+- Use hasParameter before fetching it from container fix (by @emodric )
+
 ## [1.0.5] - 2017-06-29 
 ### Added
 - Email templates were not properly resolved
