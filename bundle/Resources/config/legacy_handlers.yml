@@ -1,0 +1,15 @@
+services:
+    netgen_information_collection.field_handler.checkbox:
+        class: Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CheckboxFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.integer:
+        class: Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\IntegerFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.float:
+        class: Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\FloatFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }

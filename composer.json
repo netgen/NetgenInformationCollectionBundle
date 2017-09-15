@@ -43,7 +43,8 @@
     },
     "scripts": {
         "test": "@php vendor/bin/phpunit --colors=always",
-        "fix": "@php vendor/bin/php-cs-fixer fix"
+        "fix": "@php vendor/bin/php-cs-fixer fix",
+        "coverage": "@php -dzend_extension=xdebug.so vendor/bin/phpunit --colors=always"
     },
     "config": {
         "sort-packages": true
