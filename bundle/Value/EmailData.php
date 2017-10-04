@@ -86,7 +86,7 @@ class EmailData
      */
     public function hasAttachments()
     {
-        return empty($this->attachments);
+        return !empty($this->attachments);
     }
 
     /**

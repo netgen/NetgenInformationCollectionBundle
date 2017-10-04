@@ -5,6 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Factory;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
 use Netgen\Bundle\InformationCollectionBundle\Constants;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
@@ -172,8 +173,41 @@ class EmailDataFactory
         );
     }
 
-    protected function resolveAttachments(array $collectedFields)
+    /**
+     * @param $contentTypeIdentifier
+     * @param array $collectedFields
+     *
+     * @return BinaryFile[]|null
+     */
+    protected function resolveAttachments($contentTypeIdentifier, array $collectedFields)
     {
-        
+        if (array_key_exists($contentTypeIdentifier, $this->config['attachments'][ConfigurationConstants::CONTENT_TYPES])) {
+            $send = $this->config['attachments'][ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier];
+        } else {
+            $send = $this->config['attachments']['send'];
+        }
+
+        if (!$send) {
+            return null;
+        }
+
+        return $this->getBinaryFileFields($collectedFields);
+    }
+
+    /**
+     * @param array $collectedFields
+     *
+     * @return BinaryFile[]|null
+     */
+    protected function getBinaryFileFields(array $collectedFields)
+    {
+        $filtered = [];
+        foreach ($collectedFields as $identifier => $value) {
+            if ($value instanceof BinaryFile) {
+                $filtered[] = $value;
+            }
+        }
+
+        return empty($filtered) ? null : $filtered;
     }
 }
