@@ -46,7 +46,10 @@ class Mailer implements MailerInterface
 
         if ($data->hasAttachments()) {
             foreach ($data->getAttachments() as $attachment) {
-                $message->attach(\Swift_Attachment::fromPath($attachment->inputUri, $attachment->mimeType));
+                $message->attach(
+                    \Swift_Attachment::fromPath($attachment->inputUri, $attachment->mimeType)
+                        ->setFilename($attachment->fileName)
+                );
             }
         }
 

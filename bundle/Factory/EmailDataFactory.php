@@ -87,7 +87,7 @@ class EmailDataFactory
             $this->resolve($data, Constants::FIELD_SENDER, Constants::FIELD_TYPE_EMAIL),
             $this->resolve($data, Constants::FIELD_SUBJECT),
             $this->resolveBody($data),
-            $this->resolveAttachments($value->getInformationCollectionStruct()->getCollectedFields())
+            $this->resolveAttachments($contentType->identifier, $value->getInformationCollectionStruct()->getCollectedFields())
         );
     }
 
