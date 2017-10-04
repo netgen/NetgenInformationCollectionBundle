@@ -2,6 +2,8 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Value;
 
+use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
+
 class EmailData
 {
     /**
@@ -25,19 +27,26 @@ class EmailData
     protected $body;
 
     /**
+     * @var BinaryFile[]|null
+     */
+    protected $attachments;
+
+    /**
      * EmailData constructor.
      *
      * @param string $recipient
      * @param string $sender
      * @param string $subject
      * @param string $body
+     * @param BinaryFile[] $attachments
      */
-    public function __construct($recipient, $sender, $subject, $body)
+    public function __construct($recipient, $sender, $subject, $body, $attachments = null)
     {
         $this->recipient = $recipient;
         $this->subject = $subject;
         $this->sender = $sender;
         $this->body = $body;
+        $this->attachments = $attachments;
     }
 
     /**
@@ -70,5 +79,21 @@ class EmailData
     public function getBody()
     {
         return $this->body;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAttachments()
+    {
+        return empty($this->attachments);
+    }
+
+    /**
+     * @return BinaryFile[]
+     */
+    public function getAttachments()
+    {
+        return $this->attachments;
     }
 }

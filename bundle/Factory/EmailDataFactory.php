@@ -81,13 +81,12 @@ class EmailDataFactory
         $templateWrapper = $this->twig->load($template);
         $data = new TemplateData($value, $content, $templateWrapper);
 
-        $body = $this->resolveBody($data);
-
         return new EmailData(
             $this->resolve($data, Constants::FIELD_RECIPIENT, Constants::FIELD_TYPE_EMAIL),
             $this->resolve($data, Constants::FIELD_SENDER, Constants::FIELD_TYPE_EMAIL),
             $this->resolve($data, Constants::FIELD_SUBJECT),
-            $body
+            $this->resolveBody($data),
+            $this->resolveAttachments($value->getInformationCollectionStruct()->getCollectedFields())
         );
     }
 
@@ -171,5 +170,10 @@ class EmailDataFactory
             $data->getTemplateWrapper()->getSourceContext()->getName(),
             $data->getTemplateWrapper()->getBlockNames()
         );
+    }
+
+    protected function resolveAttachments(array $collectedFields)
+    {
+        
     }
 }

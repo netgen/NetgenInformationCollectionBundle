@@ -44,6 +44,12 @@ class Mailer implements MailerInterface
         $message->setSubject($data->getSubject());
         $message->setBody($data->getBody(), 'text/html');
 
+        if ($data->hasAttachments()) {
+            foreach ($data->getAttachments() as $attachment) {
+                $message->attach(\Swift_Attachment::fromPath($attachment->inputUri, $attachment->mimeType));
+            }
+        }
+
         if (!$this->internalMailer->send($message)) {
             throw new EmailNotSentException('send', 'invalid mailer configuration?');
         }
