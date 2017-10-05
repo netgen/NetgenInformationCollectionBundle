@@ -181,10 +181,14 @@ class EmailDataFactory
      */
     protected function resolveAttachments($contentTypeIdentifier, array $collectedFields)
     {
-        if (array_key_exists($contentTypeIdentifier, $this->config['attachments'][ConfigurationConstants::CONTENT_TYPES])) {
-            $send = $this->config['attachments'][ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier];
+        if (empty($this->config[ConfigurationConstants::ATTACHMENTS])) {
+            return null;
+        }
+
+        if (array_key_exists($contentTypeIdentifier, $this->config[ConfigurationConstants::ATTACHMENTS][ConfigurationConstants::CONTENT_TYPES])) {
+            $send = $this->config[ConfigurationConstants::ATTACHMENTS][ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier];
         } else {
-            $send = $this->config['attachments']['send'];
+            $send = $this->config[ConfigurationConstants::ATTACHMENTS][ConfigurationConstants::SETTINGS_DEFAULT];
         }
 
         if (!$send) {

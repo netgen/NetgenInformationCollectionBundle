@@ -6,6 +6,8 @@ class ConfigurationConstants
 {
     const ACTIONS = 'actions';
 
+    const ATTACHMENTS = 'attachments';
+
     const ACTION_CONFIG = 'action_config';
 
     const TEMPLATES = 'templates';
