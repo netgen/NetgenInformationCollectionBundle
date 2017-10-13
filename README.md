@@ -1,7 +1,12 @@
 NetgenInformationCollectionBundle
 =================================
 
-[![Build Status](https://img.shields.io/travis/netgen/NetgenInformationCollectionBundle.svg?style=flat-square)](https://travis-ci.org/netgen/NetgenInformationCollectionBundle)
+Build status:
+
+Master: [![Build Status](https://img.shields.io/travis/netgen/NetgenInformationCollectionBundle.svg?style=flat-square&branch=master)](https://travis-ci.org/netgen/NetgenInformationCollectionBundle)
+
+1.x: [![Build Status](https://img.shields.io/travis/netgen/NetgenInformationCollectionBundle.svg?style=flat-square&branch=1.x)](https://travis-ci.org/netgen/NetgenInformationCollectionBundle)
+
 [![Code Coverage](https://img.shields.io/codecov/c/github/netgen/NetgenInformationCollectionBundle.svg?style=flat-square)](https://codecov.io/gh/netgen/NetgenInformationCollectionBundle)
 [![Quality Score](https://img.shields.io/scrutinizer/g/netgen/NetgenInformationCollectionBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/netgen/NetgenInformationCollectionBundle)
 [![Code Climate](https://img.shields.io/codeclimate/github/netgen/NetgenInformationCollectionBundle.svg?style=flat-square)](https://codeclimate.com/github/netgen/NetgenInformationCollectionBundle)
