@@ -1,8 +1,10 @@
 language: php
 
+# directories to cache
 cache:
     directories:
         - vendor
+        - $HOME/.composer/cache
 
 matrix:
     # mark as finished before allow_failures are run
