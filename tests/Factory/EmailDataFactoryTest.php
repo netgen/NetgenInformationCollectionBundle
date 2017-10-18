@@ -219,7 +219,10 @@ class EmailDataFactoryTest extends TestCase
             'fieldDefinitions' => array(),
         ));
 
-        $event = new InformationCollected(new DataWrapper(new InformationCollectionStruct(), $contentType, $location));
+        $informationCollectionStruct = new InformationCollectionStruct();
+        $informationCollectionStruct->setCollectedFieldValue('my_value_1', new TextLineValue("My value 1"));
+        $informationCollectionStruct->setCollectedFieldValue('my_value_2', new TextLineValue("My value 2"));
+        $event = new InformationCollected(new DataWrapper($informationCollectionStruct, $contentType, $location));
 
         $this->twig->expects($this->once())
             ->method('load')
@@ -309,7 +312,10 @@ TEMPLATE;
             'fieldDefinitions' => array(),
         ));
 
-        $event = new InformationCollected(new DataWrapper(new InformationCollectionStruct(), $contentType, $location));
+        $informationCollectionStruct = new InformationCollectionStruct();
+        $informationCollectionStruct->setCollectedFieldValue('my_value_1', new TextLineValue("My value 1"));
+        $informationCollectionStruct->setCollectedFieldValue('my_value_2', new TextLineValue("My value 2"));
+        $event = new InformationCollected(new DataWrapper($informationCollectionStruct, $contentType, $location));
 
         $this->twig->expects($this->once())
             ->method('load')
@@ -388,7 +394,10 @@ TEMPLATE;
             'fieldDefinitions' => array(),
         ));
 
-        $event = new InformationCollected(new DataWrapper(new InformationCollectionStruct(), $contentType, $location));
+        $informationCollectionStruct = new InformationCollectionStruct();
+        $informationCollectionStruct->setCollectedFieldValue('my_value_1', new TextLineValue("My value 1"));
+        $informationCollectionStruct->setCollectedFieldValue('my_value_2', new TextLineValue("My value 2"));
+        $event = new InformationCollected(new DataWrapper($informationCollectionStruct, $contentType, $location));
 
         $this->twig->expects($this->once())
             ->method('load')
@@ -474,7 +483,10 @@ TEMPLATE;
             'fieldDefinitions' => array(),
         ));
 
-        $event = new InformationCollected(new DataWrapper(new InformationCollectionStruct(), $contentType, $location));
+        $informationCollectionStruct = new InformationCollectionStruct();
+        $informationCollectionStruct->setCollectedFieldValue('my_value_1', new TextLineValue("My value 1"));
+        $informationCollectionStruct->setCollectedFieldValue('my_value_2', new TextLineValue("My value 2"));
+        $event = new InformationCollected(new DataWrapper($informationCollectionStruct, $contentType, $location));
 
         $this->twig->expects($this->once())
             ->method('load')
