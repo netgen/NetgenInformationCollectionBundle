@@ -20,7 +20,12 @@ engines:
     enabled: true
     config:
       file_extensions: "php"
-      rulesets: "cleancode,controversial,design,codesize,unusedcode,ic_ruleset.xml"
+      rulesets: "cleancode,controversial,design,codesize,unusedcode"
+    checks:
+      Naming/ShortVariable:
+        enabled: false
+      Naming/LongVariable:
+        enabled: false
   duplication:
     enabled: true
     config:
