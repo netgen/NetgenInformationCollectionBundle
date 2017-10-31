@@ -26,6 +26,7 @@ before_install:
 
 # install dependencies
 install:
+    - composer static-analysis
     - composer install
 
 # execute phpunit as the script command
