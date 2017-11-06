@@ -2,6 +2,7 @@ parameters:
     netgen_information_collection.action.registry.class: Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry
     netgen_information_collection.action.db.class: Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction
     netgen_information_collection.action.email.class: Netgen\Bundle\InformationCollectionBundle\Action\EmailAction
+    netgen_information_collection.action.auto_responder.class: Netgen\Bundle\InformationCollectionBundle\Action\AutoResponderAction
 
 services:
     netgen_information_collection.action.registry:
@@ -29,3 +30,11 @@ services:
             - '@netgen_information_collection.mailer'
         tags:
             - { name: netgen_information_collection.action, alias: email }
+
+    netgen_information_collection.action.auto_responder:
+        class: '%netgen_information_collection.action.auto_responder.class%'
+        arguments:
+            - '@netgen_information_collection.factory.auto_responder_data'
+            - '@netgen_information_collection.mailer'
+        tags:
+            - { name: netgen_information_collection.action, alias: auto_responder }
