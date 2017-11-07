@@ -19,4 +19,14 @@ class ConfigurationConstants
     const SETTINGS_DEFAULT = 'default';
 
     const CONTENT_TYPES = 'content_types';
+
+    const ACTION_EMAIL = 'email';
+
+    const ACTION_AUTO_RESPONDER = 'auto_responder';
+
+    const EMAIL_FIELD_IDENTIFIER = 'email_field_identifier';
+
+    const EMAIL_SENDER = 'sender';
+    const EMAIL_RECIPIENT = 'recipient';
+    const EMAIL_SUBJECT = 'subject';
 }

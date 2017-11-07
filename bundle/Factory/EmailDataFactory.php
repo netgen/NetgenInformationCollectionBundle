@@ -10,6 +10,7 @@ use Netgen\Bundle\InformationCollectionBundle\Constants;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailBlockException;
+use Netgen\Bundle\InformationCollectionBundle\Exception\MissingValueException;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
 use Twig_Environment;
@@ -126,7 +127,11 @@ class EmailDataFactory
             return $fieldValue->value->$property;
         }
 
-        return $this->config[ConfigurationConstants::DEFAULT_VARIABLES][$field];
+        if (!empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES][$field])) {
+            return $this->config[ConfigurationConstants::DEFAULT_VARIABLES][$field];
+        }
+
+        throw new MissingValueException($field);
     }
 
     /**
@@ -164,7 +169,8 @@ class EmailDataFactory
                         'event' => $data->getEvent(),
                         'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
                         'content' => $data->getContent(),
-                        'default_variables' => $this->config[ConfigurationConstants::DEFAULT_VARIABLES],
+                        'default_variables' => !empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES])
+                            ? $this->config[ConfigurationConstants::DEFAULT_VARIABLES] : null,
                     )
                 );
         }
