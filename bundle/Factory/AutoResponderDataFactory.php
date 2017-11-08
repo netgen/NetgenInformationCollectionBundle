@@ -5,10 +5,11 @@ namespace Netgen\Bundle\InformationCollectionBundle\Factory;
 use Netgen\Bundle\InformationCollectionBundle\Constants;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
-use Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailValueException;
 use Netgen\Bundle\InformationCollectionBundle\Exception\MissingValueException;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
+use function array_key_exists;
+use function trim;
 
 class AutoResponderDataFactory extends EmailDataFactory
 {

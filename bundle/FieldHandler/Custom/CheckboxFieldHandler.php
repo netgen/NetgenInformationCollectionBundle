@@ -6,6 +6,7 @@ use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\FieldType\Value;
 use eZ\Publish\Core\FieldType\Checkbox\Value as CheckboxValue;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
+use function intval;
 
 class CheckboxFieldHandler implements CustomLegacyFieldHandlerInterface
 {

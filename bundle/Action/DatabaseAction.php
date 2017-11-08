@@ -12,6 +12,7 @@ use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
+use DateTime;
 
 class DatabaseAction implements ActionInterface, CrucialActionInterface
 {
@@ -68,7 +69,7 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
         $content = $this->repository->getContentService()->loadContent($location->contentInfo->id);
 
         $currentUser = $this->repository->getCurrentUser();
-        $dt = new \DateTime();
+        $dt = new DateTime();
 
         /** @var EzInfoCollection $ezInfo */
         $ezInfo = $this->infoCollectionRepository->getInstance();

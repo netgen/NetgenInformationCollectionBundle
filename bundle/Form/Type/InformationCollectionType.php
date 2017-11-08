@@ -8,6 +8,8 @@ use Netgen\Bundle\EzFormsBundle\Form\Type\AbstractContentType;
 use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
 use RuntimeException;
 use Symfony\Component\Form\FormBuilderInterface;
+use function array_keys;
+use function in_array;
 
 class InformationCollectionType extends AbstractContentType
 {

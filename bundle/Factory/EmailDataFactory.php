@@ -14,6 +14,8 @@ use Netgen\Bundle\InformationCollectionBundle\Exception\MissingValueException;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
 use Twig_Environment;
+use function array_key_exists;
+use function trim;
 
 class EmailDataFactory
 {

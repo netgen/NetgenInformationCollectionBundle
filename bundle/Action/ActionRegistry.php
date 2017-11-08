@@ -7,6 +7,8 @@ use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use Netgen\Bundle\InformationCollectionBundle\Priority;
 use Psr\Log\LoggerInterface;
+use function in_array;
+use function usort;
 
 class ActionRegistry
 {
