@@ -49,6 +49,7 @@ class Configuration extends SiteAccessConfiguration
                 ->normalizeKeys(false)
                     ->children()
                         ->arrayNode(ConfigurationConstants::ACTION_AUTO_RESPONDER)
+                            ->addDefaultsIfNotSet()
                             ->children()
                                 ->arrayNode(ConfigurationConstants::TEMPLATES)
                                     ->children()
