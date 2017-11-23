@@ -91,6 +91,11 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
          * @var \eZ\Publish\Core\FieldType\Value $value
          */
         foreach ($struct->getCollectedFields() as $fieldDefIdentifier => $value) {
+            
+            if ($value === null) {
+                continue;
+            }
+
             $value = $this->factory->getLegacyValue($value, $contentType->getFieldDefinition($fieldDefIdentifier));
 
             $ezInfoAttribute = $this->infoCollectionAttributeRepository->getInstance();
