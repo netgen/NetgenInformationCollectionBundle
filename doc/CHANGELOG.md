@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.2] - 2017-11-23
+### Added
+- Sometimes field value can be null, added defensive check
+
 ## [1.3.1] - 2017-11-8
 ### Added
 - Fixed problem with `AutoResponderAction` configuration in context of Symfony 3.3
