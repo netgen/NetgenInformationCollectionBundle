@@ -1,6 +1,7 @@
 services:
     netgen_information_collection.factory.email_data:
         class: Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory
+        public: false
         arguments:
             - "$action_config.email;netgen_information_collection$"
             - '@ezpublish.translation_helper'
@@ -10,5 +11,6 @@ services:
 
     netgen_information_collection.factory.field_data:
         class: Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory
+        public: false
         arguments:
             - '@netgen_information_collection.field_handler.registry'

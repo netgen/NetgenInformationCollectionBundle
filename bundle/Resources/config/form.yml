@@ -1,11 +1,13 @@
 services:
     netgen_information_collection.form.data_mapper.info_collection:
         class: Netgen\Bundle\InformationCollectionBundle\Form\DataMapper\InformationCollectionMapper
+        public: false
         arguments:
             - "@netgen.ezforms.form.fieldtype_handler_registry"
 
     netgen_information_collection.form.type.info_collection:
         class: Netgen\Bundle\InformationCollectionBundle\Form\Type\InformationCollectionType
+        # public: false
         arguments:
             - "@netgen.ezforms.form.fieldtype_handler_registry"
             - "@netgen.ezforms.form.data_mapper.info_collection"

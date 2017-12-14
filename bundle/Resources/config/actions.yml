@@ -1,6 +1,7 @@
 services:
     netgen_information_collection.action.registry:
         class: Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry
+        public: false
         arguments:
             - "$actions;netgen_information_collection$"
             - "@logger"
@@ -9,6 +10,7 @@ services:
 
     netgen_information_collection.action.db:
         class: Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction
+        public: false
         arguments:
             - '@netgen_information_collection.factory.field_data'
             - '@netgen_information_collection.repository_aggregate'
@@ -18,6 +20,7 @@ services:
 
     netgen_information_collection.action.email:
         class: Netgen\Bundle\InformationCollectionBundle\Action\EmailAction
+        public: false
         arguments:
             - '@netgen_information_collection.factory.email_data'
             - '@netgen_information_collection.mailer'
