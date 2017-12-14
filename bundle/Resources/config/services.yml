@@ -43,9 +43,9 @@ services:
     netgen.field_definition.form_type_extension:
         class: Netgen\Bundle\InformationCollectionBundle\Form\Extension\FieldDefinitionTypeExtension
         tags:
-            - { name: form.type_extension, extended_type: "%ezrepoforms.field_definition.form_type.class%" }
+            - { name: form.type_extension, extended_type: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType }
 
     netgen.content_type.update.form_type_extension:
         class: Netgen\Bundle\InformationCollectionBundle\Form\Extension\ContentTypeUpdateTypeExtension
         tags:
-            - { name: form.type_extension, extended_type: "%ezrepoforms.content_type.update.form_type.class%" }
+            - { name: form.type_extension, extended_type: EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeUpdateType }
