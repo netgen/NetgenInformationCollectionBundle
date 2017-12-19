@@ -7,9 +7,9 @@ use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
 use PHPUnit\Framework\TestCase;
-use Twig_Environment;
-use Twig_Loader_Array;
-use Twig_TemplateWrapper;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
+use Twig\TemplateWrapper;
 
 class TemplateDataTest extends TestCase
 {
@@ -29,14 +29,14 @@ class TemplateDataTest extends TestCase
     protected $content;
 
     /**
-     * @var \Twig_TemplateWrapper
+     * @var \Twig\TemplateWrapper
      */
     protected $templateWrapper;
 
     public function setUp()
     {
-        $twig = new Twig_Environment(
-            new Twig_Loader_Array(
+        $twig = new Environment(
+            new ArrayLoader(
                 array(
                     'index' => '{% block foo %}{% endblock %}',
                 )
@@ -45,7 +45,7 @@ class TemplateDataTest extends TestCase
 
         $this->event = new InformationCollected(new DataWrapper('test', null, null));
         $this->content = new Content();
-        $this->templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
+        $this->templateWrapper = new TemplateWrapper($twig, $twig->loadTemplate('index'));
 
         $this->templateData = new TemplateData(
             array(

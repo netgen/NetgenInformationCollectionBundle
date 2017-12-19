@@ -11,7 +11,7 @@ use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailBlockException;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
-use Twig_Environment;
+use Twig\Environment;
 
 class EmailDataFactory
 {
@@ -36,7 +36,7 @@ class EmailDataFactory
     protected $contentService;
 
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twig;
 
@@ -47,14 +47,14 @@ class EmailDataFactory
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
      * @param \eZ\Publish\Core\Helper\FieldHelper $fieldHelper
      * @param \eZ\Publish\API\Repository\ContentService $contentService
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      */
     public function __construct(
         array $config,
         TranslationHelper $translationHelper,
         FieldHelper $fieldHelper,
         ContentService $contentService,
-        Twig_Environment $twig
+        Environment $twig
     ) {
         $this->config = $config;
         $this->translationHelper = $translationHelper;
