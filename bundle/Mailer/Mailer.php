@@ -27,7 +27,7 @@ class Mailer implements MailerInterface
      */
     public function createAndSendMessage(EmailData $data)
     {
-        $message = \Swift_Message::newInstance();
+        $message = new \Swift_Message();
 
         try {
             $message->setTo($data->getRecipient());
