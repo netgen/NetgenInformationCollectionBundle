@@ -13,3 +13,18 @@ services:
         class: Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\FloatFieldHandler
         tags:
             - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.date:
+        class: Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\DateFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.time:
+        class: Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\TimeFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.date_and_time:
+        class: Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\DateAndTimeFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
