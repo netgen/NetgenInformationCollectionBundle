@@ -88,8 +88,8 @@ class EmailDataFactory
         $body = $this->resolveBody($data);
 
         return new EmailData(
-            $this->resolve($data, Constants::FIELD_RECIPIENT, Constants::FIELD_TYPE_EMAIL),
-            $this->resolve($data, Constants::FIELD_SENDER, Constants::FIELD_TYPE_EMAIL),
+            $this->resolveEmail($data, Constants::FIELD_RECIPIENT),
+            $this->resolveEmail($data, Constants::FIELD_SENDER),
             $this->resolve($data, Constants::FIELD_SUBJECT),
             $body,
             $this->resolveAttachments($contentType->identifier, $value->getInformationCollectionStruct()->getCollectedFields())
@@ -107,6 +107,7 @@ class EmailDataFactory
      */
     protected function resolve(TemplateData $data, $field, $property = Constants::FIELD_TYPE_TEXT)
     {
+        $rendered = '';
         if ($data->getTemplateWrapper()->hasBlock($field)) {
             $rendered = $data->getTemplateWrapper()->renderBlock(
                 $field,
@@ -117,7 +118,11 @@ class EmailDataFactory
                 )
             );
 
-            return trim($rendered);
+            $rendered = trim($rendered);
+        }
+
+        if (!empty($rendered)) {
+            return $rendered;
         }
 
         $content = $data->getContent();
@@ -127,6 +132,50 @@ class EmailDataFactory
             $fieldValue = $this->translationHelper->getTranslatedField($content, $field);
 
             return $fieldValue->value->$property;
+        }
+
+        if (!empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES][$field])) {
+            return $this->config[ConfigurationConstants::DEFAULT_VARIABLES][$field];
+        }
+
+        throw new MissingValueException($field);
+    }
+
+    /**
+     * Returns resolved email parameter.
+     *
+     * @param TemplateData $data
+     * @param string $field
+     *
+     * @return string
+     */
+    protected function resolveEmail(TemplateData $data, $field)
+    {
+        $rendered = '';
+        if ($data->getTemplateWrapper()->hasBlock($field)) {
+            $rendered = $data->getTemplateWrapper()->renderBlock(
+                $field,
+                array(
+                    'event' => $data->getEvent(),
+                    'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
+                    'content' => $data->getContent(),
+                )
+            );
+
+            $rendered = trim($rendered);
+        }
+
+        if (!empty($rendered) && filter_var($rendered, FILTER_VALIDATE_EMAIL)) {
+            return $rendered;
+        }
+
+        $content = $data->getContent();
+        if (array_key_exists($field, $content->fields) &&
+            !$this->fieldHelper->isFieldEmpty($content, $field)
+        ) {
+            $fieldValue = $this->translationHelper->getTranslatedField($content, $field);
+
+            return $fieldValue->value->email;
         }
 
         if (!empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES][$field])) {
