@@ -24,7 +24,7 @@
         "doctrine/orm": "^2.5"
     },
     "require-dev": {
-        "ezsystems/ezpublish-kernel": "~6.0",
+        "ezsystems/ezpublish-kernel": "~6.0|~7.0",
         "phpunit/phpunit": "^5.7",
         "swiftmailer/swiftmailer": "^5.0|^6.0",
         "matthiasnoback/symfony-config-test": "~2.0",
