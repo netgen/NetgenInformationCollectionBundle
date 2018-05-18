@@ -9,7 +9,7 @@
 
 
     {#{% if childrenTags is not empty %}#}
-    <form method="post" action="{{ path('netgen_tags_admin_tag_children', {'tagId': tag is defined ? tag.id : 0}) }}">
+    <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection', {'collectionId': collection.id}) }}">
 
         <input type="hidden" value="{{ collection.id }}" name="CollectionId">
 

@@ -17,3 +17,18 @@ netgen_information_collection.route.admin.view:
     path: /netgen/informationcollection/view/{collectionId}
     defaults: { _controller: netgen_information_collection.controller.admin:viewAction }
     methods: [GET]
+
+netgen_information_collection.route.admin.handle_contents:
+    path: /netgen/informationcollection/handle/contents
+    defaults: { _controller: netgen_information_collection.controller.admin:handleContentsAction }
+    methods: [POST]
+
+netgen_information_collection.route.admin.handle_collection_list:
+    path: /netgen/informationcollection/handle/collection-list/{contentId}
+    defaults: { _controller: netgen_information_collection.controller.admin:handleCollectionListAction }
+    methods: [POST]
+
+netgen_information_collection.route.admin.handle_collection:
+    path: /netgen/informationcollection/handle/collection/{collectionId}
+    defaults: { _controller: netgen_information_collection.controller.admin:handleCollectionAction }
+    methods: [POST]

@@ -1,0 +1,2 @@
+parameters:
+    netgen_information_collection.default.admin.max_per_page: 10

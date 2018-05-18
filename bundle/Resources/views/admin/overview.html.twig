@@ -6,7 +6,7 @@
     <h1>{{ 'netgen_information_collection_admin_overview_title'|trans({'%count%': objects.count}) }}</h1>
 
     {% if objects is not empty %}
-        <form method="post" action="">
+        <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_contents') }}">
             <table>
                 <thead>
                     <tr>

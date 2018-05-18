@@ -78,4 +78,19 @@ class AdminController extends Controller
 
         return $this->render("NetgenInformationCollectionBundle:admin:view.html.twig", $data);
     }
+
+    public function handleContentsAction(Request $request)
+    {
+        
+    }
+
+    public function handleCollectionListAction(Request $request)
+    {
+
+    }
+
+    public function handleCollectionAction(Request $request)
+    {
+        
+    }
 }

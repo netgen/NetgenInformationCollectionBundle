@@ -27,6 +27,7 @@ class NetgenInformationCollectionExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('parameters.yml');
+        $loader->load('default_settings.yml');
 
         $processor = new ConfigurationProcessor($container, ConfigurationConstants::SETTINGS_ROOT);
         $configArrays = array(
