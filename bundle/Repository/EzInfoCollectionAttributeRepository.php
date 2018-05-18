@@ -61,4 +61,19 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function search($contentId, $searchText)
+    {
+        $qb = $this->createQueryBuilder('eica');
+
+        $result = $qb->select('eica.informationCollectionId')
+            ->where('eica.contentObjectId = :contentId')
+            ->setParameter('contentId', $contentId)
+            ->andWhere('eica.dataText LIKE :searchText')
+            ->setParameter('searchText', '%' . $searchText . '%')
+            ->getQuery()
+            ->getScalarResult();
+
+        return array_column($result, "informationCollectionId");
+    }
 }

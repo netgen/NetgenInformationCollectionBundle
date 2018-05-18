@@ -149,12 +149,6 @@ EOD;
 
     public function collectionList($contentId, $limit, $offset = 0)
     {
-        $user = $this->repository->getUserService()->loadUser(10);
-
-
-        $content = $this->contentService
-            ->loadContent($contentId);
-
         $collections = $this->ezInfoCollectionRepository->findBy(
             [
                 'contentObjectId' => $contentId,
@@ -181,6 +175,45 @@ EOD;
     public function collectionListCount($contentId)
     {
         return $this->ezInfoCollectionRepository->getChildrenCount($contentId);
+    }
+
+    public function search($contentId, $searchText, $limit, $offset = 0)
+    {
+        $collections = $this->ezInfoCollectionAttributeRepository->search($contentId, $searchText);
+
+        $collections = $this->ezInfoCollectionRepository->findBy(
+            [
+                'id' => $collections,
+            ],
+            [],
+            $limit,
+            $offset
+        );
+
+        $objects = [];
+        foreach ($collections as $collection) {
+            $d = [
+                'object' => $collection,
+                'user' => $this->getUser($collection->getCreatorId()),
+            ];
+
+            $objects[] = $d;
+        }
+
+        return $objects;
+    }
+
+    public function searchCount($contentId, $searchText)
+    {
+        $collections = $this->ezInfoCollectionAttributeRepository->search($contentId, $searchText);
+
+        $collections = $this->ezInfoCollectionRepository->findBy(
+            [
+                'id' => $collections,
+            ]
+        );
+
+        return count($collections);
     }
 
     public function view($collectionId)

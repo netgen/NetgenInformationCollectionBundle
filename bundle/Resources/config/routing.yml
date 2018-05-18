@@ -8,6 +8,11 @@ netgen_information_collection.route.admin.collection_list:
     defaults: { _controller: netgen_information_collection.controller.admin:collectionListAction }
     methods: [GET]
 
+netgen_information_collection.route.admin.collection_list_search:
+    path: /netgen/informationcollection/collection-list-search/{contentId}
+    defaults: { _controller: netgen_information_collection.controller.admin:searchAction }
+    methods: [GET]
+
 netgen_information_collection.route.admin.view:
     path: /netgen/informationcollection/view/{collectionId}
     defaults: { _controller: netgen_information_collection.controller.admin:viewAction }

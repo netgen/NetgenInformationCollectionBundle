@@ -5,15 +5,24 @@
 {% block content %}
     <h1>{{ 'netgen_information_collection_admin_collection_list_title'|trans({'%content_name%': ez_content_name(content), '%count%': objects.count}) }}</h1>
     {% if objects is not empty %}
-        <form name="tag_create" method="get" action="">
+
+        {% set search_text = app.request.query.get('searchText', '') %}
+
+        <form name="tag_create" method="get" action="{{ path('netgen_information_collection.route.admin.collection_list_search', {'contentId':content.id}) }}">
             <div class="ng-tags-input">
                 <label for="collection-search">
                     {{ 'netgen_information_collection_admin_collection_search_collections'|trans }}
                 </label>
-                <input id="collection-search" type="text" name="{{ 'netgen_information_collection_admin_collection_search'|trans }}">
+                <input id="collection-search" type="text" name="searchText" value="{{ search_text }}">
                 <input type="submit" value="Search" class="tags-btn">
             </div>
         </form>
+
+        {% if search_text %}
+            <p>
+                Displaying results({{ objects.count }}) for "{{ search_text }}"
+            </p>
+        {% endif %}
 
         <form method="post" action="">
             <table>
