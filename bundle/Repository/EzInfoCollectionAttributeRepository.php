@@ -27,4 +27,38 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
         $this->_em->persist($infoCollectionAttribute);
         $this->_em->flush($infoCollectionAttribute);
     }
+
+    public function findByCollectionIdAndFieldDefinitionIds($collectionId, $fieldDefinitionIds)
+    {
+        $qb = $this->createQueryBuilder('eica');
+
+        return $qb->select('eica')
+            ->where('eica.informationCollectionId = :collection-id')
+            ->setParameter('collection-id', $collectionId)
+            ->andWhere($qb->expr()->in('eica.contentClassAttributeId', ':fields'))
+            ->setParameter('fields', $fieldDefinitionIds)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByCollectionId($collectionId)
+    {
+        $qb = $this->createQueryBuilder('eica');
+
+        return $qb->select('eica')
+            ->where('eica.informationCollectionId = :collection-id')
+            ->setParameter('collection-id', $collectionId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getCountByContentId($contentId)
+    {
+        return (int)$this->createQueryBuilder('eica')
+            ->andWhere('eica.contentObjectId = :contentId')
+            ->setParameter('contentId', $contentId)
+            ->select('COUNT(eica) as children_count')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

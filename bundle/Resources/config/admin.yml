@@ -1,0 +1,10 @@
+services:
+    netgen_information_collection.controller.admin:
+        class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\AdminController
+        parent: ezpublish.controller.base
+
+    netgen_information_collection.api.service:
+        class: Netgen\Bundle\InformationCollectionBundle\API\InformationCollectionService
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@ezpublish.api.repository"

@@ -1,0 +1,72 @@
+{% trans_default_domain 'netgen_information_collection_admin' %}
+
+{% extends '@NetgenInformationCollection/admin/pagelayout.html.twig' %}
+
+{% block content %}
+    <h1>{{ 'netgen_information_collection_admin_overview_title'|trans({'%count%': objects.count}) }}</h1>
+
+    {% if objects is not empty %}
+        <form method="post" action="">
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{ 'netgen_information_collection_admin_overview_select_all'|trans }}</th>
+                        <th>{{ 'netgen_information_collection_admin_overview_content_name'|trans }}</th>
+                        <th>{{ 'netgen_information_collection_admin_overview_content_type'|trans }}</th>
+                        <th>{{ 'netgen_information_collection_admin_overview_first_collection'|trans }}</th>
+                        <th>{{ 'netgen_information_collection_admin_overview_last_collection'|trans }}</th>
+                        <th>{{ 'netgen_information_collection_admin_overview_collections'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for object in objects %}
+                        <tr>
+                            <td>
+                                <input id="{{ object.contentobject_id }}" name="ContentId[]" value="{{ object.contentobject_id }}" title="Select collections for removal." type="checkbox">
+                                <label for="{{ object.contentobject_id }}">
+                                </label>
+                            </td>
+                            <td>
+                                <img src="/extension/ngadminui/design/ngadminui/images/icons/kp/16x16/Document.png" alt="section" title="section" width="16" height="16">
+                                &nbsp;
+                                <a href="/content/view/full/{{ object.main_node_id }}">
+                                    {{ object.name }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ object.class_name }}
+                            </td>
+                            <td>
+                                {{ object.first_collection.created|date("Y.m.d H:i") }}
+                            </td>
+                            <td>
+                                {{ object.last_collection.created|date("Y.m.d H:i") }}
+                            </td>
+                            <td class="number" align="right">
+                                <a href="{{ path("netgen_information_collection.route.admin.collection_list", {"contentId": object.contentobject_id}) }}">
+                                    {{ object.collections }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if objects.haveToPaginate() %}
+                {{ pagerfanta( objects, 'eztags_admin' ) }}
+            {% endif %}
+
+            <div class="tags-btn-group">
+                {#{% if can_delete %}#}
+                    <button type="submit" name="DeleteCollectionByContentIdAction" class="tags-btn" data-enabler="Tags">
+                        {{ 'netgen_information_collection_admin_overview_delete'|trans }}
+                    </button>
+                {#{% endif %}#}
+            </div>
+
+        </form>
+    {% else %}
+        <p>{{ 'netgen_information_collection_admin_overview_no_objects'|trans }}</p>
+    {% endif %}
+
+{% endblock %}

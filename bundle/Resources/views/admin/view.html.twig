@@ -1,0 +1,52 @@
+{% trans_default_domain 'netgen_information_collection_admin' %}
+
+{% extends '@NetgenInformationCollection/admin/pagelayout.html.twig' %}
+
+{% block content %}
+
+    <h1>{{ 'netgen_information_collection_admin_view_title'|trans({'%collection_id%': collection.id, '%content_name%': ez_content_name(content)}) }}</h1>
+    <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.modified|date("Y.m.d H:i"), '%user_name%': user.name}) }}</h6>
+
+
+    {#{% if childrenTags is not empty %}#}
+    <form method="post" action="{{ path('netgen_tags_admin_tag_children', {'tagId': tag is defined ? tag.id : 0}) }}">
+
+        <input type="hidden" value="{{ collection.id }}" name="CollectionId">
+
+        {% for object in objects %}
+
+            <span>
+                <input id="{{ object.field.identifier }}" name="FieldId[]" value="{{ object.field.identifier }}" title="Select collections for removal." type="checkbox">
+                <label for="{{ object.field.identifier }}">
+                </label>
+            </span>
+            <label>{{ ez_field_name(content, object.field.identifier) }}:</label>
+            <span class="attribute">
+                {{ object.object.value }}
+            </span>
+            <hr>
+
+        {% endfor %}
+
+        {#{% if childrenTags.haveToPaginate() %}#}
+        {#{{ pagerfanta( childrenTags, 'eztags_admin' ) }}#}
+        {#{% endif %}#}
+
+        <div class="tags-btn-group">
+            {#{% if can_edit %}#}
+            {#<button type="submit" name="MoveTagsAction" class="tags-btn" data-enabler="Tags">{{ 'tag.button.move_selected'|trans }}</button>#}
+            {#{% endif %}#}
+
+            {#{% if can_read %}#}
+            {#<button type="submit" name="CopyTagsAction" class="tags-btn" data-enabler="Tags">{{ 'tag.button.copy_selected'|trans }}</button>#}
+            {#{% endif %}#}
+
+            {#{% if can_delete %}#}
+            <button type="submit" name="DeleteCollectionAction" class="tags-btn" data-enabler="Tags">{{ 'netgen_information_collection_admin_view_delete'|trans }}</button>
+            <button type="submit" name="AnonymizeCollectionAction" class="tags-btn" data-enabler="Tags">{{ 'netgen_information_collection_admin_view_anonymize'|trans }}</button>
+            {#{% endif %}#}
+        </div>
+
+    </form>
+
+{% endblock %}

@@ -141,4 +141,85 @@ class EzInfoCollectionAttribute
     {
         $this->informationCollectionId = $informationCollectionId;
     }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getContentClassAttributeId()
+    {
+        return $this->contentClassAttributeId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getContentObjectAttributeId()
+    {
+        return $this->contentObjectAttributeId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getContentObjectId()
+    {
+        return $this->contentObjectId;
+    }
+
+    /**
+     * @return float
+     */
+    public function getDataFloat()
+    {
+        return $this->dataFloat;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDataInt()
+    {
+        return $this->dataInt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDataText()
+    {
+        return $this->dataText;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInformationCollectionId()
+    {
+        return $this->informationCollectionId;
+    }
+
+    public function getValue()
+    {
+        if (!empty($this->dataText)) {
+            return $this->dataText;
+        }
+
+        if (!empty($this->dataInt)) {
+            return $this->dataInt;
+        }
+
+        if (!empty($this->dataFloat)) {
+            return $this->dataFloat;
+        }
+
+        return '';
+    }
 }

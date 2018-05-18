@@ -1,1 +1,14 @@
+netgen_information_collection.route.admin.overview:
+    path: /netgen/informationcollection/overview
+    defaults: { _controller: netgen_information_collection.controller.admin:overviewAction }
+    methods: [GET]
 
+netgen_information_collection.route.admin.collection_list:
+    path: /netgen/informationcollection/collection-list/{contentId}
+    defaults: { _controller: netgen_information_collection.controller.admin:collectionListAction }
+    methods: [GET]
+
+netgen_information_collection.route.admin.view:
+    path: /netgen/informationcollection/view/{collectionId}
+    defaults: { _controller: netgen_information_collection.controller.admin:viewAction }
+    methods: [GET]

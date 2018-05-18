@@ -10,3 +10,8 @@ phpunit.phar
 phpunit.xml
 coverage.xml
 build/
+.tmp/
+node_modules/
+/vendor/
+grunt.lock
+package-lock.json

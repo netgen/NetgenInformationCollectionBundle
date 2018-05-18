@@ -65,6 +65,14 @@ class EzInfoCollection
     }
 
     /**
+     * @return int
+     */
+    public function getContentObjectId()
+    {
+        return $this->contentObjectId;
+    }
+
+    /**
      * @param int $id
      */
     public function setId($id)
@@ -110,5 +118,37 @@ class EzInfoCollection
     public function setUserIdentifier($userIdentifier)
     {
         $this->userIdentifier = $userIdentifier;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCreatorId()
+    {
+        return $this->creatorId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserIdentifier()
+    {
+        return $this->userIdentifier;
     }
 }

@@ -3,6 +3,7 @@ imports:
     - { resource: storage.yml }
     - { resource: factories.yml }
     - { resource: legacy_handlers.yml }
+    - { resource: admin.yml }
 
 parameters:
     # Controllers

@@ -1,0 +1,19 @@
+{% trans_default_domain 'netgen_information_collection_admin' %}
+
+<p class="path">
+    <span class="path-here-text">{{ 'netgen_information_collection_admin_you_are_here'|trans }}:</span>
+
+    {% if app.request.get('contentId') %}
+        <a class="path" href="{{ path('netgen_information_collection.route.admin.overview') }}">{{ 'netgen_information_collection_admin_path_collected_information'|trans }}</a>
+        <span class="slash"> / </span>
+        <span class="path">{{ ez_content_name(content) }}</span>
+    {% elseif app.request.get('collectionId') %}
+        <a class="path" href="{{ path('netgen_information_collection.route.admin.overview') }}">{{ 'netgen_information_collection_admin_path_collected_information'|trans }}</a>
+        <span class="slash"> / </span>
+        <a class="path" href="{{ path('netgen_information_collection.route.admin.collection_list', {'contentId': content.id}) }}">{{ ez_content_name(content) }}</a>
+        <span class="slash"> / </span>
+        <span class="path">{{ collection.id }}</span>
+    {% else %}
+        <span class="path">{{ 'netgen_information_collection_admin_path_collected_information'|trans }}</span>
+    {% endif %}
+</p>
