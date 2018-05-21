@@ -1,0 +1,20 @@
+{% trans_default_domain 'netgen_information_collection_admin' %}
+
+{% set rootTagId = rootTagId|default(0) %}
+{% set showRootTag = showRootTag|default(true) %}
+{% set selectedTag = selectedTag|default(null) %}
+{% set disableSubtree = disableSubtree|default([]) %}
+{% if app.request.attributes.has('contentId') %}
+    {% set pathString = '/0/' ~ app.request.attributes.get('contentId') %}
+{% endif %}
+
+{% block tags_tree %}
+    <div
+        class="tags-tree"
+        data-path="{{ path('netgen_information_collection.route.admin.tree_get_children', {'contentId': '_contentId_'}) }}"
+        data-rootTagId="{{ rootTagId }}"
+        data-showRootTag="{{ showRootTag ? 'true' : 'false' }}"
+        data-selectedTagPath="{% if pathString is defined %}{{ pathString }}{% else %}{{ '' }}{% endif %}"
+        data-disableSubtree="{{ disableSubtree|join(',') }}"
+    ></div>
+{% endblock %}

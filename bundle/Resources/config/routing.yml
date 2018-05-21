@@ -32,3 +32,10 @@ netgen_information_collection.route.admin.handle_collection:
     path: /netgen/informationcollection/handle/collection
     defaults: { _controller: netgen_information_collection.controller.admin:handleCollectionAction }
     methods: [POST]
+
+netgen_information_collection.route.admin.tree_get_children:
+    path: /netgen/informationcollection/tree/{contentId}/{isRoot}
+    defaults:
+        _controller: netgen_information_collection.controller.tree:getChildrenAction
+        _method: GET
+        isRoot: false

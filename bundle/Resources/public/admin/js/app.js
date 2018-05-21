@@ -41,7 +41,7 @@ $.noConflict();
                         var rootTagId = self.$tree.data('roottagid');
 
                         return route
-                            .replace("_tagId_", node.id)
+                            .replace("_contentId_", node.id)
                             .replace("#", rootTagId + "/true");
                     }
                 },
@@ -60,7 +60,7 @@ $.noConflict();
                 var selectedNodeId = selectedTagPath[selectedTagPath.length - 1];
                 this.select_node(selectedNodeId);
                 if (!self.settings.modal) {
-                    self.$tree.find('a#' + selectedNodeId + '_anchor').addClass('selected');
+                    self.$tree.find('#' + selectedNodeId + '_anchor').addClass('selected');
                 }
             });
         }).on("ready.jstree", function (event, data) {

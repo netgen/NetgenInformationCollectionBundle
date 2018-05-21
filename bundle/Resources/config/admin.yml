@@ -8,3 +8,12 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@ezpublish.api.repository"
+
+    netgen_information_collection.controller.tree:
+        class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\TreeController
+        parent: ezpublish.controller.base
+        public: true
+        arguments:
+            - "@netgen_information_collection.api.service"
+            - "@translator"
+            - "@router"
