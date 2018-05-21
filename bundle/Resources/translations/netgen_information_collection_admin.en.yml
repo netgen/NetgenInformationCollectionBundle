@@ -28,3 +28,5 @@ netgen_information_collection_admin_view_title: 'Collection #%collection_id% for
 netgen_information_collection_admin_view_subtitle: 'Last modified: %date%, %user_name%'
 netgen_information_collection_admin_view_delete: 'Delete selected'
 netgen_information_collection_admin_view_anonymize: 'Anonymize selected'
+
+netgen_information_collection_admin_back: 'Back'

@@ -1,0 +1,8 @@
+netgen_information_collection_admin_flash_field_success: 'Field success'
+netgen_information_collection_admin_flash_field_fail: 'Field fail'
+
+netgen_information_collection_admin_flash_collection_success: 'Collection success'
+netgen_information_collection_admin_flash_collection_fail: 'Collection fail'
+
+netgen_information_collection_admin_flash_contents_success: 'Contents success'
+netgen_information_collection_admin_flash_contents_fail: 'Contents fail'

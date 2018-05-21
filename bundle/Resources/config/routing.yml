@@ -24,11 +24,11 @@ netgen_information_collection.route.admin.handle_contents:
     methods: [POST]
 
 netgen_information_collection.route.admin.handle_collection_list:
-    path: /netgen/informationcollection/handle/collection-list/{contentId}
+    path: /netgen/informationcollection/handle/collection-list
     defaults: { _controller: netgen_information_collection.controller.admin:handleCollectionListAction }
     methods: [POST]
 
 netgen_information_collection.route.admin.handle_collection:
-    path: /netgen/informationcollection/handle/collection/{collectionId}
+    path: /netgen/informationcollection/handle/collection
     defaults: { _controller: netgen_information_collection.controller.admin:handleCollectionAction }
     methods: [POST]

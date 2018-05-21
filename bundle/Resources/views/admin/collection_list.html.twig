@@ -3,6 +3,13 @@
 {% extends '@NetgenInformationCollection/admin/pagelayout.html.twig' %}
 
 {% block content %}
+
+    {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
+
+    <a class="tags-btn" href="{{ path('netgen_information_collection.route.admin.overview') }}">
+        {{ 'netgen_information_collection_admin_back'|trans }}
+    </a>
+
     <h1>{{ 'netgen_information_collection_admin_collection_list_title'|trans({'%content_name%': ez_content_name(content), '%count%': objects.count}) }}</h1>
     {% if objects is not empty %}
 
@@ -24,7 +31,8 @@
             </p>
         {% endif %}
 
-        <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection_list', {'contentId':content.id}) }}">
+        <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection_list') }}">
+            <input type="hidden" name="ContentId" value="{{ content.id }}">
             <table>
                 <thead>
                 <tr>

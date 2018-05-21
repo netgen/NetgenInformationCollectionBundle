@@ -4,20 +4,27 @@
 
 {% block content %}
 
+    {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
+
+    <a class="tags-btn" href="{{ path('netgen_information_collection.route.admin.collection_list', {'contentId': content.id}) }}">
+        {{ 'netgen_information_collection_admin_back'|trans }}
+    </a>
+
     <h1>{{ 'netgen_information_collection_admin_view_title'|trans({'%collection_id%': collection.id, '%content_name%': ez_content_name(content)}) }}</h1>
     <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.modified|date("Y.m.d H:i"), '%user_name%': user.name}) }}</h6>
 
 
     {#{% if childrenTags is not empty %}#}
-    <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection', {'collectionId': collection.id}) }}">
+    <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection') }}">
 
         <input type="hidden" value="{{ collection.id }}" name="CollectionId">
+        <input type="hidden" value="{{ content.id }}" name="ContentId">
 
         {% for object in objects %}
 
             <span>
-                <input id="{{ object.field.identifier }}" name="FieldId[]" value="{{ object.field.identifier }}" title="Select collections for removal." type="checkbox">
-                <label for="{{ object.field.identifier }}">
+                <input id="{{ object.field.id }}" name="FieldId[]" value="{{ object.field.id }}" title="Select collections for removal." type="checkbox">
+                <label for="{{ object.field.id }}">
                 </label>
             </span>
             <label>{{ ez_field_name(content, object.field.identifier) }}:</label>
