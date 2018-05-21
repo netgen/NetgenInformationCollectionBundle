@@ -64,12 +64,16 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
 
     public function search($contentId, $searchText)
     {
+        $searchText = strtolower($searchText);
+
         $qb = $this->createQueryBuilder('eica');
 
         $result = $qb->select('eica.informationCollectionId')
             ->where('eica.contentObjectId = :contentId')
             ->setParameter('contentId', $contentId)
-            ->andWhere('eica.dataText LIKE :searchText')
+            ->andWhere($qb->expr()->andX(
+                $qb->expr()->like('LOWER(eica.dataText)', ':searchText')
+            ))
             ->setParameter('searchText', '%' . $searchText . '%')
             ->getQuery()
             ->getScalarResult();

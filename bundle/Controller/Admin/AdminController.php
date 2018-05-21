@@ -55,7 +55,7 @@ class AdminController extends Controller
     public function searchAction(Request $request, $contentId)
     {
         $this->denyAccessUnlessGranted('ez:infocollector:read');
-        
+
         $content = $this->container->get('ezpublish.api.service.content')
             ->loadContent($contentId);
 
