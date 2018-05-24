@@ -27,7 +27,9 @@ netgen_information_collection_admin_collection_no_collections: 'No collections a
 
 netgen_information_collection_admin_view_title: 'Collection #%collection_id% for %content_name%'
 netgen_information_collection_admin_view_subtitle: 'Last modified: %date%, %user_name%'
-netgen_information_collection_admin_view_delete: 'Delete selected'
-netgen_information_collection_admin_view_anonymize: 'Anonymize selected'
+netgen_information_collection_admin_view_delete: 'Delete'
+netgen_information_collection_admin_view_anonymize: 'Anonymize'
+netgen_information_collection_admin_view_delete_field: 'Delete selected fields'
+netgen_information_collection_admin_view_anonymize_field: 'Anonymize selected fields'
 
 netgen_information_collection_admin_back: 'Back'
