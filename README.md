@@ -4,10 +4,6 @@
     </a>
 </h1>
 
-
-NetgenInformationCollectionBundle
-=================================
-
 [![Build Status](https://img.shields.io/travis/netgen/NetgenInformationCollectionBundle.svg?style=flat-square)](https://travis-ci.org/netgen/NetgenInformationCollectionBundle)
 [![Code Coverage](https://img.shields.io/codecov/c/github/netgen/NetgenInformationCollectionBundle.svg?style=flat-square)](https://codecov.io/gh/netgen/NetgenInformationCollectionBundle)
 [![Quality Score](https://img.shields.io/scrutinizer/g/netgen/NetgenInformationCollectionBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/netgen/NetgenInformationCollectionBundle)
