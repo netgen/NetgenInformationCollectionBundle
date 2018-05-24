@@ -6,8 +6,12 @@
 
     {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
+<<<<<<< Updated upstream
     {#<a class="tags-btn" href="{{ path('netgen_information_collection.route.admin.collection_list', {'contentId': content.id}) }}">#}
     <a class="tags-btn" href="{{ app.request.headers.get('referer') }}">
+=======
+    <a class="ic-btn" href="{{ path('netgen_information_collection.route.admin.collection_list', {'contentId': content.id}) }}">
+>>>>>>> Stashed changes
         {{ 'netgen_information_collection_admin_back'|trans }}
     </a>
 
@@ -15,6 +19,10 @@
     <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.modified|date("Y.m.d H:i"), '%user_name%': user.name}) }}</h6>
 
 
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
     <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection') }}">
 
         <input type="hidden" value="{{ collection.id }}" name="CollectionId">
@@ -35,19 +43,18 @@
 
         {% endfor %}
 
+<<<<<<< Updated upstream
         <div class="tags-btn-group">
             {#{% if can_edit %}#}
             {#<button type="submit" name="MoveTagsAction" class="tags-btn" data-enabler="Tags">{{ 'tag.button.move_selected'|trans }}</button>#}
             {#{% endif %}#}
+=======
 
-            {#{% if can_read %}#}
-            {#<button type="submit" name="CopyTagsAction" class="tags-btn" data-enabler="Tags">{{ 'tag.button.copy_selected'|trans }}</button>#}
-            {#{% endif %}#}
+>>>>>>> Stashed changes
 
-            {#{% if can_delete %}#}
-            <button type="submit" name="DeleteCollectionAction" class="tags-btn" data-enabler="Tags">{{ 'netgen_information_collection_admin_view_delete'|trans }}</button>
-            <button type="submit" name="AnonymizeCollectionAction" class="tags-btn" data-enabler="Tags">{{ 'netgen_information_collection_admin_view_anonymize'|trans }}</button>
-            {#{% endif %}#}
+        <div class="ic-btn-group">
+            <button type="submit" name="DeleteCollectionAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_delete'|trans }}</button>
+            <button type="submit" name="AnonymizeCollectionAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_anonymize'|trans }}</button>
         </div>
 
     </form>

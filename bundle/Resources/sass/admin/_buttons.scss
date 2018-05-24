@@ -1,5 +1,5 @@
 #{$namespace} {
-    .tags-btn {
+    .ic-btn {
         display:inline-block;
         font-weight:normal;
         text-align:center;
@@ -23,7 +23,7 @@
         &.disabled {
             opacity:0.5;
             cursor:not-allowed;
-            .tags-btn-effect {
+            .ic-btn-effect {
                 display:none;
             }
             &:hover,
@@ -39,7 +39,7 @@
             background:darken($btnDefault, 10%);
             text-decoration:none;
         }
-        &.tags-btn-primary {
+        &.ic-btn-primary {
             background:$btnPrimary;
             color:$btnPrimaryColor;
             &[disabled]
@@ -53,11 +53,11 @@
             &:focus {
                 background:desaturate(darken($btnPrimary, 8%), 10%);
             }
-            .tags-btn-effect {
+            .ic-btn-effect {
                 background:hsla(0, 0, 100, 0.25);
             }
         }
-        &.tags-btn-link {
+        &.ic-btn-link {
             color:$linkColor;
             background:transparent;
         }
@@ -71,7 +71,7 @@
                 margin:0 0 0 0.25em;
             }
         }
-        .tags-btn-effect {
+        .ic-btn-effect {
             position:absolute;
             display:block;
             left:50%;
@@ -84,10 +84,10 @@
             animation:effectSize 0.5s cubic-bezier(0.39, 0.76, 0.6, 0.98), effectFade 0.5s cubic-bezier(0.34, 0.29, 0.87, 0.57);
         }
     }
-    .tags-btn-group {
+    .ic-btn-group {
         @extend %clearfix;
         margin:1em 0;
-        > .tags-btn {
+        > .ic-btn {
             float:left;
             margin-left:1px;
             border-radius:0;
@@ -103,9 +103,9 @@
             }
         }
     }
-    .tags-actions {
+    .ic-actions {
         margin:1em 0;
-        .tags-btn {
+        .ic-btn {
             margin-right:0.5em;
         }
     }

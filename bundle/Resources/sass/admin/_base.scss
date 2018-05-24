@@ -3,7 +3,7 @@ body {
     height:100%;
     margin:0;
 }
-body.tags-resizing {
+body.ic-resizing {
     cursor:ew-resize;
 }
 
@@ -21,7 +21,7 @@ body.tags-resizing {
     * {
         box-sizing:border-box;
     }
-    .ng-tags-container {
+    .ic-container {
         height:100%;
         width:100%;
         max-width:1600px;
@@ -30,40 +30,40 @@ body.tags-resizing {
         flex:1;
         align-items:stretch;
     }
-    .tags-sidebar {
+    .ic-sidebar {
         width:$sidebarWidth;
         background:$sidebarBg;
-        .jstree-ng-tags {
+        .jstree-ng-ic {
             padding:$gutter;
             overflow-x:hidden;
         }
     }
-    .tags-content {
+    .ic-content {
         flex:1;
         padding:$gutter;
         overflow-x:auto;
     }
 
     /* messages */
-    .tags-message {
+    .ic-message {
         margin:2em 0 3em;
         padding:$gutter;
         background:hsl(205, 30, 92);
-        &.tags-message-success {
+        &.ic-message-success {
             background:hsl(160, 80, 80);
         }
-        &.tags-message-error {
+        &.ic-message-error {
             background:hsl(0, 100, 90);
         }
     }
 
     /* header */
-    .ng-tags-header {
+    .ic-header {
         background:hsl(0, 0, 30);
-        .ng-tags-logo {
+        .ic-logo {
             height:50px;
             width:$sidebarWidth;
-            background:hsl(0, 0, 20) url(../images/tags-logo-full.svg) no-repeat center center;
+            background:hsl(0, 0, 20) url(../images/ic-logo-full.svg) no-repeat center center;
             background-size:auto 60%;
         }
     }

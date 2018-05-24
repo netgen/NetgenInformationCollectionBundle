@@ -4,7 +4,6 @@
 {% extends netgen_information_collection_admin.pageLayoutTemplate %}
 
 {% block content %}
-    {{ dump(netgen_information_collection_admin.pageLayoutTemplate) }}
     {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
     <h1>{{ 'netgen_information_collection_admin_overview_title'|trans({'%count%': objects.count}) }}</h1>
@@ -61,10 +60,10 @@
                 {{ pagerfanta( objects, 'netgen_information_collection_admin' ) }}
             {% endif %}
 
-            <div class="tags-btn-group">
-                <button type="submit" name="DeleteCollectionByContentIdAction" class="tags-btn" data-enabler="Tags">
-                    {{ 'netgen_information_collection_admin_overview_delete'|trans }}
-                </button>
+            <div class="ic-btn-group">
+                    <button type="submit" name="DeleteCollectionByContentIdAction" class="ic-btn" data-enabler="ic">
+                        {{ 'netgen_information_collection_admin_overview_delete'|trans }}
+                    </button>
             </div>
 
         </form>

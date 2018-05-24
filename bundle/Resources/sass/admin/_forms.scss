@@ -87,7 +87,7 @@
     }
 }
 
-.ng-tags-input {
+.ic-input {
     margin:0 0 1.5em;
     label {
         display:block;
@@ -121,7 +121,7 @@
             }
         }
     }
-    .tag-keyword {
+    .ic-keyword {
         display:inline-block;
         height:$btnHeight;
         line-height:$btnHeight;
@@ -133,7 +133,7 @@
         border-radius:$borderRadius;
         border-top-right-radius:0;
         border-bottom-right-radius:0;
-        + .tags-btn {
+        + .ic-btn {
             border-top-left-radius:0;
             border-bottom-left-radius:0;
         }

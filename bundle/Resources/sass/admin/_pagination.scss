@@ -1,7 +1,7 @@
 .pagination-centered {
     text-align:center;
 }
-.tags-pagination {
+.ic-pagination {
     list-style-type:none;
     display:inline-block;
     margin:1em auto;
@@ -16,12 +16,12 @@
             display:none;
         }
         &.active {
-            .tags-btn {
+            .ic-btn {
                 cursor:default;
             }
         }
     }
-    .tags-btn {
+    .ic-btn {
         border-radius:0;
         .md-icon {
             margin:0;

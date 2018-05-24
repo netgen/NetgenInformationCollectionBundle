@@ -6,8 +6,7 @@
 
     {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
-    {#<a class="tags-btn" href="{{ path('netgen_information_collection.route.admin.overview') }}">#}
-    <a class="tags-btn" href="{{ app.request.headers.get('referer') }}">
+    <a class="ic-btn" href="{{ app.request.headers.get('referer') }}">
         {{ 'netgen_information_collection_admin_back'|trans }}
     </a>
 
@@ -16,13 +15,13 @@
 
         {% set search_text = app.request.query.get('searchText', '') %}
 
-        <form name="tag_create" method="get" action="{{ path('netgen_information_collection.route.admin.collection_list_search', {'contentId':content.id}) }}">
-            <div class="ng-tags-input">
+        <form name="ic_search" method="get" action="{{ path('netgen_information_collection.route.admin.collection_list_search', {'contentId':content.id}) }}">
+            <div class="ic-input">
                 <label for="collection-search">
                     {{ 'netgen_information_collection_admin_collection_search_collections'|trans }}
                 </label>
                 <input id="collection-search" type="text" name="searchText" value="{{ search_text }}">
-                <input type="submit" value="Search" class="tags-btn">
+                <input type="submit" value="Search" class="ic-btn">
             </div>
         </form>
 
@@ -76,12 +75,12 @@
                 {{ pagerfanta( objects, 'netgen_information_collection_admin' ) }}
             {% endif %}
 
-            <div class="tags-btn-group">
+            <div class="ic-btn-group">
                 {#{% if can_delete %}#}
-                <button type="submit" name="DeleteCollectionByCollectionIdAction" class="tags-btn" data-enabler="Tags">
+                <button type="submit" name="DeleteCollectionByCollectionIdAction" class="ic-btn" data-enabler="IC">
                     {{ 'netgen_information_collection_admin_collection_delete'|trans }}
                 </button>
-                <button type="submit" name="AnonymizeCollectionByCollectionIdAction" class="tags-btn" data-enabler="Tags">
+                <button type="submit" name="AnonymizeCollectionByCollectionIdAction" class="ic-btn" data-enabler="IC">
                     {{ 'netgen_information_collection_admin_collection_anonymize'|trans }}
                 </button>
                 {#{% endif %}#}

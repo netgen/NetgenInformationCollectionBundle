@@ -10,7 +10,7 @@ $.noConflict();
     var TagsTree = function(el, options){
         this.settings = $.extend({
             'modal': false,
-            'treeClassName': 'tags-tree',
+            'treeClassName': 'ic-tree',
             'modalClassName': 'ng-modal'
         }, options);
 

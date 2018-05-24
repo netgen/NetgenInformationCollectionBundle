@@ -1,8 +1,8 @@
 #{$namespace} {
-    .tags-tabs {
+    .ic-tabs {
         margin:2em 0 3.5em;
     }
-    .tags-tab-controls {
+    .ic-tab-controls {
         list-style-type:none;
         width:100%;
         padding:0;
@@ -16,7 +16,7 @@
             background:hsl(0, 0, 32);
             margin:0;
             &.active {
-                .tags-tab-control {
+                .ic-tab-control {
                     &::after {
                         width:100%;
                         transition:width 0.25s ease-out;
@@ -24,7 +24,7 @@
                 }
             }
         }
-        .tags-tab-control {
+        .ic-tab-control {
             display:block;
             padding:10px 10px;
             text-align:center;
@@ -51,7 +51,7 @@
             }
         }
     }
-    .tags-tab {
+    .ic-tab {
         display:none;
         &.active {
             display:block;
