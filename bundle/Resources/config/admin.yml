@@ -2,12 +2,19 @@ services:
     netgen_information_collection.controller.admin:
         class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\AdminController
         parent: ezpublish.controller.base
+        public: true
+        arguments:
+            - "@netgen_information_collection.api.service"
+            - "@ezpublish.api.service.content"
+            - "@ezpublish.config.resolver"
 
     netgen_information_collection.api.service:
         class: Netgen\Bundle\InformationCollectionBundle\API\InformationCollectionService
+        public: true
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@ezpublish.api.repository"
+            - "@netgen_information_collection.core.persistence.gateway.doctrine"
 
     netgen_information_collection.controller.tree:
         class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\TreeController
@@ -17,3 +24,30 @@ services:
             - "@netgen_information_collection.api.service"
             - "@translator"
             - "@router"
+
+    netgen_information_collection.templating.admin_global_variable:
+        class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\AdminGlobalVariable
+        public: true
+        # We need the lazy flag due to usage of dynamic parameters
+        lazy: true
+        calls:
+            - [setPageLayoutTemplate, ["$admin.pagelayout;netgen_information_collection$"]]
+
+    netgen_information_collection.core.persistence.gateway.doctrine:
+        class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase
+        public: false
+        arguments:
+            - '@database_connection'
+
+    netgen_information_collection.pagerfanta.view.eztags_admin:
+        class: Netgen\Bundle\InformationCollectionBundle\Core\Pagination\Pagerfanta\View\InformationCollectionAdminView
+        public: false
+        # Not being lazy results in out of memory exceptions on eZ Platform 2.0,
+        # probably due to @twig dependency
+        lazy: true
+        arguments:
+            - "@twig"
+        calls:
+            - [setDefaultTemplate, ['@@NetgenInformationCollection/admin/pagerfanta.html.twig']]
+        tags:
+            - {name: pagerfanta.view, alias: netgen_information_collection_admin}

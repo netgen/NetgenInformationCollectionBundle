@@ -1,9 +1,10 @@
 {% trans_default_domain 'netgen_information_collection_admin' %}
 
-{% extends '@NetgenInformationCollection/admin/pagelayout.html.twig' %}
+{#{% extends '@NetgenInformationCollection/admin/pagelayout.html.twig' %}#}
+{% extends netgen_information_collection_admin.pageLayoutTemplate %}
 
 {% block content %}
-
+    {{ dump(netgen_information_collection_admin.pageLayoutTemplate) }}
     {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
     <h1>{{ 'netgen_information_collection_admin_overview_title'|trans({'%count%': objects.count}) }}</h1>
@@ -13,7 +14,8 @@
             <table>
                 <thead>
                     <tr>
-                        <th>{{ 'netgen_information_collection_admin_overview_select_all'|trans }}</th>
+                        {#<th>{{ 'netgen_information_collection_admin_overview_select_all'|trans }}</th>#}
+                        <th></th>
                         <th>{{ 'netgen_information_collection_admin_overview_content_name'|trans }}</th>
                         <th>{{ 'netgen_information_collection_admin_overview_content_type'|trans }}</th>
                         <th>{{ 'netgen_information_collection_admin_overview_first_collection'|trans }}</th>
@@ -56,15 +58,13 @@
             </table>
 
             {% if objects.haveToPaginate() %}
-                {{ pagerfanta( objects, 'eztags_admin' ) }}
+                {{ pagerfanta( objects, 'netgen_information_collection_admin' ) }}
             {% endif %}
 
             <div class="tags-btn-group">
-                {#{% if can_delete %}#}
-                    <button type="submit" name="DeleteCollectionByContentIdAction" class="tags-btn" data-enabler="Tags">
-                        {{ 'netgen_information_collection_admin_overview_delete'|trans }}
-                    </button>
-                {#{% endif %}#}
+                <button type="submit" name="DeleteCollectionByContentIdAction" class="tags-btn" data-enabler="Tags">
+                    {{ 'netgen_information_collection_admin_overview_delete'|trans }}
+                </button>
             </div>
 
         </form>

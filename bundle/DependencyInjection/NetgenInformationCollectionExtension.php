@@ -5,8 +5,11 @@ namespace Netgen\Bundle\InformationCollectionBundle\DependencyInjection;
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Config\Resource\FileResource;
+use Symfony\Component\Yaml\Yaml;
 use function array_merge;
 
 /**
@@ -14,7 +17,7 @@ use function array_merge;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class NetgenInformationCollectionExtension extends Extension
+class NetgenInformationCollectionExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -50,6 +53,26 @@ class NetgenInformationCollectionExtension extends Extension
                     $container->setParameter($paramName . '.' . $key, $value);
                 }
             }
+        }
+    }
+
+    public function prepend(ContainerBuilder $container)
+    {
+        $configs = array(
+            'twig.yml' => 'twig',
+        );
+
+        $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
+
+//        if (in_array('EzPlatformAdminUiBundle', $activatedBundles, true)) {
+//            $configs['ezadminui/twig.yml'] = 'twig';
+//        }
+
+        foreach ($configs as $fileName => $extensionName) {
+            $configFile = __DIR__ . '/../Resources/config/' . $fileName;
+            $config = Yaml::parse(file_get_contents($configFile));
+            $container->prependExtensionConfig($extensionName, $config);
+            $container->addResource(new FileResource($configFile));
         }
     }
 }

@@ -1,12 +1,13 @@
 {% trans_default_domain 'netgen_information_collection_admin' %}
 
-{% extends '@NetgenInformationCollection/admin/pagelayout.html.twig' %}
+{% extends netgen_information_collection_admin.pageLayoutTemplate %}
 
 {% block content %}
 
     {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
-    <a class="tags-btn" href="{{ path('netgen_information_collection.route.admin.overview') }}">
+    {#<a class="tags-btn" href="{{ path('netgen_information_collection.route.admin.overview') }}">#}
+    <a class="tags-btn" href="{{ app.request.headers.get('referer') }}">
         {{ 'netgen_information_collection_admin_back'|trans }}
     </a>
 
@@ -36,7 +37,8 @@
             <table>
                 <thead>
                 <tr>
-                    <th>{{ 'netgen_information_collection_admin_collection_select_all'|trans }}</th>
+                    {#<th>{{ 'netgen_information_collection_admin_collection_select_all'|trans }}</th>#}
+                    <th></th>
                     <th>{{ 'netgen_information_collection_admin_collection_creator'|trans }}</th>
                     <th>{{ 'netgen_information_collection_admin_collection_created'|trans }}</th>
                     <th>{{ 'netgen_information_collection_admin_collection_modified'|trans }}</th>
@@ -71,7 +73,7 @@
             </table>
 
             {% if objects.haveToPaginate() %}
-                {{ pagerfanta( objects, 'eztags_admin' ) }}
+                {{ pagerfanta( objects, 'netgen_information_collection_admin' ) }}
             {% endif %}
 
             <div class="tags-btn-group">

@@ -1,12 +1,13 @@
 {% trans_default_domain 'netgen_information_collection_admin' %}
 
-{% extends '@NetgenInformationCollection/admin/pagelayout.html.twig' %}
+{% extends netgen_information_collection_admin.pageLayoutTemplate %}
 
 {% block content %}
 
     {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
-    <a class="tags-btn" href="{{ path('netgen_information_collection.route.admin.collection_list', {'contentId': content.id}) }}">
+    {#<a class="tags-btn" href="{{ path('netgen_information_collection.route.admin.collection_list', {'contentId': content.id}) }}">#}
+    <a class="tags-btn" href="{{ app.request.headers.get('referer') }}">
         {{ 'netgen_information_collection_admin_back'|trans }}
     </a>
 
@@ -14,7 +15,6 @@
     <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.modified|date("Y.m.d H:i"), '%user_name%': user.name}) }}</h6>
 
 
-    {#{% if childrenTags is not empty %}#}
     <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection') }}">
 
         <input type="hidden" value="{{ collection.id }}" name="CollectionId">
@@ -34,10 +34,6 @@
             <hr>
 
         {% endfor %}
-
-        {#{% if childrenTags.haveToPaginate() %}#}
-        {#{{ pagerfanta( childrenTags, 'eztags_admin' ) }}#}
-        {#{% endif %}#}
 
         <div class="tags-btn-group">
             {#{% if can_edit %}#}

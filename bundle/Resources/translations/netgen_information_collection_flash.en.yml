@@ -6,3 +6,5 @@ netgen_information_collection_admin_flash_collection_fail: 'Collection fail'
 
 netgen_information_collection_admin_flash_contents_success: 'Contents success'
 netgen_information_collection_admin_flash_contents_fail: 'Contents fail'
+
+netgen_information_collection_admin_flash_fields_missing: 'Please selects fields'

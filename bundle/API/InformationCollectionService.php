@@ -3,8 +3,8 @@
 namespace Netgen\Bundle\InformationCollectionBundle\API;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 use eZ\Publish\API\Repository\Repository;
+use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
@@ -75,8 +75,13 @@ EOD;
 
     protected $contentTypeService;
 
+    /**
+     * @var DoctrineDatabase
+     */
+    private $gateway;
 
-    public function __construct(EntityManagerInterface $entityManager, Repository $repository)
+
+    public function __construct(EntityManagerInterface $entityManager, Repository $repository, DoctrineDatabase $gateway)
     {
         $this->entityManager = $entityManager;
         $this->ezInfoCollectionRepository = $this->entityManager->getRepository(EzInfoCollection::class);
@@ -84,21 +89,20 @@ EOD;
         $this->repository = $repository;
         $this->contentService = $repository->getContentService();
         $this->contentTypeService = $repository->getContentTypeService();
+        $this->gateway = $gateway;
     }
 
     public function overview($limit = 10, $offset = 0)
     {
-        $query = $this->entityManager->getConnection()->prepare($this->q);
+//        $query = $this->entityManager->getConnection()->prepare($this->q);
+//        $query->execute();
+//        $objects = $query->fetchAll();
+        $objects = $this->gateway->getObjectsWithCollections();
 
-        $query->execute();
-
-        $objects = $query->fetchAll();
-
-        $query = $this->entityManager->getConnection()->prepare($this->countQuery);
-
-        $query->execute();
-
-        $mainCount = $query->fetchColumn(0);
+//        $query = $this->entityManager->getConnection()->prepare($this->countQuery);
+//        $query->execute();
+//        $mainCount = $query->fetchColumn(0);
+//        $mainCount = $this->gateway->getObjectsWithCollectionCount();
 
         foreach (array_keys($objects) as $i) {
             $contentId = (int)$objects[$i]['contentobject_id'];
@@ -138,13 +142,10 @@ EOD;
 
     public function overviewCount()
     {
-        $query = $this->entityManager->getConnection()->prepare($this->countQuery);
-
-        $query->execute();
-
-        $mainCount = $query->fetchColumn(0);
-
-        return $mainCount;
+//        $query = $this->entityManager->getConnection()->prepare($this->countQuery);
+//        $query->execute();
+//        $mainCount = $query->fetchColumn(0);
+        return $this->gateway->getContentsWithCollectionsCount();
     }
 
     public function collectionList($contentId, $limit, $offset = 0)

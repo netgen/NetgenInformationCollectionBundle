@@ -2,30 +2,47 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
-use Doctrine\ORM\EntityManagerInterface;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
+use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Netgen\Bundle\InformationCollectionBundle\API\InformationCollectionService;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListSearchAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionContentsAdapter;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
+use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
 {
+    /**
+     * @var InformationCollectionService
+     */
+    protected $service;
+
+    /**
+     * @var ContentService
+     */
+    protected $contentService;
+
+    /**
+     * @var ConfigResolverInterface
+     */
+    protected $configResolver;
+
+    public function __construct(InformationCollectionService $service, ContentService $contentService, ConfigResolverInterface $configResolver)
+    {
+        $this->service = $service;
+        $this->contentService = $contentService;
+        $this->configResolver = $configResolver;
+    }
+
     public function overviewAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ez:infocollector:read');
 
-        $service = $this->container->get('netgen_information_collection.api.service');
-
-        $currentPage = (int) $request->query->get('page');
-        $adapter = new InformationCollectionContentsAdapter($service);
-        $pager = new Pagerfanta($adapter);
-        $pager->setNormalizeOutOfRangePages(true);
-        $pager->setMaxPerPage(10);
-        $pager->setCurrentPage($currentPage > 0 ? $currentPage : 1);
+        $adapter = new InformationCollectionContentsAdapter($this->service);
+        $pager = $this->getPager($adapter, (int) $request->query->get('page'));
 
         return $this->render("NetgenInformationCollectionBundle:admin:overview.html.twig", ['objects' => $pager]);
     }
@@ -34,17 +51,10 @@ class AdminController extends Controller
     {
         $this->denyAccessUnlessGranted('ez:infocollector:read');
 
-        $content = $this->container->get('ezpublish.api.service.content')
-            ->loadContent($contentId);
+        $content = $this->contentService->loadContent($contentId);
 
-        $service = $this->container->get('netgen_information_collection.api.service');
-
-        $currentPage = (int)$request->query->get('page');
-        $adapter = new InformationCollectionCollectionListAdapter($service, $contentId);
-        $pager = new Pagerfanta($adapter);
-        $pager->setNormalizeOutOfRangePages(true);
-        $pager->setMaxPerPage(10);
-        $pager->setCurrentPage($currentPage > 0 ? $currentPage : 1);
+        $adapter = new InformationCollectionCollectionListAdapter($this->service, $contentId);
+        $pager = $this->getPager($adapter, (int)$request->query->get('page'));
 
         return $this->render("NetgenInformationCollectionBundle:admin:collection_list.html.twig", [
             'objects' => $pager,
@@ -56,19 +66,12 @@ class AdminController extends Controller
     {
         $this->denyAccessUnlessGranted('ez:infocollector:read');
 
-        $content = $this->container->get('ezpublish.api.service.content')
-            ->loadContent($contentId);
+        $content = $this->contentService->loadContent($contentId);
 
-        $service = $this->container->get('netgen_information_collection.api.service');
-
-        $currentPage = (int)$request->query->get('page');
         $adapter = new InformationCollectionCollectionListSearchAdapter(
-            $service, $contentId, $request->query->get('searchText')
+            $this->service, $contentId, $request->query->get('searchText')
         );
-        $pager = new Pagerfanta($adapter);
-        $pager->setNormalizeOutOfRangePages(true);
-        $pager->setMaxPerPage(10);
-        $pager->setCurrentPage($currentPage > 0 ? $currentPage : 1);
+        $pager = $this->getPager($adapter, (int)$request->query->get('page'));
 
         return $this->render("NetgenInformationCollectionBundle:admin:collection_list.html.twig",
             [
@@ -80,8 +83,7 @@ class AdminController extends Controller
 
     public function viewAction($collectionId)
     {
-        $repository = $this->container->get('netgen_information_collection.api.service');
-        $data = $repository->view($collectionId);
+        $data = $this->service->view($collectionId);
 
         return $this->render("NetgenInformationCollectionBundle:admin:view.html.twig", $data);
     }
@@ -97,6 +99,12 @@ class AdminController extends Controller
     {
         $contentId = $request->request->get('ContentId');
 
+        if (empty($request->request->get('CollectionId'))) {
+            $this->addFlashMessage('errors', 'netgen_information_collection_admin_flash_collection_missing', array('%tagKeyword%' => 'kifla'));
+
+            return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
+        }
+
         $this->addFlashMessage('success', 'netgen_information_collection_admin_flash_collection_success', array('%tagKeyword%' => 'kifla'));
 
         return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
@@ -105,6 +113,15 @@ class AdminController extends Controller
     public function handleCollectionAction(Request $request)
     {
         $collectionId = $request->request->get('CollectionId');
+        $contentId = $request->request->get('ContentId');
+
+        if (empty($request->request->get('FieldId'))) {
+            $this->addFlashMessage('errors', 'netgen_information_collection_admin_flash_fields_missing', array('%tagKeyword%' => 'kifla'));
+
+            return $this->redirectToRoute('netgen_information_collection.route.admin.view', ['collectionId' => $collectionId]);
+        }
+
+        $fields = $request->request->get('FieldId');
 
         if ($request->request->has('AnonymizeCollectionAction')) {
             $this->addFlashMessage('success', 'netgen_information_collection_admin_flash_field_success', array('%tagKeyword%' => 'kifla'));
@@ -134,4 +151,26 @@ class AdminController extends Controller
             )
         );
     }
+
+    /**
+     * Returns configured instance of Pagerfanta
+     *
+     * @param AdapterInterface $adapter
+     * @param $currentPage
+     *
+     * @return Pagerfanta
+     */
+    protected function getPager(AdapterInterface $adapter, $currentPage)
+    {
+        $currentPage = (int) $currentPage;
+        $pager = new Pagerfanta($adapter);
+        $pager->setNormalizeOutOfRangePages(true);
+        $pager->setMaxPerPage(
+            $this->configResolver->getParameter('admin.max_per_page', 'netgen_information_collection')
+        );
+        $pager->setCurrentPage($currentPage > 0 ? $currentPage : 1);
+
+        return $pager;
+    }
+
 }

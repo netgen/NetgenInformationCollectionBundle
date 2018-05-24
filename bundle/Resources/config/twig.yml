@@ -1,0 +1,2 @@
+globals:
+    netgen_information_collection_admin: "@netgen_information_collection.templating.admin_global_variable"
