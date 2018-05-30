@@ -1,7 +1,7 @@
 /* ng-tags theme for jstree */
 $nodeHeight: 24px;
 
-.jstree-ic {
+.jstree-ng-tags {
     font-size:13px;
     margin:0 0 1.5em;
     .jstree-icon {
@@ -17,6 +17,7 @@ $nodeHeight: 24px;
     .jstree-node {
         line-height:$nodeHeight;
         position:relative;
+        padding-bottom: 5px;
         .jstree-node {
             margin-left:$nodeHeight;
         }
@@ -50,9 +51,13 @@ $nodeHeight: 24px;
             word-break:break-word;
             padding-left:26px;
             position:relative;
+            margin-right: 15px;
+            line-height: 20px;
+            top: 2px;
             .jstree-icon {
                 position:absolute;
                 left:0;
+                top: -2px;
             }
         }
     }
@@ -104,7 +109,7 @@ $nodeHeight: 24px;
     }
 }
 
-.jstree-ic-contextmenu.vakata-context {
+.jstree-ng-tags-contextmenu.vakata-context {
     border:none;
     background:#fff;
     box-shadow:rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
@@ -160,10 +165,10 @@ $nodeHeight: 24px;
     }
 }
 
-.ic-tree li.disabled {
+.tags-tree li.disabled {
     color: gray;
 }
 
-.ic-tree a.selected {
+.tags-tree a.selected {
     color: $linkColor;
 }

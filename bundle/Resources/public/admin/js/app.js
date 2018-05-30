@@ -10,7 +10,7 @@ $.noConflict();
     var TagsTree = function(el, options){
         this.settings = $.extend({
             'modal': false,
-            'treeClassName': 'ic-tree',
+            'treeClassName': 'tags-tree',
             'modalClassName': 'ng-modal'
         }, options);
 
@@ -324,10 +324,10 @@ function ngTagsInit(){
         });
     };
 
-    $('.tags-tabs').tagsTabs();
-    $('.tags-modal-tree').tagsTree({'modal': true});
-    $('.tags-tree-wrapper').tagsTree();
-    $('.tags-sidebar-resizable').tagsResize({connectWith: '.ng-tags-logo'});
+    $('.ic-tabs').tagsTabs();
+    $('.ic-modal-tree').tagsTree({'modal': true});
+    $('.ic-tree-wrapper').tagsTree();
+    $('.ic-sidebar-resizable').tagsResize({connectWith: '.ng-ic-logo'});
 
     /* input enabled/disabled buttons */
     var $enabledInputs = $('input[data-enable]'),

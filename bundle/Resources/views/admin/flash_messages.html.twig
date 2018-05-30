@@ -1,11 +1,11 @@
 {% for message in app.session.flashBag.get('netgen_information_collection.success') %}
-    <div class="tags-message tags-message-success">
+    <div class="ic-message ic-message-success">
         {{ message }}
     </div>
 {% endfor %}
 
 {% for message in app.session.flashBag.get('netgen_information_collection.errors') %}
-    <div class="tags-message tags-message-error">
+    <div class="ic-message ic-message-error">
         {{ message }}
     </div>
 {% endfor %}

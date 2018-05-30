@@ -85,10 +85,27 @@
             }
         }
     }
+    .list-object {
+        position: relative;
+        padding: 10px 0 10px 40px;
+        border-bottom: 1px solid #d4d4d4;
+        .checkbox {
+            position: absolute;
+            left:0;
+            label {
+                margin:0;
+            }
+        }
+        .attribute-name {
+            font-weight: bold;
+        }
+    }
 }
 
 .ic-input {
     margin:0 0 1.5em;
+    display: block;
+    overflow: hidden;
     label {
         display:block;
         margin:0 0 0.25em;
@@ -104,6 +121,8 @@
         padding:0 0.75em;
         border-radius:$borderRadius;
         font-size:1em;
+        float: left;
+        margin-right:10px;
     }
     &.error-input {
         input[type=text] {

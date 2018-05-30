@@ -7,7 +7,7 @@
     {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
     <a class="ic-btn" href="{{ app.request.headers.get('referer') }}">
-        {{ 'netgen_information_collection_admin_back'|trans }}
+        <i class="md-icon">chevron_left</i> {{ 'netgen_information_collection_admin_back'|trans }}
     </a>
 
     <h1>{{ 'netgen_information_collection_admin_collection_list_title'|trans({'%content_name%': ez_content_name(content), '%count%': objects.count}) }}</h1>

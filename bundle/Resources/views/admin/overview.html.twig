@@ -26,8 +26,8 @@
                     {% for object in objects %}
                         <tr>
                             <td>
-                                <input id="{{ object.contentobject_id }}" name="ContentId[]" value="{{ object.contentobject_id }}" title="Select collections for removal." type="checkbox">
-                                <label for="{{ object.contentobject_id }}">
+                                <input id="{{ object.contentobject_id }}_id" name="ContentId[]" value="{{ object.contentobject_id }}" title="Select collections for removal." type="checkbox">
+                                <label for="{{ object.contentobject_id }}_id">
                                 </label>
                             </td>
                             <td>

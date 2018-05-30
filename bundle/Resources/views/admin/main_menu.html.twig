@@ -1,9 +1,4 @@
-{#{% set selectedTag = null %}#}
-{#{% if app.request.attributes.has('tag') %}#}
-    {#{% set selectedTag = app.request.attributes.get('tag') %}#}
-{#{% endif %}#}
 
-<div class="tags-tree-wrapper">
-    {#{% include '@NetgenInformationCollection/admin/tree.html.twig' with {selectedTag: selectedTag} %}#}
+<div class="ic-tree-wrapper">
     {% include '@NetgenInformationCollection/admin/tree.html.twig' %}
 </div>
