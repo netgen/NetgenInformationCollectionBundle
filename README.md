@@ -1,6 +1,6 @@
 <h1 align="center">
     <a href="https://www.netgenlabs.com/" target="_blank">
-        <img src="https://github.com/netgen/NetgenInformationCollectionBundle/raw/admin/bundle/Resources/public/admin/images/additional/ic-logo-color.png" />
+        <img src="https://github.com/netgen/NetgenInformationCollectionBundle/raw/1.x/bundle/Resources/public/admin/images/additional/ic-logo-color.png" />
     </a>
 </h1>
 
