@@ -24,6 +24,7 @@ netgen_information_collection_admin_collection_anonymize: 'Anonymize selected'
 netgen_information_collection_admin_collection_search: 'Search'
 netgen_information_collection_admin_collection_search_collections: 'Search collected information'
 netgen_information_collection_admin_collection_no_collections: 'No collections available.'
+netgen_information_collection_admin_collection_no_collections_results: "Displaying results(%count%) for %text%"
 
 netgen_information_collection_admin_view_title: 'Collection #%collection_id% for %content_name%'
 netgen_information_collection_admin_view_subtitle: 'Last modified: %date%, %user_name%'

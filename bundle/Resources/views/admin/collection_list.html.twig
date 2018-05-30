@@ -27,7 +27,7 @@
 
         {% if search_text %}
             <p>
-                Displaying results({{ objects.count }}) for "{{ search_text }}"
+                {{ "netgen_information_collection_admin_collection_no_collections_results"|trans({"%count%": objects.count, "%text%": search_text }) }}
             </p>
         {% endif %}
 
@@ -36,7 +36,6 @@
             <table>
                 <thead>
                 <tr>
-                    {#<th>{{ 'netgen_information_collection_admin_collection_select_all'|trans }}</th>#}
                     <th></th>
                     <th>{{ 'netgen_information_collection_admin_collection_creator'|trans }}</th>
                     <th>{{ 'netgen_information_collection_admin_collection_created'|trans }}</th>
@@ -76,14 +75,12 @@
             {% endif %}
 
             <div class="ic-btn-group">
-                {#{% if can_delete %}#}
                 <button type="submit" name="DeleteCollectionByCollectionIdAction" class="ic-btn" data-enabler="IC">
                     {{ 'netgen_information_collection_admin_collection_delete'|trans }}
                 </button>
                 <button type="submit" name="AnonymizeCollectionByCollectionIdAction" class="ic-btn" data-enabler="IC">
                     {{ 'netgen_information_collection_admin_collection_anonymize'|trans }}
                 </button>
-                {#{% endif %}#}
             </div>
 
         </form>

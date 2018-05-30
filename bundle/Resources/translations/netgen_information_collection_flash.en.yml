@@ -1,10 +1,10 @@
-netgen_information_collection_admin_flash_field_success: 'Field success'
-netgen_information_collection_admin_flash_field_fail: 'Field fail'
+success.fields_removed: "Fields removed successfully"
+success.fields_anonymized: "Fields anonymized successfully"
+success.collection_removed: "Collection removed successfully"
+success.collections_removed: "Collections removed successfully"
+success.collection_anonymized: "Collection anonymized successfully"
+success.collections_anonymized: "Collections anonymized successfully"
 
-netgen_information_collection_admin_flash_collection_success: 'Collection success'
-netgen_information_collection_admin_flash_collection_fail: 'Collection fail'
 
-netgen_information_collection_admin_flash_contents_success: 'Contents success'
-netgen_information_collection_admin_flash_contents_fail: 'Contents fail'
-
-netgen_information_collection_admin_flash_fields_missing: 'Please selects fields'
+errors.fields_not_selected_remove: "Please select fields to remove"
+errors.fields_not_selected_anonymize: "Please select fields to anonymize"

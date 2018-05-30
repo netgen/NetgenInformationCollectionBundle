@@ -3,7 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
-use Netgen\Bundle\InformationCollectionBundle\API\InformationCollectionService;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -21,14 +21,14 @@ class TreeController extends Controller
     protected $router;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\InformationCollectionService
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService
      */
-    private $service;
+    protected $service;
 
     /**
      * TreeController constructor.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\InformationCollectionService
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
      * @param \Symfony\Component\Routing\RouterInterface $router
      */

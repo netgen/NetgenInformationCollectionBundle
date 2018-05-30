@@ -5,7 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use Netgen\Bundle\InformationCollectionBundle\API\InformationCollectionService;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListSearchAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionContentsAdapter;
@@ -118,7 +118,7 @@ class AdminController extends Controller
         $contentId = $request->request->get('ContentId');
 
         if (empty($request->request->get('FieldId'))) {
-            $this->addFlashMessage('errors', 'netgen_information_collection_admin_flash_fields_missing', array('%tagKeyword%' => 'kifla'));
+            $this->addFlashMessage('errors', 'fields_not_selected_remove');
 
             return $this->redirectToRoute('netgen_information_collection.route.admin.view', ['collectionId' => $collectionId]);
         }
@@ -126,9 +126,9 @@ class AdminController extends Controller
         $fields = $request->request->get('FieldId');
 
         if ($request->request->has('AnonymizeCollectionAction')) {
-            $this->addFlashMessage('success', 'netgen_information_collection_admin_flash_field_success', array('%tagKeyword%' => 'kifla'));
+            $this->addFlashMessage('success', 'fields_removed');
         } else {
-            $this->addFlashMessage('errors', 'netgen_information_collection_admin_flash_field_fail', array('%tagKeyword%' => 'kifla'));
+            $this->addFlashMessage('errors', 'field_fail', array('%tagKeyword%' => 'kifla'));
         }
 
 

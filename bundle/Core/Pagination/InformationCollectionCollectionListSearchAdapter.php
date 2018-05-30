@@ -3,7 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Pagination;
 
 use Pagerfanta\Adapter\AdapterInterface;
-use Netgen\Bundle\InformationCollectionBundle\API\InformationCollectionService;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService;
 
 class InformationCollectionCollectionListSearchAdapter implements AdapterInterface
 {

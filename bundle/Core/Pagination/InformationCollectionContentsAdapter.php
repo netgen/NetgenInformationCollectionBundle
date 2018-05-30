@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Pagination;
 
-use Netgen\Bundle\InformationCollectionBundle\API\InformationCollectionService;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService;
 use Pagerfanta\Adapter\AdapterInterface;
 
 class InformationCollectionContentsAdapter implements AdapterInterface

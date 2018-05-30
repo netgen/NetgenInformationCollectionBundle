@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway;
 
 use Doctrine\DBAL\Connection;
+use PDO;
 
 class DoctrineDatabase
 {
@@ -26,6 +27,7 @@ AND ezcontentclass.version = 0
 AND ezcontentobject.id IN
 ( SELECT DISTINCT ezinfocollection.contentobject_id FROM ezinfocollection )
 ORDER BY ezcontentobject.name ASC
+LIMIT ?, ?
 EOD;
 
     protected $objectsWithCollectionCountQuery = <<<EOD
@@ -70,9 +72,11 @@ EOD;
         return $query->fetchColumn(0);
     }
 
-    public function getObjectsWithCollections()
+    public function getObjectsWithCollections($limit, $offset)
     {
         $query = $this->connection->prepare($this->objectsWithCollectionsQuery);
+        $query->bindParam(1, $offset, PDO::PARAM_INT);
+        $query->bindParam(2, $limit, PDO::PARAM_INT);
 
         $query->execute();
 

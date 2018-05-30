@@ -1,6 +1,5 @@
 {% trans_default_domain 'netgen_information_collection_admin' %}
 
-{#{% extends '@NetgenInformationCollection/admin/pagelayout.html.twig' %}#}
 {% extends netgen_information_collection_admin.pageLayoutTemplate %}
 
 {% block content %}
@@ -13,7 +12,6 @@
             <table>
                 <thead>
                     <tr>
-                        {#<th>{{ 'netgen_information_collection_admin_overview_select_all'|trans }}</th>#}
                         <th></th>
                         <th>{{ 'netgen_information_collection_admin_overview_content_name'|trans }}</th>
                         <th>{{ 'netgen_information_collection_admin_overview_content_type'|trans }}</th>
@@ -31,7 +29,7 @@
                                 </label>
                             </td>
                             <td>
-                                <img src="/extension/ngadminui/design/ngadminui/images/icons/kp/16x16/Document.png" alt="section" title="section" width="16" height="16">
+                                <img src="{{ asset('bundles/netgeninformationcollection/admin/images/Document.png') }}" alt="section" title="section" width="16" height="16">
                                 &nbsp;
                                 <a href="/content/view/full/{{ object.main_node_id }}">
                                     {{ object.name }}
@@ -61,9 +59,9 @@
             {% endif %}
 
             <div class="ic-btn-group">
-                    <button type="submit" name="DeleteCollectionByContentIdAction" class="ic-btn" data-enabler="ic">
-                        {{ 'netgen_information_collection_admin_overview_delete'|trans }}
-                    </button>
+                <button type="submit" name="DeleteCollectionByContentIdAction" class="ic-btn" data-enabler="ic">
+                    {{ 'netgen_information_collection_admin_overview_delete'|trans }}
+                </button>
             </div>
 
         </form>
