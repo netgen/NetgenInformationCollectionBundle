@@ -67,9 +67,7 @@ EOD;
 
         $query->execute();
 
-        $mainCount = $query->fetchColumn(0);
-
-        return $mainCount;
+        return $query->fetchColumn(0);
     }
 
     public function getObjectsWithCollections()

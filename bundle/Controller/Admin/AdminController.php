@@ -83,6 +83,8 @@ class AdminController extends Controller
 
     public function viewAction($collectionId)
     {
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
+
         $data = $this->service->view($collectionId);
 
         return $this->render("NetgenInformationCollectionBundle:admin:view.html.twig", $data);

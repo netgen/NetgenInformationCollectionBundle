@@ -2,90 +2,60 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\API;
 
-use Doctrine\ORM\EntityManagerInterface;
 use eZ\Publish\API\Repository\Repository;
 use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase;
-use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
-use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 
 class InformationCollectionService
 {
     /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
-
-    /**
-     * @var EzInfoCollectionRepository
+     * @var \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository
      */
     protected $ezInfoCollectionRepository;
 
     /**
-     * @var EzInfoCollectionAttributeRepository
+     * @var \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository
      */
     protected $ezInfoCollectionAttributeRepository;
 
-    protected $q = <<<EOD
-SELECT DISTINCT ezcontentobject.id AS contentobject_id,
-	ezcontentobject.name,
-	ezcontentobject_tree.main_node_id,
-	ezcontentclass.serialized_name_list,
-	ezcontentclass.identifier AS class_identifier
-FROM ezcontentobject,
-	ezcontentobject_tree,
-	ezcontentclass
-WHERE ezcontentobject_tree.contentobject_id = ezcontentobject.id
-AND ezcontentobject.contentclass_id = ezcontentclass.id
-AND ezcontentclass.version = 0
-AND ezcontentobject.id IN
-( SELECT DISTINCT ezinfocollection.contentobject_id FROM ezinfocollection )
-ORDER BY ezcontentobject.name ASC
-EOD;
-
-    protected $overviewCount = <<<EOD
-SELECT COUNT(*) as count
-FROM ezcontentobject,
-	ezcontentobject_tree,
-	ezcontentclass
-WHERE ezcontentobject_tree.contentobject_id = ezcontentobject.id
-AND ezcontentobject.contentclass_id = ezcontentclass.id
-AND ezcontentclass.version = 0
-AND ezcontentobject.id IN
-( SELECT DISTINCT ezinfocollection.contentobject_id FROM ezinfocollection )
-ORDER BY ezcontentobject.name ASC;
-EOD;
-
-
-    protected $countQuery = <<<EOD
-    SELECT COUNT( DISTINCT ezinfocollection.contentobject_id ) as count
-FROM ezinfocollection,
-	ezcontentobject,
-	ezcontentobject_tree
-WHERE ezinfocollection.contentobject_id = ezcontentobject.id
-AND ezinfocollection.contentobject_id = ezcontentobject_tree.contentobject_id
-EOD;
     /**
-     * @var Repository
+     * @var \eZ\Publish\API\Repository\Repository
      */
     protected $repository;
 
+    /**
+     * @var \eZ\Publish\API\Repository\ContentService
+     */
     protected $contentService;
 
+    /**
+     * @var \eZ\Publish\API\Repository\ContentTypeService
+     */
     protected $contentTypeService;
 
     /**
-     * @var DoctrineDatabase
+     * @var \Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase
      */
-    private $gateway;
+    protected $gateway;
 
-
-    public function __construct(EntityManagerInterface $entityManager, Repository $repository, DoctrineDatabase $gateway)
+    /**
+     * InformationCollectionService constructor.
+     *
+     * @param \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository $ezInfoCollectionRepository
+     * @param \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository
+     * @param \eZ\Publish\API\Repository\Repository $repository
+     * @param \Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase $gateway
+     */
+    public function __construct(
+        EzInfoCollectionRepository $ezInfoCollectionRepository,
+        EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository,
+        Repository $repository,
+        DoctrineDatabase $gateway
+    )
     {
-        $this->entityManager = $entityManager;
-        $this->ezInfoCollectionRepository = $this->entityManager->getRepository(EzInfoCollection::class);
-        $this->ezInfoCollectionAttributeRepository = $this->entityManager->getRepository(EzInfoCollectionAttribute::class);
+        $this->ezInfoCollectionRepository = $ezInfoCollectionRepository;
+        $this->ezInfoCollectionAttributeRepository = $ezInfoCollectionAttributeRepository;
         $this->repository = $repository;
         $this->contentService = $repository->getContentService();
         $this->contentTypeService = $repository->getContentTypeService();
@@ -94,15 +64,7 @@ EOD;
 
     public function overview($limit = 10, $offset = 0)
     {
-//        $query = $this->entityManager->getConnection()->prepare($this->q);
-//        $query->execute();
-//        $objects = $query->fetchAll();
         $objects = $this->gateway->getObjectsWithCollections();
-
-//        $query = $this->entityManager->getConnection()->prepare($this->countQuery);
-//        $query->execute();
-//        $mainCount = $query->fetchColumn(0);
-//        $mainCount = $this->gateway->getObjectsWithCollectionCount();
 
         foreach (array_keys($objects) as $i) {
             $contentId = (int)$objects[$i]['contentobject_id'];
@@ -142,9 +104,6 @@ EOD;
 
     public function overviewCount()
     {
-//        $query = $this->entityManager->getConnection()->prepare($this->countQuery);
-//        $query->execute();
-//        $mainCount = $query->fetchColumn(0);
         return $this->gateway->getContentsWithCollectionsCount();
     }
 

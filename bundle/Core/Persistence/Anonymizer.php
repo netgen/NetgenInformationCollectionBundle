@@ -1,14 +1,15 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle;
+namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence;
 
+use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer as AnonymizerAPI;
 use eZ\Publish\API\Repository\Repository;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 
-class Anonymizer
+class Anonymizer implements AnonymizerAPI
 {
     /**
      * @var EzInfoCollectionRepository

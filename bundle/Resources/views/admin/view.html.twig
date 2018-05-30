@@ -4,11 +4,11 @@
 
 {% block content %}
 
-    {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
-
     <a class="ic-btn" href="{{ app.request.headers.get('referer') }}">
         <i class="md-icon">chevron_left</i> {{ 'netgen_information_collection_admin_back'|trans }}
     </a>
+
+    {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
     <h1>{{ 'netgen_information_collection_admin_view_title'|trans({'%collection_id%': collection.id, '%content_name%': ez_content_name(content)}) }}</h1>
     <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.modified|date("Y.m.d H:i"), '%user_name%': user.name}) }}</h6>
