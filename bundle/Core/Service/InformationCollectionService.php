@@ -87,8 +87,6 @@ class InformationCollectionService implements APIInformationCollectionService
                 ]
             );
 
-            $count = $this->ezInfoCollectionRepository->getChildrenCount($contentId);
-
 
             $objects[$i]['first_collection'] = $firstCollection;
             $objects[$i]['last_collection'] = $lastCollection;
@@ -97,7 +95,7 @@ class InformationCollectionService implements APIInformationCollectionService
             $contentType = $this->contentTypeService->loadContentType($content->contentInfo->contentTypeId);
 
             $objects[$i]['class_name'] = $contentType->getName();
-            $objects[$i]['collections'] = $count;
+            $objects[$i]['collections'] = $this->ezInfoCollectionRepository->getChildrenCount($contentId);
         }
 
         return $objects;

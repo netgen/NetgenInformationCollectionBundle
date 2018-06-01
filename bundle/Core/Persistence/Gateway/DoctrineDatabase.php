@@ -8,7 +8,7 @@ use PDO;
 class DoctrineDatabase
 {
     /**
-     * @var Connection
+     * @var \Doctrine\DBAL\Connection
      */
     protected $connection;
 
@@ -53,13 +53,20 @@ WHERE ezinfocollection.contentobject_id = ezcontentobject.id
 AND ezinfocollection.contentobject_id = ezcontentobject_tree.contentobject_id
 EOD;
 
+    /**
+     * DoctrineDatabase constructor.
+     *
+     * @param \Doctrine\DBAL\Connection $connection
+     */
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
     }
 
     /**
-     * @return mixed
+     * Returns number of content objects that have any collection
+     *
+     * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
      */
@@ -69,9 +76,19 @@ EOD;
 
         $query->execute();
 
-        return $query->fetchColumn(0);
+        return (int)$query->fetchColumn(0);
     }
 
+    /**
+     * Returns content objects with their collections
+     *
+     * @param int $limit
+     * @param int $offset
+     *
+     * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function getObjectsWithCollections($limit, $offset)
     {
         $query = $this->connection->prepare($this->objectsWithCollectionsQuery);
@@ -83,12 +100,19 @@ EOD;
         return $query->fetchAll();
     }
 
+    /**
+     * Returns collections count
+     *
+     * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function getObjectsWithCollectionCount()
     {
         $query = $this->connection->prepare($this->objectsWithCollectionCountQuery);
 
         $query->execute();
 
-        return $query->fetchColumn(0);
+        return (int)$query->fetchColumn(0);
     }
 }

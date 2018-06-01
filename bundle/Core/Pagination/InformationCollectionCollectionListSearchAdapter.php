@@ -8,7 +8,7 @@ use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionS
 class InformationCollectionCollectionListSearchAdapter implements AdapterInterface
 {
     /**
-     * @var InformationCollectionService
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService
      */
     protected $informationCollectionService;
 
@@ -22,6 +22,13 @@ class InformationCollectionCollectionListSearchAdapter implements AdapterInterfa
      */
     protected $searchText;
 
+    /**
+     * InformationCollectionCollectionListSearchAdapter constructor.
+     *
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService $informationCollectionService
+     * @param int $contentId
+     * @param string $searchText
+     */
     public function __construct(InformationCollectionService $informationCollectionService, $contentId, $searchText)
     {
         $this->informationCollectionService = $informationCollectionService;

@@ -1,0 +1,21 @@
+services:
+    netgen_information_collection.anonymizer.service:
+        class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer\AnonymizerService
+        arguments:
+            - "@ezpublish.api.repository"
+            - "@netgen_information_collection.repository.ez_info_collection"
+            - "@netgen_information_collection.repository.ez_info_collection_attribute"
+            - "@netgen_information_collection.anonymizer.visitor.field.aggregate"
+
+    netgen_information_collection.anonymizer.visitor.field.aggregate:
+        class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer\Visitor\Field\Aggregate
+
+    netgen_information_collection.anonymizer.visitor.field.simple:
+        class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer\Visitor\Field\Simple
+        tags:
+            - { netgen_information_collection.anonymizer.visitor.field, priority: -255 }
+
+    netgen_information_collection.anonymizer.field_id_resolver:
+        class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer\FieldIdResolver
+        arguments:
+            - "@ezpublish.api.service.content_type"

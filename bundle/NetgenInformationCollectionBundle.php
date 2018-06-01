@@ -4,6 +4,7 @@ namespace Netgen\Bundle\InformationCollectionBundle;
 
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\ActionsPass;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\CustomFieldHandlersPass;
+use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\FieldAnonymizerVisitorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -18,5 +19,6 @@ class NetgenInformationCollectionBundle extends Bundle
 
         $container->addCompilerPass(new ActionsPass());
         $container->addCompilerPass(new CustomFieldHandlersPass());
+        $container->addCompilerPass(new FieldAnonymizerVisitorPass());
     }
 }

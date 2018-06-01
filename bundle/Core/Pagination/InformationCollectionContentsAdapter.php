@@ -8,10 +8,15 @@ use Pagerfanta\Adapter\AdapterInterface;
 class InformationCollectionContentsAdapter implements AdapterInterface
 {
     /**
-     * @var InformationCollectionService
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService
      */
     protected $informationCollectionService;
 
+    /**
+     * InformationCollectionContentsAdapter constructor.
+     *
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService $informationCollectionService
+     */
     public function __construct(InformationCollectionService $informationCollectionService)
     {
         $this->informationCollectionService = $informationCollectionService;

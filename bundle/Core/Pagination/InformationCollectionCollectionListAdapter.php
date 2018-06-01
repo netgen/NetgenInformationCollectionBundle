@@ -8,7 +8,7 @@ use Pagerfanta\Adapter\AdapterInterface;
 class InformationCollectionCollectionListAdapter implements AdapterInterface
 {
     /**
-     * @var InformationCollectionService
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService
      */
     protected $informationCollectionService;
 
@@ -17,6 +17,12 @@ class InformationCollectionCollectionListAdapter implements AdapterInterface
      */
     protected $contentId;
 
+    /**
+     * InformationCollectionCollectionListAdapter constructor.
+     *
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService $informationCollectionService
+     * @param int $contentId
+     */
     public function __construct(InformationCollectionService $informationCollectionService, $contentId)
     {
         $this->informationCollectionService = $informationCollectionService;
