@@ -4,6 +4,7 @@ imports:
     - { resource: factories.yml }
     - { resource: legacy_handlers.yml }
     - { resource: admin.yml }
+    - { resource: anonymizers.yml }
 
 parameters:
     # Controllers

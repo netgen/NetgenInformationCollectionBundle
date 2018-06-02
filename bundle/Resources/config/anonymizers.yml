@@ -13,7 +13,7 @@ services:
     netgen_information_collection.anonymizer.visitor.field.simple:
         class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer\Visitor\Field\Simple
         tags:
-            - { netgen_information_collection.anonymizer.visitor.field, priority: -255 }
+            - { name: netgen_information_collection.anonymizer.visitor.field, priority: -255 }
 
     netgen_information_collection.anonymizer.field_id_resolver:
         class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer\FieldIdResolver

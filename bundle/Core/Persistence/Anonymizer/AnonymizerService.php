@@ -81,10 +81,18 @@ class AnonymizerService implements Anonymizer
             ->getContentTypeService()
             ->loadContentType($content->contentInfo->contentTypeId);
 
-        $attributes = $this->collectionAttributeRepository
-            ->findByCollectionId($collection->getId(), $fields);
+        $query = [
+            'informationCollectionId' => $collection->getId(),
+        ];
 
-        $this->anonymize($attributes);
+        if (!empty($fields)) {
+            $query['contentClassAttributeId'] = $fields;
+        }
+
+        $attributes = $this->collectionAttributeRepository
+            ->findBy($query);
+
+        $this->anonymize($attributes, $contentType);
     }
 
     /**

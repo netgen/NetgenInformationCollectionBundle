@@ -5,6 +5,7 @@ services:
         public: true
         arguments:
             - "@netgen_information_collection.api.service"
+            - "@netgen_information_collection.anonymizer.service"
             - "@ezpublish.api.service.content"
             - "@ezpublish.config.resolver"
 

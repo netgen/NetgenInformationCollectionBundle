@@ -5,6 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListSearchAdapter;
@@ -30,11 +31,22 @@ class AdminController extends Controller
      */
     protected $configResolver;
 
-    public function __construct(InformationCollectionService $service, ContentService $contentService, ConfigResolverInterface $configResolver)
+    /**
+     * @var Anonymizer
+     */
+    protected $anonymizer;
+
+    public function __construct(
+        InformationCollectionService $service,
+        Anonymizer $anonymizer,
+        ContentService $contentService,
+        ConfigResolverInterface $configResolver
+    )
     {
         $this->service = $service;
         $this->contentService = $contentService;
         $this->configResolver = $configResolver;
+        $this->anonymizer = $anonymizer;
     }
 
     public function overviewAction(Request $request)
@@ -141,7 +153,18 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('AnonymizeCollectionAction')) {
-            // implement anonymization
+
+            foreach ($collections as $collection) {
+                $this->anonymizer->anonymizeCollection($collection);
+            }
+
+            if (count($collections) > 1) {
+                $this->addFlashMessage('success', 'collections_anonymized');
+            } else {
+                $this->addFlashMessage('success', 'collection_anonymized');
+            }
+
+            return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
         }
 
         $this->addFlashMessage('error', 'something_went_wrong');
@@ -177,7 +200,15 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('AnonymizeFieldAction')) {
-            // implement anonymization
+            $this->anonymizer->anonymizeCollection($collectionId, $fields);
+
+            if (count($fields) > 1) {
+                $this->addFlashMessage('success', 'fields_anonymized');
+            } else {
+                $this->addFlashMessage('success', 'field_anonymized');
+            }
+
+            return $this->redirectToRoute('netgen_information_collection.route.admin.view', ['collectionId' => $collectionId]);
         }
 
         if ($request->request->has('DeleteCollectionAction')) {
@@ -191,7 +222,11 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('AnonymizeCollectionAction')) {
-            // implement anonymization
+            $this->anonymizer->anonymizeCollection($collectionId);
+
+            $this->addFlashMessage("success", "collection_anonymized");
+
+            return $this->redirectToRoute('netgen_information_collection.route.admin.view', ['collectionId' => $collectionId]);
         }
 
         $this->addFlashMessage('error', 'something_went_wrong');

@@ -1,6 +1,7 @@
 success.fields_removed: "Fields removed successfully"
 success.field_removed: "Field removed successfully"
 success.fields_anonymized: "Fields anonymized successfully"
+success.field_anonymized: "Field anonymized successfully"
 success.collection_removed: "Collection removed successfully"
 success.content_removed: "Content removed successfully"
 success.collections_removed: "Collections removed successfully"
