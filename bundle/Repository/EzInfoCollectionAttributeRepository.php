@@ -28,6 +28,18 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
         $this->_em->flush($infoCollectionAttribute);
     }
 
+    /**
+     * @param \Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute[] $attributes
+     */
+    public function remove(array $attributes)
+    {
+        foreach ($attributes as $attribute) {
+            $this->_em->remove($attribute);
+        }
+
+        $this->_em->flush();
+    }
+
     public function findByCollectionIdAndFieldDefinitionIds($collectionId, $fieldDefinitionIds)
     {
         $qb = $this->createQueryBuilder('eica');

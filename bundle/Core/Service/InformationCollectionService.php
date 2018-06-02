@@ -5,6 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Core\Service;
 use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService as APIInformationCollectionService;
 use eZ\Publish\API\Repository\Repository;
 use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase;
+use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 
@@ -216,23 +217,37 @@ class InformationCollectionService implements APIInformationCollectionService
         return $this->repository->getUserService()->loadUser($userId);
     }
 
-    public function deleteCollection($contentId, $collectionId)
-    {
-        
-    }
-
     public function deleteCollectionFields($contentId, $collectionId, $fields)
     {
-        
+        $attributes = $this->ezInfoCollectionAttributeRepository
+            ->findBy(
+                [
+                    'contentObjectId' => $contentId,
+                    'informationCollectionId' => $collectionId,
+                    'contentClassAttributeId' => $fields,
+                ]);
+
+        $this->ezInfoCollectionAttributeRepository->remove($attributes);
     }
 
     public function deleteCollections($contentId, array $collections)
     {
-        
+        $collections = $this->ezInfoCollectionRepository
+            ->findBy([
+                'contentObjectId' => $contentId,
+                'id' => $collections,
+            ]);
+
+        $this->ezInfoCollectionRepository->remove($collections);
     }
 
-    public function deleteCollectionByContent(array $contentIds)
+    public function deleteCollectionByContent(array $contents)
     {
+        $collections = $this->ezInfoCollectionRepository
+            ->findBy([
+                'contentObjectId' => $contents,
+            ]);
 
+        $this->ezInfoCollectionRepository->remove($collections);
     }
 }

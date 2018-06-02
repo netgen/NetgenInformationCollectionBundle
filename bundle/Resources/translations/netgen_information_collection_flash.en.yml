@@ -1,10 +1,17 @@
 success.fields_removed: "Fields removed successfully"
+success.field_removed: "Field removed successfully"
 success.fields_anonymized: "Fields anonymized successfully"
 success.collection_removed: "Collection removed successfully"
+success.content_removed: "Content removed successfully"
 success.collections_removed: "Collections removed successfully"
+success.contents_removed: "Contents removed successfully"
 success.collection_anonymized: "Collection anonymized successfully"
 success.collections_anonymized: "Collections anonymized successfully"
 
 
 errors.fields_not_selected_remove: "Please select fields to remove"
+errors.collections_not_selected: "Please select collections"
+errors.contents_not_selected: "Please select contents"
 errors.fields_not_selected_anonymize: "Please select fields to anonymize"
+errors.fields_not_selected: "Please select fields"
+errors.something_went_wrong: "Something went wrong"

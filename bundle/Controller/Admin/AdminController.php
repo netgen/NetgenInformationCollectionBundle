@@ -92,7 +92,27 @@ class AdminController extends Controller
 
     public function handleContentsAction(Request $request)
     {
-        $this->addFlashMessage('success', 'netgen_information_collection_admin_flash_contents_success', array('%tagKeyword%' => 'kifla'));
+        $contents = $request->request->get('ContentId', []);
+
+        if (empty($contents)) {
+            $this->addFlashMessage('errors', 'contents_not_selected');
+
+            return $this->redirectToRoute('netgen_information_collection.route.admin.overview');
+        }
+
+        if ($request->request->has('DeleteCollectionByContentAction')) {
+            $this->service->deleteCollectionByContent($contents);
+
+            if (count($contents) > 1) {
+                $this->addFlashMessage('success', 'contents_removed');
+            } else {
+                $this->addFlashMessage('success', 'content_removed');
+            }
+
+            return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
+        }
+
+        $this->addFlashMessage('error', 'something_went_wrong');
 
         return $this->redirectToRoute('netgen_information_collection.route.admin.overview');
     }
@@ -100,14 +120,31 @@ class AdminController extends Controller
     public function handleCollectionListAction(Request $request)
     {
         $contentId = $request->request->get('ContentId');
+        $collections = $request->request->get('CollectionId', []);
 
-        if (empty($request->request->get('CollectionId'))) {
-            $this->addFlashMessage('errors', 'netgen_information_collection_admin_flash_collection_missing', array('%tagKeyword%' => 'kifla'));
+        if (empty($collections)) {
+            $this->addFlashMessage('errors', 'collections_not_selected');
 
             return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
         }
 
-        $this->addFlashMessage('success', 'netgen_information_collection_admin_flash_collection_success', array('%tagKeyword%' => 'kifla'));
+        if ($request->request->has('DeleteCollectionAction')) {
+            $this->service->deleteCollections($contentId, $collections);
+
+            if (count($collections) > 1) {
+                $this->addFlashMessage('success', 'collections_removed');
+            } else {
+                $this->addFlashMessage('success', 'collection_removed');
+            }
+
+            return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
+        }
+
+        if ($request->request->has('AnonymizeCollectionAction')) {
+            // implement anonymization
+        }
+
+        $this->addFlashMessage('error', 'something_went_wrong');
 
         return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
     }
@@ -116,21 +153,48 @@ class AdminController extends Controller
     {
         $collectionId = $request->request->get('CollectionId');
         $contentId = $request->request->get('ContentId');
+        $fields = $request->request->get('FieldId', []);
 
-        if (empty($request->request->get('FieldId'))) {
-            $this->addFlashMessage('errors', 'fields_not_selected_remove');
+        if (
+            ($request->request->has('AnonymizeFieldAction') || $request->request->has('DeleteFieldAction'))
+            && empty($fields)
+        ) {
+            $this->addFlashMessage('errors', 'fields_not_selected');
 
             return $this->redirectToRoute('netgen_information_collection.route.admin.view', ['collectionId' => $collectionId]);
         }
 
-        $fields = $request->request->get('FieldId');
+        if ($request->request->has('DeleteFieldAction')) {
+            $this->service->deleteCollectionFields($contentId, $collectionId, $fields);
 
-        if ($request->request->has('AnonymizeCollectionAction')) {
-            $this->addFlashMessage('success', 'fields_removed');
-        } else {
-            $this->addFlashMessage('errors', 'field_fail', array('%tagKeyword%' => 'kifla'));
+            if (count($fields) > 1) {
+                $this->addFlashMessage('success', 'fields_removed');
+            } else {
+                $this->addFlashMessage('success', 'field_removed');
+            }
+
+            return $this->redirectToRoute('netgen_information_collection.route.admin.view', ['collectionId' => $collectionId]);
         }
 
+        if ($request->request->has('AnonymizeFieldAction')) {
+            // implement anonymization
+        }
+
+        if ($request->request->has('DeleteCollectionAction')) {
+
+            $this->service->deleteCollections($contentId, [$collectionId]);
+
+            $this->addFlashMessage("success", "collection_removed");
+
+            return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
+
+        }
+
+        if ($request->request->has('AnonymizeCollectionAction')) {
+            // implement anonymization
+        }
+
+        $this->addFlashMessage('error', 'something_went_wrong');
 
         return $this->redirectToRoute('netgen_information_collection.route.admin.view', ['collectionId' => $collectionId]);
     }

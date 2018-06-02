@@ -29,6 +29,15 @@ class EzInfoCollectionRepository extends EntityRepository
         $this->_em->flush($informationCollection);
     }
 
+    public function remove(array $collections)
+    {
+        foreach ($collections as $collection) {
+            $this->_em->remove($collection);
+        }
+
+        $this->_em->flush();
+    }
+
     public function findByContentId($contentId)
     {
         $qb = $this->createQueryBuilder('ezc');
