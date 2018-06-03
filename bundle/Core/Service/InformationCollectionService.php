@@ -2,14 +2,14 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Service;
 
-use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService as APIInformationCollectionService;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
 use eZ\Publish\API\Repository\Repository;
 use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 
-class InformationCollectionService implements APIInformationCollectionService
+class InformationCollectionService implements InformationCollection
 {
     /**
      * @var \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository

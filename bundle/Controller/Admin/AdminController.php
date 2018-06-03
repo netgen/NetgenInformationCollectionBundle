@@ -6,7 +6,7 @@ use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer;
-use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListSearchAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionContentsAdapter;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminController extends Controller
 {
     /**
-     * @var InformationCollectionService
+     * @var InformationCollection
      */
     protected $service;
 
@@ -37,7 +37,7 @@ class AdminController extends Controller
     protected $anonymizer;
 
     public function __construct(
-        InformationCollectionService $service,
+        InformationCollection $service,
         Anonymizer $anonymizer,
         ContentService $contentService,
         ConfigResolverInterface $configResolver

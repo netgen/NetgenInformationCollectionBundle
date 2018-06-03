@@ -2,22 +2,22 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Pagination;
 
-use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
 use Pagerfanta\Adapter\AdapterInterface;
 
 class InformationCollectionContentsAdapter implements AdapterInterface
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection
      */
     protected $informationCollectionService;
 
     /**
      * InformationCollectionContentsAdapter constructor.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService $informationCollectionService
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection $informationCollectionService
      */
-    public function __construct(InformationCollectionService $informationCollectionService)
+    public function __construct(InformationCollection $informationCollectionService)
     {
         $this->informationCollectionService = $informationCollectionService;
     }

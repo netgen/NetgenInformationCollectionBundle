@@ -1,0 +1,46 @@
+{% trans_default_domain 'netgen_information_collection_admin' %}
+
+{% extends netgen_information_collection_admin.pageLayoutTemplate %}
+
+{% block content %}
+
+    <h1>{{ 'netgen_information_collection_admin_export_title'|trans }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        <div class="ic-input">
+            <label for="{{ form.dateFrom.vars.id }}">
+                {{ form.dateFrom.vars.label|trans }}:
+            </label>
+
+            {{ form_errors(form.dateFrom) }}
+
+            {{ form_widget(form.dateFrom) }}
+        </div>
+
+        <div class="ic-input">
+            <label for="{{ form.dateTo.vars.id }}">
+                {{ form.dateTo.vars.label|trans }}:
+            </label>
+
+            {{ form_errors(form.dateTo) }}
+
+            {{ form_widget(form.dateTo) }}
+        </div>
+
+        <div class="ic-btn-group">
+            <button type="submit" name="{{ form.export.vars.full_name }}" class="ic-btn">
+                {{ form.export.vars.label|trans }}
+            </button>
+            {% do form.export.setRendered %}
+            <button type="submit" name="{{ form.cancel.vars.full_name }}" class="ic-btn">
+                {{ form.cancel.vars.label|trans }}
+            </button>
+            {% do form.cancel.setRendered %}
+            {{ form_row(form.cancel) }}
+        </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}

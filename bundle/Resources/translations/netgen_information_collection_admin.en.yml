@@ -34,3 +34,10 @@ netgen_information_collection_admin_view_delete_field: 'Delete selected fields'
 netgen_information_collection_admin_view_anonymize_field: 'Anonymize selected fields'
 
 netgen_information_collection_admin_back: 'Back'
+
+netgen_information_collection_admin_export_created: 'Created'
+netgen_information_collection_admin_export_export: 'Export'
+netgen_information_collection_admin_export_cancel: 'Cancel'
+netgen_information_collection_admin_export_from: 'From'
+netgen_information_collection_admin_export_to: 'To'
+netgen_information_collection_admin_export_title: 'Export menu'

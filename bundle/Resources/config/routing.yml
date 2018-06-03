@@ -39,3 +39,8 @@ netgen_information_collection.route.admin.tree_get_children:
         _controller: netgen_information_collection.controller.tree:getChildrenAction
         _method: GET
         isRoot: false
+
+netgen_information_collection.route.admin.export:
+    path: /netgen/informationcollection/export/menu/{contentId}
+    defaults: { _controller: netgen_information_collection.controller.export:exportAction }
+    methods: [GET, POST]

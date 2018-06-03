@@ -3,12 +3,12 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Pagination;
 
 use Pagerfanta\Adapter\AdapterInterface;
-use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
 
 class InformationCollectionCollectionListSearchAdapter implements AdapterInterface
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection
      */
     protected $informationCollectionService;
 
@@ -25,11 +25,11 @@ class InformationCollectionCollectionListSearchAdapter implements AdapterInterfa
     /**
      * InformationCollectionCollectionListSearchAdapter constructor.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService $informationCollectionService
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection $informationCollectionService
      * @param int $contentId
      * @param string $searchText
      */
-    public function __construct(InformationCollectionService $informationCollectionService, $contentId, $searchText)
+    public function __construct(InformationCollection $informationCollectionService, $contentId, $searchText)
     {
         $this->informationCollectionService = $informationCollectionService;
         $this->contentId = $contentId;

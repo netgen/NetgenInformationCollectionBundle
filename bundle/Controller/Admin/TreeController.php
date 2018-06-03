@@ -3,7 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
-use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -21,19 +21,19 @@ class TreeController extends Controller
     protected $router;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection
      */
     protected $service;
 
     /**
      * TreeController constructor.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollectionService
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
      * @param \Symfony\Component\Routing\RouterInterface $router
      */
     public function __construct(
-        InformationCollectionService $service,
+        InformationCollection $service,
         TranslatorInterface $translator,
         RouterInterface $router
     ) {
@@ -90,16 +90,17 @@ class TreeController extends Controller
 
     protected function getCollections($data, $isRoot = false)
     {
-        $count = $this->service->collectionListCount($data['contentobject_id']);
+        $contentId = $data['contentobject_id'];
+        $count = $this->service->collectionListCount($contentId);
 
         return array(
-            'id' => $data['contentobject_id'],
+            'id' => $contentId,
             'parent' => $isRoot ? '#' : '0',
             'text' => $data['class_name'] . ' (' . strval($count) . ')',
             'children' => false,
             'a_attr' => array(
-                'href' => $this->router->generate('netgen_information_collection.route.admin.collection_list', ['contentId' => $data['contentobject_id']]),
-                'rel' => $data['contentobject_id'],
+                'href' => $this->router->generate('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]),
+                'rel' => $contentId,
             ),
             'state' => array(
                 'opened' => $isRoot,
@@ -115,6 +116,11 @@ class TreeController extends Controller
                         'name' => 'anonymize',
                         'url' => '',
                         'text' => "Anonymize",
+                    ),
+                    array(
+                        'name' => 'export',
+                        'url' => $this->router->generate('netgen_information_collection.route.admin.export', ['contentId' => $contentId]),
+                        'text' => 'Export',
                     ),
                 ),
             ),

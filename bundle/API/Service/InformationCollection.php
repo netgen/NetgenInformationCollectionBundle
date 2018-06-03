@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\API\Service;
 
-interface InformationCollectionService
+interface InformationCollection
 {
 
 }
