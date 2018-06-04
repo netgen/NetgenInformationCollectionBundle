@@ -15,6 +15,14 @@
 
     <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection') }}">
 
+        <div class="ic-btn-group">
+            <button type="submit" name="DeleteFieldAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_delete_field'|trans }}</button>
+            <button type="submit" name="AnonymizeFieldAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_anonymize_field'|trans }}</button>
+
+            <button type="submit" name="DeleteCollectionAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_delete'|trans }}</button>
+            <button type="submit" name="AnonymizeCollectionAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_anonymize'|trans }}</button>
+        </div>
+
         <input type="hidden" value="{{ collection.entity.id }}" name="CollectionId">
         <input type="hidden" value="{{ collection.content.id }}" name="ContentId">
 
@@ -33,14 +41,6 @@
                 </span>
             </div>
         {% endfor %}
-
-        <div class="ic-btn-group">
-            <button type="submit" name="DeleteFieldAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_delete_field'|trans }}</button>
-            <button type="submit" name="AnonymizeFieldAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_anonymize_field'|trans }}</button>
-
-            <button type="submit" name="DeleteCollectionAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_delete'|trans }}</button>
-            <button type="submit" name="AnonymizeCollectionAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_anonymize'|trans }}</button>
-        </div>
 
     </form>
 

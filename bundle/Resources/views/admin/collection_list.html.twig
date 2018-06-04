@@ -17,10 +17,7 @@
 
         <form name="ic_search" method="get" action="{{ path('netgen_information_collection.route.admin.collection_list_search', {'contentId':content.id}) }}">
             <div class="ic-input">
-                <label for="collection-search">
-                    {{ 'netgen_information_collection_admin_collection_search_collections'|trans }}
-                </label>
-                <input id="collection-search" type="text" name="searchText" value="{{ search_text }}">
+                <input id="collection-search" type="text" name="searchText" value="{{ search_text }}" placeholder="{{ 'netgen_information_collection_admin_collection_search_collections'|trans }}">
                 <input type="submit" value="Search" class="ic-btn">
             </div>
         </form>
@@ -31,7 +28,23 @@
             </p>
         {% endif %}
 
+        <form name="ic_search" method="get" action="{{ path('netgen_information_collection.route.admin.export', {'contentId':content.id}) }}">
+            <div class="ic-input">
+                <input type="submit" value="Export" class="ic-btn">
+            </div>
+        </form>
+
         <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection_list') }}">
+
+            <div class="ic-btn-group">
+                <button type="submit" name="DeleteCollectionAction" class="ic-btn" data-enabler="IC">
+                    {{ 'netgen_information_collection_admin_collection_delete'|trans }}
+                </button>
+                <button type="submit" name="AnonymizeCollectionAction" class="ic-btn" data-enabler="IC">
+                    {{ 'netgen_information_collection_admin_collection_anonymize'|trans }}
+                </button>
+            </div>
+
             <input type="hidden" name="ContentId" value="{{ content.id }}">
             <table>
                 <thead>
@@ -74,15 +87,6 @@
             {% if objects.haveToPaginate() %}
                 {{ pagerfanta( objects, 'netgen_information_collection_admin' ) }}
             {% endif %}
-
-            <div class="ic-btn-group">
-                <button type="submit" name="DeleteCollectionAction" class="ic-btn" data-enabler="IC">
-                    {{ 'netgen_information_collection_admin_collection_delete'|trans }}
-                </button>
-                <button type="submit" name="AnonymizeCollectionAction" class="ic-btn" data-enabler="IC">
-                    {{ 'netgen_information_collection_admin_collection_anonymize'|trans }}
-                </button>
-            </div>
 
         </form>
     {% else %}

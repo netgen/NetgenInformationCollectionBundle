@@ -8,11 +8,17 @@ use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
 
 class Simple extends FieldAnonymizerVisitor
 {
+    /**
+     * @inheritdoc
+     */
     public function accept(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType)
     {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function visit(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType)
     {
         return 'XXXXXXXXXX';

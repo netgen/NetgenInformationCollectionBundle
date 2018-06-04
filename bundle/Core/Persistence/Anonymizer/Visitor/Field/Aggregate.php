@@ -14,6 +14,11 @@ class Aggregate extends FieldAnonymizerVisitor
      */
     protected $visitors;
 
+    /**
+     * Aggregate constructor.
+     *
+     * @param array $visitors
+     */
     public function __construct(array $visitors = [])
     {
         foreach ($visitors as $visitor) {
@@ -21,16 +26,25 @@ class Aggregate extends FieldAnonymizerVisitor
         }
     }
 
+    /**
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor $visitor
+     */
     public function addVisitor(FieldAnonymizerVisitor $visitor)
     {
         $this->visitors[] = $visitor;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function accept(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType)
     {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function visit(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType)
     {
         foreach ($this->visitors as $visitor) {
