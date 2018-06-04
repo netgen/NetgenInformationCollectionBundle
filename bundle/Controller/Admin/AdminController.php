@@ -167,7 +167,10 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('DeleteCollectionByContentAction')) {
-            $this->service->deleteCollectionByContent($contents);
+            $query = new Query([
+                'contents' => $contents,
+            ]);
+            $this->service->deleteCollectionByContent($query);
 
             $this->addFlashMessage('success', 'content_removed', $count);
 
@@ -199,7 +202,11 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('DeleteCollectionAction')) {
-            $this->service->deleteCollections($contentId, $collections);
+            $query = new Query([
+                'contentId' => $contentId,
+                'collections' => $collections,
+            ]);
+            $this->service->deleteCollections($query);
 
             $this->addFlashMessage('success', 'collection_removed', $count);
 
@@ -246,7 +253,12 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('DeleteFieldAction')) {
-            $this->service->deleteCollectionFields($contentId, $collectionId, $fields);
+            $query = new Query([
+                'contentId' => $contentId,
+                'collectionId' => $collectionId,
+                'fields' => $fields,
+            ]);
+            $this->service->deleteCollectionFields($query);
 
             $this->addFlashMessage('success', 'field_removed', $count);
 
@@ -262,8 +274,11 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('DeleteCollectionAction')) {
-
-            $this->service->deleteCollections($contentId, [$collectionId]);
+            $query = new Query([
+                'contentId' => $contentId,
+                'collections' => [$collectionId],
+            ]);
+            $this->service->deleteCollections($query);
 
             $this->addFlashMessage("success", "collection_removed");
 
