@@ -55,8 +55,7 @@ class TreeController extends Controller
         } else {
 
             $query = new Query([
-                'limit' => 10,
-                'offset' => 0,
+                'limit' => $this->getConfigResolver()->getParameter('admin.tree_limit', 'netgen_information_collection'),
             ]);
 
             $objects = $this->service->getObjectsWithCollections($query);
@@ -75,12 +74,7 @@ class TreeController extends Controller
      */
     protected function getRootTreeData()
     {
-        $query = new Query([
-            'limit' => 0,
-            'offset' => 0,
-        ]);
-
-        $count = $this->service->getObjectsWithCollections($query);
+        $count = $this->service->getObjectsWithCollections(Query::count());
 
         return array(
             'id' => '0',
@@ -99,15 +93,19 @@ class TreeController extends Controller
         );
     }
 
-
+    /**
+     * Creates tree structure for Content
+     *
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Content $content
+     * @param bool $isRoot
+     *
+     * @return array
+     */
     protected function getCollections(Content $content, $isRoot = false)
     {
-        $query = new Query([
-            'contentId' => $content->content->id,
-            'limit' => 0,
-        ]);
-
-        $count = $this->service->getCollections($query);
+        $count = $this->service->getCollections(
+            Query::withContent($content->content->id)
+        );
 
         return array(
             'id' => $content->content->id,

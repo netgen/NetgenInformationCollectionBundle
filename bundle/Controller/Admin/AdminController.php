@@ -69,7 +69,7 @@ class AdminController extends Controller
     {
         $this->denyAccessUnlessGranted('ez:infocollector:read');
 
-        $adapter = new InformationCollectionContentsAdapter($this->service, new Query());
+        $adapter = new InformationCollectionContentsAdapter($this->service, Query::count());
         $pager = $this->getPager($adapter, (int) $request->query->get('page'));
 
         return $this->render("NetgenInformationCollectionBundle:admin:overview.html.twig", ['objects' => $pager]);
@@ -88,9 +88,7 @@ class AdminController extends Controller
         $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $content = $this->contentService->loadContent($contentId);
-        $query = new Query([
-            'contentId' => $contentId,
-        ]);
+        $query = Query::withContent($contentId);
         $adapter = new InformationCollectionCollectionListAdapter($this->service, $query);
         $pager = $this->getPager($adapter, (int)$request->query->get('page'));
 
@@ -157,6 +155,8 @@ class AdminController extends Controller
      */
     public function handleContentsAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
+
         $contents = $request->request->get('ContentId', []);
         $count = count($contents);
 
@@ -191,6 +191,8 @@ class AdminController extends Controller
      */
     public function handleCollectionListAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
+
         $contentId = $request->request->get('ContentId');
         $collections = $request->request->get('CollectionId', []);
         $count = count($collections);
@@ -238,6 +240,8 @@ class AdminController extends Controller
      */
     public function handleCollectionAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
+
         $collectionId = $request->request->get('CollectionId');
         $contentId = $request->request->get('ContentId');
         $fields = $request->request->get('FieldId', []);

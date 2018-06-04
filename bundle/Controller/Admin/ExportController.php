@@ -4,16 +4,13 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
-use eZ\Publish\API\Repository\ContentTypeService;
 use Netgen\Bundle\InformationCollectionBundle\API\Service\Exporter;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\ExportCriteria;
 use Netgen\Bundle\InformationCollectionBundle\Form\Type\ExportType;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use League\Csv\Writer;
 use SplTempFileObject;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class ExportController extends Controller
 {

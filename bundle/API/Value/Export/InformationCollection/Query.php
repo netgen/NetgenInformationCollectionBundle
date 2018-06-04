@@ -66,4 +66,32 @@ class Query extends ValueObject
      * @var int
      */
     public $offset = 0;
+
+    /**
+     * Creates query with content id as argument
+     *
+     * @param int $contentId
+     *
+     * @return self
+     */
+    public static function withContent($contentId)
+    {
+        return new self([
+            'contentId' => $contentId,
+            'offset' => 0,
+        ]);
+    }
+
+    /**
+     * Creates count query
+     *
+     * @return self
+     */
+    public static function count()
+    {
+        return new self([
+            'limit' => 0,
+            'offset' => 0,
+        ]);
+    }
 }

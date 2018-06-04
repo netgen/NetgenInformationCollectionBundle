@@ -1,4 +1,4 @@
 parameters:
     netgen_information_collection.default.admin.max_per_page: 10
-
+    netgen_information_collection.default.admin.tree_limit: 10
     netgen_information_collection.default.admin.pagelayout: '@@NetgenInformationCollection/admin/pagelayout.html.twig'
