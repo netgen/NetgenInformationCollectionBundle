@@ -10,26 +10,26 @@
 
     {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
-    <h1>{{ 'netgen_information_collection_admin_view_title'|trans({'%collection_id%': collection.id, '%content_name%': ez_content_name(content)}) }}</h1>
-    <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.modified|date("Y.m.d H:i"), '%user_name%': user.name}) }}</h6>
+    <h1>{{ 'netgen_information_collection_admin_view_title'|trans({'%collection_id%': collection.entity.id, '%content_name%': ez_content_name(collection.content)}) }}</h1>
+    <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.entity.modified|date("Y.m.d H:i"), '%user_name%': collection.user.name}) }}</h6>
 
     <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection') }}">
 
-        <input type="hidden" value="{{ collection.id }}" name="CollectionId">
-        <input type="hidden" value="{{ content.id }}" name="ContentId">
+        <input type="hidden" value="{{ collection.entity.id }}" name="CollectionId">
+        <input type="hidden" value="{{ collection.content.id }}" name="ContentId">
 
-        {% for object in objects %}
+        {% for attribute in collection.attributes %}
             <div class="list-object">
                 <span class="checkbox">
-                    <input id="{{ object.field.id }}" name="FieldId[]" value="{{ object.field.id }}" title="Select collections for removal." type="checkbox">
-                    <label for="{{ object.field.id }}">
+                    <input id="{{ attribute.field.id }}" name="FieldId[]" value="{{ attribute.field.id }}" title="Select collections for removal." type="checkbox">
+                    <label for="{{ attribute.field.id }}">
                     </label>
                 </span>
                 <span class="attribute-name">
-                    {{ ez_field_name(content, object.field.identifier) }}:
+                    {{ ez_field_name(content, attribute.field.identifier) }}:
                 </span>
                 <span class="attribute-value">
-                    {{ object.object.value }}
+                    {{ attribute.entity.value }}
                 </span>
             </div>
         {% endfor %}

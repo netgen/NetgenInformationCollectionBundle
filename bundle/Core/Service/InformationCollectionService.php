@@ -4,8 +4,15 @@ namespace Netgen\Bundle\InformationCollectionBundle\Core\Service;
 
 use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
 use eZ\Publish\API\Repository\Repository;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Attribute;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Collection;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Collections;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Content;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\ContentsWithCollections;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Query;
 use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
+use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 
@@ -64,15 +71,28 @@ class InformationCollectionService implements InformationCollection
         $this->gateway = $gateway;
     }
 
-    public function overview($limit = 10, $offset = 0)
+    /**
+     * @inheritdoc
+     */
+    public function getObjectsWithCollections(Query $query)
     {
-        $objects = $this->gateway->getObjectsWithCollections($limit, $offset);
+        if ($query->limit === Query::COUNT_QUERY) {
 
-        foreach (array_keys($objects) as $i) {
-            $contentId = (int)$objects[$i]['contentobject_id'];
+            return new ContentsWithCollections([
+                'count' => $this->gateway->getContentsWithCollectionsCount(),
+            ]);
+        }
+
+        $objects = $this->gateway->getObjectsWithCollections($query->limit, $query->offset);
+
+        $contents = [];
+        foreach ($objects as $object) {
+
+            $content = $this->contentService->loadContent((int)$object['content_id']);
+
             $firstCollection = $this->ezInfoCollectionRepository->findOneBy(
                 [
-                    'contentObjectId' => $contentId,
+                    'contentObjectId' => $content->id,
                 ],
                 [
                     'created' => 'ASC',
@@ -81,106 +101,196 @@ class InformationCollectionService implements InformationCollection
 
             $lastCollection = $this->ezInfoCollectionRepository->findOneBy(
                 [
-                    'contentObjectId' => $contentId,
+                    'contentObjectId' => $content->id,
                 ],
                 [
                     'created' => 'DESC',
                 ]
             );
 
-
-            $objects[$i]['first_collection'] = $firstCollection;
-            $objects[$i]['last_collection'] = $lastCollection;
-
-            $content = $this->contentService->loadContent($contentId);
-            $contentType = $this->contentTypeService->loadContentType($content->contentInfo->contentTypeId);
-
-            $objects[$i]['class_name'] = $contentType->getName();
-            $objects[$i]['collections'] = $this->ezInfoCollectionRepository->getChildrenCount($contentId);
+            $contents[] = new Content(
+                [
+                    'content' => $content,
+                    'contentType' => $this->contentTypeService->loadContentType($content->contentInfo->contentTypeId),
+                    'firstCollection' => $firstCollection,
+                    'lastCollection' => $lastCollection,
+                    'count' => $this->ezInfoCollectionRepository->getChildrenCount($content->id),
+                ]
+            );
         }
 
-        return $objects;
-    }
-
-    public function overviewCount()
-    {
-        return $this->gateway->getContentsWithCollectionsCount();
-    }
-
-    public function collectionList($contentId, $limit, $offset = 0)
-    {
-        $collections = $this->ezInfoCollectionRepository->findBy(
+        return new ContentsWithCollections(
             [
-                'contentObjectId' => $contentId,
-            ],
-            [],
-            $limit,
-            $offset
-        );
-
-
-        $objects = [];
-        foreach ($collections as $collection) {
-            $d = [
-                'object' => $collection,
-                'user' => $this->getUser($collection->getCreatorId()),
-            ];
-
-            $objects[] = $d;
-        }
-
-        return $objects;
-    }
-
-    public function collectionListCount($contentId)
-    {
-        return $this->ezInfoCollectionRepository->getChildrenCount($contentId);
-    }
-
-    public function search($contentId, $searchText, $limit, $offset = 0)
-    {
-        $collections = $this->ezInfoCollectionAttributeRepository->search($contentId, $searchText);
-
-        $collections = $this->ezInfoCollectionRepository->findBy(
-            [
-                'id' => $collections,
-            ],
-            [],
-            $limit,
-            $offset
-        );
-
-        $objects = [];
-        foreach ($collections as $collection) {
-            $d = [
-                'object' => $collection,
-                'user' => $this->getUser($collection->getCreatorId()),
-            ];
-
-            $objects[] = $d;
-        }
-
-        return $objects;
-    }
-
-    public function searchCount($contentId, $searchText)
-    {
-        $collections = $this->ezInfoCollectionAttributeRepository->search($contentId, $searchText);
-
-        $collections = $this->ezInfoCollectionRepository->findBy(
-            [
-                'id' => $collections,
+                'contents' => $contents,
+                'count' => count($contents),
             ]
         );
-
-        return count($collections);
     }
 
-    public function view($collectionId)
+    public function getCollections(Query $query)
+    {
+        if ($query->limit === Query::COUNT_QUERY) {
+            return new Collections([
+                'count' => $this->ezInfoCollectionRepository->getChildrenCount($query->contentId),
+                'collections' => [],
+            ]);
+        }
+
+        $collections = $this->ezInfoCollectionRepository->findBy(
+            [
+                'contentObjectId' => $query->contentId,
+            ],
+            [],
+            $query->limit,
+            $query->offset
+        );
+
+
+        $objects = [];
+        foreach ($collections as $collection) {
+            $objects[] = $this->loadCollection($collection->getId());
+        }
+
+        return new Collections(
+            [
+                'collections' => $objects,
+                'count' => count($objects),
+            ]
+        );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function search(Query $query)
+    {
+        if ($query->limit === Query::COUNT_QUERY) {
+            $collections = $this->ezInfoCollectionAttributeRepository->search($query->contentId, $query->searchText);
+
+            // needs rewrite
+            $collections = $this->ezInfoCollectionRepository->findBy(
+                [
+                    'id' => $collections,
+                ]
+            );
+
+            return new Collections([
+                'count' => count($collections),
+                'collections' => [],
+            ]);
+        }
+
+
+        $collections = $this->ezInfoCollectionAttributeRepository->search($query->contentId, $query->searchText);
+
+        $collections = $this->ezInfoCollectionRepository->findBy(
+            [
+                'id' => $collections,
+            ],
+            [],
+            $query->limit,
+            $query->offset
+        );
+
+        $objects = [];
+        foreach ($collections as $collection) {
+            $objects[] = $this->loadCollection($collection->getId());
+        }
+
+        return new Collections(
+            [
+                'collections' => $objects,
+                'count' => count($objects),
+            ]
+        );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCollection(Query $query)
+    {
+        return $this->loadCollection($query->collectionId);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function deleteCollectionFields(Query $query)
+    {
+        $attributes = $this->ezInfoCollectionAttributeRepository
+            ->findBy(
+                [
+                    'contentObjectId' => $query->contentId,
+                    'informationCollectionId' => $query->collectionId,
+                    'contentClassAttributeId' => $query->fields,
+                ]);
+
+        $this->ezInfoCollectionAttributeRepository->remove($attributes);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function deleteCollections(Query $query)
+    {
+        $collections = $this->ezInfoCollectionRepository
+            ->findBy([
+                'contentObjectId' => $query->contentId,
+                'id' => $query->collections,
+            ]);
+
+        foreach ($collections as $collection) {
+
+            $attributes = $this->ezInfoCollectionAttributeRepository->findBy(['informationCollectionId' => $collection->getId()]);
+            $this->ezInfoCollectionAttributeRepository->remove($attributes);
+
+        }
+
+        $this->ezInfoCollectionRepository->remove($collections);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function deleteCollectionByContent(Query $query)
+    {
+        $collections = $this->ezInfoCollectionRepository
+            ->findBy([
+                'contentObjectId' => $query->contents,
+            ]);
+
+        foreach ($collections as $collection) {
+
+            $attributes = $this->ezInfoCollectionAttributeRepository->findBy(['informationCollectionId' => $collection->getId()]);
+            $this->ezInfoCollectionAttributeRepository->remove($attributes);
+
+        }
+
+        $this->ezInfoCollectionRepository->remove($collections);
+    }
+
+    /**
+     * @param int $userId
+     *
+     * @return \eZ\Publish\API\Repository\Values\User\User
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
+    protected function getUser($userId)
+    {
+        return $this->repository->getUserService()->loadUser($userId);
+    }
+
+    /**
+     * @param int $collectionId
+     *
+     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Collection
+     */
+    protected function loadCollection($collectionId)
     {
         $collection = $this->ezInfoCollectionRepository->findOneBy(['id' => $collectionId]);
 
-        $user = $this->getUser($collection->getCreatorId());
         $content = $this->contentService->loadContent($collection->getContentObjectId());
 
         $contentType = $this->contentTypeService->loadContentType($content->contentInfo->contentTypeId);
@@ -192,62 +302,22 @@ class InformationCollectionService implements InformationCollection
             ]
         );
 
-        $objects = [];
+        $attributes = [];
+        /** @var EzInfoCollectionAttribute $coll */
         foreach ($collections as $coll) {
 
-            $d = [
-                'object' => $coll,
+            $attributes[] = new Attribute([
+                'entity' => $coll,
                 'field' => $definitionsById[$coll->getContentClassAttributeId()],
-            ];
-
-            $objects[] = $d;
+            ]);
 
         }
 
-        return [
-            'collection' => $collection,
-            'objects' => $objects,
-            'user' => $user,
+        return new Collection([
+            'entity' => $collection,
+            'attributes' => $attributes,
+            'user' => $this->getUser($collection->getCreatorId()),
             'content' => $content,
-        ];
-    }
-
-    protected function getUser($userId)
-    {
-        return $this->repository->getUserService()->loadUser($userId);
-    }
-
-    public function deleteCollectionFields($contentId, $collectionId, $fields)
-    {
-        $attributes = $this->ezInfoCollectionAttributeRepository
-            ->findBy(
-                [
-                    'contentObjectId' => $contentId,
-                    'informationCollectionId' => $collectionId,
-                    'contentClassAttributeId' => $fields,
-                ]);
-
-        $this->ezInfoCollectionAttributeRepository->remove($attributes);
-    }
-
-    public function deleteCollections($contentId, array $collections)
-    {
-        $collections = $this->ezInfoCollectionRepository
-            ->findBy([
-                'contentObjectId' => $contentId,
-                'id' => $collections,
-            ]);
-
-        $this->ezInfoCollectionRepository->remove($collections);
-    }
-
-    public function deleteCollectionByContent(array $contents)
-    {
-        $collections = $this->ezInfoCollectionRepository
-            ->findBy([
-                'contentObjectId' => $contents,
-            ]);
-
-        $this->ezInfoCollectionRepository->remove($collections);
+        ]);
     }
 }

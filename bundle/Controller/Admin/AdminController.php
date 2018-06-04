@@ -7,6 +7,7 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Query;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListSearchAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionContentsAdapter;
@@ -17,25 +18,33 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminController extends Controller
 {
     /**
-     * @var InformationCollection
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection
      */
     protected $service;
 
     /**
-     * @var ContentService
+     * @var \eZ\Publish\API\Repository\ContentService
      */
     protected $contentService;
 
     /**
-     * @var ConfigResolverInterface
+     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
      */
     protected $configResolver;
 
     /**
-     * @var Anonymizer
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer
      */
     protected $anonymizer;
 
+    /**
+     * AdminController constructor.
+     *
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection $service
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer $anonymizer
+     * @param \eZ\Publish\API\Repository\ContentService $contentService
+     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
+     */
     public function __construct(
         InformationCollection $service,
         Anonymizer $anonymizer,
@@ -49,23 +58,40 @@ class AdminController extends Controller
         $this->anonymizer = $anonymizer;
     }
 
+    /**
+     * Displays overview page
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function overviewAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ez:infocollector:read');
 
-        $adapter = new InformationCollectionContentsAdapter($this->service);
+        $adapter = new InformationCollectionContentsAdapter($this->service, new Query());
         $pager = $this->getPager($adapter, (int) $request->query->get('page'));
 
         return $this->render("NetgenInformationCollectionBundle:admin:overview.html.twig", ['objects' => $pager]);
     }
 
+    /**
+     * Displays list of collection for selected Content
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $contentId
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function collectionListAction(Request $request, $contentId)
     {
         $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $content = $this->contentService->loadContent($contentId);
-
-        $adapter = new InformationCollectionCollectionListAdapter($this->service, $contentId);
+        $query = new Query([
+            'contentId' => $contentId,
+        ]);
+        $adapter = new InformationCollectionCollectionListAdapter($this->service, $query);
         $pager = $this->getPager($adapter, (int)$request->query->get('page'));
 
         return $this->render("NetgenInformationCollectionBundle:admin:collection_list.html.twig", [
@@ -74,15 +100,25 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * Handles collection search
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $contentId
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function searchAction(Request $request, $contentId)
     {
         $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $content = $this->contentService->loadContent($contentId);
 
-        $adapter = new InformationCollectionCollectionListSearchAdapter(
-            $this->service, $contentId, $request->query->get('searchText')
-        );
+        $query = new Query([
+            'contentId' => $contentId,
+            'searchText' => $request->query->get('searchText'),
+        ]);
+        $adapter = new InformationCollectionCollectionListSearchAdapter($this->service, $query);
         $pager = $this->getPager($adapter, (int)$request->query->get('page'));
 
         return $this->render("NetgenInformationCollectionBundle:admin:collection_list.html.twig",
@@ -93,18 +129,36 @@ class AdminController extends Controller
         );
     }
 
+    /**
+     * Displays individual collection details
+     *
+     * @param int $collectionId
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function viewAction($collectionId)
     {
         $this->denyAccessUnlessGranted('ez:infocollector:read');
 
-        $data = $this->service->view($collectionId);
+        $collection = $this->service->getCollection(new Query(['collectionId' => $collectionId]));
 
-        return $this->render("NetgenInformationCollectionBundle:admin:view.html.twig", $data);
+        return $this->render("NetgenInformationCollectionBundle:admin:view.html.twig", [
+            'collection' => $collection,
+            'content' => $collection->content,
+        ]);
     }
 
+    /**
+     * Handles actions performed on overview page
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function handleContentsAction(Request $request)
     {
         $contents = $request->request->get('ContentId', []);
+        $count = count($contents);
 
         if (empty($contents)) {
             $this->addFlashMessage('errors', 'contents_not_selected');
@@ -115,13 +169,9 @@ class AdminController extends Controller
         if ($request->request->has('DeleteCollectionByContentAction')) {
             $this->service->deleteCollectionByContent($contents);
 
-            if (count($contents) > 1) {
-                $this->addFlashMessage('success', 'contents_removed');
-            } else {
-                $this->addFlashMessage('success', 'content_removed');
-            }
+            $this->addFlashMessage('success', 'content_removed', $count);
 
-            return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
+            return $this->redirectToRoute('netgen_information_collection.route.admin.overview');
         }
 
         $this->addFlashMessage('error', 'something_went_wrong');
@@ -129,10 +179,18 @@ class AdminController extends Controller
         return $this->redirectToRoute('netgen_information_collection.route.admin.overview');
     }
 
+    /**
+     * Handles actions performed on collection list page
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function handleCollectionListAction(Request $request)
     {
         $contentId = $request->request->get('ContentId');
         $collections = $request->request->get('CollectionId', []);
+        $count = count($collections);
 
         if (empty($collections)) {
             $this->addFlashMessage('errors', 'collections_not_selected');
@@ -143,11 +201,7 @@ class AdminController extends Controller
         if ($request->request->has('DeleteCollectionAction')) {
             $this->service->deleteCollections($contentId, $collections);
 
-            if (count($collections) > 1) {
-                $this->addFlashMessage('success', 'collections_removed');
-            } else {
-                $this->addFlashMessage('success', 'collection_removed');
-            }
+            $this->addFlashMessage('success', 'collection_removed', $count);
 
             return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
         }
@@ -158,11 +212,7 @@ class AdminController extends Controller
                 $this->anonymizer->anonymizeCollection($collection);
             }
 
-            if (count($collections) > 1) {
-                $this->addFlashMessage('success', 'collections_anonymized');
-            } else {
-                $this->addFlashMessage('success', 'collection_anonymized');
-            }
+            $this->addFlashMessage('success', 'collection_anonymized', $count);
 
             return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
         }
@@ -172,11 +222,19 @@ class AdminController extends Controller
         return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
     }
 
+    /**
+     * Handles action on collection details page
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function handleCollectionAction(Request $request)
     {
         $collectionId = $request->request->get('CollectionId');
         $contentId = $request->request->get('ContentId');
         $fields = $request->request->get('FieldId', []);
+        $count = count($fields);
 
         if (
             ($request->request->has('AnonymizeFieldAction') || $request->request->has('DeleteFieldAction'))
@@ -190,11 +248,7 @@ class AdminController extends Controller
         if ($request->request->has('DeleteFieldAction')) {
             $this->service->deleteCollectionFields($contentId, $collectionId, $fields);
 
-            if (count($fields) > 1) {
-                $this->addFlashMessage('success', 'fields_removed');
-            } else {
-                $this->addFlashMessage('success', 'field_removed');
-            }
+            $this->addFlashMessage('success', 'field_removed', $count);
 
             return $this->redirectToRoute('netgen_information_collection.route.admin.view', ['collectionId' => $collectionId]);
         }
@@ -202,11 +256,7 @@ class AdminController extends Controller
         if ($request->request->has('AnonymizeFieldAction')) {
             $this->anonymizer->anonymizeCollection($collectionId, $fields);
 
-            if (count($fields) > 1) {
-                $this->addFlashMessage('success', 'fields_anonymized');
-            } else {
-                $this->addFlashMessage('success', 'field_anonymized');
-            }
+            $this->addFlashMessage('success', 'field_anonymized', $count);
 
             return $this->redirectToRoute('netgen_information_collection.route.admin.view', ['collectionId' => $collectionId]);
         }
@@ -239,14 +289,16 @@ class AdminController extends Controller
      *
      * @param string $messageType
      * @param string $message
+     * @param string $count
      * @param array $parameters
      */
-    protected function addFlashMessage($messageType, $message, array $parameters = array())
+    protected function addFlashMessage($messageType, $message, $count = 1, array $parameters = array())
     {
         $this->addFlash(
             'netgen_information_collection.' . $messageType,
-            $this->container->get('translator')->trans(
+            $this->container->get('translator')->transChoice(
                 $messageType . '.' . $message,
+                $count,
                 $parameters,
                 'netgen_information_collection_flash'
             )
@@ -256,10 +308,10 @@ class AdminController extends Controller
     /**
      * Returns configured instance of Pagerfanta
      *
-     * @param AdapterInterface $adapter
+     * @param \Pagerfanta\Adapter\AdapterInterface $adapter
      * @param $currentPage
      *
-     * @return Pagerfanta
+     * @return \Pagerfanta\Pagerfanta
      */
     protected function getPager(AdapterInterface $adapter, $currentPage)
     {

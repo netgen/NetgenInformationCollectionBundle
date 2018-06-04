@@ -12,11 +12,6 @@ class ExportCriteria extends ValueObject
     public $content;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\ContentType\ContentType
-     */
-    public $contentType;
-
-    /**
      * @var \DateTime
      */
     public $from;

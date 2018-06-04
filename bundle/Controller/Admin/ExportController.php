@@ -8,7 +8,12 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use Netgen\Bundle\InformationCollectionBundle\API\Service\Exporter;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\ExportCriteria;
 use Netgen\Bundle\InformationCollectionBundle\Form\Type\ExportType;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
+use League\Csv\Writer;
+use SplTempFileObject;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class ExportController extends Controller
 {
@@ -22,16 +27,10 @@ class ExportController extends Controller
      */
     protected $exporter;
 
-    /**
-     * @var \eZ\Publish\API\Repository\ContentTypeService
-     */
-    protected $contentTypeService;
-
-    public function __construct(ContentService $contentService, ContentTypeService $contentTypeService, Exporter $exporter)
+    public function __construct(ContentService $contentService, Exporter $exporter)
     {
         $this->contentService = $contentService;
         $this->exporter = $exporter;
-        $this->contentTypeService = $contentTypeService;
     }
 
     public function exportAction($contentId, Request $request)
@@ -39,7 +38,6 @@ class ExportController extends Controller
         $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $content = $this->contentService->loadContent($contentId);
-        $contentType = $this->contentTypeService->loadContentType($content->contentInfo->contentTypeId);
 
         $form = $this->createForm(ExportType::class);
         $form->handleRequest($request);
@@ -49,7 +47,6 @@ class ExportController extends Controller
             $exportCriteria = new ExportCriteria(
                 [
                     'content' => $content,
-                    'contentType' => $contentType,
                     'from' => $form->getData('dateFrom'),
                     'to' => $form->getData('dateTo'),
                 ]
@@ -57,6 +54,15 @@ class ExportController extends Controller
 
             $export = $this->exporter->export($exportCriteria);
 
+            $writer = Writer::createFromFileObject(new SplTempFileObject());
+            $writer->setDelimiter("\t"); //the delimiter will be the tab character
+            $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
+            $writer->setOutputBOM(Writer::BOM_UTF8); //adding the BOM sequence on output
+            $writer->insertOne($export->header);
+            $writer->insertAll($export->contents);
+
+            $writer->output('export.csv');
+            return new Response('');
         }
 
         return $this->render("@NetgenInformationCollection/admin/export_menu.html.twig",

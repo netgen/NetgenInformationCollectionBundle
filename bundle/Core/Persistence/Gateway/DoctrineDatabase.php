@@ -13,7 +13,7 @@ class DoctrineDatabase
     protected $connection;
 
     protected $objectsWithCollectionsQuery = <<<EOD
-SELECT DISTINCT ezcontentobject.id AS contentobject_id,
+SELECT DISTINCT ezcontentobject.id AS content_id,
 	ezcontentobject.name,
 	ezcontentobject_tree.main_node_id,
 	ezcontentclass.serialized_name_list,

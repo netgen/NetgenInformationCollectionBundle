@@ -12,7 +12,7 @@
         <span class="slash"> / </span>
         <a class="path" href="{{ path('netgen_information_collection.route.admin.collection_list', {'contentId': content.id}) }}">{{ ez_content_name(content) }}</a>
         <span class="slash"> / </span>
-        <span class="path">{{ collection.id }}</span>
+        <span class="path">{{ collection.entity.id }}</span>
     {% else %}
         <span class="path">{{ 'netgen_information_collection_admin_path_collected_information'|trans }}</span>
     {% endif %}

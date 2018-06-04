@@ -22,31 +22,32 @@
                 </thead>
                 <tbody>
                     {% for object in objects %}
+                        {% set content_id = object.content.id %}
                         <tr>
                             <td>
-                                <input id="{{ object.contentobject_id }}_id" name="ContentId[]" value="{{ object.contentobject_id }}" title="Select collections for removal." type="checkbox">
-                                <label for="{{ object.contentobject_id }}_id">
+                                <input id="{{ content_id }}_id" name="ContentId[]" value="{{ content_id }}" title="Select collections for removal." type="checkbox">
+                                <label for="{{ content_id }}_id">
                                 </label>
                             </td>
                             <td>
                                 <img src="{{ asset('bundles/netgeninformationcollection/admin/images/Document.png') }}" alt="section" title="section" width="16" height="16">
                                 &nbsp;
-                                <a href="/content/view/full/{{ object.main_node_id }}">
-                                    {{ object.name }}
+                                <a href="/content/view/full/{{ object.content.contentInfo.mainLocationId }}">
+                                    {{ ez_content_name(object.content) }}
                                 </a>
                             </td>
                             <td>
-                                {{ object.class_name }}
+                                {{ object.contentType.name }}
                             </td>
                             <td>
-                                {{ object.first_collection.created|date("Y.m.d H:i") }}
+                                {{ object.firstCollection.created|date("Y.m.d H:i") }}
                             </td>
                             <td>
-                                {{ object.last_collection.created|date("Y.m.d H:i") }}
+                                {{ object.lastCollection.created|date("Y.m.d H:i") }}
                             </td>
                             <td class="number" align="right">
-                                <a href="{{ path("netgen_information_collection.route.admin.collection_list", {"contentId": object.contentobject_id}) }}">
-                                    {{ object.collections }}
+                                <a href="{{ path("netgen_information_collection.route.admin.collection_list", {"contentId": content_id}) }}">
+                                    {{ object.count }}
                                 </a>
                             </td>
                         </tr>

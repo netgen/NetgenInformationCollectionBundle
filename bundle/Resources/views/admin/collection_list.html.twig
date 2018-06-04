@@ -45,24 +45,25 @@
                 </thead>
                 <tbody>
                 {% for object in objects %}
+                    {% set content_id = object.content.id %}
                     <tr>
                         <td>
-                            <input id="{{ object.object.id }}" name="CollectionId[]" value="{{ object.object.id }}" title="Select collections for removal." type="checkbox">
-                            <label for="{{ object.object.id }}">
+                            <input id="{{ content_id }}" name="CollectionId[]" value="{{ content_id }}" title="Select collections for removal." type="checkbox">
+                            <label for="{{ content_id }}">
                             </label>
                         </td>
                         <td>
                             {{ object.user.name }}
                         </td>
                         <td>
-                            {{ object.object.created|date("Y.m.d H:i") }}
+                            {{ object.entity.created|date("Y.m.d H:i") }}
                         </td>
                         <td>
-                            {{ object.object.modified|date("Y.m.d H:i") }}
+                            {{ object.entity.modified|date("Y.m.d H:i") }}
                         </td>
                         <td class="number" align="right">
-                            <a href="{{ path("netgen_information_collection.route.admin.view", {"collectionId": object.object.id}) }}">
-                                {{ object.object.id }}
+                            <a href="{{ path("netgen_information_collection.route.admin.view", {"collectionId": object.entity.id}) }}">
+                                {{ object.entity.id }}
                             </a>
                         </td>
                     </tr>

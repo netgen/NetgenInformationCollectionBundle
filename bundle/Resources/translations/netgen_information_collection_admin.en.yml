@@ -40,4 +40,6 @@ netgen_information_collection_admin_export_export: 'Export'
 netgen_information_collection_admin_export_cancel: 'Cancel'
 netgen_information_collection_admin_export_from: 'From'
 netgen_information_collection_admin_export_to: 'To'
-netgen_information_collection_admin_export_title: 'Export menu'
+netgen_information_collection_admin_export_title: 'Choose the timeframe for export'
+
+netgen_information_collection_admin_collected_information: 'Collected information (%count%)'

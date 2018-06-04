@@ -14,8 +14,3 @@ services:
         class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer\Visitor\Field\Simple
         tags:
             - { name: netgen_information_collection.anonymizer.visitor.field, priority: -255 }
-
-    netgen_information_collection.anonymizer.field_id_resolver:
-        class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer\FieldIdResolver
-        arguments:
-            - "@ezpublish.api.service.content_type"

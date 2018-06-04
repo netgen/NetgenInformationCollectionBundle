@@ -2,30 +2,14 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Pagination;
 
-use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
-use Pagerfanta\Adapter\AdapterInterface;
-
-class InformationCollectionContentsAdapter implements AdapterInterface
+class InformationCollectionContentsAdapter extends BaseAdapter
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection
-     */
-    protected $informationCollectionService;
-
-    /**
-     * InformationCollectionContentsAdapter constructor.
-     *
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection $informationCollectionService
-     */
-    public function __construct(InformationCollection $informationCollectionService)
-    {
-        $this->informationCollectionService = $informationCollectionService;
-    }
-
     public function getNbResults()
     {
         if (!isset($this->nbResults)) {
-            $this->nbResults = $this->informationCollectionService->overviewCount();
+            $this->nbResults = $this->informationCollectionService
+                ->getObjectsWithCollections($this->getCountQuery())
+                ->count;
         }
 
         return $this->nbResults;
@@ -34,11 +18,10 @@ class InformationCollectionContentsAdapter implements AdapterInterface
     public function getSlice($offset, $length)
     {
         $objects = $this->informationCollectionService
-            ->overview($length, $offset);
+            ->getObjectsWithCollections($this->getQuery($offset, $length))
+            ->contents;
 
-        if (!isset($this->nbResults)) {
-            $this->nbResults = $this->informationCollectionService->overviewCount();
-        }
+        $this->getNbResults();
 
         return $objects;
     }

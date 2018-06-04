@@ -4,6 +4,8 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Content;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Query;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -52,9 +54,14 @@ class TreeController extends Controller
             $result[] = $this->getRootTreeData();
         } else {
 
-            $data = $this->service->overview(10);
-            foreach ($data as $datum) {
-                $result[] = $this->getCollections($datum, $isRoot);
+            $query = new Query([
+                'limit' => 10,
+                'offset' => 0,
+            ]);
+
+            $objects = $this->service->getObjectsWithCollections($query);
+            foreach ($objects->contents as $content) {
+                $result[] = $this->getCollections($content, $isRoot);
             }
         }
 
@@ -68,12 +75,17 @@ class TreeController extends Controller
      */
     protected function getRootTreeData()
     {
-        $count = $this->service->overviewCount();
+        $query = new Query([
+            'limit' => 0,
+            'offset' => 0,
+        ]);
+
+        $count = $this->service->getObjectsWithCollections($query);
 
         return array(
             'id' => '0',
             'parent' => '#',
-            'text' => 'Collected information' . ' (' . strval($count) . ')',
+            'text' => $this->translator->trans('netgen_information_collection_admin_collected_information', ['%count%' => $count->count], 'netgen_information_collection_admin'),
             'children' => true,
             'state' => array(
                 'opened' => true,
@@ -88,19 +100,23 @@ class TreeController extends Controller
     }
 
 
-    protected function getCollections($data, $isRoot = false)
+    protected function getCollections(Content $content, $isRoot = false)
     {
-        $contentId = $data['contentobject_id'];
-        $count = $this->service->collectionListCount($contentId);
+        $query = new Query([
+            'contentId' => $content->content->id,
+            'limit' => 0,
+        ]);
+
+        $count = $this->service->getCollections($query);
 
         return array(
-            'id' => $contentId,
+            'id' => $content->content->id,
             'parent' => $isRoot ? '#' : '0',
-            'text' => $data['class_name'] . ' (' . strval($count) . ')',
+            'text' => $content->contentType->getName() . ' (' . strval($count->count) . ')',
             'children' => false,
             'a_attr' => array(
-                'href' => $this->router->generate('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]),
-                'rel' => $contentId,
+                'href' => $this->router->generate('netgen_information_collection.route.admin.collection_list', ['contentId' => $content->content->id]),
+                'rel' => $content->content->id,
             ),
             'state' => array(
                 'opened' => $isRoot,
@@ -108,19 +124,9 @@ class TreeController extends Controller
             'data' => array(
                 'context_menu' => array(
                     array(
-                        'name' => 'delete',
-                        'url' => '',
-                        'text' => 'Delete',
-                    ),
-                    array(
-                        'name' => 'anonymize',
-                        'url' => '',
-                        'text' => "Anonymize",
-                    ),
-                    array(
                         'name' => 'export',
-                        'url' => $this->router->generate('netgen_information_collection.route.admin.export', ['contentId' => $contentId]),
-                        'text' => 'Export',
+                        'url' => $this->router->generate('netgen_information_collection.route.admin.export', ['contentId' => $content->content->id]),
+                        'text' => $this->translator->trans('netgen_information_collection_admin_export_export', [], 'netgen_information_collection_admin'),
                     ),
                 ),
             ),

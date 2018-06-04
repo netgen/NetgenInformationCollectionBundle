@@ -2,37 +2,14 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Pagination;
 
-use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
-use Pagerfanta\Adapter\AdapterInterface;
-
-class InformationCollectionCollectionListAdapter implements AdapterInterface
+class InformationCollectionCollectionListAdapter extends BaseAdapter
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection
-     */
-    protected $informationCollectionService;
-
-    /**
-     * @var int
-     */
-    protected $contentId;
-
-    /**
-     * InformationCollectionCollectionListAdapter constructor.
-     *
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection $informationCollectionService
-     * @param int $contentId
-     */
-    public function __construct(InformationCollection $informationCollectionService, $contentId)
-    {
-        $this->informationCollectionService = $informationCollectionService;
-        $this->contentId = $contentId;
-    }
-
     public function getNbResults()
     {
         if (!isset($this->nbResults)) {
-            $this->nbResults = $this->informationCollectionService->collectionListCount($this->contentId);
+            $this->nbResults = $this->informationCollectionService
+                ->getCollections($this->getCountQuery())
+                ->count;
         }
 
         return $this->nbResults;
@@ -41,11 +18,10 @@ class InformationCollectionCollectionListAdapter implements AdapterInterface
     public function getSlice($offset, $length)
     {
         $objects = $this->informationCollectionService
-            ->collectionList($this->contentId, $length, $offset);
+            ->getCollections($this->getQuery($offset, $length))
+            ->collections;
 
-        if (!isset($this->nbResults)) {
-            $this->nbResults = $this->informationCollectionService->collectionListCount($this->contentId);
-        }
+        $this->getNbResults();
 
         return $objects;
     }
