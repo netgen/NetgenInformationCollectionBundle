@@ -18,32 +18,24 @@ class ExportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('dateFrom', DateType::class, [
-            'required' => true,
+            'required' => false,
             'widget' => 'single_text',
             'label' => 'netgen_information_collection_admin_export_from',
             'translation_domain' => 'netgen_information_collection_admin',
             'constraints' => [
-                new Assert\NotBlank([
-                    'message' => 'Some message'
-                ]),
-                new Assert\Date([
-                    'message' => 'Some message',
-                ])
+                new Assert\NotBlank(),
+                new Assert\Date(),
             ],
         ]);
 
         $builder->add('dateTo', DateType::class, [
-            'required' => true,
+            'required' => false,
             'widget' => 'single_text',
             'label' => 'netgen_information_collection_admin_export_to',
             'translation_domain' => 'netgen_information_collection_admin',
             'constraints' => [
-                new Assert\NotBlank([
-                    'message' => 'Some message'
-                ]),
-                new Assert\Date([
-                    'message' => 'Some message',
-                ])
+                new Assert\NotBlank(),
+                new Assert\Date(),
             ],
         ]);
 

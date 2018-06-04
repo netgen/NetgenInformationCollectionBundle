@@ -30,6 +30,14 @@ class ExportController extends Controller
         $this->exporter = $exporter;
     }
 
+    /**
+     * Handles export
+     *
+     * @param int $contentId
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
     public function exportAction($contentId, Request $request)
     {
         $this->denyAccessUnlessGranted('ez:infocollector:read');
@@ -39,7 +47,11 @@ class ExportController extends Controller
         $form = $this->createForm(ExportType::class);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->get('cancel')->isClicked()) {
+            return $this->redirect($this->generateUrl('netgen_information_collection.route.admin.overview'));
+        }
+
+        if ($form->isValid() && $form->get('export')->isClicked()) {
 
             $exportCriteria = new ExportCriteria(
                 [
