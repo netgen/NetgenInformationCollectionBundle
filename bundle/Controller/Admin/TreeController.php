@@ -44,6 +44,13 @@ class TreeController extends Controller
         $this->service = $service;
     }
 
+    /**
+     * Get contents with collections
+     *
+     * @param bool $isRoot
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function getChildrenAction($isRoot = false)
     {
         $this->denyAccessUnlessGranted('ez:infocollector:read');
@@ -103,9 +110,12 @@ class TreeController extends Controller
      */
     protected function getCollections(Content $content, $isRoot = false)
     {
-        $count = $this->service->getCollections(
-            Query::withContent($content->content->id)
-        );
+        $query = new Query([
+            'contentId' => $content->content->id,
+            'limit' => Query::COUNT_QUERY,
+        ]);
+
+        $count = $this->service->getCollections($query);
 
         return array(
             'id' => $content->content->id,

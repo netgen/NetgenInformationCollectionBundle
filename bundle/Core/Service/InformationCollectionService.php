@@ -11,7 +11,6 @@ use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollec
 use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\ContentsWithCollections;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Query;
 use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase;
-use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
