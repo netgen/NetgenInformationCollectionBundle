@@ -12,47 +12,6 @@ class DoctrineDatabase
      */
     protected $connection;
 
-    protected $objectsWithCollectionsQuery = <<<EOD
-SELECT DISTINCT ezcontentobject.id AS content_id,
-	ezcontentobject.name,
-	ezcontentobject_tree.main_node_id,
-	ezcontentclass.serialized_name_list,
-	ezcontentclass.identifier AS class_identifier
-FROM ezcontentobject,
-	ezcontentobject_tree,
-	ezcontentclass
-WHERE ezcontentobject_tree.contentobject_id = ezcontentobject.id
-AND ezcontentobject.contentclass_id = ezcontentclass.id
-AND ezcontentclass.version = 0
-AND ezcontentobject.id IN
-( SELECT DISTINCT ezinfocollection.contentobject_id FROM ezinfocollection )
-ORDER BY ezcontentobject.name ASC
-LIMIT ?, ?
-EOD;
-
-    protected $objectsWithCollectionCountQuery = <<<EOD
-SELECT COUNT(*) as count
-FROM ezcontentobject,
-	ezcontentobject_tree,
-	ezcontentclass
-WHERE ezcontentobject_tree.contentobject_id = ezcontentobject.id
-AND ezcontentobject.contentclass_id = ezcontentclass.id
-AND ezcontentclass.version = 0
-AND ezcontentobject.id IN
-( SELECT DISTINCT ezinfocollection.contentobject_id FROM ezinfocollection )
-ORDER BY ezcontentobject.name ASC;
-EOD;
-
-
-    protected $contentsWithCollectionsCountQuery = <<<EOD
-    SELECT COUNT( DISTINCT ezinfocollection.contentobject_id ) as count
-FROM ezinfocollection,
-	ezcontentobject,
-	ezcontentobject_tree
-WHERE ezinfocollection.contentobject_id = ezcontentobject.id
-AND ezinfocollection.contentobject_id = ezcontentobject_tree.contentobject_id
-EOD;
-
     /**
      * DoctrineDatabase constructor.
      *
@@ -72,11 +31,33 @@ EOD;
      */
     public function getContentsWithCollectionsCount()
     {
-        $query = $this->connection->prepare($this->contentsWithCollectionsCountQuery);
+        $query = $this->connection->createQueryBuilder();
+        $query->select(
+                'COUNT(DISTINCT eic.contentobject_id) AS count'
+            )
+            ->from($this->connection->quoteIdentifier('ezinfocollection'), 'eic')
+            ->innerJoin(
+                'eic',
+                $this->connection->quoteIdentifier('ezcontentobject'),
+                'eco',
+                $query->expr()->eq(
+                    $this->connection->quoteIdentifier('eic.contentobject_id'),
+                    $this->connection->quoteIdentifier('eco.id')
+                )
+            )
+            ->innerJoin(
+                'eic',
+                $this->connection->quoteIdentifier('ezcontentobject_tree'),
+                'ecot',
+                $query->expr()->eq(
+                    $this->connection->quoteIdentifier('eic.contentobject_id'),
+                    $this->connection->quoteIdentifier('ecot.contentobject_id')
+                )
+            );
 
-        $query->execute();
+        $statement = $query->execute();
 
-        return (int)$query->fetchColumn(0);
+        return (int)$statement->fetchColumn();
     }
 
     /**
@@ -91,28 +72,55 @@ EOD;
      */
     public function getObjectsWithCollections($limit, $offset)
     {
-        $query = $this->connection->prepare($this->objectsWithCollectionsQuery);
-        $query->bindParam(1, $offset, PDO::PARAM_INT);
-        $query->bindParam(2, $limit, PDO::PARAM_INT);
+        $contentIdsQuery = $this->connection->createQueryBuilder();
+        $contentIdsQuery
+            ->select("DISTINCT contentobject_id AS id")
+            ->from($this->connection->quoteIdentifier('ezinfocollection'));
 
-        $query->execute();
+        $statement = $contentIdsQuery->execute();
 
-        return $query->fetchAll();
-    }
+        $contents = [];
+        foreach ($statement->fetchAll() as $content) {
+            $contents[] = (int)$content['id'];
+        }
 
-    /**
-     * Returns collections count
-     *
-     * @return int
-     *
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function getObjectsWithCollectionCount()
-    {
-        $query = $this->connection->prepare($this->objectsWithCollectionCountQuery);
+        $query = $this->connection->createQueryBuilder();
+        $query
+            ->select(
+                "eco.id AS content_id",
+                        "eco.name",
+                        "ecot.main_node_id",
+                        "ecc.serialized_name_list",
+                        "ecc.identifier AS class_identifier"
+            )
+            ->from($this->connection->quoteIdentifier('ezcontentobject'), 'eco')
+            ->innerJoin(
+                'eco',
+                $this->connection->quoteIdentifier('ezcontentobject_tree'),
+                'ecot',
+                $query->expr()->eq(
+                    $this->connection->quoteIdentifier('eco.id'),
+                    $this->connection->quoteIdentifier('ecot.contentobject_id')
+                )
+            )
+            ->innerJoin(
+                'eco',
+                $this->connection->quoteIdentifier('ezcontentclass'),
+                'ecc',
+                $query->expr()->eq(
+                    $this->connection->quoteIdentifier('eco.contentclass_id'),
+                    $this->connection->quoteIdentifier('ecc.id')
+                )
+            )
+            ->where(
+                $query->expr()->eq('ecc.version', 0)
+            )
+            ->andWhere($query->expr()->in('eco.id', $contents))
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
 
-        $query->execute();
+        $statement = $query->execute();
 
-        return (int)$query->fetchColumn(0);
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
