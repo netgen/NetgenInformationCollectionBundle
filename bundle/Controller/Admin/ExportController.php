@@ -64,7 +64,7 @@ class ExportController extends Controller
             $export = $this->exporter->export($exportCriteria);
 
             $writer = Writer::createFromFileObject(new SplTempFileObject());
-            $writer->setDelimiter("\t"); //the delimiter will be the tab character
+            $writer->setDelimiter(",");
             $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
             $writer->setOutputBOM(Writer::BOM_UTF8); //adding the BOM sequence on output
             $writer->insertOne($export->header);
