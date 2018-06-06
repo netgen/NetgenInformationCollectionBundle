@@ -121,6 +121,6 @@ class DoctrineDatabase
 
         $statement = $query->execute();
 
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }
