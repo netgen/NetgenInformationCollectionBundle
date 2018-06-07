@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@netgen/admin-ui@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@netgen/admin-ui/-/admin-ui-1.0.3.tgz#1bc63a879cdb9722cbb5a300fcfc310bd5a4caf9"
+"@netgen/admin-ui@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@netgen/admin-ui/-/admin-ui-1.0.5.tgz#bae8ae48f8209294618ea0bf2d4b08d100d03afd"
   dependencies:
     jquery "^3.3.1"
     jstree "^3.3.5"

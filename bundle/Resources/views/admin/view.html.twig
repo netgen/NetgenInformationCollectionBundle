@@ -15,9 +15,9 @@
 
     <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection') }}">
 
-        <div class="ng-ui-btn-group">
-            <button type="submit" name="DeleteFieldAction" class="ng-ui-btn">{{ 'netgen_information_collection_admin_view_delete_field'|trans }}</button>
-            <button type="submit" name="AnonymizeFieldAction" class="ng-ui-btn">{{ 'netgen_information_collection_admin_view_anonymize_field'|trans }}</button>
+        <div class="ng-ui-btn-group mb-3">
+            <button type="submit" name="DeleteFieldAction" class="ng-ui-btn" data-enabler="Item">{{ 'netgen_information_collection_admin_view_delete_field'|trans }}</button>
+            <button type="submit" name="AnonymizeFieldAction" class="ng-ui-btn" data-enabler="Item">{{ 'netgen_information_collection_admin_view_anonymize_field'|trans }}</button>
 
             <button type="submit" name="DeleteCollectionAction" class="ng-ui-btn">{{ 'netgen_information_collection_admin_view_delete'|trans }}</button>
             <button type="submit" name="AnonymizeCollectionAction" class="ng-ui-btn">{{ 'netgen_information_collection_admin_view_anonymize'|trans }}</button>
@@ -27,18 +27,18 @@
         <input type="hidden" value="{{ collection.content.id }}" name="ContentId">
 
         {% for attribute in collection.attributes %}
-            <div class="list-object">
-                <span class="checkbox">
-                    <input id="{{ attribute.field.id }}" name="FieldId[]" value="{{ attribute.field.id }}" title="Select collections for removal." type="checkbox">
+            <div class="list-object list-object-divider">
+                <div class="ng-ui-input">
+                    <input id="{{ attribute.field.id }}" name="FieldId[]" value="{{ attribute.field.id }}" title="Select collections for removal." type="checkbox" data-enable="Item">
                     <label for="{{ attribute.field.id }}">
+                        <span class="attribute-name">
+                            {{ ez_field_name(content, attribute.field.identifier) }}:
+                        </span>
+                        <span class="attribute-value">
+                            {{ attribute.entity.value }}
+                        </span>
                     </label>
-                </span>
-                <span class="attribute-name">
-                    {{ ez_field_name(content, attribute.field.identifier) }}:
-                </span>
-                <span class="attribute-value">
-                    {{ attribute.entity.value }}
-                </span>
+                </div>
             </div>
         {% endfor %}
 

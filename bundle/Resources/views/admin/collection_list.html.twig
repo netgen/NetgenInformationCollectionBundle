@@ -15,26 +15,26 @@
 
         {% set search_text = app.request.query.get('searchText', '') %}
 
-        <div class="ng-ui-btn-group">
-        <form name="ic_search" method="get" action="{{ path('netgen_information_collection.route.admin.collection_list_search', {'contentId':content.id}) }}">
+        <form name="ic_search" method="get" action="{{ path('netgen_information_collection.route.admin.export', {'contentId':content.id}) }}">
             <div class="ng-ui-input">
-                <input id="collection-search" type="text" name="searchText" value="{{ search_text }}" placeholder="{{ 'netgen_information_collection_admin_collection_search_collections'|trans }}">
+                <input type="submit" value="Export" class="ng-ui-btn">
+            </div>
+        </form>
+
+        <form name="ic_search" method="get" action="{{ path('netgen_information_collection.route.admin.collection_list_search', {'contentId':content.id}) }}">
+            <div class="ng-ui-btn-group">
+                <div class="ng-ui-input">
+                    <input id="collection-search" type="text" name="searchText" value="{{ search_text }}" placeholder="{{ 'netgen_information_collection_admin_collection_search_collections'|trans }}">
+                </div>
                 <input type="submit" value="Search" class="ng-ui-btn">
             </div>
         </form>
-        </div>
 
         {% if search_text %}
             <p>
                 {{ "netgen_information_collection_admin_collection_no_collections_results"|trans({"%count%": objects.count, "%text%": search_text }) }}
             </p>
         {% endif %}
-
-        <form name="ic_search" method="get" action="{{ path('netgen_information_collection.route.admin.export', {'contentId':content.id}) }}">
-            <div class="ng-ui-input">
-                <input type="submit" value="Export" class="ng-ui-btn">
-            </div>
-        </form>
 
         <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection_list') }}">
 
