@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <a class="ic-btn" href="{{ app.request.headers.get('referer') }}">
+    <a class="ng-ui-btn" href="{{ app.request.headers.get('referer') }}">
         <i class="md-icon">chevron_left</i> {{ 'netgen_information_collection_admin_back'|trans }}
     </a>
 
@@ -15,12 +15,12 @@
 
     <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection') }}">
 
-        <div class="ic-btn-group">
-            <button type="submit" name="DeleteFieldAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_delete_field'|trans }}</button>
-            <button type="submit" name="AnonymizeFieldAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_anonymize_field'|trans }}</button>
+        <div class="ng-ui-btn-group">
+            <button type="submit" name="DeleteFieldAction" class="ng-ui-btn">{{ 'netgen_information_collection_admin_view_delete_field'|trans }}</button>
+            <button type="submit" name="AnonymizeFieldAction" class="ng-ui-btn">{{ 'netgen_information_collection_admin_view_anonymize_field'|trans }}</button>
 
-            <button type="submit" name="DeleteCollectionAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_delete'|trans }}</button>
-            <button type="submit" name="AnonymizeCollectionAction" class="ic-btn" data-enabler="ic">{{ 'netgen_information_collection_admin_view_anonymize'|trans }}</button>
+            <button type="submit" name="DeleteCollectionAction" class="ng-ui-btn">{{ 'netgen_information_collection_admin_view_delete'|trans }}</button>
+            <button type="submit" name="AnonymizeCollectionAction" class="ng-ui-btn">{{ 'netgen_information_collection_admin_view_anonymize'|trans }}</button>
         </div>
 
         <input type="hidden" value="{{ collection.entity.id }}" name="CollectionId">

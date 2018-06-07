@@ -9,7 +9,7 @@
     {{ form_start(form) }}
         {{ form_errors(form) }}
 
-        <div class="ic-input">
+        <div class="ng-ui-input">
             <label for="{{ form.dateFrom.vars.id }}">
                 {{ form.dateFrom.vars.label|trans }}:
             </label>
@@ -19,7 +19,7 @@
             {{ form_widget(form.dateFrom) }}
         </div>
 
-        <div class="ic-input">
+        <div class="ng-ui-input">
             <label for="{{ form.dateTo.vars.id }}">
                 {{ form.dateTo.vars.label|trans }}:
             </label>
@@ -29,12 +29,12 @@
             {{ form_widget(form.dateTo) }}
         </div>
 
-        <div class="ic-btn-group">
-            <button type="submit" name="{{ form.export.vars.full_name }}" class="ic-btn">
+        <div class="ng-ui-btn-group">
+            <button type="submit" name="{{ form.export.vars.full_name }}" class="ng-ui-btn">
                 {{ form.export.vars.label|trans }}
             </button>
             {% do form.export.setRendered %}
-            <button type="submit" name="{{ form.cancel.vars.full_name }}" class="ic-btn">
+            <button type="submit" name="{{ form.cancel.vars.full_name }}" class="ng-ui-btn">
                 {{ form.cancel.vars.label|trans }}
             </button>
             {% do form.cancel.setRendered %}

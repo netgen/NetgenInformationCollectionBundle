@@ -5,6 +5,5 @@
         "Netgen <info@netgen.hr>"
     ],
     "dependencies": {
-        "jquery": "^3.0"
     }
 }

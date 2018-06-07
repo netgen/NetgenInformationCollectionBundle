@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <a class="ic-btn" href="{{ app.request.headers.get('referer') }}">
+    <a class="ng-ui-btn" href="{{ app.request.headers.get('referer') }}">
         <i class="md-icon">chevron_left</i> {{ 'netgen_information_collection_admin_back'|trans }}
     </a>
 
@@ -15,11 +15,11 @@
 
         {% set search_text = app.request.query.get('searchText', '') %}
 
-        <div class="ic-btn-group">
+        <div class="ng-ui-btn-group">
         <form name="ic_search" method="get" action="{{ path('netgen_information_collection.route.admin.collection_list_search', {'contentId':content.id}) }}">
-            <div class="ic-input">
+            <div class="ng-ui-input">
                 <input id="collection-search" type="text" name="searchText" value="{{ search_text }}" placeholder="{{ 'netgen_information_collection_admin_collection_search_collections'|trans }}">
-                <input type="submit" value="Search" class="ic-btn">
+                <input type="submit" value="Search" class="ng-ui-btn">
             </div>
         </form>
         </div>
@@ -31,18 +31,18 @@
         {% endif %}
 
         <form name="ic_search" method="get" action="{{ path('netgen_information_collection.route.admin.export', {'contentId':content.id}) }}">
-            <div class="ic-input">
-                <input type="submit" value="Export" class="ic-btn">
+            <div class="ng-ui-input">
+                <input type="submit" value="Export" class="ng-ui-btn">
             </div>
         </form>
 
         <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection_list') }}">
 
-            <div class="ic-btn-group">
-                <button type="submit" name="DeleteCollectionAction" class="ic-btn" data-enabler="IC">
+            <div class="ng-ui-btn-group">
+                <button type="submit" name="DeleteCollectionAction" class="ng-ui-btn" data-enabler="Item">
                     {{ 'netgen_information_collection_admin_collection_delete'|trans }}
                 </button>
-                <button type="submit" name="AnonymizeCollectionAction" class="ic-btn" data-enabler="IC">
+                <button type="submit" name="AnonymizeCollectionAction" class="ng-ui-btn" data-enabler="Item">
                     {{ 'netgen_information_collection_admin_collection_anonymize'|trans }}
                 </button>
             </div>
@@ -63,7 +63,7 @@
                     {% set collection_id = object.entity.id %}
                     <tr>
                         <td>
-                            <input id="{{ collection_id }}" name="CollectionId[]" value="{{ collection_id }}" title="Select collections for removal." type="checkbox">
+                            <input id="{{ collection_id }}" name="CollectionId[]" value="{{ collection_id }}" title="Select collections for removal." type="checkbox" data-enable="Item">
                             <label for="{{ collection_id }}">
                             </label>
                         </td>

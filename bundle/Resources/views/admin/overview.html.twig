@@ -25,7 +25,7 @@
                         {% set content_id = object.content.id %}
                         <tr>
                             <td>
-                                <input id="{{ content_id }}_id" name="ContentId[]" value="{{ content_id }}" title="Select collections for removal." type="checkbox">
+                                <input id="{{ content_id }}_id" name="ContentId[]" value="{{ content_id }}" title="Select collections for removal." type="checkbox" data-enable="Item">
                                 <label for="{{ content_id }}_id">
                                 </label>
                             </td>
@@ -59,8 +59,8 @@
                 {{ pagerfanta( objects, 'netgen_information_collection_admin' ) }}
             {% endif %}
 
-            <div class="ic-btn-group">
-                <button type="submit" name="DeleteCollectionByContentAction" class="ic-btn" data-enabler="ic">
+            <div class="ng-ui-btn-group">
+                <button type="submit" name="DeleteCollectionByContentAction" class="ng-ui-btn" data-enabler="Item">
                     {{ 'netgen_information_collection_admin_overview_delete'|trans }}
                 </button>
             </div>

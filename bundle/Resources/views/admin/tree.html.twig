@@ -10,8 +10,8 @@
 
 {% block tags_tree %}
     <div
-        class="tags-tree"
-        data-path="{{ path('netgen_information_collection.route.admin.tree_get_children', {'contentId': '_contentId_'}) }}"
+        class="ng-ui-tree"
+        data-path="{{ path('netgen_information_collection.route.admin.tree_get_children', {'contentId': '_itemId_'}) }}"
         data-rootTagId="{{ rootTagId }}"
         data-showRootTag="{{ showRootTag ? 'true' : 'false' }}"
         data-selectedTagPath="{% if pathString is defined %}{{ pathString }}{% else %}{{ '' }}{% endif %}"
