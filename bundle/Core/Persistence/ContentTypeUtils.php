@@ -2,10 +2,12 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence;
 
+use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
-use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
+use OutOfBoundsException;
 
-class ContentTypeUtils
+final class ContentTypeUtils
 {
     /**
      * @var \eZ\Publish\API\Repository\ContentTypeService
@@ -13,29 +15,46 @@ class ContentTypeUtils
     protected $contentTypeService;
 
     /**
+     * @var \eZ\Publish\API\Repository\ContentService
+     */
+    protected $contentService;
+
+    /**
      * FieldIdResolver constructor.
      *
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
+     * @param \eZ\Publish\API\Repository\ContentService $contentService
      */
-    public function __construct(ContentTypeService $contentTypeService)
+    public function __construct(ContentTypeService $contentTypeService, ContentService $contentService)
     {
         $this->contentTypeService = $contentTypeService;
+        $this->contentService = $contentService;
     }
 
     /**
      * Return field id for fiven field definition identifier
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     * @param int $contentId
      * @param string $fieldDefIdentifier
      *
      * @return mixed
+     *
+     * @throws \OutOfBoundsException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    public function getId(Content $content, $fieldDefIdentifier)
+    public function getFieldId($contentId, $fieldDefIdentifier)
     {
+        $content = $this->contentService->loadContent($contentId);
+
         $contentType = $this->contentTypeService
             ->loadContentType($content->contentInfo->contentTypeId);
 
         $field = $contentType->getFieldDefinition($fieldDefIdentifier);
+
+        if (!$field instanceof FieldDefinition) {
+            throw new OutOfBoundsException(sprintf("ContentType does not contain field with identifier %s.", $fieldDefIdentifier));
+        }
 
         return $field->id;
     }
@@ -44,13 +63,18 @@ class ContentTypeUtils
     /**
      * Returns fields that are marked as info collectors
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     * @param int $contentId
      *
      * @return array
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    public function getInfoCollectorFields(Content $content)
+    public function getInfoCollectorFields($contentId)
     {
         $fields = [];
+
+        $content = $this->contentService->loadContent($contentId);
 
         $contentType = $this->contentTypeService
             ->loadContentType($content->contentInfo->contentTypeId);

@@ -2,9 +2,9 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Repository;
 
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
+use DateTime;
 
 class EzInfoCollectionRepository extends EntityRepository
 {
@@ -49,48 +49,16 @@ class EzInfoCollectionRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findOlderThanThirtyDaysByContentId($contentId)
+    public function findByContentIdOlderThan($contentId, DateTime $date)
     {
         $qb = $this->createQueryBuilder('ezc');
-        $date = new \DateTime();
-        $date->modify('-30 days');
 
         return $qb->select('ezc')
             ->where('ezc.contentObjectId = :content')
             ->setParameter('content', $contentId)
-            ->andWhere('ezc.created > :date')
-            ->setParameter('date', $date->getTimestamp())
+            ->andWhere($qb->expr()->lte('ezc.created', $date->getTimestamp()))
             ->getQuery()
             ->getResult();
-    }
-
-    public function findOlderThanThirtyDaysById($infoCollectionId)
-    {
-        $qb = $this->createQueryBuilder('ezc');
-        $date = new \DateTime();
-        $date->modify('-30 days');
-
-        return $qb->select('ezc')
-            ->where('ezc.id = :info-collection')
-            ->setParameter('info-collection', $infoCollectionId)
-            ->andWhere('ezc.created > :date')
-            ->setParameter('date', $date->getTimestamp())
-            ->getQuery()
-            ->getSingleResult(AbstractQuery::HYDRATE_OBJECT);
-    }
-
-    public function overview()
-    {
-        $qb = $this->createQueryBuilder('ezc');
-
-        return $qb->select('COUNT(ezc) as count')
-            ->a
-            ->where('ezc.id = :info-collection')
-            ->setParameter('info-collection', $infoCollectionId)
-            ->andWhere('ezc.created > :date')
-            ->setParameter('date', $date->getTimestamp())
-            ->getQuery()
-            ->getSingleResult(AbstractQuery::HYDRATE_OBJECT);
     }
 
     public function getChildrenCount($contentId)

@@ -74,3 +74,4 @@ services:
         class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils
         arguments:
             - "@ezpublish.api.service.content_type"
+            - "@ezpublish.api.service.content"
