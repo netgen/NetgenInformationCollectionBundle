@@ -7,7 +7,7 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Query;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListSearchAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionContentsAdapter;

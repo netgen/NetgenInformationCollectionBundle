@@ -15,7 +15,7 @@ use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\Repository\Values\User\User;
 use eZ\Publish\SPI\Persistence\Content\ContentInfo;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
-use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
@@ -29,7 +29,7 @@ use PHPUnit\Framework\TestCase;
 class DatabaseActionTest extends TestCase
 {
     /**
-     * @var DatabaseAction
+     * @var \Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction
      */
     protected $action;
 
@@ -69,12 +69,12 @@ class DatabaseActionTest extends TestCase
     protected $fields;
 
     /**
-     * @var InformationCollectionStruct
+     * @var \Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct
      */
     protected $struct;
 
     /**
-     * @var LegacyData
+     * @var \Netgen\Bundle\InformationCollectionBundle\Value\LegacyData
      */
     protected $legacyData;
 
@@ -114,6 +114,10 @@ class DatabaseActionTest extends TestCase
                     'identifier' => 'some_field_2',
                     'id' => 987,
                 )),
+                new FieldDefinition(array(
+                    'identifier' => 'some_field_3',
+                    'id' => 12313,
+                )),
             ),
         ));
 
@@ -139,6 +143,12 @@ class DatabaseActionTest extends TestCase
                 'id' => 789,
                 'fieldDefIdentifier' => 'some_field_2',
                 'value' => new TextLineValue('some value 2'),
+                'languageCode' => 'eng_GB',
+            )),
+            new Field(array(
+                'id' => 13213,
+                'fieldDefIdentifier' => 'some_field_3',
+                'value' => null,
                 'languageCode' => 'eng_GB',
             )),
         );

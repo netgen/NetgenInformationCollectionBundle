@@ -23,6 +23,7 @@ class EmailDataTest extends TestCase
         $this->assertEquals($sender, $emailData->getSender());
         $this->assertEquals($subject, $emailData->getSubject());
         $this->assertEquals($body, $emailData->getBody());
+        $this->assertNull($emailData->getAttachments());
     }
 
     public function emailDataProvider()

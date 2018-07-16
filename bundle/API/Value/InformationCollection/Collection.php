@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection;
+namespace Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection;
 
 use Netgen\Bundle\InformationCollectionBundle\API\Value\ValueObject;
 
@@ -12,7 +12,7 @@ class Collection extends ValueObject
     public $entity;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Attribute[]
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Attribute[]
      */
     public $attributes;
 

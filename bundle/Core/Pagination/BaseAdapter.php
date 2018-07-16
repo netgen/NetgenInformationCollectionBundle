@@ -3,7 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Pagination;
 
 use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Query;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query;
 use Pagerfanta\Adapter\AdapterInterface;
 
 abstract class BaseAdapter implements AdapterInterface
@@ -14,7 +14,7 @@ abstract class BaseAdapter implements AdapterInterface
     protected $informationCollectionService;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Query
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query
      */
     protected $query;
 
@@ -22,7 +22,7 @@ abstract class BaseAdapter implements AdapterInterface
      * InformationCollectionCollectionListAdapter constructor.
      *
      * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection $informationCollectionService
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Query $query
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query $query
      */
     public function __construct(InformationCollection $informationCollectionService, Query $query)
     {
@@ -34,7 +34,7 @@ abstract class BaseAdapter implements AdapterInterface
      * @param int $offset
      * @param int $length
      *
-     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Query
+     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query
      */
     protected function getQuery($offset, $length)
     {
@@ -46,7 +46,7 @@ abstract class BaseAdapter implements AdapterInterface
     }
 
     /**
-     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Query
+     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query
      */
     protected function getCountQuery()
     {

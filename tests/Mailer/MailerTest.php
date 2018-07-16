@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Mailer;
 
+use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFileValue;
 use Netgen\Bundle\InformationCollectionBundle\Mailer\Mailer;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 use PHPUnit\Framework\TestCase;
@@ -74,6 +75,25 @@ class MailerTest extends TestCase
     public function testCreateAndSendMessage()
     {
         $data = new EmailData('recipient@example.com', 'sender@example.com', 'Test', 'Body');
+
+        $this->swiftMailer->expects($this->once())
+            ->method('send')
+            ->willReturn(1);
+
+        $this->mailer->createAndSendMessage($data);
+    }
+
+    public function testCreateAndSendMessageWithAttachments()
+    {
+        $attachments = [
+            new BinaryFileValue(
+                [
+                    'inputUri' => __DIR__ . "\attachment.txt",
+                ]
+            ),
+        ];
+
+        $data = new EmailData('recipient@example.com', 'sender@example.com', 'Test', 'Body', $attachments);
 
         $this->swiftMailer->expects($this->once())
             ->method('send')

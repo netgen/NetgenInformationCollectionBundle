@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection;
+namespace Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection;
 
 use Netgen\Bundle\InformationCollectionBundle\API\Value\ValueObject;
 
@@ -12,7 +12,7 @@ class ContentsWithCollections extends ValueObject
     public $count;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Content
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Content
      */
     public $contents;
 }

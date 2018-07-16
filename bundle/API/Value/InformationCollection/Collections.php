@@ -1,13 +1,13 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection;
+namespace Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection;
 
 use Netgen\Bundle\InformationCollectionBundle\API\Value\ValueObject;
 
 class Collections extends ValueObject
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Collection[]
+     * @var \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collection[]
      */
     public $collections;
 

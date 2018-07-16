@@ -64,10 +64,6 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
 
         $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
 
-//        if (in_array('EzPlatformAdminUiBundle', $activatedBundles, true)) {
-//            $configs['ezadminui/twig.yml'] = 'twig';
-//        }
-
         foreach ($configs as $fileName => $extensionName) {
             $configFile = __DIR__ . '/../Resources/config/' . $fileName;
             $config = Yaml::parse(file_get_contents($configFile));

@@ -4,12 +4,12 @@ namespace Netgen\Bundle\InformationCollectionBundle\Core\Service;
 
 use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
 use eZ\Publish\API\Repository\Repository;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Attribute;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Collection;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Collections;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Content;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\ContentsWithCollections;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Query;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Attribute;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collection;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collections;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Content;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\ContentsWithCollections;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query;
 use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
@@ -284,7 +284,7 @@ class InformationCollectionService implements InformationCollection
     /**
      * @param int $collectionId
      *
-     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Collection
+     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collection
      */
     protected function loadCollection($collectionId)
     {

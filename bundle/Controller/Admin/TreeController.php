@@ -4,8 +4,8 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Content;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Query;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Content;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -103,7 +103,7 @@ class TreeController extends Controller
     /**
      * Creates tree structure for Content
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\Export\InformationCollection\Content $content
+     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Content $content
      * @param bool $isRoot
      *
      * @return array
