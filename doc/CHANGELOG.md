@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.0] - 2018-08-10
+### Added
+- Symfony based admin interface for managing collected information
+- Admin interface can work standalone or integrated into Netgen AdminUI
+- GDPR compliant removal and anonymizatio of collected information
+- Console command for anonymization
+- Collected information export to CSV
+
 ## [1.4.1] - 2018-03-09
 ### Fixed
 - Continue with fallback logic if subject/recipient/sender template blocks do not return value
