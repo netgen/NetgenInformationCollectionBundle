@@ -33,6 +33,16 @@ public function registerBundles()
 }
 ```
 
+### Include routing configuration
+
+In your main routing configuration file probably `routing.yml` add:
+
+```yaml
+_netgen_information_collection:
+    resource: '@NetgenInformationCollectionBundle/Resources/config/routing.yml'
+```
+
+
 ### Enable auto_mapping for Doctrine
 
 Add this to `config.yml`, it will make Doctrine automatically load the mappings from our bundle:
