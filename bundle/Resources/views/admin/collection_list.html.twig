@@ -39,10 +39,10 @@
         <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection_list') }}">
 
             <div class="ng-ui-btn-group">
-                <button type="submit" name="DeleteCollectionAction" class="ng-ui-btn" data-enabler="Item">
+                <button type="submit" name="DeleteCollectionAction" class="ng-ui-btn" data-enabler="Item" disabled="disabled">
                     {{ 'netgen_information_collection_admin_collection_delete'|trans }}
                 </button>
-                <button type="submit" name="AnonymizeCollectionAction" class="ng-ui-btn" data-enabler="Item">
+                <button type="submit" name="AnonymizeCollectionAction" class="ng-ui-btn" data-enabler="Item" disabled="disabled">
                     {{ 'netgen_information_collection_admin_collection_anonymize'|trans }}
                 </button>
             </div>
@@ -63,7 +63,7 @@
                     {% set collection_id = object.entity.id %}
                     <tr>
                         <td>
-                            <input id="{{ collection_id }}" name="CollectionId[]" value="{{ collection_id }}" title="Select collections for removal." type="checkbox" data-enable="Item">
+                            <input data-enable="Item" id="{{ collection_id }}" name="CollectionId[]" value="{{ collection_id }}" title="Select collections for removal." type="checkbox" data-enable="Item">
                             <label for="{{ collection_id }}">
                             </label>
                         </td>
