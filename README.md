@@ -28,6 +28,8 @@ License, docs and installation instructions
 
 [Installation instructions](doc/INSTALL.md)
 
+[Upgrade instructions](doc/UPGRADE.md)
+
 [Documentation](doc/DOC.md)
 
 [Changelog](doc/CHANGELOG.md)
