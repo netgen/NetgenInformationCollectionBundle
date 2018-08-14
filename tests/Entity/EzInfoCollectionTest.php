@@ -29,5 +29,12 @@ class EzInfoCollectionTest extends TestCase
         $this->entity->setCreatorId(43432456);
         $this->entity->setModified(43432);
         $this->entity->setUserIdentifier(546);
+
+
+        $this->assertEquals(4234, $this->entity->getContentObjectId());
+        $this->assertEquals(4535, $this->entity->getCreated());
+        $this->assertEquals(43432456, $this->entity->getCreatorId());
+        $this->assertEquals(43432, $this->entity->getModified());
+        $this->assertEquals(546, $this->entity->getUserIdentifier());
     }
 }
