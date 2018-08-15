@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.3] - 2018-08-16
+### Fixed
+- Spelling in translation
+- Return empty array when there is no collected information contents
+
 ## [1.5.2] - 2018-08-13
 ### Fixed
 - Use ez_urlalias rather than legacy route
