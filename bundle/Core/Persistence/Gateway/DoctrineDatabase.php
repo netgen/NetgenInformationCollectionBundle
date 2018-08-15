@@ -84,6 +84,10 @@ class DoctrineDatabase
             $contents[] = (int)$content['id'];
         }
 
+        if (empty($contents)) {
+            return [];
+        }
+
         $query = $this->connection->createQueryBuilder();
         $query
             ->select(
