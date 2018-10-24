@@ -93,20 +93,10 @@ class DoctrineDatabase
             ->select(
                 "eco.id AS content_id",
                         "eco.name",
-                        "ecot.main_node_id",
                         "ecc.serialized_name_list",
                         "ecc.identifier AS class_identifier"
             )
             ->from($this->connection->quoteIdentifier('ezcontentobject'), 'eco')
-            ->innerJoin(
-                'eco',
-                $this->connection->quoteIdentifier('ezcontentobject_tree'),
-                'ecot',
-                $query->expr()->eq(
-                    $this->connection->quoteIdentifier('eco.id'),
-                    $this->connection->quoteIdentifier('ecot.contentobject_id')
-                )
-            )
             ->innerJoin(
                 'eco',
                 $this->connection->quoteIdentifier('ezcontentclass'),

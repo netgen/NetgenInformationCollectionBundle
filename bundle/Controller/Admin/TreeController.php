@@ -110,6 +110,8 @@ class TreeController extends Controller
      */
     protected function getCollections(Content $content, $isRoot = false)
     {
+        $languages = $this->getConfigResolver()->getParameter('languages');
+
         $query = new Query([
             'contentId' => $content->content->id,
             'limit' => Query::COUNT_QUERY,
@@ -120,7 +122,7 @@ class TreeController extends Controller
         return array(
             'id' => $content->content->id,
             'parent' => $isRoot ? '#' : '0',
-            'text' => $content->contentType->getName() . ' (' . strval($count->count) . ')',
+            'text' => $content->contentType->getName($languages[0]) . ' (' . strval($count->count) . ')',
             'children' => false,
             'a_attr' => array(
                 'href' => $this->router->generate('netgen_information_collection.route.admin.collection_list', ['contentId' => $content->content->id]),

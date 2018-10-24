@@ -37,7 +37,7 @@
                                 </a>
                             </td>
                             <td>
-                                {{ object.contentType.name }}
+                                {{ ez_trans_prop(object.contentType, "name") }}
                             </td>
                             <td>
                                 {{ object.firstCollection.created|date("Y.m.d H:i") }}
