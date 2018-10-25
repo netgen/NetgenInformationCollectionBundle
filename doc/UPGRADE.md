@@ -1,6 +1,11 @@
 Upgrade instructions
 ====================
 
+Upgrade to 1.5.5
+----------------
+
+Release 1.5.4 renames command for anonymizing collections from `netgen:collected-info:anonymize` to `nginfocollector:anonymize`.
+
 Upgrade to 1.5.0
 ----------------
 
