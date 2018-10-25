@@ -30,4 +30,9 @@ class Content extends ValueObject
      * @var int
      */
     public $count;
+
+    /**
+     * @var bool
+     */
+    public $hasLocation;
 }

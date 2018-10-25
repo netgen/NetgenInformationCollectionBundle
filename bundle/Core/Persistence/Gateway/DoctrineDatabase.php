@@ -45,7 +45,7 @@ class DoctrineDatabase
                     $this->connection->quoteIdentifier('eco.id')
                 )
             )
-            ->innerJoin(
+            ->leftJoin(
                 'eic',
                 $this->connection->quoteIdentifier('ezcontentobject_tree'),
                 'ecot',
@@ -92,11 +92,21 @@ class DoctrineDatabase
         $query
             ->select(
                 "eco.id AS content_id",
-                        "eco.name",
-                        "ecc.serialized_name_list",
-                        "ecc.identifier AS class_identifier"
+                "eco.name",
+                "ecot.main_node_id",
+                "ecc.serialized_name_list",
+                "ecc.identifier AS class_identifier"
             )
             ->from($this->connection->quoteIdentifier('ezcontentobject'), 'eco')
+            ->leftJoin(
+                'eco',
+                $this->connection->quoteIdentifier('ezcontentobject_tree'),
+                'ecot',
+                $query->expr()->eq(
+                    $this->connection->quoteIdentifier('eco.id'),
+                    $this->connection->quoteIdentifier('ecot.contentobject_id')
+                )
+            )
             ->innerJoin(
                 'eco',
                 $this->connection->quoteIdentifier('ezcontentclass'),
@@ -110,6 +120,7 @@ class DoctrineDatabase
                 $query->expr()->eq('ecc.version', 0)
             )
             ->andWhere($query->expr()->in('eco.id', $contents))
+            ->groupBy($this->connection->quoteIdentifier('ecot.main_node_id'))
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 

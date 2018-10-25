@@ -114,6 +114,7 @@ class InformationCollectionService implements InformationCollection
                     'firstCollection' => $firstCollection,
                     'lastCollection' => $lastCollection,
                     'count' => $this->ezInfoCollectionRepository->getChildrenCount($content->id),
+                    'hasLocation' => empty($object['main_node_id']) ? false : true,
                 ]
             );
         }
