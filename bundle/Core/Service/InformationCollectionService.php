@@ -306,6 +306,10 @@ class InformationCollectionService implements InformationCollection
         /** @var EzInfoCollectionAttribute $coll */
         foreach ($collections as $coll) {
 
+            if (empty($definitionsById[$coll->getContentClassAttributeId()])) {
+                continue;
+            }
+
             $attributes[] = new Attribute([
                 'entity' => $coll,
                 'field' => $definitionsById[$coll->getContentClassAttributeId()],
