@@ -27,7 +27,7 @@ class DataAnonymizerCommand extends ContainerAwareCommand
 
     protected function configure()
     {
-        $this->setName("netgen:collected-info:anonymize");
+        $this->setName("nginfocollector:anonymize");
         $this->setDescription("Anonymizes collected data in collected info tables.");
         $this->setHelp("This command allows you to anonymize data collected by this library in collected info tables.");
 
