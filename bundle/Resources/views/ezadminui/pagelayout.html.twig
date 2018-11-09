@@ -1,0 +1,49 @@
+{% set rendered_content = block('content') %}
+
+{#
+    We embed the main layout.html.twig instead of extending it
+    to be able to inject additional markup before and after its
+    content block.
+#}
+{% embed '@EzPlatformAdminUi/layout.html.twig' %}
+    {% trans_default_domain 'netgen_information_collection_admin' %}
+
+    {% block title %}{{ 'pagelayout.title'|trans }}{% endblock %}
+
+    {% block pageTitle %}{% endblock %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+
+        {% include '@NetgenInformationCollection/admin/stylesheets.html.twig' %}
+        {% include '@NetgenInformationCollection/ezadminui/stylesheets.html.twig' %}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+
+        {% include '@NetgenInformationCollection/admin/javascripts.html.twig' %}
+    {% endblock %}
+
+    {% block content %}
+        <div class="ic-app row">
+            {% include '@NetgenInformationCollection/admin/header.html.twig' %}
+
+            <div class="ng-ui-container">
+                <div class="ng-ui-sidebar ng-ui-sidebar-resizable">
+                    <div class="main-menu">
+                        {% include '@NetgenInformationCollection/admin/main_menu.html.twig' %}
+                    </div>
+                </div>
+
+                <div class="ng-ui-content">
+                    <div class="path">
+                        {% include '@NetgenInformationCollection/admin/path.html.twig' %}
+                    </div>
+
+                    {{ rendered_content|raw }}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}
