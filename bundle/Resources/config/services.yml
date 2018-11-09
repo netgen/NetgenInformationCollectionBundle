@@ -26,6 +26,10 @@ parameters:
     netgen_information_collection.mailer.class: Netgen\Bundle\InformationCollectionBundle\Mailer\Mailer
     # END of Mailer
 services:
+    netgen_information_collection.controller.test:
+        class: Netgen\Bundle\InformationCollectionBundle\Controller\TestController
+        parent: ezpublish.controller.base
+
     netgen_information_collection.controller:
         class: '%netgen_information_collection.controller.class%'
         calls:
