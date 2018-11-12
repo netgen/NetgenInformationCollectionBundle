@@ -10,7 +10,6 @@ imports:
 parameters:
     # Controllers
     netgen_information_collection.controller.class: Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController
-    netgen_information_collection_legacy.controller.class: Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionLegacyController
     netgen_information_collection.form.builder.class: Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder
     # END of Controllers
 
@@ -37,14 +36,6 @@ services:
 
     information_collection:
         alias: 'netgen_information_collection.controller'
-
-    netgen_information_collection_legacy.controller:
-        class: '%netgen_information_collection_legacy.controller.class%'
-        calls:
-            - [setContainer, ['@service_container']]
-
-    information_collection_legacy:
-        alias: 'netgen_information_collection_legacy.controller'
 
     netgen_information_collection.form.builder:
         class: '%netgen_information_collection.form.builder.class%'

@@ -5,11 +5,12 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller;
 use eZ\Bundle\EzPublishCoreBundle\Controller as BaseController;
 use Netgen\Bundle\InformationCollectionBundle\Form\RepositoryForms\InformationCollectionMapper;
 use Netgen\Bundle\InformationCollectionBundle\Form\RepositoryForms\InformationCollectionType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TestController extends BaseController
 {
-    public function test()
+    public function test(Request $request)
     {
         $contentId = 235;
 
@@ -27,6 +28,11 @@ class TestController extends BaseController
             'languageCode' => $content->contentInfo->mainLanguageCode,
             'mainLanguageCode' => $content->contentInfo->mainLanguageCode,
         ]);
+
+        $form->handleRequest($request);
+
+        dump($form->getData());
+
 
         return $this->render('@NetgenInformationCollection/test.html.twig', ['form' => $form->createView()]);
     }

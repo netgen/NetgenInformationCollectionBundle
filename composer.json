@@ -45,12 +45,9 @@
         }
     },
     "scripts": {
-        "test": "@php vendor/bin/phpunit --colors=always",
+        "test": "@php vendor/bin/phpunit -c phpunit.xml --colors=always",
         "fix": "@php vendor/bin/php-cs-fixer fix",
-        "coverage": "@php -dzend_extension=xdebug.so vendor/bin/phpunit --colors=always"
-    },
-    "config": {
-        "sort-packages": true
+        "coverage": "@php -dzend_extension=xdebug.so vendor/bin/phpunit -c phpunit.xml --colors=always"
     },
     "extra": {
         "branch-alias": {
