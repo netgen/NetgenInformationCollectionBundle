@@ -35,12 +35,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Netgen\\Bundle\\InformationCollectionBundle\\": "bundle"
+            "Netgen\\Bundle\\InformationCollectionBundle\\": "bundle",
+            "Netgen\\InformationCollection\\": "lib"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Netgen\\Bundle\\InformationCollectionBundle\\Tests\\": "tests"
+            "Netgen\\Bundle\\InformationCollectionBundle\\Tests\\": "tests/bundle",
+            "Netgen\\InformationCollection\\Tests\\": "tests/lib"
         }
     },
     "scripts": {

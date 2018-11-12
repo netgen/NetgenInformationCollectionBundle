@@ -2,15 +2,10 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form\Type;
 
-use eZ\Publish\API\Repository\Repository;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\ExportCriteria;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ExportType extends AbstractType
