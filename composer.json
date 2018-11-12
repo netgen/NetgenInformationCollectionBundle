@@ -23,7 +23,6 @@
         "ezsystems/ezplatform-admin-ui": "^1.3",
         "ezsystems/ezpublish-kernel": "^7.0",
         "league/csv": "^8.0",
-        "netgen/ez-forms-bundle": "^1.3.2|^2.0",
         "twig/twig": "^2.0"
     },
     "require-dev": {
