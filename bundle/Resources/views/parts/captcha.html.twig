@@ -1,0 +1,9 @@
+{% macro captcha() %}
+    {% if ezpublish.configResolver.parameter("captcha.enabled", "netgen_information_collection") %}
+        <div class="info-collector-captcha">
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+            {% set captcha = ezpublish.configResolver.parameter("captcha.site_key", "netgen_information_collection") %}
+            <div class="g-recaptcha" data-sitekey="{{ captcha }}"></div>
+        </div>
+    {% endif %}
+{% endmacro %}

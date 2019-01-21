@@ -36,6 +36,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
         $configArrays = array(
             ConfigurationConstants::ACTIONS,
             ConfigurationConstants::ACTION_CONFIG,
+            'captcha',
         );
 
         $scopes = array_merge(array('default'), $container->getParameter('ezpublish.siteaccess.list'));

@@ -2,6 +2,7 @@ parameters:
     netgen_information_collection.factory.email_data.class: Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory
     netgen_information_collection.factory.field_data.class: Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory
     netgen_information_collection.factory.auto_responder_data.class: Netgen\Bundle\InformationCollectionBundle\Factory\AutoResponderDataFactory
+    netgen_information_collection.factory.captcha.class: Netgen\Bundle\InformationCollectionBundle\Form\Captcha\CaptchaService
 
 services:
     netgen_information_collection.factory.email_data:
@@ -26,3 +27,8 @@ services:
         class: '%netgen_information_collection.factory.field_data.class%'
         arguments:
             - '@netgen_information_collection.field_handler.registry'
+
+    netgen_information_collection.factory.captcha:
+        class: '%netgen_information_collection.factory.captcha.class%'
+        arguments:
+            - "$captcha;netgen_information_collection$"

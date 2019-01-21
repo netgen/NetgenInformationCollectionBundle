@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle;
 
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Form\Captcha\CaptchaValueInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 trait InformationCollectionLegacyTrait
@@ -29,6 +30,11 @@ trait InformationCollectionLegacyTrait
 
         $form = $formBuilder->createFormForLocation($location)
             ->getForm();
+
+        /** @var CaptchaValueInterface $captcha */
+        $captcha = $this->container
+            ->get('netgen_information_collection.factory.captcha')
+            ->getCaptcha();
 
         $form->handleRequest($request);
 

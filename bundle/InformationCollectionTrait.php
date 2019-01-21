@@ -5,6 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle;
 use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
 use eZ\Publish\Core\MVC\Symfony\View\LocationValueView;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Form\Captcha\CaptchaValueInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 trait InformationCollectionTrait
@@ -32,9 +33,14 @@ trait InformationCollectionTrait
         $form = $formBuilder->createFormForLocation($view->getLocation())
             ->getForm();
 
+        /** @var CaptchaValueInterface $captcha */
+        $captcha = $this->container
+            ->get('netgen_information_collection.factory.captcha')
+            ->getCaptcha();
+
         $form->handleRequest($request);
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isValid() && $form->isSubmitted() && $captcha->isValid($request)) {
             $isValid = true;
 
             $event = new InformationCollected($form->getData());

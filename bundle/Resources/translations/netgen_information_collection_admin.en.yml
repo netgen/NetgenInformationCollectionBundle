@@ -43,3 +43,4 @@ netgen_information_collection_admin_export_to: 'To'
 netgen_information_collection_admin_export_title: 'Choose the timeframe for export'
 
 netgen_information_collection_admin_collected_information: 'Collected information (%count%)'
+netgen_information_collection_admin_missing_location: 'Content does not have a valid location.'
