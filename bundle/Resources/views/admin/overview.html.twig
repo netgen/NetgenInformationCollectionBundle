@@ -32,9 +32,16 @@
                             <td>
                                 <img src="{{ asset('bundles/netgeninformationcollection/admin/images/Document.png') }}" alt="section" title="section" width="16" height="16">
                                 &nbsp;
-                                {% if object.hasLocation %}<a href="{{ path("ez_urlalias", { "contentId": object.content.contentInfo.id }) }}">{% endif %}
+                                {% if object.hasLocation %}
+                                    <a href="{{ path("ez_urlalias", { "contentId": object.content.contentInfo.id }) }}">
+                                        {{ ez_content_name(object.content) }}
+                                    </a>
+                                {% else %}
                                     {{ ez_content_name(object.content) }}
-                                {% if object.hasLocation %}</a>{% endif %}
+                                    <span class="ng-ui-tt" title="Lorem ipsum consectetur?">
+                                        <i class="material-icons">help</i>
+                                    </span>
+                                {% endif %}
                             </td>
                             <td>
                                 {{ ez_trans_prop(object.contentType, "name") }}

@@ -13,4 +13,13 @@
   .ic-content {
       padding-left: 15px;
   }
+  .ng-ui-tt {
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+
+    .material-icons {
+      font-size: inherit;
+    }
+  }
 }
