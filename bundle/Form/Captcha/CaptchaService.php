@@ -2,6 +2,10 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form\Captcha;
 
+use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+
 class CaptchaService
 {
     /**
@@ -9,17 +13,23 @@ class CaptchaService
      */
     protected $config;
 
-    public function __construct($config = [])
+    /**
+     * @var \eZ\Publish\API\Repository\ContentTypeService
+     */
+    protected $contentTypeService;
+
+    public function __construct(ContentTypeService $contentTypeService, $config = [])
     {
         $this->config = $config;
+        $this->contentTypeService = $contentTypeService;
     }
 
     /**
      * @return \Netgen\Bundle\InformationCollectionBundle\Form\Captcha\CaptchaValueInterface
      */
-    public function getCaptcha()
+    public function getCaptcha(Location $location)
     {
-        if ($this->config['enabled']) {
+        if ($this->canCaptchaBeEnabled($location)) {
             return $this->processConfiguration();
         }
 
@@ -51,5 +61,24 @@ class CaptchaService
         }
 
         return new ReCaptcha($reCaptcha);
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     *
+     * @return bool
+     */
+    public function canCaptchaBeEnabled(Location $location)
+    {
+        $contentType = $this->contentTypeService
+            ->loadContentType($location->contentInfo->contentTypeId);
+
+        if (!empty($this->config['override_by_type'])) {
+            if (in_array($contentType->identifier, array_keys($this->config['override_by_type']))) {
+                return $this->config['override_by_type'][$contentType->identifier];
+            }
+        }
+
+        return $this->config['enabled'];
     }
 }

@@ -24,6 +24,10 @@ parameters:
     # Mailer
     netgen_information_collection.mailer.class: Netgen\Bundle\InformationCollectionBundle\Mailer\Mailer
     # END of Mailer
+
+    # Twig
+    netgen_information_collection.twig.extension.class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\InformationCollectionExtension
+    # END of Twig
 services:
     netgen_information_collection.controller:
         class: '%netgen_information_collection.controller.class%'
@@ -63,3 +67,11 @@ services:
         class: '%netgen_information_collection.mailer.class%'
         arguments:
             - '@mailer'
+
+    netgen_information_collection.twig.extension:
+        class: '%netgen_information_collection.twig.extension.class%'
+        arguments:
+            - '@netgen_information_collection.factory.captcha'
+            - '@ezpublish.config.resolver'
+        tags:
+            - { name: twig.extension }

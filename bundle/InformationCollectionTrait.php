@@ -36,7 +36,8 @@ trait InformationCollectionTrait
         /** @var CaptchaValueInterface $captcha */
         $captcha = $this->container
             ->get('netgen_information_collection.factory.captcha')
-            ->getCaptcha();
+            ->getCaptcha($view->getLocation());
+
 
         $form->handleRequest($request);
 

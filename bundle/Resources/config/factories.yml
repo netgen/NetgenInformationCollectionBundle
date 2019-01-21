@@ -31,4 +31,5 @@ services:
     netgen_information_collection.factory.captcha:
         class: '%netgen_information_collection.factory.captcha.class%'
         arguments:
+            - "@ezpublish.api.service.content_type"
             - "$captcha;netgen_information_collection$"
