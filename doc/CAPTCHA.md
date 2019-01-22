@@ -90,7 +90,7 @@ To help with frontend implementation bundle provides two Twig functions:
 
 Both accepts eZ Location value object as argument.
 
-Example template implementation for `ng_feedback_form` would be something like this:
+Example template implementation for `ng_feedback_form` would be something like this (visible captcha):
 
 ```twig
 {% block content %}
