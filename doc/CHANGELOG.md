@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.0] - 
+### Added
+- Admin can now display collected info for contents without location
+- ReCaptcha support
+
 ## [1.5.4] - 2018-10-24
 ### Fixed
 - Breaks in older versions of eZ

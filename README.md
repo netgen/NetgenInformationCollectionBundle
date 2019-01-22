@@ -36,4 +36,6 @@ License, docs and installation instructions
 
 [Documentation](doc/DOC.md)
 
+[Captcha](doc/CAPTCHA.md)
+
 [Changelog](doc/CHANGELOG.md)
