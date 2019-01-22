@@ -2,21 +2,30 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form\Captcha;
 
-use Symfony\Component\HttpFoundation\Request;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\CaptchaValue;
 use ReCaptcha\ReCaptcha as BaseReCaptcha;
+use Symfony\Component\HttpFoundation\Request;
 
-class ReCaptcha implements CaptchaValueInterface
+class ReCaptcha implements CaptchaValue
 {
     /**
      * @var \ReCaptcha\ReCaptcha
      */
     protected $reCaptcha;
 
+    /**
+     * ReCaptcha constructor.
+     *
+     * @param \ReCaptcha\ReCaptcha $reCaptcha
+     */
     public function __construct(BaseReCaptcha $reCaptcha)
     {
         $this->reCaptcha = $reCaptcha;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function isValid(Request $request)
     {
         $response = $this->reCaptcha->verify(
@@ -27,6 +36,8 @@ class ReCaptcha implements CaptchaValueInterface
     }
 
     /**
+     * Returns aggregated captcha implementation
+     *
      * @return \ReCaptcha\ReCaptcha
      */
     public function getInnerCaptcha()

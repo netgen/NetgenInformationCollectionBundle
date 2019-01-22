@@ -3,7 +3,6 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Templating\Twig;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\Form\Captcha\CaptchaService;
 use Twig_Extension;
 use Twig_Function;
@@ -16,16 +15,18 @@ class InformationCollectionExtension extends Twig_Extension
     protected $captcha;
 
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     * InformationCollectionExtension constructor.
+     *
+     * @param \Netgen\Bundle\InformationCollectionBundle\Form\Captcha\CaptchaService $captcha
      */
-    protected $configResolver;
-
-    public function __construct(CaptchaService $captcha, ConfigResolverInterface $configResolver)
+    public function __construct(CaptchaService $captcha)
     {
         $this->captcha = $captcha;
-        $this->configResolver = $configResolver;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getFunctions()
     {
         return [
@@ -35,20 +36,26 @@ class InformationCollectionExtension extends Twig_Extension
     }
 
     /**
-     * @param Location $location
+     * Checks if captcha is enabled for given Location
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      *
      * @return bool
      */
     public function isEnabled(Location $location)
     {
-        return $this->captcha->canCaptchaBeEnabled($location);
+        return $this->captcha->isEnabled($location);
     }
 
     /**
+     * Return configured site key for given Location
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     *
      * @return string
      */
-    public function getSiteKey()
+    public function getSiteKey(Location $location)
     {
-        return $this->configResolver->getParameter('captcha.site_key', 'netgen_information_collection');
+        return $this->captcha->getSiteKey($location);
     }
 }

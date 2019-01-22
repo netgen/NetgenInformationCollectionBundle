@@ -5,8 +5,9 @@ namespace Netgen\Bundle\InformationCollectionBundle\Form\Captcha;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\CaptchaService as CaptchaServiceInterface;
 
-class CaptchaService
+class CaptchaService implements CaptchaServiceInterface
 {
     /**
      * @var array
@@ -18,6 +19,12 @@ class CaptchaService
      */
     protected $contentTypeService;
 
+    /**
+     * CaptchaService constructor.
+     *
+     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentTypeService
+     * @param array $config
+     */
     public function __construct(ContentTypeService $contentTypeService, $config = [])
     {
         $this->config = $config;
@@ -25,60 +32,125 @@ class CaptchaService
     }
 
     /**
-     * @return \Netgen\Bundle\InformationCollectionBundle\Form\Captcha\CaptchaValueInterface
+     * @inheritdoc
+     */
+    public function isEnabled(Location $location)
+    {
+        $config = $this->getConfig($location);
+        dump($config);
+
+        return $config['enabled'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSiteKey(Location $location)
+    {
+        $config = $this->getConfig($location);
+
+        return $config['site_key'];
+    }
+
+    /**
+     * @inheritdoc
      */
     public function getCaptcha(Location $location)
     {
-        if ($this->canCaptchaBeEnabled($location)) {
-            return $this->processConfiguration();
+        $config = $this->getConfig($location);
+
+        if ($config['enabled']) {
+            $reCaptcha = new \ReCaptcha\ReCaptcha($this->config['secret']);
+
+            if (!empty($this->config['options'])) {
+
+                if (!empty($this->config['options']['hostname'])) {
+                    $reCaptcha->setExpectedHostname($this->config['options']['hostname']);
+                }
+                if (!empty($this->config['options']['apk_package_name'])) {
+                    $reCaptcha->setExpectedApkPackageName($this->config['options']['apk_package_name']);
+                }
+                if (!empty($this->config['options']['action'])) {
+                    $reCaptcha->setExpectedAction($this->config['options']['action']);
+                }
+                if (!empty($this->config['options']['score_threshold'])) {
+                    $reCaptcha->setScoreThreshold($this->config['options']['score_threshold']);
+                }
+                if (!empty($this->config['options']['challenge_timeout'])) {
+                    $reCaptcha->setChallengeTimeout($this->config['options']['challenge_timeout']);
+                }
+            }
+
+            return new ReCaptcha($reCaptcha);
         }
 
         return new NullObject();
     }
 
-    protected function processConfiguration()
+    /**
+     * Returns filtered config for current Location
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     *
+     * @return array
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
+    protected function getConfig(Location $location)
     {
-        $reCaptcha = new \ReCaptcha\ReCaptcha($this->config['secret']);
+        $contentTypeConfig = $this->getConfigForContentType(
+            $this->getContentType($location)
+        );
 
-        if (!empty($this->config['options'])) {
-
-
-            if (!empty($this->config['options']['hostname'])) {
-                $reCaptcha->setExpectedHostname($this->config['options']['hostname']);
-            }
-            if (!empty($this->config['options']['apk_package_name'])) {
-                $reCaptcha->setExpectedApkPackageName($this->config['options']['apk_package_name']);
-            }
-            if (!empty($this->config['options']['action'])) {
-                $reCaptcha->setExpectedAction($this->config['options']['action']);
-            }
-            if (!empty($this->config['options']['score_threshold'])) {
-                $reCaptcha->setScoreThreshold($this->config['options']['score_threshold']);
-            }
-            if (!empty($this->config['options']['challenge_timeout'])) {
-                $reCaptcha->setChallengeTimeout($this->config['options']['challenge_timeout']);
-            }
-        }
-
-        return new ReCaptcha($reCaptcha);
+        return array_replace($this->config, $contentTypeConfig);
     }
 
     /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * Returns filtered config for current ContentType
+     *
+     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
+     *
+     * @return array
+     */
+    protected function getConfigForContentType(ContentType $contentType)
+    {
+        if ($this->hasConfigForContentType($contentType)) {
+            return $this->config['override_by_type'][$contentType->identifier];
+        }
+
+        return [];
+    }
+
+    /**
+     * Checks if override exist for given ContentType
+     *
+     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
      *
      * @return bool
      */
-    public function canCaptchaBeEnabled(Location $location)
+    protected function hasConfigForContentType(ContentType $contentType)
     {
-        $contentType = $this->contentTypeService
-            ->loadContentType($location->contentInfo->contentTypeId);
-
         if (!empty($this->config['override_by_type'])) {
             if (in_array($contentType->identifier, array_keys($this->config['override_by_type']))) {
-                return $this->config['override_by_type'][$contentType->identifier];
+                return true;
             }
         }
 
-        return $this->config['enabled'];
+        return false;
+    }
+
+    /**
+     * Helper method for retrieving ContentType from Location
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     *
+     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
+    protected function getContentType(Location $location)
+    {
+        return $this->contentTypeService
+            ->loadContentType($location->contentInfo->contentTypeId);
     }
 }

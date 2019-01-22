@@ -72,6 +72,5 @@ services:
         class: '%netgen_information_collection.twig.extension.class%'
         arguments:
             - '@netgen_information_collection.factory.captcha'
-            - '@ezpublish.config.resolver'
         tags:
             - { name: twig.extension }
