@@ -60,24 +60,24 @@ class CaptchaService implements CaptchaServiceInterface
         $config = $this->getConfig($location);
 
         if ($config['enabled']) {
-            $reCaptcha = new \ReCaptcha\ReCaptcha($this->config['secret']);
+            $reCaptcha = new \ReCaptcha\ReCaptcha($config['secret']);
 
-            if (!empty($this->config['options'])) {
+            if (!empty($config['options'])) {
 
-                if (!empty($this->config['options']['hostname'])) {
-                    $reCaptcha->setExpectedHostname($this->config['options']['hostname']);
+                if (!empty($config['options']['hostname'])) {
+                    $reCaptcha->setExpectedHostname($config['options']['hostname']);
                 }
-                if (!empty($this->config['options']['apk_package_name'])) {
-                    $reCaptcha->setExpectedApkPackageName($this->config['options']['apk_package_name']);
+                if (!empty($config['options']['apk_package_name'])) {
+                    $reCaptcha->setExpectedApkPackageName($config['options']['apk_package_name']);
                 }
-                if (!empty($this->config['options']['action'])) {
-                    $reCaptcha->setExpectedAction($this->config['options']['action']);
+                if (!empty($config['options']['action'])) {
+                    $reCaptcha->setExpectedAction($config['options']['action']);
                 }
-                if (!empty($this->config['options']['score_threshold'])) {
-                    $reCaptcha->setScoreThreshold($this->config['options']['score_threshold']);
+                if (!empty($config['options']['score_threshold'])) {
+                    $reCaptcha->setScoreThreshold($config['options']['score_threshold']);
                 }
-                if (!empty($this->config['options']['challenge_timeout'])) {
-                    $reCaptcha->setChallengeTimeout($this->config['options']['challenge_timeout']);
+                if (!empty($config['options']['challenge_timeout'])) {
+                    $reCaptcha->setChallengeTimeout($config['options']['challenge_timeout']);
                 }
             }
 
