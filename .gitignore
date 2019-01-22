@@ -15,3 +15,4 @@ node_modules/
 /vendor/
 grunt.lock
 package-lock.json
+yarn-error.log
