@@ -37,7 +37,6 @@ class CaptchaService implements CaptchaServiceInterface
     public function isEnabled(Location $location)
     {
         $config = $this->getConfig($location);
-        dump($config);
 
         return $config['enabled'];
     }
