@@ -7,6 +7,7 @@ use eZ\Publish\Core\Repository\LocationService;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\CaptchaService;
 use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionLegacyController;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use PHPUnit\Framework\TestCase;
@@ -33,6 +34,11 @@ class InformationCollectionLegacyControllerTest extends TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $builder;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $captcha;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -79,6 +85,11 @@ class InformationCollectionLegacyControllerTest extends TestCase
         $this->builder = $this->getMockBuilder(FormBuilder::class)
             ->disableOriginalConstructor()
             ->setMethods(array('createFormForLocation'))
+            ->getMock();
+
+        $this->builder = $this->getMockBuilder(CaptchaService::class)
+            ->disableOriginalConstructor()
+            ->setMethods(array('getCaptcha', 'getSiteKey', 'isEnabled'))
             ->getMock();
 
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
@@ -131,10 +142,11 @@ class InformationCollectionLegacyControllerTest extends TestCase
     {
         $location = new Location(array('id' => 123));
 
-        $this->container->expects($this->exactly(4))
+        $this->container->expects($this->exactly(5))
             ->method('get')
             ->with($this->logicalOr(
                 $this->equalTo('netgen_information_collection.form.builder'),
+                $this->equalTo('netgen_information_collection.factory.captcha'),
                 $this->equalTo('event_dispatcher'),
                 $this->equalTo('ezpublish.api.service.location'),
                 $this->equalTo('ez_content')
@@ -191,10 +203,11 @@ class InformationCollectionLegacyControllerTest extends TestCase
     {
         $location = new Location(array('id' => 123));
 
-        $this->container->expects($this->exactly(3))
+        $this->container->expects($this->exactly(4))
             ->method('get')
             ->with($this->logicalOr(
                 $this->equalTo('netgen_information_collection.form.builder'),
+                $this->equalTo('netgen_information_collection.factory.captcha'),
                 $this->equalTo('event_dispatcher'),
                 $this->equalTo('ezpublish.api.service.location'),
                 $this->equalTo('ez_content')
@@ -251,6 +264,8 @@ class InformationCollectionLegacyControllerTest extends TestCase
         switch ($id) {
             case 'netgen_information_collection.form.builder':
                 return $this->builder;
+            case 'netgen_information_collection.factory.captcha':
+                return $this->captcha;
             case 'event_dispatcher':
                 return $this->dispatcher;
             case 'ezpublish.api.service.location':

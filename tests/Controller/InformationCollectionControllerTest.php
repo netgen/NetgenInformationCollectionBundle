@@ -6,6 +6,7 @@ use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\Bundle\InformationCollectionBundle\API\Service\CaptchaService;
 use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use Netgen\Bundle\InformationCollectionBundle\Tests\ContentViewStub;
@@ -32,6 +33,11 @@ class InformationCollectionControllerTest extends TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $builder;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $captcha;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -72,6 +78,11 @@ class InformationCollectionControllerTest extends TestCase
         $this->builder = $this->getMockBuilder(FormBuilder::class)
             ->disableOriginalConstructor()
             ->setMethods(array('createFormForLocation'))
+            ->getMock();
+
+        $this->builder = $this->getMockBuilder(CaptchaService::class)
+            ->disableOriginalConstructor()
+            ->setMethods(array('getCaptcha', 'getSiteKey', 'isEnabled'))
             ->getMock();
 
         $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
@@ -228,6 +239,8 @@ class InformationCollectionControllerTest extends TestCase
         switch ($id) {
             case 'netgen_information_collection.form.builder':
                 return $this->builder;
+            case 'netgen_information_collection.factory.captcha':
+                return $this->captcha;
             case 'event_dispatcher':
                 return $this->dispatcher;
         }
