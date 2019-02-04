@@ -6,7 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.6.1] - 2019-02-02
+## [1.6.2] - 2019-02-04
+### Fixed
+- Add jQuery to global scope on standalone admin
+
+## [1.6.1] - 2019-02-04
 ### Fixed
 - MySQL handing of GROUP BY when ONLY_FULL_GROUP_BY mode is on (tnx @darinda for reporting the issue)
 
