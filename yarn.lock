@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@netgen/admin-ui@^1.0.5":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@netgen/admin-ui/-/admin-ui-1.0.7.tgz#bdbe5282b06b42c0f8941e1a33d7744dcd425d51"
-  integrity sha512-oTZJ7AkfvTMI1+fusVuKvmQhxbRYJ4vFe1tE6Zlv48BJLotar/2XZSDR92r8cncAwBWxKEg0TLz852Y3UbUZRg==
+"@netgen/admin-ui@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@netgen/admin-ui/-/admin-ui-1.0.8.tgz#24fd1fdf22754f1e916768e01b5b435e98a788f0"
+  integrity sha512-BhxsbMErpVwJ3WRxNk+Rp2oQ7OckgXEJyKHux8HTftB9+hwW8GXyRLvpPYo2kpXUWiXJMQJ5zVxC6D2kZSNSqA==
   dependencies:
     jquery "^3.3.1"
     jstree "^3.3.5"
