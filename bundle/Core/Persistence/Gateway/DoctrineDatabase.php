@@ -91,11 +91,11 @@ class DoctrineDatabase
         $query = $this->connection->createQueryBuilder();
         $query
             ->select(
-                "eco.id AS content_id",
-                "eco.name",
+                "MAX(eco.id) AS content_id",
+                "MAX(eco.name)",
                 "ecot.main_node_id",
-                "ecc.serialized_name_list",
-                "ecc.identifier AS class_identifier"
+                "MAX(ecc.serialized_name_list)",
+                "MAX(ecc.identifier) AS class_identifier"
             )
             ->from($this->connection->quoteIdentifier('ezcontentobject'), 'eco')
             ->leftJoin(
