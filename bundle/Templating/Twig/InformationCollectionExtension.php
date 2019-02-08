@@ -5,7 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Templating\Twig;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\Bundle\InformationCollectionBundle\Form\Captcha\CaptchaService;
 use Twig_Extension;
-use Twig_Function;
+use Twig_SimpleFunction;
 
 class InformationCollectionExtension extends Twig_Extension
 {
@@ -30,8 +30,8 @@ class InformationCollectionExtension extends Twig_Extension
     public function getFunctions()
     {
         return [
-            new Twig_Function('info_collection_captcha_is_enabled', [$this, 'isEnabled']),
-            new Twig_Function('info_collection_captcha_get_site_key', [$this, 'getSiteKey']),
+            new Twig_SimpleFunction('info_collection_captcha_is_enabled', [$this, 'isEnabled']),
+            new Twig_SimpleFunction('info_collection_captcha_get_site_key', [$this, 'getSiteKey']),
         ];
     }
 
