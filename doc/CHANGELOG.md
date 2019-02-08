@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.3] - 2019-02-08
+### Fixed
+- `prototype('array')` is now used instead of `arrayPrototype`
+- Twig function is now instance of `Twig_SimpleFunction` instead of `Twig_Function`
+
 ## [1.6.2] - 2019-02-04
 ### Fixed
 - Add jQuery to global scope on standalone admin
