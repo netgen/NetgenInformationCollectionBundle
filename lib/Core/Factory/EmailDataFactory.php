@@ -1,21 +1,22 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Factory;
+declare(strict_types=1);
 
+namespace Netgen\InformationCollection\Core\Factory;
+
+use function array_key_exists;
 use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
 use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
-use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
-use Netgen\Bundle\InformationCollectionBundle\Constants;
-use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
-use Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailBlockException;
-use Netgen\Bundle\InformationCollectionBundle\Exception\MissingValueException;
-use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
-use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
-use Twig_Environment;
-use function array_key_exists;
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+use Netgen\InformationCollection\API\Exception\MissingEmailBlockException;
+use Netgen\InformationCollection\API\Exception\MissingValueException;
+use Netgen\InformationCollection\API\Value\DataTransfer\TemplateContent;
+use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
+use Netgen\InformationCollection\API\Constants;
 use function trim;
+use Twig_Environment;
 
 class EmailDataFactory
 {
@@ -111,11 +112,11 @@ class EmailDataFactory
         if ($data->getTemplateWrapper()->hasBlock($field)) {
             $rendered = $data->getTemplateWrapper()->renderBlock(
                 $field,
-                array(
+                [
                     'event' => $data->getEvent(),
                     'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
                     'content' => $data->getContent(),
-                )
+                ]
             );
 
             $rendered = trim($rendered);
@@ -131,7 +132,7 @@ class EmailDataFactory
         ) {
             $fieldValue = $this->translationHelper->getTranslatedField($content, $field);
 
-            return $fieldValue->value->$property;
+            return $fieldValue->value->{$property};
         }
 
         if (!empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES][$field])) {
@@ -155,11 +156,11 @@ class EmailDataFactory
         if ($data->getTemplateWrapper()->hasBlock($field)) {
             $rendered = $data->getTemplateWrapper()->renderBlock(
                 $field,
-                array(
+                [
                     'event' => $data->getEvent(),
                     'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
                     'content' => $data->getContent(),
-                )
+                ]
             );
 
             $rendered = trim($rendered);
@@ -216,13 +217,13 @@ class EmailDataFactory
             return $data->getTemplateWrapper()
                 ->renderBlock(
                     Constants::BLOCK_EMAIL,
-                    array(
+                    [
                         'event' => $data->getEvent(),
                         'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
                         'content' => $data->getContent(),
                         'default_variables' => !empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES])
                             ? $this->config[ConfigurationConstants::DEFAULT_VARIABLES] : null,
-                    )
+                    ]
                 );
         }
 

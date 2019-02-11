@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway;
 
 use Doctrine\DBAL\Connection;
@@ -23,11 +25,11 @@ class DoctrineDatabase
     }
 
     /**
-     * Returns number of content objects that have any collection
-     *
-     * @return int
+     * Returns number of content objects that have any collection.
      *
      * @throws \Doctrine\DBAL\DBALException
+     *
+     * @return int
      */
     public function getContentsWithCollectionsCount()
     {
@@ -57,31 +59,31 @@ class DoctrineDatabase
 
         $statement = $query->execute();
 
-        return (int)$statement->fetchColumn();
+        return (int) $statement->fetchColumn();
     }
 
     /**
-     * Returns content objects with their collections
+     * Returns content objects with their collections.
      *
      * @param int $limit
      * @param int $offset
      *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
+     *
+     * @return array
      */
     public function getObjectsWithCollections($limit, $offset)
     {
         $contentIdsQuery = $this->connection->createQueryBuilder();
         $contentIdsQuery
-            ->select("DISTINCT contentobject_id AS id")
+            ->select('DISTINCT contentobject_id AS id')
             ->from($this->connection->quoteIdentifier('ezinfocollection'));
 
         $statement = $contentIdsQuery->execute();
 
         $contents = [];
         foreach ($statement->fetchAll() as $content) {
-            $contents[] = (int)$content['id'];
+            $contents[] = (int) $content['id'];
         }
 
         if (empty($contents)) {
@@ -91,11 +93,11 @@ class DoctrineDatabase
         $query = $this->connection->createQueryBuilder();
         $query
             ->select(
-                "eco.id AS content_id",
-                "eco.name",
-                "ecot.main_node_id",
-                "ecc.serialized_name_list",
-                "ecc.identifier AS class_identifier"
+                'eco.id AS content_id',
+                'eco.name',
+                'ecot.main_node_id',
+                'ecc.serialized_name_list',
+                'ecc.identifier AS class_identifier'
             )
             ->from($this->connection->quoteIdentifier('ezcontentobject'), 'eco')
             ->leftJoin(

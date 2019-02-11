@@ -1,8 +1,10 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\API\Value\Export;
+declare(strict_types=1);
 
-use Netgen\Bundle\InformationCollectionBundle\API\Value\ValueObject;
+namespace Netgen\InformationCollection\API\Value\Export;
+
+use Netgen\InformationCollection\API\Value\ValueObject;
 
 class Export extends ValueObject
 {

@@ -1,30 +1,33 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Action;
+declare(strict_types=1);
 
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
-use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
-use Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException;
-use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
-use Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface;
+namespace Netgen\InformationCollection\Core\Action;
+
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+use Netgen\InformationCollection\API\Exception\ActionFailedException;
+use Netgen\InformationCollection\API\Action\ActionInterface;
+use Netgen\InformationCollection\API\Exception\EmailNotSentException;
+use Netgen\InformationCollection\Core\Factory\EmailDataFactory;
+use Netgen\InformationCollection\API\Mailer\MailerInterface;
 
 class EmailAction implements ActionInterface
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface
+     * @var \Netgen\InformationCollection\API\Mailer\MailerInterface
      */
     protected $mailer;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory
+     * @var \Netgen\InformationCollection\Core\Factory\EmailDataFactory
      */
     protected $factory;
 
     /**
      * EmailAction constructor.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory $factory
-     * @param \Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface $mailer
+     * @param \Netgen\InformationCollection\Core\Factory\EmailDataFactory $factory
+     * @param \Netgen\InformationCollection\API\Mailer\MailerInterface $mailer
      */
     public function __construct(EmailDataFactory $factory, MailerInterface $mailer)
     {
@@ -35,7 +38,7 @@ class EmailAction implements ActionInterface
     /**
      * {@inheritdoc}
      */
-    public function act(InformationCollected $event)
+    public function act(InformationCollected $event): void
     {
         $emailData = $this->factory->build($event);
 

@@ -1,29 +1,31 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Visitor;
+declare(strict_types=1);
 
-use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
+namespace Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor;
+
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
 
 abstract class FieldAnonymizerVisitor
 {
     /**
      * Accept the given $ezInfoCollectionAttribute for visiting.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute $ezInfoCollectionAttribute
+     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute $ezInfoCollectionAttribute
      * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
      *
      * @return bool
      */
-    abstract public function accept(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType);
+    abstract public function accept(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType): bool;
 
     /**
      * Visit given $ezInfoCollectionAttribute and return string.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute $ezInfoCollectionAttribute
+     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute $ezInfoCollectionAttribute
      * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
      *
      * @return string
      */
-    abstract public function visit(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType);
+    abstract public function visit(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType): string;
 }

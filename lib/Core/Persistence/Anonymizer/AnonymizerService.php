@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer;
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer;
+use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
-use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor;
 
 class AnonymizerService implements Anonymizer
 {
@@ -45,8 +47,7 @@ class AnonymizerService implements Anonymizer
         EzInfoCollectionRepository $collectionRepository,
         EzInfoCollectionAttributeRepository $collectionAttributeRepository,
         FieldAnonymizerVisitor $fieldAnonymizerVisitor
-    )
-    {
+    ) {
         $this->collectionRepository = $collectionRepository;
         $this->collectionAttributeRepository = $collectionAttributeRepository;
         $this->repository = $repository;

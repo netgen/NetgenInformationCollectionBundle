@@ -1,51 +1,68 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\API\Service;
+declare(strict_types=1);
 
-use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query;
+namespace Netgen\InformationCollection\API\Service;
+
+use Netgen\InformationCollection\API\Value\Filter\Query;
+use Netgen\InformationCollection\API\Value\ContentsWithCollections;
+use Netgen\InformationCollection\API\Value\Collections;
+use Netgen\InformationCollection\API\Value\Collection;
 
 interface InformationCollection
 {
     /**
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query $query
+     * @param \Netgen\InformationCollection\API\Value\Filter\Query $query
      *
-     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\ContentsWithCollections
+     * @return \Netgen\InformationCollection\API\Value\ContentsWithCollections
      */
-    public function getObjectsWithCollections(Query $query);
+    public function getObjectsWithCollections(Query $query): ContentsWithCollections;
 
     /**
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query $query
+     * Returns collections for given content object
      *
-     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collections
-     */
-    public function getCollections(Query $query);
-
-    /**
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query $query
+     * @param \Netgen\InformationCollection\API\Value\Filter\Query $query
      *
-     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collection
+     * @return \Netgen\InformationCollection\API\Value\Collections
      */
-    public function getCollection(Query $query);
+    public function getCollections(Query $query): Collections;
 
     /**
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query $query
+     * Returns single collection
      *
-     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collections
+     * @param \Netgen\InformationCollection\API\Value\Filter\Query $query
+     *
+     * @return \Netgen\InformationCollection\API\Value\Collection
      */
-    public function search(Query $query);
+    public function getCollection(Query $query): Collection;
 
     /**
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query $query
+     * Returns collection based on search criteria
+     *
+     * @param \Netgen\InformationCollection\API\Value\Filter\Query $query
+     *
+     * @return \Netgen\InformationCollection\API\Value\Collections
      */
-    public function deleteCollectionFields(Query $query);
+    public function search(Query $query): Collections;
 
     /**
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query $query
+     * Removes selected collection fields
+     *
+     * @param \Netgen\InformationCollection\API\Value\Filter\Query $query
      */
-    public function deleteCollections(Query $query);
+    public function deleteCollectionFields(Query $query): void;
 
     /**
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query $query
+     * Removes whole collections
+     *
+     * @param \Netgen\InformationCollection\API\Value\Filter\Query $query
      */
-    public function deleteCollectionByContent(Query $query);
+    public function deleteCollections(Query $query): void;
+
+    /**
+     * Removes whole collections per content
+     *
+     * @param \Netgen\InformationCollection\API\Value\Filter\Query $query
+     */
+    public function deleteCollectionByContent(Query $query): void;
 }

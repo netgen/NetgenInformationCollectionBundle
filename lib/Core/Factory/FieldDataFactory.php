@@ -1,25 +1,27 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Factory;
+declare(strict_types=1);
+
+namespace Netgen\InformationCollection\Core\Factory;
 
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\FieldType\Value;
-use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
-use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFieldHandlerInterface;
-use Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry;
-use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
+use Netgen\InformationCollection\API\FieldHandler\CustomFieldHandlerInterface;
+use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
+use Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegistry;
+use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 
 class FieldDataFactory
 {
     /**
-     * @var FieldHandlerRegistry
+     * @var \Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegistry
      */
     protected $registry;
 
     /**
      * FieldDataFactory constructor.
      *
-     * @param FieldHandlerRegistry $registry
+     * @param \Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegistry $registry
      */
     public function __construct(FieldHandlerRegistry $registry)
     {
@@ -29,35 +31,30 @@ class FieldDataFactory
     /**
      * Returns value object that represents legacy value.
      *
-     * @param Value $value
-     * @param FieldDefinition $fieldDefinition
+     * @param \eZ\Publish\Core\FieldType\Value $value
+     * @param \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinition
      *
-     * @return LegacyData
+     * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */
-    public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition)
+    public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {
         /** @var CustomFieldHandlerInterface $handler */
         $handler = $this->registry->handle($value);
 
         if (null === $handler) {
-
-            return new LegacyData(
-                $fieldDefinition->id,
-                0,
-                0,
-                (string)$value
-            );
+            return new FieldValue([
+                'fieldDefinitionId' => $fieldDefinition->id,
+                'dataText' => (string) $value,
+            ]);
         }
 
         if ($handler instanceof CustomLegacyFieldHandlerInterface) {
             return $handler->getLegacyValue($value, $fieldDefinition);
         }
 
-        return new LegacyData(
-            $fieldDefinition->id,
-            0,
-            0,
-            (string) $handler->toString($value, $fieldDefinition)
-        );
+        return new FieldValue([
+            'fieldDefinitionId' => $fieldDefinition->id,
+            'dataText' => $handler->toString($value, $fieldDefinition),
+        ]);
     }
 }

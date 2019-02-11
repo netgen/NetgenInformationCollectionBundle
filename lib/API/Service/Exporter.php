@@ -1,17 +1,20 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\API\Service;
+declare(strict_types=1);
 
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\ExportCriteria;
+namespace Netgen\InformationCollection\API\Service;
+
+use Netgen\InformationCollection\API\Value\Export\Export;
+use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
 
 interface Exporter
 {
     /**
-     * Generate Export for give ExportCriteria
+     * Generate Export for give ExportCriteria.
      *
-     * @param int $contentId
+     * @param \Netgen\InformationCollection\API\Value\Export\ExportCriteria $criteria
      *
-     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\Export\Export
+     * @return \Netgen\InformationCollection\API\Value\Export\Export
      */
-    public function export(ExportCriteria $criteria);
+    public function export(ExportCriteria $criteria): Export;
 }

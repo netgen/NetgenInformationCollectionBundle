@@ -1,18 +1,22 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Action;
+declare(strict_types=1);
+
+namespace Netgen\InformationCollection\Core\Action;
 
 use Doctrine\DBAL\DBALException;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Content;
-use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
-use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
-use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
-use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
-use DateTime;
+use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+use Netgen\InformationCollection\API\Exception\ActionFailedException;
+use Netgen\InformationCollection\Core\Factory\FieldDataFactory;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
+
+use Netgen\InformationCollection\API\Action\ActionInterface;
+use Netgen\InformationCollection\API\Action\CrucialActionInterface;
+use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 
 class DatabaseAction implements ActionInterface, CrucialActionInterface
 {
@@ -59,7 +63,7 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
     /**
      * {@inheritdoc}
      */
-    public function act(InformationCollected $event)
+    public function act(InformationCollected $event): void
     {
         $struct = $event->getInformationCollectionStruct();
         $contentType = $event->getContentType();
@@ -69,7 +73,7 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
         $content = $this->repository->getContentService()->loadContent($location->contentInfo->id);
 
         $currentUser = $this->repository->getCurrentUser();
-        $dt = new DateTime();
+        $dt = new \DateTimeImmutable();
 
         /** @var EzInfoCollection $ezInfo */
         $ezInfo = $this->infoCollectionRepository->getInstance();
@@ -91,7 +95,6 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
          * @var \eZ\Publish\Core\FieldType\Value $value
          */
         foreach ($struct->getCollectedFields() as $fieldDefIdentifier => $value) {
-            
             if ($value === null) {
                 continue;
             }

@@ -1,0 +1,50 @@
+services:
+    netgen_information_collection.api.service:
+        class: Netgen\InformationCollection\Core\Service\InformationCollectionService
+        public: true
+        arguments:
+            - "@netgen_information_collection.repository.ez_info_collection"
+            - "@netgen_information_collection.repository.ez_info_collection_attribute"
+            - "@ezpublish.api.repository"
+            - "@netgen_information_collection.core.persistence.gateway.doctrine"
+
+    netgen_information_collection.templating.admin_global_variable:
+        class: Netgen\InformationCollection\Templating\Twig\AdminGlobalVariable
+        public: true
+        # We need the lazy flag due to usage of dynamic parameters
+        lazy: true
+        calls:
+            - [setPageLayoutTemplate, ["$admin.pagelayout;netgen_information_collection$"]]
+
+    netgen_information_collection.core.persistence.gateway.doctrine:
+        class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase
+        public: false
+        arguments:
+            - '@database_connection'
+
+    netgen_information_collection.pagerfanta.view.eztags_admin:
+        class: Netgen\InformationCollection\Core\Pagination\Pagerfanta\View\InformationCollectionAdminView
+        public: false
+        # Not being lazy results in out of memory exceptions on eZ Platform 2.0,
+        # probably due to @twig dependency
+        lazy: true
+        arguments:
+            - "@twig"
+        calls:
+            - [setDefaultTemplate, ['@@NetgenInformationCollection/admin/pagerfanta.html.twig']]
+        tags:
+            - { name: pagerfanta.view, alias: netgen_information_collection_admin }
+
+    netgen_information_collection.service.exporter:
+        class: Netgen\InformationCollection\Core\Service\ExporterService
+        arguments:
+            - "@netgen_information_collection.repository.ez_info_collection"
+            - "@netgen_information_collection.repository.ez_info_collection_attribute"
+            - "@translator"
+            - "@netgen_information_collection.utils.content_type"
+
+    netgen_information_collection.utils.content_type:
+        class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils
+        arguments:
+            - "@ezpublish.api.service.content_type"
+            - "@ezpublish.api.service.content"

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer\Visitor\Field;
 
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
@@ -9,7 +11,7 @@ use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
 class Simple extends FieldAnonymizerVisitor
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function accept(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType)
     {
@@ -17,7 +19,7 @@ class Simple extends FieldAnonymizerVisitor
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function visit(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType)
     {

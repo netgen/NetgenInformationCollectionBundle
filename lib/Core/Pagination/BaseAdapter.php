@@ -1,28 +1,30 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Core\Pagination;
+declare(strict_types=1);
 
-use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query;
+namespace Netgen\InformationCollection\Core\Pagination;
+
+use Netgen\InformationCollection\API\Service\InformationCollection;
+use Netgen\InformationCollection\API\Value\Filter\Query;
 use Pagerfanta\Adapter\AdapterInterface;
 
 abstract class BaseAdapter implements AdapterInterface
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection
+     * @var \Netgen\InformationCollection\API\Service\InformationCollection
      */
     protected $informationCollectionService;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query
+     * @var \Netgen\InformationCollection\API\Value\Filter\Query
      */
     protected $query;
 
     /**
      * InformationCollectionCollectionListAdapter constructor.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection $informationCollectionService
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query $query
+     * @param \Netgen\InformationCollection\API\Service\InformationCollection $informationCollectionService
+     * @param \Netgen\InformationCollection\API\Value\Filter\Query $query
      */
     public function __construct(InformationCollection $informationCollectionService, Query $query)
     {
@@ -34,7 +36,7 @@ abstract class BaseAdapter implements AdapterInterface
      * @param int $offset
      * @param int $length
      *
-     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query
+     * @return \Netgen\InformationCollection\API\Value\Filter\Query
      */
     protected function getQuery($offset, $length)
     {
@@ -46,7 +48,7 @@ abstract class BaseAdapter implements AdapterInterface
     }
 
     /**
-     * @return \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query
+     * @return \Netgen\InformationCollection\API\Value\Filter\Query
      */
     protected function getCountQuery()
     {

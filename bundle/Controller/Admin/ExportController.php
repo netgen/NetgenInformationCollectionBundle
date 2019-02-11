@@ -4,7 +4,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
-use Netgen\Bundle\InformationCollectionBundle\API\Service\Exporter;
+use Netgen\InformationCollection\API\Service\Exporter;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\ExportCriteria;
 use Netgen\Bundle\InformationCollectionBundle\Form\Type\ExportType;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +12,7 @@ use League\Csv\Writer;
 use SplTempFileObject;
 use Symfony\Component\HttpFoundation\Response;
 
-class ExportController extends Controller
+final class ExportController extends Controller
 {
     /**
      * @var \eZ\Publish\API\Repository\ContentService
@@ -20,7 +20,7 @@ class ExportController extends Controller
     protected $contentService;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\Exporter
+     * @var \Netgen\InformationCollection\API\Service\Exporter
      */
     protected $exporter;
 

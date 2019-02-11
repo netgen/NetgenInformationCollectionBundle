@@ -1,0 +1,30 @@
+services:
+    netgen_information_collection.field_handler.checkbox:
+        class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\CheckboxFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.integer:
+        class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\IntegerFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.float:
+        class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\FloatFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.date:
+        class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\DateFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.time:
+        class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\TimeFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.date_and_time:
+        class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\DateFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }

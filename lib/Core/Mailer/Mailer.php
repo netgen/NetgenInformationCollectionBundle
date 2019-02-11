@@ -1,9 +1,12 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Mailer;
+declare(strict_types=1);
 
-use Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException;
-use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
+namespace Netgen\InformationCollection\Core\Mailer;
+
+use Netgen\InformationCollection\API\Exception\EmailNotSentException;
+use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
+use Netgen\InformationCollection\API\Mailer\MailerInterface;
 
 class Mailer implements MailerInterface
 {
@@ -25,7 +28,7 @@ class Mailer implements MailerInterface
     /**
      * {@inheritdoc}
      */
-    public function createAndSendMessage(EmailData $data)
+    public function createAndSendMessage(EmailContent $data): void
     {
         $message = new \Swift_Message();
 

@@ -1,13 +1,15 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Form\RepositoryForms;
+declare(strict_types=1);
 
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use EzSystems\RepositoryForms\Data\Mapper\FormDataMapperInterface;
+namespace Netgen\InformationCollection\Integration\RepositoryForms;
+
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\API\Repository\Values\ValueObject;
-use EzSystems\RepositoryForms\Data\Content\ContentUpdateData;
+use eZ\Publish\SPI\Search\Field;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
+use EzSystems\RepositoryForms\Data\Mapper\FormDataMapperInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InformationCollectionMapper implements FormDataMapperInterface

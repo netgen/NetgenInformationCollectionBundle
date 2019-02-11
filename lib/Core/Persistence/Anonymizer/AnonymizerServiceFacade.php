@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer;
 
+use DateTime;
 use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
-use DateTime;
 use OutOfBoundsException;
 
 final class AnonymizerServiceFacade
@@ -13,17 +15,17 @@ final class AnonymizerServiceFacade
     /**
      * @var \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer
      */
-    protected $anonymizer;
+    private $anonymizer;
 
     /**
      * @var \Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils
      */
-    protected $contentTypeUtils;
+    private $contentTypeUtils;
 
     /**
      * @var \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository
      */
-    protected $ezInfoCollectionRepository;
+    private $ezInfoCollectionRepository;
 
     /**
      * AnonymizerServiceFacade constructor.
@@ -36,15 +38,14 @@ final class AnonymizerServiceFacade
         Anonymizer $anonymizer,
         ContentTypeUtils $contentTypeUtils,
         EzInfoCollectionRepository $ezInfoCollectionRepository
-    )
-    {
+    ) {
         $this->anonymizer = $anonymizer;
         $this->contentTypeUtils = $contentTypeUtils;
         $this->ezInfoCollectionRepository = $ezInfoCollectionRepository;
     }
 
     /**
-     * Anonymize collections by content id
+     * Anonymize collections by content id.
      *
      * @param int $contentId Content id
      * @param array $fields Fields list
@@ -52,7 +53,7 @@ final class AnonymizerServiceFacade
      *
      * @return int
      */
-    public function anonymize($contentId, array $fields = [], DateTime $date = null)
+    public function anonymize($contentId, array $fields = [], \DateTimeImmutable $date = null)
     {
         $fieldsWithIds = $this->getFieldIds($contentId, $fields);
 
@@ -70,14 +71,15 @@ final class AnonymizerServiceFacade
     }
 
     /**
-     * Map field id's to list of field identifiers
+     * Map field id's to list of field identifiers.
      *
      * @param int $content
      * @param array $fieldIdentifiers
+     * @param mixed $contentId
      *
      * @return array
      */
-    protected function getFieldIds($contentId, array $fieldIdentifiers)
+    private function getFieldIds($contentId, array $fieldIdentifiers)
     {
         $ids = [];
         foreach ($fieldIdentifiers as $identifier) {
@@ -91,9 +93,9 @@ final class AnonymizerServiceFacade
         return $ids;
     }
 
-    protected function getCollections($contentId, DateTime $date = null)
+    private function getCollections($contentId, \DateTimeImmutable $date = null)
     {
-        if (is_null($date)) {
+        if (null === $date) {
             $collections = $this->ezInfoCollectionRepository->findByContentId($contentId);
         } else {
             $collections = $this->ezInfoCollectionRepository->findByContentIdOlderThan($contentId, $date);

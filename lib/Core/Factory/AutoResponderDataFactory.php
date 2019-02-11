@@ -1,14 +1,15 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Factory;
+declare(strict_types=1);
 
-use Netgen\Bundle\InformationCollectionBundle\Constants;
-use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
-use Netgen\Bundle\InformationCollectionBundle\Exception\MissingValueException;
-use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
-use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
+namespace Netgen\InformationCollection\Core\Factory;
+
 use function array_key_exists;
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+use Netgen\InformationCollection\API\Exception\MissingValueException;
+use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
+use Netgen\InformationCollection\API\Value\DataTransfer\TemplateContent;
+use Netgen\InformationCollection\API\Constants;
 use function trim;
 
 class AutoResponderDataFactory extends EmailDataFactory
@@ -54,11 +55,11 @@ class AutoResponderDataFactory extends EmailDataFactory
         if ($data->getTemplateWrapper()->hasBlock(Constants::FIELD_RECIPIENT)) {
             $rendered = $data->getTemplateWrapper()->renderBlock(
                 Constants::FIELD_RECIPIENT,
-                array(
+                [
                     'event' => $data->getEvent(),
                     'collected_fields' => $fields,
                     'content' => $data->getContent(),
-                )
+                ]
             );
 
             return trim($rendered);
@@ -89,11 +90,11 @@ class AutoResponderDataFactory extends EmailDataFactory
         if ($data->getTemplateWrapper()->hasBlock(Constants::FIELD_AUTO_RESPONDER_SUBJECT)) {
             $rendered = $data->getTemplateWrapper()->renderBlock(
                 Constants::FIELD_AUTO_RESPONDER_SUBJECT,
-                array(
+                [
                     'event' => $data->getEvent(),
                     'collected_fields' => $fields,
                     'content' => $data->getContent(),
-                )
+                ]
             );
 
             return trim($rendered);
@@ -112,7 +113,7 @@ class AutoResponderDataFactory extends EmailDataFactory
             return $this->config[ConfigurationConstants::DEFAULT_VARIABLES][ConfigurationConstants::EMAIL_SUBJECT];
         }
 
-        $message = Constants::FIELD_AUTO_RESPONDER_SUBJECT . "|" .ConfigurationConstants::EMAIL_SUBJECT;
+        $message = Constants::FIELD_AUTO_RESPONDER_SUBJECT . '|' . ConfigurationConstants::EMAIL_SUBJECT;
         throw new MissingValueException($message);
     }
 }

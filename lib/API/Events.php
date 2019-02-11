@@ -1,6 +1,8 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle;
+declare(strict_types=1);
+
+namespace Netgen\InformationCollection\API;
 
 final class Events
 {
@@ -9,5 +11,5 @@ final class Events
      *
      * The event listener method receives a \Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected
      */
-    const INFORMATION_COLLECTED = 'netgen_information_collection.events.information_collected';
+    public const INFORMATION_COLLECTED = 'netgen_information_collection.events.information_collected';
 }

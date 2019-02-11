@@ -1,6 +1,8 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Core\Pagination\Pagerfanta\View;
+declare(strict_types=1);
+
+namespace Netgen\InformationCollection\Core\Pagination\Pagerfanta\View;
 
 use Pagerfanta\PagerfantaInterface;
 use Pagerfanta\View\ViewInterface;
@@ -86,7 +88,7 @@ class InformationCollectionAdminView implements ViewInterface
      *
      * @return string
      */
-    public function render(PagerfantaInterface $pagerfanta, $routeGenerator, array $options = array())
+    public function render(PagerfantaInterface $pagerfanta, $routeGenerator, array $options = [])
     {
         $this->pagerfanta = $pagerfanta;
         $this->routeGenerator = $routeGenerator;
@@ -95,11 +97,11 @@ class InformationCollectionAdminView implements ViewInterface
         $this->calculateStartAndEndPage();
 
         return $this->twig->render(
-            isset($options['template']) ? $options['template'] : $this->template,
-            array(
+            $options['template'] ?? $this->template,
+            [
                 'pager' => $pagerfanta,
                 'pages' => $this->getPages(),
-            )
+            ]
         );
     }
 
@@ -175,7 +177,7 @@ class InformationCollectionAdminView implements ViewInterface
      */
     protected function getPages()
     {
-        $pages = array();
+        $pages = [];
 
         $pages['previous_page'] = $this->pagerfanta->hasPreviousPage() ?
             $this->generateUrl($this->pagerfanta->getPreviousPage()) :
@@ -188,7 +190,7 @@ class InformationCollectionAdminView implements ViewInterface
 
         $pages['separator_before'] = $this->startPage > 3 ? true : false;
 
-        $middlePages = array();
+        $middlePages = [];
         for ($i = $this->startPage, $end = $this->endPage; $i <= $end; ++$i) {
             $middlePages[$i] = $this->generateUrl($i);
         }

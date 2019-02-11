@@ -89,7 +89,7 @@ class ActionRegistryTest extends TestCase
      */
     protected $event2;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->config = array(
             'default' => array(

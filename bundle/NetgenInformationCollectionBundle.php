@@ -2,10 +2,10 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle;
 
-use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\ActionsPass;
-use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\CustomFieldHandlersPass;
-use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\FieldAnonymizerVisitorPass;
-use Netgen\Bundle\InformationCollectionBundle\PolicyProvider\InformationCollectionPolicyProvider;
+use Netgen\InformationCollection\Container\Compiler\ActionsPass;
+use Netgen\InformationCollection\Container\Compiler\CustomFieldHandlersPass;
+use Netgen\InformationCollection\Container\Compiler\FieldAnonymizerVisitorPass;
+use Netgen\InformationCollection\PolicyProvider\InformationCollectionPolicyProvider;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

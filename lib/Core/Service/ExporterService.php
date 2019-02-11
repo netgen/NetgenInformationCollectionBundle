@@ -1,6 +1,8 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Core\Service;
+declare(strict_types=1);
+
+namespace Netgen\InformationCollection\Core\Service;
 
 use Netgen\Bundle\InformationCollectionBundle\API\Service\Exporter;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\Export;
@@ -47,8 +49,7 @@ class ExporterService implements Exporter
         EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository,
         TranslatorInterface $translator,
         ContentTypeUtils $contentTypeUtils
-    )
-    {
+    ) {
         $this->ezInfoCollectionRepository = $ezInfoCollectionRepository;
         $this->ezInfoCollectionAttributeRepository = $ezInfoCollectionAttributeRepository;
         $this->translator = $translator;
@@ -56,7 +57,7 @@ class ExporterService implements Exporter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function export(ExportCriteria $criteria)
     {
@@ -69,24 +70,19 @@ class ExporterService implements Exporter
 
         /** @var EzInfoCollection $collection */
         foreach ($collections as $collection) {
-
             $row = [];
             $attributes = $this->ezInfoCollectionAttributeRepository->findBy(['informationCollectionId' => $collection->getId()]);
 
             foreach ($fields as $fieldId => $fieldName) {
-
                 if ($fieldId === 'created') {
-
                     $row[] = $this->getCreatedDate($collection);
                     continue;
                 }
 
                 $row[] = $this->getAttributeValue($fieldId, $attributes);
-
             }
 
             $rows[] = $row;
-
         }
 
         $header = array_values($fields);
@@ -100,7 +96,7 @@ class ExporterService implements Exporter
     }
 
     /**
-     * Get create date from EzInfoCollection as string
+     * Get create date from EzInfoCollection as string.
      *
      * @param \Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection $ezInfoCollection
      *
@@ -108,14 +104,14 @@ class ExporterService implements Exporter
      */
     protected function getCreatedDate(EzInfoCollection $ezInfoCollection)
     {
-        $date = new \DateTime();
+        $date = new \DateTimeImmutable();
         $date->setTimestamp($ezInfoCollection->getCreated());
 
         return $date->format('Y-m-d');
     }
 
     /**
-     * Get attribute value string
+     * Get attribute value string.
      *
      * @param int $fieldId
      * @param array $attributes
@@ -126,15 +122,13 @@ class ExporterService implements Exporter
     {
         /** @var EzInfoCollectionAttribute $attribute */
         foreach ($attributes as $attribute) {
-
             if ($fieldId === $attribute->getContentClassAttributeId()) {
                 $value = $attribute->getValue();
                 $value = str_replace('"', '""', $value);
                 $value = str_replace(';', ', ', $value);
                 $value = strip_tags($value);
 
-                return preg_replace(array( '/\r|\n/' ), array( ' ' ), $value);
-
+                return preg_replace(['/\r|\n/'], [' '], $value);
             }
         }
 

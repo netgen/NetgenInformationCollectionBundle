@@ -1,10 +1,12 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Listener;
+declare(strict_types=1);
 
-use Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry;
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
-use Netgen\Bundle\InformationCollectionBundle\Events;
+namespace Netgen\InformationCollection\Listener;
+
+use Netgen\InformationCollection\Core\Action\ActionRegistry;
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+use Netgen\InformationCollection\API\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class InformationCollectedListener implements EventSubscriberInterface
@@ -29,9 +31,9 @@ class InformationCollectedListener implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             Events::INFORMATION_COLLECTED => 'onInformationCollected',
-        );
+        ];
     }
 
     /**

@@ -1,6 +1,8 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Form\RepositoryForms;
+declare(strict_types=1);
+
+namespace Netgen\InformationCollection\Integration\RepositoryForms;
 
 use eZ\Publish\Core\Repository\Values\Content\ContentUpdateStruct;
 use EzSystems\RepositoryForms\Data\Content\ContentData;

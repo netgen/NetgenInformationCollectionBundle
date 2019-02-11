@@ -1,0 +1,37 @@
+imports:
+    - { resource: actions.yml }
+    - { resource: core/persistence.yml }
+    - { resource: factories.yml }
+    - { resource: legacy_handlers.yml }
+    - { resource: admin.yml }
+    - { resource: anonymizers.yml }
+    - { resource: ezplatform_admin.yml }
+
+parameters:
+
+services:
+    netgen_information_collection.form.builder:
+        class: Netgen\InformationCollection\Form\Builder\FormBuilder
+        arguments:
+            - '@form.factory'
+            - '@ezpublish.api.service.content_type'
+
+    netgen_information_collection.listener:
+        class: Netgen\InformationCollection\Listener\InformationCollectedListener
+        arguments:
+            - '@netgen_information_collection.action.registry'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_information_collection.field_handler.registry:
+        class: Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegistry
+
+    netgen_information_collection.mailer:
+        class: Netgen\InformationCollection\Core\Mailer\Mailer
+        arguments:
+            - '@mailer'
+
+#    netgen_information_collection.form.extension.field_definition:
+#        class: Netgen\Bundle\InformationCollectionBundle\Form\Extension\FieldDefinitionTypeExtension
+#        tags:
+#            - { name: form.type_extension, extended_type: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType }

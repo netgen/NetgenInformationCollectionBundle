@@ -1,6 +1,8 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Core\Pagination;
+declare(strict_types=1);
+
+namespace Netgen\InformationCollection\Core\Pagination;
 
 class InformationCollectionCollectionListAdapter extends BaseAdapter
 {

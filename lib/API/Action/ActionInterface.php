@@ -1,15 +1,17 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Action;
+declare(strict_types=1);
+
+namespace Netgen\InformationCollection\API\Action;
 
 interface ActionInterface
 {
     /**
      * Act on InformationCollected event.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected $event
+     * @param \Netgen\InformationCollection\API\Value\Event\InformationCollected $event
      *
-     * @throws \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
+     * @throws \Netgen\InformationCollection\API\Exception\ActionFailedException
      */
-    public function act(\Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected $event);
+    public function act(\Netgen\InformationCollection\API\Value\Event\InformationCollected $event): void;
 }

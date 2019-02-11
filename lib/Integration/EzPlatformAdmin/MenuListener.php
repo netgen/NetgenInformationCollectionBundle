@@ -1,6 +1,8 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Integration\EzPlatformAdmin;
+declare(strict_types=1);
+
+namespace Netgen\InformationCollection\Integration\EzPlatformAdmin;
 
 use EzSystems\EzPlatformAdminUi\Menu\Event\ConfigureMenuEvent;
 use EzSystems\EzPlatformAdminUi\Menu\MainMenuBuilder;

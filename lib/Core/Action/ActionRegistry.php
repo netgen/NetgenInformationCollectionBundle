@@ -1,13 +1,16 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Action;
+declare(strict_types=1);
 
-use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
-use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
-use Netgen\Bundle\InformationCollectionBundle\Priority;
-use Psr\Log\LoggerInterface;
+namespace Netgen\InformationCollection\Core\Action;
+
 use function in_array;
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+use Netgen\InformationCollection\API\Exception\ActionFailedException;
+use Netgen\InformationCollection\API\Priority;
+use Netgen\InformationCollection\API\Action\CrucialActionInterface;
+use Netgen\InformationCollection\API\Action\ActionInterface;
+use Psr\Log\LoggerInterface;
 use function usort;
 
 class ActionRegistry
@@ -23,7 +26,7 @@ class ActionRegistry
     protected $actions;
 
     /**
-     * @var LoggerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
 
@@ -38,10 +41,10 @@ class ActionRegistry
      * @param array $config
      * @param LoggerInterface $logger
      */
-    public function __construct($config, LoggerInterface $logger)
+    public function __construct(array $config, LoggerInterface $logger)
     {
         $this->config = $config;
-        $this->actions = array();
+        $this->actions = [];
         $this->logger = $logger;
     }
 
@@ -52,13 +55,13 @@ class ActionRegistry
      * @param ActionInterface $action
      * @param int $priority
      */
-    public function addAction($name, ActionInterface $action, $priority = Priority::DEFAULT_PRIORITY)
+    public function addAction(string $name, ActionInterface $action, int $priority = Priority::DEFAULT_PRIORITY): void
     {
-        $this->actions[] = array(
+        $this->actions[] = [
             'name' => $name,
             'action' => $action,
             'priority' => $priority,
-        );
+        ];
     }
 
     public function act(InformationCollected $event)
@@ -119,15 +122,15 @@ class ActionRegistry
      */
     protected function prepareConfig($contentTypeIdentifier)
     {
-        if (!empty($this->config[ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier])) {
-            return $this->config[ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier];
+        if (!empty($this->config['content_types'][$contentTypeIdentifier])) {
+            return $this->config['content_types'][$contentTypeIdentifier];
         }
 
         if (!empty($this->config['default'])) {
             return  $this->config['default'];
         }
 
-        return array();
+        return [];
     }
 
     /**

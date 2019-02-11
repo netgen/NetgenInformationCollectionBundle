@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\API\Value;
 
 use eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException;
@@ -15,10 +17,10 @@ abstract class ValueObject
      *
      * @param array $properties
      */
-    public function __construct(array $properties = array())
+    public function __construct(array $properties = [])
     {
         foreach ($properties as $property => $value) {
-            $this->$property = $value;
+            $this->{$property} = $value;
         }
     }
 
@@ -27,11 +29,11 @@ abstract class ValueObject
      *
      * @ignore This method is for internal use
      *
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException When property does not exist
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException When property is readonly (protected)
-     *
      * @param string $property Name of the property
      * @param string $value
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException When property does not exist
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException When property is readonly (protected)
      */
     public function __set($property, $value)
     {
@@ -48,16 +50,16 @@ abstract class ValueObject
      *
      * @ignore This method is for internal use
      *
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException exception on all reads to undefined properties so typos are not silently accepted.
-     *
      * @param string $property Name of the property
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException exception on all reads to undefined properties so typos are not silently accepted
      *
      * @return mixed
      */
     public function __get($property)
     {
         if (property_exists($this, $property)) {
-            return $this->$property;
+            return $this->{$property};
         }
         throw new PropertyNotFoundException($property, get_class($this));
     }
@@ -83,12 +85,12 @@ abstract class ValueObject
      *
      * @ignore This method is for internal use
      *
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException exception on all writes to undefined properties so typos are not silently accepted and
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException exception on readonly (protected) properties.
-     *
      * @uses ::__set()
      *
      * @param string $property Name of the property
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException exception on all writes to undefined properties so typos are not silently accepted and
+     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException exception on readonly (protected) properties
      *
      * @return bool
      */

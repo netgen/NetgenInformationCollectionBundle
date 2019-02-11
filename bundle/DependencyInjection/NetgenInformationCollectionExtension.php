@@ -27,10 +27,16 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yml');
-        $loader->load('parameters.yml');
-        $loader->load('default_settings.yml');
+        $bundleResourceLoader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $bundleResourceLoader->load('services.yml');
+//        $loader->load('parameters.yml');
+//        $loader->load('default_settings.yml');
+
+
+        $libResourceLoader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../../lib/Resources/config'));
+        $libResourceLoader->load('services.yml');
+        $libResourceLoader->load('parameters.yml');
+        $libResourceLoader->load('default_settings.yml');
 
         $processor = new ConfigurationProcessor($container, ConfigurationConstants::SETTINGS_ROOT);
         $configArrays = array(
@@ -65,7 +71,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
         $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
 
         foreach ($configs as $fileName => $extensionName) {
-            $configFile = __DIR__ . '/../Resources/config/' . $fileName;
+            $configFile = __DIR__ . '/../../lib/Resources/config/' . $fileName;
             $config = Yaml::parse(file_get_contents($configFile));
             $container->prependExtensionConfig($extensionName, $config);
             $container->addResource(new FileResource($configFile));

@@ -1,0 +1,36 @@
+services:
+    netgen_information_collection.controller:
+        class: Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController
+        calls:
+            - [setContainer, ['@service_container']]
+
+    information_collection:
+        alias: 'netgen_information_collection.controller'
+
+    netgen_information_collection.controller.admin:
+        class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\AdminController
+        parent: ezpublish.controller.base
+        public: true
+        arguments:
+            - "@netgen_information_collection.api.service"
+            - "@netgen_information_collection.anonymizer.service"
+            - "@ezpublish.api.service.content"
+            - "@ezpublish.config.resolver"
+
+    netgen_information_collection.controller.export:
+        class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\ExportController
+        parent: ezpublish.controller.base
+        public: true
+        arguments:
+            - "@ezpublish.api.service.content"
+            - "@netgen_information_collection.service.exporter"
+
+
+    netgen_information_collection.controller.tree:
+        class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\TreeController
+        parent: ezpublish.controller.base
+        public: true
+        arguments:
+            - "@netgen_information_collection.api.service"
+            - "@translator"
+            - "@router"

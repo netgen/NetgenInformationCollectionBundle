@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer\Visitor\Field;
 
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
@@ -35,7 +37,7 @@ class Aggregate extends FieldAnonymizerVisitor
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function accept(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType)
     {
@@ -43,7 +45,7 @@ class Aggregate extends FieldAnonymizerVisitor
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function visit(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType)
     {
@@ -54,7 +56,7 @@ class Aggregate extends FieldAnonymizerVisitor
         }
 
         throw new OutOfBoundsException(
-            "No visitor registered for field anonymization"
+            'No visitor registered for field anonymization'
         );
     }
 }

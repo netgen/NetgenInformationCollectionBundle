@@ -1,14 +1,16 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer;
+declare(strict_types=1);
+
+namespace Netgen\InformationCollection\API\Persistence\Anonymizer;
 
 interface Anonymizer
 {
     /**
-     * Anonymizes collection with option to anonymize only fields identified by passed ids
+     * Anonymizes collection with option to anonymize only fields identified by passed ids.
      *
-     * @param int $collectionId
+     * @param int $collection
      * @param array $fields
      */
-    public function anonymizeCollection($collectionId, array $fields = []);
+    public function anonymizeCollection(int $collection, array $fields = []): void;
 }

@@ -1,30 +1,33 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Action;
+declare(strict_types=1);
 
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
-use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
-use Netgen\Bundle\InformationCollectionBundle\Factory\AutoResponderDataFactory;
-use Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface;
-use Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException;
+namespace Netgen\InformationCollection\Core\Action;
+
+use Netgen\InformationCollection\API\Exception\ActionFailedException;
+use Netgen\InformationCollection\API\Exception\EmailNotSentException;
+use Netgen\InformationCollection\Core\Factory\AutoResponderDataFactory;
+use Netgen\InformationCollection\API\Action\ActionInterface;
+use Netgen\InformationCollection\API\Mailer\MailerInterface;
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 
 class AutoResponderAction implements ActionInterface
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface
+     * @var \Netgen\InformationCollection\API\Mailer\MailerInterface
      */
     protected $mailer;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Factory\AutoResponderDataFactory
+     * @var \Netgen\InformationCollection\Core\Factory\AutoResponderDataFactory
      */
     protected $factory;
 
     /**
      * AutoResponderAction constructor.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\Factory\AutoResponderDataFactory $factory
-     * @param \Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface $mailer
+     * @param \Netgen\InformationCollection\Core\Factory\AutoResponderDataFactory $factory
+     * @param \Netgen\InformationCollection\API\Mailer\MailerInterface $mailer
      */
     public function __construct(AutoResponderDataFactory $factory, MailerInterface $mailer)
     {
@@ -35,7 +38,7 @@ class AutoResponderAction implements ActionInterface
     /**
      * {@inheritdoc}
      */
-    public function act(InformationCollected $event)
+    public function act(InformationCollected $event): void
     {
         $emailData = $this->factory->build($event);
 

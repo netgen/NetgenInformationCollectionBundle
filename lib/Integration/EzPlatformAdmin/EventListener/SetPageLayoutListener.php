@@ -1,17 +1,19 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Integration\EzPlatformAdmin\EventListener;
+declare(strict_types=1);
+
+namespace Netgen\InformationCollection\Integration\EzPlatformAdmin\EventListener;
 
 use EzSystems\EzPlatformAdminUiBundle\EzPlatformAdminUiBundle;
+use Netgen\InformationCollection\Templating\Twig\AdminGlobalVariable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Netgen\Bundle\InformationCollectionBundle\Templating\Twig\AdminGlobalVariable;
 
 class SetPageLayoutListener implements EventSubscriberInterface
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Templating\Twig\AdminGlobalVariable
+     * @var \Netgen\InformationCollection\Templating\Twig\AdminGlobalVariable
      */
     protected $globalVariable;
 
@@ -29,8 +31,7 @@ class SetPageLayoutListener implements EventSubscriberInterface
         AdminGlobalVariable $adminGlobalVariable,
         array $groupsBySiteAccess,
         $pageLayoutTemplate
-    )
-    {
+    ) {
         $this->globalVariable = $adminGlobalVariable;
         $this->pageLayoutTemplate = $pageLayoutTemplate;
         $this->groupsBySiteAccess = $groupsBySiteAccess;
