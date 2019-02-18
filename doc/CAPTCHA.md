@@ -132,3 +132,56 @@ Example template implementation for `ng_feedback_form` would be something like t
     </div>
 {% endblock %}
 ```
+
+Or, using captcha v3:
+```twig
+{% block content %}
+    <div class="view-type view-type-{{ view_type }} ng-feedback-form">
+        <div class="full-form-content">
+            {% if not is_valid %}
+                {% if not content.fields.body.empty %}
+                    {{ ng_render_field(content.fields.body) }}
+                {% endif %}
+
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                <fieldset>
+                    {{ form_row(form.sender_name, {attr: {class: 'form-control'}}) }}
+                    {{ form_row(form.email, {attr: {class: 'form-control'}}) }}
+                    {{ form_row(form.subject, {attr: {class: 'form-control'}}) }}
+                    {{ form_row(form.message, {attr: {class: 'form-control'}}) }}
+                    
+                    <input name="g-recaptcha-response" hidden>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </fieldset>
+
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+
+
+                {% if info_collection_captcha_is_enabled(location) %}
+                    {% set captcha = info_collection_captcha_get_site_key(location.innerLocation) %}
+                    <div class="info-collector-captcha">
+                        <script src="https://www.google.com/recaptcha/api.js?render={{ captcha }}"></script>
+                        <script>
+                            grecaptcha.ready(function () {
+                                grecaptcha.execute('{{ captcha }}', {action: 'feedback'}).then(function (token) {
+                                    $('[name="g-recaptcha-response"]').val(token);
+                                });
+                            });
+                        </script>
+                    </div>
+                {% endif %}
+
+            {% else %}
+                {{ block('success') }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+```
+
+If captcha validation results in error with code "missing-input-response" you probably did not send reCAPTCHA token in variable "g-recaptcha-response".
+Another error you might encounter is "action-mismatch". In this case make sure that the action you specified in captcha config (globaly or per content type)
+ is the same as the one you use when executing captcha check.
