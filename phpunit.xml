@@ -14,20 +14,20 @@
         beStrictAboutChangesToGlobalState="true"
 >
     <testsuites>
-        <testsuite name="Netgen\InformationCollection\Tests">
-            <directory>tests</directory>
+        <testsuite name="Library\Tests">
+            <directory>tests/lib</directory>
+        </testsuite>
+        <testsuite name="Bundle\Tests">
+            <directory>tests/bundle</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
             <directory suffix=".php">bundle</directory>
+            <directory suffix=".php">lib</directory>
             <exclude>
-                <directory>bundle/Repository</directory>
-                <directory>bundle/Resources</directory>
-                <file>bundle/NetgenInformationCollectionBundle.php</file>
-                <file>bundle/Controller/InformationCollectionController.php</file>
-                <file>bundle/InformationCollectionTrait.php</file>
-                <file>bundle/Events.php</file>
+                <directory>bundle</directory>
+                <directory>lib</directory>
             </exclude>
         </whitelist>
     </filter>

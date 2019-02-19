@@ -12,3 +12,4 @@ phpunit.phar
 .php_cs.cache
 grunt.lock
 package-lock.json
+.phpunit.result.cache
