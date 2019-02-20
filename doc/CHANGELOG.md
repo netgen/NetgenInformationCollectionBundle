@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.4] - 2019-02-20
+### Added
+- Display form error when captcha validatio fails - tnx @bvrbanec
+- Captcha documentation - tnx @bvrbanec
+
+### Fixed
+- Documentation typo
+
 ## [1.6.3] - 2019-02-08
 ### Fixed
 - `prototype('array')` is now used instead of `arrayPrototype`
