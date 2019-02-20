@@ -6,6 +6,7 @@ use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
 use eZ\Publish\Core\MVC\Symfony\View\LocationValueView;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Form\Captcha\CaptchaValueInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 trait InformationCollectionTrait
@@ -38,12 +39,12 @@ trait InformationCollectionTrait
             ->get('netgen_information_collection.factory.captcha')
             ->getCaptcha($view->getLocation());
 
-
         $form->handleRequest($request);
+        $validCaptcha = $captcha->isValid($request);
+        $formSubmitted = $form->isSubmitted();
 
-        if ($form->isValid() && $form->isSubmitted() && $captcha->isValid($request)) {
+        if ($formSubmitted && $form->isValid() && $validCaptcha) {
             $isValid = true;
-
             $event = new InformationCollected($form->getData());
 
             /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher */
@@ -51,6 +52,10 @@ trait InformationCollectionTrait
                 ->get('event_dispatcher');
 
             $dispatcher->dispatch(Events::INFORMATION_COLLECTED, $event);
+        }
+
+        if (true === $formSubmitted && false === $validCaptcha) {
+            $form->addError(new FormError($this->container->get('translator')->trans('form.errors.captcha_failed', array(), 'netgen_information_collection_form_messages')));
         }
 
         return array(
