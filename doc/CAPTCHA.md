@@ -183,5 +183,5 @@ Or, using captcha v3:
 ```
 
 If captcha validation results in error with code "missing-input-response" you probably did not send reCAPTCHA token in variable "g-recaptcha-response".
-Another error you might encounter is "action-mismatch". In this case make sure that the action you specified in captcha config (globaly or per content type)
+Another error you might encounter is "action-mismatch". In this case make sure that the action you specified in captcha config (globally or per content type)
  is the same as the one you use when executing captcha check.
