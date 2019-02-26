@@ -61,6 +61,35 @@ class EzInfoCollectionRepository extends EntityRepository
             ->getResult();
     }
 
+    public function findByCriteria($criteria)
+    {
+        if (empty($criteria->content->id)) {
+            throw new \RuntimeException('Content id is not valid or does not exist');
+        }
+
+        $contentObjectId = $criteria->content->id;
+
+        $qb = $this->createQueryBuilder('ezc');
+
+        $qb->select('ezc')
+           ->where('ezc.contentObjectId = :content')
+           ->setParameter('content', $contentObjectId);
+
+        if (!empty($criteria->from) && !empty($criteria->to)) {
+            $dateFrom = $criteria->from->getTimestamp();
+            $dateTo = $criteria->to->getTimestamp();
+
+            if ($dateFrom > $dateTo) {
+                throw new \RuntimeException("Starting date must be greater than ending date");
+            }
+            $qb->andWhere('ezc.created BETWEEN :from AND :to')
+               ->setParameter('from', $dateFrom)
+               ->setParameter('to', $dateTo);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function getChildrenCount($contentId)
     {
         return (int)$this->createQueryBuilder('ezc')

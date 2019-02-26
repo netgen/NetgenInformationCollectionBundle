@@ -63,7 +63,7 @@ class ExporterService implements Exporter
         $fields = $this->contentTypeUtils->getInfoCollectorFields($criteria->content->id);
         $fields['created'] = $this->translator->trans('netgen_information_collection_admin_export_created', [], 'netgen_information_collection_admin');
 
-        $collections = $this->ezInfoCollectionRepository->findBy(['contentObjectId' => $criteria->content->id]);
+        $collections = $this->ezInfoCollectionRepository->findByCriteria($criteria);
 
         $rows = [];
 
