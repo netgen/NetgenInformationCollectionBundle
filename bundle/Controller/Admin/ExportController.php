@@ -56,8 +56,8 @@ class ExportController extends Controller
             $exportCriteria = new ExportCriteria(
                 [
                     'content' => $content,
-                    'from' => $form->getData('dateFrom'),
-                    'to' => $form->getData('dateTo'),
+                    'from' => $form->getData()['dateFrom'],
+                    'to' => $form->getData()['dateTo'],
                 ]
             );
 
