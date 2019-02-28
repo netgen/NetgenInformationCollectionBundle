@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\ExportCriteria;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use DateTime;
 
@@ -61,19 +62,17 @@ class EzInfoCollectionRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findByCriteria($criteria)
+    public function findByCriteria(ExportCriteria $criteria)
     {
         if (empty($criteria->content->id)) {
             throw new \RuntimeException('Content id is not valid or does not exist');
         }
 
-        $contentObjectId = $criteria->content->id;
-
         $qb = $this->createQueryBuilder('ezc');
 
         $qb->select('ezc')
            ->where('ezc.contentObjectId = :content')
-           ->setParameter('content', $contentObjectId);
+           ->setParameter('content', $criteria->content->id);
 
         if (!empty($criteria->from) && !empty($criteria->to)) {
             $dateFrom = $criteria->from->getTimestamp();
