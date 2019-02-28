@@ -17,7 +17,7 @@
 
         <form name="ic_search" method="get" action="{{ path('netgen_information_collection.route.admin.export', {'contentId':content.id}) }}">
             <div class="ng-ui-input">
-                <input type="submit" value="Export" class="ng-ui-btn">
+                <input type="submit" value="{{ 'netgen_information_collection_admin_collection_export'|trans }}" class="ng-ui-btn">
             </div>
         </form>
 
@@ -26,7 +26,7 @@
                 <div class="ng-ui-input">
                     <input id="collection-search" type="text" name="searchText" value="{{ search_text }}" placeholder="{{ 'netgen_information_collection_admin_collection_search_collections'|trans }}">
                 </div>
-                <input type="submit" value="Search" class="ng-ui-btn">
+                <input type="submit" value="{{ 'netgen_information_collection_admin_collection_search'|trans }}" class="ng-ui-btn">
             </div>
         </form>
 

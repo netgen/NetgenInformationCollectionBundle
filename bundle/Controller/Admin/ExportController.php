@@ -48,7 +48,7 @@ class ExportController extends Controller
         $form->handleRequest($request);
 
         if ($form->get('cancel')->isClicked()) {
-            return $this->redirect($this->generateUrl('netgen_information_collection.route.admin.overview'));
+            return $this->redirect($this->generateUrl('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]));
         }
 
         if ($form->isValid() && $form->get('export')->isClicked()) {

@@ -22,6 +22,7 @@ netgen_information_collection_admin_collection_creator: 'Creator'
 netgen_information_collection_admin_collection_delete: 'Delete selected'
 netgen_information_collection_admin_collection_anonymize: 'Anonymize selected'
 netgen_information_collection_admin_collection_search: 'Search'
+netgen_information_collection_admin_collection_export: 'Export'
 netgen_information_collection_admin_collection_search_collections: 'Search collections'
 netgen_information_collection_admin_collection_no_collections: 'No collections available.'
 netgen_information_collection_admin_collection_no_collections_results: "Displaying results(%count%) for %text%"
