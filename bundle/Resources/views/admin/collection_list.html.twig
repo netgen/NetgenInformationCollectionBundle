@@ -18,12 +18,9 @@
         <form name="ic_export" method="get" action="{{ path('netgen_information_collection.route.admin.export', {'contentId':content.id}) }}">
             <div class="ng-ui-input">
                 <input type="submit" value="{{ 'netgen_information_collection_admin_collection_export'|trans }}" class="ng-ui-btn">
-            </div>
-        </form>
-
-        <form name="ic_export_all" method="get" action="{{ path('netgen_information_collection.route.admin.export_all', {'contentId':content.id}) }}">
-            <div class="ng-ui-input">
-                <input type="submit" value="Export All" class="ng-ui-btn">
+                <a href="{{ path('netgen_information_collection.route.admin.export_all', {'contentId':content.id}) }}" class="ng-ui-btn">
+                    {{ 'netgen_information_collection_admin_export_export_all'|trans }}
+                </a>
             </div>
         </form>
 

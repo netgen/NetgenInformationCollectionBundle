@@ -38,6 +38,7 @@ netgen_information_collection_admin_back: 'Back'
 
 netgen_information_collection_admin_export_created: 'Created'
 netgen_information_collection_admin_export_export: 'Export'
+netgen_information_collection_admin_export_export_all: 'Export All'
 netgen_information_collection_admin_export_cancel: 'Cancel'
 netgen_information_collection_admin_export_from: 'From'
 netgen_information_collection_admin_export_to: 'To'
