@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.6] - 2019-03-05
+### Added
+- Export all functionality - tnx @ludwig031
+
 ## [1.6.5] - 2019-02-28
 ### Fixed
 - Exporter did not took into account date filtering  - tnx @ludwig031
