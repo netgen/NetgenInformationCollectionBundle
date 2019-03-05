@@ -100,6 +100,50 @@ class ExporterService implements Exporter
     }
 
     /**
+     * @inheritdoc
+     */
+    public function exportAll(ExportCriteria $criteria)
+    {
+        $fields = $this->contentTypeUtils->getInfoCollectorFields($criteria->content->id);
+        $fields['created'] = $this->translator->trans('netgen_information_collection_admin_export_created', [], 'netgen_information_collection_admin');
+
+        $collections = $this->ezInfoCollectionRepository->findBy(['contentObjectId' => $criteria->content->id]);
+
+        $rows = [];
+
+        /** @var EzInfoCollection $collection */
+        foreach ($collections as $collection) {
+
+            $row = [];
+            $attributes = $this->ezInfoCollectionAttributeRepository->findBy(['informationCollectionId' => $collection->getId()]);
+
+            foreach ($fields as $fieldId => $fieldName) {
+
+                if ($fieldId === 'created') {
+
+                    $row[] = $this->getCreatedDate($collection);
+                    continue;
+                }
+
+                $row[] = $this->getAttributeValue($fieldId, $attributes);
+
+            }
+
+            $rows[] = $row;
+
+        }
+
+        $header = array_values($fields);
+
+        return new Export(
+            [
+                'header' => $header,
+                'contents' => $rows,
+            ]
+        );
+    }
+
+    /**
      * Get create date from EzInfoCollection as string
      *
      * @param \Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection $ezInfoCollection

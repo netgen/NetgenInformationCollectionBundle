@@ -81,4 +81,35 @@ class ExportController extends Controller
             ]
         );
     }
+
+    /**
+     * Handles export
+     *
+     * @param int $contentId
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function exportAllAction($contentId)
+    {
+        $content = $this->contentService->loadContent($contentId);
+
+        $exportCriteria = new ExportCriteria(
+            [
+                'content' => $content,
+            ]
+        );
+
+        $export = $this->exporter->exportAll($exportCriteria);
+
+        $writer = Writer::createFromFileObject(new SplTempFileObject());
+        $writer->setDelimiter(",");
+        $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
+        $writer->setOutputBOM(Writer::BOM_UTF8); //adding the BOM sequence on output
+        $writer->insertOne($export->header);
+        $writer->insertAll($export->contents);
+
+        $writer->output('export.csv');
+        return new Response('');
+
+    }
 }
