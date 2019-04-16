@@ -4,6 +4,7 @@ namespace Netgen\Bundle\InformationCollectionBundle;
 
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Form\Captcha\CaptchaValueInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 trait InformationCollectionLegacyTrait
@@ -37,10 +38,11 @@ trait InformationCollectionLegacyTrait
             ->getCaptcha($location);
 
         $form->handleRequest($request);
+        $validCaptcha = $captcha->isValid($request);
+        $formSubmitted = $form->isSubmitted();
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($formSubmitted && $form->isValid() && $validCaptcha) {
             $isValid = true;
-
             $event = new InformationCollected($form->getData());
 
             /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher */
@@ -48,6 +50,10 @@ trait InformationCollectionLegacyTrait
                 ->get('event_dispatcher');
 
             $dispatcher->dispatch(Events::INFORMATION_COLLECTED, $event);
+        }
+
+        if (true === $formSubmitted && false === $validCaptcha) {
+            $form->addError(new FormError($this->container->get('translator')->trans('form.errors.captcha_failed', array(), 'netgen_information_collection_form_messages')));
         }
 
         return array(
