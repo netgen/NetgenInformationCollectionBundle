@@ -14,7 +14,7 @@ class DateFieldHandler implements CustomLegacyFieldHandlerInterface
      */
     public function supports(Value $value)
     {
-        return $value instanceof DateValue;
+        return $value instanceof DateValue && $value->date !== null;
     }
 
     /**

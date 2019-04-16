@@ -14,7 +14,7 @@ class DateAndTimeFieldHandler implements CustomLegacyFieldHandlerInterface
      */
     public function supports(Value $value)
     {
-        return $value instanceof DateAndTimeValue;
+        return $value instanceof DateAndTimeValue && $value->value !== null;
     }
 
     /**
