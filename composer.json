@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "doctrine/orm": "^2.5",
+        "doctrine/orm": "^2.0",
         "ezsystems/ezpublish-kernel": "*",
         "google/recaptcha": "^1.2",
         "league/csv": "^8.0",
