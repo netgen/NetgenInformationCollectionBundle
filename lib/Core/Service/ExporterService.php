@@ -8,10 +8,10 @@ use Netgen\Bundle\InformationCollectionBundle\API\Service\Exporter;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\Export;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\ExportCriteria;
 use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils;
-use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
-use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
+use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
+use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class ExporterService implements Exporter

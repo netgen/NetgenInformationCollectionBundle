@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer\Visitor\Field;
+namespace Netgen\InformationCollection\Core\Persistence\Anonymizer\Visitor\Field;
 
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor;
-use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
+use Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor;
+use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
 use OutOfBoundsException;
 
 class Aggregate extends FieldAnonymizerVisitor
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor[]
+     * @var \Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor[]
      */
     protected $visitors;
 
@@ -29,7 +29,7 @@ class Aggregate extends FieldAnonymizerVisitor
     }
 
     /**
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor $visitor
+     * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor $visitor
      */
     public function addVisitor(FieldAnonymizerVisitor $visitor)
     {
@@ -39,7 +39,7 @@ class Aggregate extends FieldAnonymizerVisitor
     /**
      * {@inheritdoc}
      */
-    public function accept(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType)
+    public function accept(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType): bool
     {
         return true;
     }
@@ -47,7 +47,7 @@ class Aggregate extends FieldAnonymizerVisitor
     /**
      * {@inheritdoc}
      */
-    public function visit(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType)
+    public function visit(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType): string
     {
         foreach ($this->visitors as $visitor) {
             if ($visitor->accept($ezInfoCollectionAttribute, $contentType)) {

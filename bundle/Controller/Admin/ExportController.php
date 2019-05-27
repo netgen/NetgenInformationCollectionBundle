@@ -5,7 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use Netgen\InformationCollection\API\Service\Exporter;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\ExportCriteria;
+use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
 use Netgen\Bundle\InformationCollectionBundle\Form\Type\ExportType;
 use Symfony\Component\HttpFoundation\Request;
 use League\Csv\Writer;
@@ -40,7 +40,7 @@ final class ExportController extends Controller
      */
     public function exportAction($contentId, Request $request)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+//        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $content = $this->contentService->loadContent($contentId);
 

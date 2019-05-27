@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\API\Value\DataTransfer;
 
 use eZ\Publish\API\Repository\Values\Content\Content;
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use Netgen\InformationCollection\API\Value\ValueObject;
 use Twig_TemplateWrapper;
 

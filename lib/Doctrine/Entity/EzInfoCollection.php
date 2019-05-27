@@ -4,57 +4,35 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Doctrine\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * EzInfoCollection.
- *
- * @ORM\Table(name="ezinfocollection", indexes={@ORM\Index(name="ezinfocollection_co_id_created", columns={"contentobject_id", "created"})})
- * @ORM\Entity(repositoryClass="Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository")
- */
 class EzInfoCollection
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="contentobject_id", type="integer", nullable=false, options={"default"=0})
      */
     private $contentObjectId;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="created", type="integer", nullable=false, options={"default"=0})
      */
     private $created;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="creator_id", type="integer", nullable=false, options={"default"=0})
      */
     private $creatorId;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="modified", type="integer", nullable=true, options={"default"=0})
      */
     private $modified;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="user_identifier", type="string", length=34, nullable=true)
      */
     private $userIdentifier;
 

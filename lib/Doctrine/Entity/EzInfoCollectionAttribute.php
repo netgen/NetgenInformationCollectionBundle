@@ -4,79 +4,45 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Doctrine\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * EzInfoCollectionAttribute.
- *
- * @ORM\Table(
- *     name="ezinfocollection_attribute",
- *     indexes={
- *          @ORM\Index(name="ezinfocollection_attr_cca_id", columns={"contentclass_attribute_id"}),
- *          @ORM\Index(name="ezinfocollection_attr_co_id", columns={"contentobject_id"}),
- *          @ORM\Index(name="ezinfocollection_attr_coa_id", columns={"contentobject_attribute_id"}),
- *          @ORM\Index(name="ezinfocollection_attr_ic_id", columns={"informationcollection_id"})
- *     }
- * )
- * @ORM\Entity(repositoryClass="Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository")
- */
 class EzInfoCollectionAttribute
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="contentclass_attribute_id", type="integer", nullable=false, options={"default"=0})
      */
     private $contentClassAttributeId;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="contentobject_attribute_id", type="integer", nullable=true)
      */
     private $contentObjectAttributeId;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="contentobject_id", type="integer", nullable=true)
      */
     private $contentObjectId;
 
     /**
      * @var float
-     *
-     * @ORM\Column(name="data_float", type="float", nullable=true)
      */
     private $dataFloat;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="data_int", type="integer", nullable=true)
      */
     private $dataInt;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="data_text", type="text", nullable=true)
      */
     private $dataText;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="informationcollection_id", type="integer", nullable=false, options={"default"=0})
      */
     private $informationCollectionId;
 

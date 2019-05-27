@@ -2,9 +2,9 @@ services:
     netgen_information_collection.repository.ez_info_collection:
         class: Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments: [ "Netgen\\Bundle\\InformationCollectionBundle\\Entity\\EzInfoCollection" ]
+        arguments: [ "Netgen\\InformationCollection\\Doctrine\\Entity\\EzInfoCollection" ]
 
     netgen_information_collection.repository.ez_info_collection_attribute:
         class: Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments: [ "Netgen\\Bundle\\InformationCollectionBundle\\Entity\\EzInfoCollectionAttribute" ]
+        arguments: [ "Netgen\\InformationCollection\\Doctrine\\Entity\\EzInfoCollectionAttribute" ]

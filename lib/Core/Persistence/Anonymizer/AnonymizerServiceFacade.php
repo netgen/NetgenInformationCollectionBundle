@@ -2,37 +2,37 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer;
+namespace Netgen\InformationCollection\Core\Persistence\Anonymizer;
 
 use DateTime;
-use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer;
-use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
+use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
+use Netgen\InformationCollection\Core\Persistence\ContentTypeUtils;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
 use OutOfBoundsException;
 
 final class AnonymizerServiceFacade
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer
+     * @var \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer
      */
     private $anonymizer;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils
+     * @var \Netgen\InformationCollection\Core\Persistence\ContentTypeUtils
      */
     private $contentTypeUtils;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository
+     * @var \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository
      */
     private $ezInfoCollectionRepository;
 
     /**
      * AnonymizerServiceFacade constructor.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer $anonymizer
-     * @param \Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils $contentTypeUtils
-     * @param \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository $ezInfoCollectionRepository
+     * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer $anonymizer
+     * @param \Netgen\InformationCollection\Core\Persistence\ContentTypeUtils $contentTypeUtils
+     * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository $ezInfoCollectionRepository
      */
     public function __construct(
         Anonymizer $anonymizer,

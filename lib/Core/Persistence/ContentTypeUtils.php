@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence;
+namespace Netgen\InformationCollection\Core\Persistence;
 
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;

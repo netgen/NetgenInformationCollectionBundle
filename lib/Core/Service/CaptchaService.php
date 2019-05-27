@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Form\Captcha;
+namespace Netgen\InformationCollectionBundle\Form\Captcha;
 
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\Location;

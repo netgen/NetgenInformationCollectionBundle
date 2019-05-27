@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity
+            name="Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection"
+            repository-class="Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository"
+            table="ezinfocollection"
+    >
+        <indexes>
+            <index name="ezinfocollection_co_id_created" columns="contentobject_id, created" />
+        </indexes>
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="contentObjectId" type="integer" nullable="false" column="contentobject_id">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="created" type="integer" nullable="false" column="created">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="creatorId" type="integer" nullable="false" column="creator_id">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="modified" type="integer" nullable="true" column="modified">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="userIdentifier" type="string" nullable="true" length="34" column="user_identifier"/>
+    </entity>
+</doctrine-mapping>

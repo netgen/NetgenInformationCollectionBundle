@@ -13,7 +13,7 @@ use Netgen\InformationCollection\API\Action\ActionInterface;
 use Psr\Log\LoggerInterface;
 use function usort;
 
-class ActionRegistry
+class ActionRegistry implements ActionInterface
 {
     /**
      * @var array
@@ -64,7 +64,7 @@ class ActionRegistry
         ];
     }
 
-    public function act(InformationCollected $event)
+    public function act(InformationCollected $event): void
     {
         $this->prepareActions();
         $config = $this->prepareConfig($event->getContentType()->identifier);

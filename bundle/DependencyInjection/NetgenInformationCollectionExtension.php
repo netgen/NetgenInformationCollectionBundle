@@ -64,6 +64,33 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
 
     public function prepend(ContainerBuilder $container)
     {
+        $this->addTwigConfig($container);
+        $this->addDoctrineConfig($container);
+    }
+
+    protected function addDoctrineConfig(ContainerBuilder $container)
+    {
+        $configDir = __DIR__ . '/../../lib/Doctrine/mappings';
+
+        $config = [
+            'orm' => [
+                'auto_mapping' => true,
+                'mappings' => [
+                    'NetgenInformationCollectionBundle' => [
+                        'is_bundle' => false,
+                        'dir' => $configDir,
+                        'type' => 'xml',
+                        'prefix' => 'Netgen\InformationCollection\Doctrine\Entity'
+                    ]
+                ]
+            ]
+        ];
+
+        $container->prependExtensionConfig('doctrine', $config);
+    }
+
+    protected function addTwigConfig(ContainerBuilder $container)
+    {
         $configs = array(
             'twig.yml' => 'twig',
         );

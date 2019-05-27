@@ -5,12 +5,12 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer;
-use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query;
-use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListAdapter;
-use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListSearchAdapter;
-use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionContentsAdapter;
+use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
+use Netgen\InformationCollection\API\Service\InformationCollection;
+use Netgen\InformationCollection\API\Value\Filter\Query;
+use Netgen\InformationCollection\Core\Pagination\InformationCollectionCollectionListAdapter;
+use Netgen\InformationCollection\Core\Pagination\InformationCollectionCollectionListSearchAdapter;
+use Netgen\InformationCollection\Core\Pagination\InformationCollectionContentsAdapter;
 use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminController extends Controller
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection
+     * @var \Netgen\InformationCollection\API\Service\InformationCollection
      */
     protected $service;
 
@@ -33,15 +33,15 @@ class AdminController extends Controller
     protected $configResolver;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer
+     * @var \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer
      */
     protected $anonymizer;
 
     /**
      * AdminController constructor.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection $service
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer $anonymizer
+     * @param \Netgen\InformationCollection\API\Service\InformationCollection $service
+     * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer $anonymizer
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
      */
@@ -67,7 +67,7 @@ class AdminController extends Controller
      */
     public function overviewAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+//        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $adapter = new InformationCollectionContentsAdapter($this->service, Query::count());
         $pager = $this->getPager($adapter, (int) $request->query->get('page'));
@@ -85,7 +85,7 @@ class AdminController extends Controller
      */
     public function collectionListAction(Request $request, $contentId)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+//        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $content = $this->contentService->loadContent($contentId);
         $query = Query::withContent($contentId);
@@ -108,7 +108,7 @@ class AdminController extends Controller
      */
     public function searchAction(Request $request, $contentId)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+//        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $content = $this->contentService->loadContent($contentId);
 
@@ -136,7 +136,7 @@ class AdminController extends Controller
      */
     public function viewAction($collectionId)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+//        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $collection = $this->service->getCollection(new Query(['collectionId' => $collectionId]));
 
@@ -155,7 +155,7 @@ class AdminController extends Controller
      */
     public function handleContentsAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+//        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $contents = $request->request->get('ContentId', []);
         $count = count($contents);
@@ -191,7 +191,7 @@ class AdminController extends Controller
      */
     public function handleCollectionListAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+//        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $contentId = $request->request->get('ContentId');
         $collections = $request->request->get('CollectionId', []);
@@ -240,7 +240,7 @@ class AdminController extends Controller
      */
     public function handleCollectionAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+//        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $collectionId = $request->request->get('CollectionId');
         $contentId = $request->request->get('ContentId');

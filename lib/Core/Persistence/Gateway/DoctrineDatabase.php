@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway;
+namespace Netgen\InformationCollection\Core\Persistence\Gateway;
 
 use Doctrine\DBAL\Connection;
 use PDO;

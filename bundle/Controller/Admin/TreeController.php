@@ -3,9 +3,9 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
-use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Content;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query;
+use Netgen\InformationCollection\API\Service\InformationCollection;
+use Netgen\InformationCollection\API\Value\Content;
+use Netgen\InformationCollection\API\Value\Filter\Query;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -23,14 +23,14 @@ class TreeController extends Controller
     protected $router;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection
+     * @var \Netgen\InformationCollection\API\Service\InformationCollection
      */
     protected $service;
 
     /**
      * TreeController constructor.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection
+     * @param \Netgen\InformationCollection\API\Service\InformationCollection
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
      * @param \Symfony\Component\Routing\RouterInterface $router
      */
@@ -53,7 +53,7 @@ class TreeController extends Controller
      */
     public function getChildrenAction($isRoot = false)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+//        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $result = array();
 
@@ -103,7 +103,7 @@ class TreeController extends Controller
     /**
      * Creates tree structure for Content
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Content $content
+     * @param \Netgen\InformationCollection\API\Value\Content $content
      * @param bool $isRoot
      *
      * @return array

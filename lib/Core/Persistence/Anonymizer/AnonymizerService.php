@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer;
+namespace Netgen\InformationCollection\Core\Persistence\Anonymizer;
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer;
-use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor;
-use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
+use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
+use Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor;
+use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
 
 class AnonymizerService implements Anonymizer
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository
+     * @var \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository
      */
     protected $collectionRepository;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository
+     * @var \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository
      */
     protected $collectionAttributeRepository;
 
@@ -30,7 +30,7 @@ class AnonymizerService implements Anonymizer
     protected $repository;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor
+     * @var \Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor
      */
     protected $fieldAnonymizerVisitor;
 
@@ -38,9 +38,9 @@ class AnonymizerService implements Anonymizer
      * Anonymizer constructor.
      *
      * @param \eZ\Publish\API\Repository\Repository $repository
-     * @param \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository $collectionRepository
-     * @param \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository $collectionAttributeRepository
-     * @param \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor $fieldAnonymizerVisitor
+     * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository $collectionRepository
+     * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository $collectionAttributeRepository
+     * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor $fieldAnonymizerVisitor
      */
     public function __construct(
         Repository $repository,
@@ -54,7 +54,7 @@ class AnonymizerService implements Anonymizer
         $this->fieldAnonymizerVisitor = $fieldAnonymizerVisitor;
     }
 
-    public function anonymizeCollection($collectionId, array $fields = [])
+    public function anonymizeCollection($collectionId, array $fields = []): void
     {
         $collection = $this->collectionRepository->find($collectionId);
 
@@ -66,7 +66,7 @@ class AnonymizerService implements Anonymizer
     }
 
     /**
-     * @param \Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection $collection
+     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection $collection
      * @param array $fields
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
@@ -97,7 +97,7 @@ class AnonymizerService implements Anonymizer
     }
 
     /**
-     * @param \Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute[] $attributes
+     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute[] $attributes
      */
     protected function anonymize(array $attributes, ContentType $contentType)
     {

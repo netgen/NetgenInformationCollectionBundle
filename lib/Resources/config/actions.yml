@@ -17,18 +17,18 @@ services:
         tags:
             - { name: netgen_information_collection.action, alias: database, priority: 300 }
 
-    netgen_information_collection.action.email:
-        class: Netgen\InformationCollection\Core\Action\EmailAction
-        arguments:
-            - '@netgen_information_collection.factory.email_data'
-            - '@netgen_information_collection.mailer'
-        tags:
-            - { name: netgen_information_collection.action, alias: email }
+#    netgen_information_collection.action.email:
+#        class: Netgen\InformationCollection\Core\Action\EmailAction
+#        arguments:
+#            - '@netgen_information_collection.factory.email_data'
+#            - '@netgen_information_collection.mailer'
+#        tags:
+#            - { name: netgen_information_collection.action, alias: email }
 
-    netgen_information_collection.action.auto_responder:
-        class: Netgen\InformationCollection\Core\Action\AutoResponderAction
-        arguments:
-            - '@netgen_information_collection.factory.auto_responder_data'
-            - '@netgen_information_collection.mailer'
-        tags:
-            - { name: netgen_information_collection.action, alias: auto_responder }
+#    netgen_information_collection.action.auto_responder:
+#        class: Netgen\InformationCollection\Core\Action\AutoResponderAction
+#        arguments:
+#            - '@netgen_information_collection.factory.auto_responder_data'
+#            - '@netgen_information_collection.mailer'
+#        tags:
+#            - { name: netgen_information_collection.action, alias: auto_responder }

@@ -17,7 +17,7 @@ services:
             - [setPageLayoutTemplate, ["$admin.pagelayout;netgen_information_collection$"]]
 
     netgen_information_collection.core.persistence.gateway.doctrine:
-        class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase
+        class: Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase
         public: false
         arguments:
             - '@database_connection'
@@ -44,7 +44,7 @@ services:
             - "@netgen_information_collection.utils.content_type"
 
     netgen_information_collection.utils.content_type:
-        class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils
+        class: Netgen\InformationCollection\Core\Persistence\ContentTypeUtils
         arguments:
             - "@ezpublish.api.service.content_type"
             - "@ezpublish.api.service.content"

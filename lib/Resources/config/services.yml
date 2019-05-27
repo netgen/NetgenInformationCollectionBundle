@@ -31,7 +31,7 @@ services:
         arguments:
             - '@mailer'
 
-#    netgen_information_collection.form.extension.field_definition:
-#        class: Netgen\Bundle\InformationCollectionBundle\Form\Extension\FieldDefinitionTypeExtension
-#        tags:
-#            - { name: form.type_extension, extended_type: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType }
+    netgen_information_collection.form.extension.field_definition:
+        class: Netgen\InformationCollection\Integration\RepositoryForms\FieldDefinitionTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType }

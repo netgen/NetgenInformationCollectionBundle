@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Core\Service;
 
 use eZ\Publish\API\Repository\Repository;
-use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Attribute;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collection;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collections;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Content;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\ContentsWithCollections;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query;
-use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase;
-use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
-use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
+use Netgen\InformationCollection\API\Service\InformationCollection;
+use Netgen\InformationCollection\API\Value\Attribute;
+use Netgen\InformationCollection\API\Value\Collection;
+use Netgen\InformationCollection\API\Value\Collections;
+use Netgen\InformationCollection\API\Value\Content;
+use Netgen\InformationCollection\API\Value\ContentsWithCollections;
+use Netgen\InformationCollection\API\Value\Filter\Query;
+use Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase;
+use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
 
 class InformationCollectionService implements InformationCollection
 {
@@ -74,7 +74,7 @@ class InformationCollectionService implements InformationCollection
     /**
      * {@inheritdoc}
      */
-    public function getObjectsWithCollections(Query $query)
+    public function getObjectsWithCollections(Query $query): ContentsWithCollections
     {
         if ($query->limit === Query::COUNT_QUERY) {
             return new ContentsWithCollections([
@@ -126,7 +126,7 @@ class InformationCollectionService implements InformationCollection
         );
     }
 
-    public function getCollections(Query $query)
+    public function getCollections(Query $query): Collections
     {
         if ($query->limit === Query::COUNT_QUERY) {
             return new Collections([
@@ -160,7 +160,7 @@ class InformationCollectionService implements InformationCollection
     /**
      * {@inheritdoc}
      */
-    public function search(Query $query)
+    public function search(Query $query): Collections
     {
         if ($query->limit === Query::COUNT_QUERY) {
             $collections = $this->ezInfoCollectionAttributeRepository->search($query->contentId, $query->searchText);
@@ -205,7 +205,7 @@ class InformationCollectionService implements InformationCollection
     /**
      * {@inheritdoc}
      */
-    public function getCollection(Query $query)
+    public function getCollection(Query $query): Collection
     {
         return $this->loadCollection($query->collectionId);
     }
@@ -213,7 +213,7 @@ class InformationCollectionService implements InformationCollection
     /**
      * {@inheritdoc}
      */
-    public function deleteCollectionFields(Query $query)
+    public function deleteCollectionFields(Query $query): void
     {
         $attributes = $this->ezInfoCollectionAttributeRepository
             ->findBy(
@@ -229,7 +229,7 @@ class InformationCollectionService implements InformationCollection
     /**
      * {@inheritdoc}
      */
-    public function deleteCollections(Query $query)
+    public function deleteCollections(Query $query): void
     {
         $collections = $this->ezInfoCollectionRepository
             ->findBy([
@@ -248,7 +248,7 @@ class InformationCollectionService implements InformationCollection
     /**
      * {@inheritdoc}
      */
-    public function deleteCollectionByContent(Query $query)
+    public function deleteCollectionByContent(Query $query): void
     {
         $collections = $this->ezInfoCollectionRepository
             ->findBy([
