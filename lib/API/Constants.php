@@ -2,7 +2,7 @@
 
 namespace Netgen\InformationCollection\API;
 
-class Constants
+final class Constants
 {
     /**
      * Recipient field identifier.

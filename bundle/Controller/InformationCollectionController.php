@@ -5,10 +5,10 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\CachableView;
 use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
 use Netgen\InformationCollection\API\InformationCollectionTrait;
+use Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class InformationCollectionController implements ContainerAwareInterface
 {
@@ -25,7 +25,7 @@ class InformationCollectionController implements ContainerAwareInterface
      */
     public function displayAndHandle(ContentValueView $view, Request $request)
     {
-        $parameters = $this->collectInformation($view, $request);
+        $parameters = $this->collectInformation($view, $request, new AdditionalContent());
 
         $view->addParameters($parameters);
 
@@ -34,16 +34,5 @@ class InformationCollectionController implements ContainerAwareInterface
         }
 
         return $view;
-    }
-
-
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
     }
 }

@@ -4,8 +4,8 @@ namespace Netgen\InformationCollection\API;
 
 use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
 use eZ\Publish\Core\MVC\Symfony\View\LocationValueView;
+use Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
-//use Netgen\InformationCollection\API\Events;
 use Symfony\Component\HttpFoundation\Request;
 use Netgen\InformationCollection\API\Form\DynamicFormBuilderInterface;
 
@@ -16,10 +16,11 @@ trait InformationCollectionTrait
      *
      * @param \eZ\Publish\Core\MVC\Symfony\View\ContentValueView $view
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent $additionalContent
      *
      * @return array
      */
-    protected function collectInformation(ContentValueView $view, Request $request)
+    protected function collectInformation(ContentValueView $view, Request $request, AdditionalContent $additionalContent): array
     {
         $isValid = false;
 
@@ -38,21 +39,23 @@ trait InformationCollectionTrait
         if ($form->isSubmitted() && $form->isValid()) {
             $isValid = true;
 
-            dump($form->getData());
-
-//            $event = new InformationCollected($form->getData());
+            $event = new InformationCollected(
+                $form->getData(),
+                $view->getLocation(),
+                $additionalContent
+            );
 
             /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher */
-//            $dispatcher = $this->container
-//                ->get('event_dispatcher');
+            $dispatcher = $this->container
+                ->get('event_dispatcher');
 
-//            $dispatcher->dispatch(Events::INFORMATION_COLLECTED, $event);
+            $dispatcher->dispatch(Events::INFORMATION_COLLECTED, $event);
         }
 
         return array(
             'is_valid' => $isValid,
             'form' => $form->createView(),
-//            'collected_fields' => $form->getData()->payload->getCollectedFields(),
+            'collected_fields' => $form->getData()->fieldsData,
         );
     }
 }

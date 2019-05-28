@@ -2,7 +2,7 @@
 
 namespace Netgen\InformationCollection\API;
 
-class Priority
+final class Priority
 {
     /**
      * Defines somehow default priority for action.

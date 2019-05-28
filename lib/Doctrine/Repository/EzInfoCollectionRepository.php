@@ -10,9 +10,9 @@ use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
 class EzInfoCollectionRepository extends EntityRepository
 {
     /**
-     * Get new EzInfoCollection instance.
+     * Get new \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection instance.
      *
-     * @return EzInfoCollection
+     * @return \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection
      */
     public function getInstance()
     {
@@ -22,7 +22,7 @@ class EzInfoCollectionRepository extends EntityRepository
     /**
      * Save object.
      *
-     * @param EzInfoCollection $informationCollection
+     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection $informationCollection
      */
     public function save(EzInfoCollection $informationCollection)
     {

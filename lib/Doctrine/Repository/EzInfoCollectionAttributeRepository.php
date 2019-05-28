@@ -10,9 +10,9 @@ use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
 class EzInfoCollectionAttributeRepository extends EntityRepository
 {
     /**
-     * Get new EzInfoCollectionAttribute instance.
+     * Get new \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute instance.
      *
-     * @return EzInfoCollectionAttribute
+     * @return \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute
      */
     public function getInstance()
     {
@@ -22,7 +22,7 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
     /**
      * Save object.
      *
-     * @param EzInfoCollectionAttribute $infoCollectionAttribute
+     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute $infoCollectionAttribute
      */
     public function save(EzInfoCollectionAttribute $infoCollectionAttribute)
     {
@@ -31,7 +31,7 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
     }
 
     /**
-     * @param \Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollectionAttribute[] $attributes
+     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute[] $attributes
      */
     public function remove(array $attributes)
     {

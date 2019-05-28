@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Core\Action;
 
 use Doctrine\DBAL\DBALException;
+use eZ\Publish\API\Repository\PermissionResolver;
 use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\Core\Repository\Values\Content\Content;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use Netgen\InformationCollection\API\Exception\ActionFailedException;
 use Netgen\InformationCollection\Core\Factory\FieldDataFactory;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
-
 use Netgen\InformationCollection\API\Action\ActionInterface;
 use Netgen\InformationCollection\API\Action\CrucialActionInterface;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
@@ -21,43 +20,49 @@ use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 class DatabaseAction implements ActionInterface, CrucialActionInterface
 {
     /**
-     * @var FieldDataFactory
+     * @var \Netgen\InformationCollection\Core\Factory\FieldDataFactory
      */
     protected $factory;
 
     /**
-     * @var EzInfoCollectionRepository
+     * @var \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository
      */
     protected $infoCollectionRepository;
 
     /**
-     * @var EzInfoCollectionAttributeRepository
+     * @var \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository
      */
     protected $infoCollectionAttributeRepository;
 
     /**
-     * @var Repository
+     * @var \eZ\Publish\API\Repository\Repository
      */
     protected $repository;
+    /**
+     * @var \eZ\Publish\API\Repository\PermissionResolver
+     */
+    private $permissionResolver;
 
     /**
      * PersistToDatabaseAction constructor.
      *
-     * @param FieldDataFactory $factory
-     * @param EzInfoCollectionRepository $infoCollectionRepository
-     * @param EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository
-     * @param Repository $repository
+     * @param \Netgen\InformationCollection\Core\Factory\FieldDataFactory $factory
+     * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository $infoCollectionRepository
+     * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository
+     * @param \eZ\Publish\API\Repository\Repository $repository
      */
     public function __construct(
         FieldDataFactory $factory,
         EzInfoCollectionRepository $infoCollectionRepository,
         EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository,
-        Repository $repository
+        Repository $repository,
+        PermissionResolver $permissionResolver
     ) {
         $this->factory = $factory;
         $this->infoCollectionRepository = $infoCollectionRepository;
         $this->infoCollectionAttributeRepository = $infoCollectionAttributeRepository;
         $this->repository = $repository;
+        $this->permissionResolver = $permissionResolver;
     }
 
     /**
@@ -68,19 +73,25 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
         $struct = $event->getInformationCollectionStruct();
         $contentType = $event->getContentType();
         $location = $event->getLocation();
+        $content = $event->getContent();
 
-        /** @var Content $content */
-        $content = $this->repository->getContentService()->loadContent($location->contentInfo->id);
+        $userReference = $this->permissionResolver
+            ->getCurrentUserReference();
 
-        $currentUser = $this->repository->getCurrentUser();
+        $user = $this->repository
+            ->getUserService()
+            ->loadUser(
+                $userReference->getUserId()
+            );
+
         $dt = new \DateTimeImmutable();
 
         /** @var EzInfoCollection $ezInfo */
         $ezInfo = $this->infoCollectionRepository->getInstance();
 
         $ezInfo->setContentObjectId($location->getContentInfo()->id);
-        $ezInfo->setUserIdentifier($currentUser->login);
-        $ezInfo->setCreatorId($currentUser->id);
+        $ezInfo->setUserIdentifier($user->login);
+        $ezInfo->setCreatorId($user->id);
         $ezInfo->setCreated($dt->getTimestamp());
         $ezInfo->setModified($dt->getTimestamp());
 
@@ -94,23 +105,22 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
          * @var string
          * @var \eZ\Publish\Core\FieldType\Value $value
          */
-        foreach ($struct->getCollectedFields() as $fieldDefIdentifier => $value) {
+        foreach ($struct->fieldsData as $fieldDefIdentifier => $value) {
             if ($value === null) {
                 continue;
             }
 
-            $value = $this->factory->getLegacyValue($value, $contentType->getFieldDefinition($fieldDefIdentifier));
-
+            $value = $this->factory->getLegacyValue($value->value, $contentType->getFieldDefinition($fieldDefIdentifier));
             $ezInfoAttribute = $this->infoCollectionAttributeRepository->getInstance();
 
-            /* @var LegacyData $value */
+            /* @var FieldValue $value */
             $ezInfoAttribute->setContentObjectId($location->getContentInfo()->id);
             $ezInfoAttribute->setInformationCollectionId($ezInfo->getId());
-            $ezInfoAttribute->setContentClassAttributeId($value->getContentClassAttributeId());
+            $ezInfoAttribute->setContentClassAttributeId($value->fieldDefinitionId);
             $ezInfoAttribute->setContentObjectAttributeId($content->getField($fieldDefIdentifier)->id);
-            $ezInfoAttribute->setDataInt($value->getDataInt());
-            $ezInfoAttribute->setDataFloat($value->getDataFloat());
-            $ezInfoAttribute->setDataText($value->getDataText());
+            $ezInfoAttribute->setDataInt($value->dataInt);
+            $ezInfoAttribute->setDataFloat($value->dataFloat);
+            $ezInfoAttribute->setDataText($value->dataText);
 
             try {
                 $this->infoCollectionAttributeRepository->save($ezInfoAttribute);
