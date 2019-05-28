@@ -35,7 +35,7 @@ abstract class ValueObject
      * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException When property does not exist
      * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException When property is readonly (protected)
      */
-    public function __set($property, $value)
+    public function __set(string $property, string $value): void
     {
         if (property_exists($this, $property)) {
             throw new PropertyReadOnlyException($property, get_class($this));
@@ -56,7 +56,7 @@ abstract class ValueObject
      *
      * @return mixed
      */
-    public function __get($property)
+    public function __get(string $property)
     {
         if (property_exists($this, $property)) {
             return $this->{$property};
@@ -75,7 +75,7 @@ abstract class ValueObject
      *
      * @return bool
      */
-    public function __isset($property)
+    public function __isset(string $property): bool
     {
         return property_exists($this, $property);
     }
@@ -94,7 +94,7 @@ abstract class ValueObject
      *
      * @return bool
      */
-    public function __unset($property)
+    public function __unset(string $property): void
     {
         $this->__set($property, null);
     }

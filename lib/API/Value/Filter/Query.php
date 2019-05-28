@@ -76,7 +76,7 @@ class Query extends ValueObject
      *
      * @return self
      */
-    public static function withContent($contentId)
+    public static function withContent(int $contentId): \Netgen\InformationCollection\API\Value\Filter\Query
     {
         return new self([
             'contentId' => $contentId,
@@ -89,7 +89,7 @@ class Query extends ValueObject
      *
      * @return self
      */
-    public static function count()
+    public static function count(): \Netgen\InformationCollection\API\Value\Filter\Query
     {
         return new self([
             'limit' => 0,

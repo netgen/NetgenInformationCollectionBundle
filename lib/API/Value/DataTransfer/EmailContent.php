@@ -43,7 +43,7 @@ class EmailContent extends ValueObject
      * @param string $body
      * @param BinaryFile[] $attachments
      */
-    public function __construct($recipient, $sender, $subject, $body, $attachments = null)
+    public function __construct(string $recipient, string $sender, string $subject, string $body, array $attachments = null)
     {
         $this->recipient = $recipient;
         $this->subject = $subject;
@@ -55,7 +55,7 @@ class EmailContent extends ValueObject
     /**
      * @return string
      */
-    public function getRecipient()
+    public function getRecipient(): string
     {
         return $this->recipient;
     }
@@ -63,7 +63,7 @@ class EmailContent extends ValueObject
     /**
      * @return string
      */
-    public function getSubject()
+    public function getSubject(): string
     {
         return $this->subject;
     }
@@ -71,7 +71,7 @@ class EmailContent extends ValueObject
     /**
      * @return string
      */
-    public function getSender()
+    public function getSender(): string
     {
         return $this->sender;
     }
@@ -79,7 +79,7 @@ class EmailContent extends ValueObject
     /**
      * @return string
      */
-    public function getBody()
+    public function getBody(): string
     {
         return $this->body;
     }
@@ -87,7 +87,7 @@ class EmailContent extends ValueObject
     /**
      * @return bool
      */
-    public function hasAttachments()
+    public function hasAttachments(): bool
     {
         return !empty($this->attachments);
     }
@@ -95,7 +95,7 @@ class EmailContent extends ValueObject
     /**
      * @return BinaryFile[]
      */
-    public function getAttachments()
+    public function getAttachments(): ?array
     {
         return $this->attachments;
     }
