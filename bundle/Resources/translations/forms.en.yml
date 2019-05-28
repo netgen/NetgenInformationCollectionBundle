@@ -1,0 +1,7 @@
+role.policy.infocollector: "Information collection"
+role.policy.infocollector.all_functions: "Information collection / All functions"
+role.policy.infocollector.read: "Information collection / Read"
+role.policy.infocollector.delete: "Information collection / Delete"
+role.policy.infocollector.anonymize: "Information collection / Anonymize"
+
+

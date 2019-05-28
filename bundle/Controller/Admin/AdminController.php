@@ -67,7 +67,7 @@ class AdminController extends Controller
      */
     public function overviewAction(Request $request)
     {
-//        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $adapter = new InformationCollectionContentsAdapter($this->service, Query::count());
         $pager = $this->getPager($adapter, (int) $request->query->get('page'));
@@ -85,7 +85,7 @@ class AdminController extends Controller
      */
     public function collectionListAction(Request $request, $contentId)
     {
-//        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $content = $this->contentService->loadContent($contentId);
         $query = Query::withContent($contentId);
@@ -108,7 +108,7 @@ class AdminController extends Controller
      */
     public function searchAction(Request $request, $contentId)
     {
-//        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $content = $this->contentService->loadContent($contentId);
 
@@ -136,7 +136,7 @@ class AdminController extends Controller
      */
     public function viewAction($collectionId)
     {
-//        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $collection = $this->service->getCollection(new Query(['collectionId' => $collectionId]));
 
@@ -155,7 +155,7 @@ class AdminController extends Controller
      */
     public function handleContentsAction(Request $request)
     {
-//        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $contents = $request->request->get('ContentId', []);
         $count = count($contents);
@@ -167,6 +167,9 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('DeleteCollectionByContentAction')) {
+
+            $this->denyAccessUnlessGranted('ez:infocollector:delete');
+
             $query = new Query([
                 'contents' => $contents,
             ]);
@@ -191,7 +194,7 @@ class AdminController extends Controller
      */
     public function handleCollectionListAction(Request $request)
     {
-//        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $contentId = $request->request->get('ContentId');
         $collections = $request->request->get('CollectionId', []);
@@ -204,6 +207,9 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('DeleteCollectionAction')) {
+
+            $this->denyAccessUnlessGranted('ez:infocollector:delete');
+
             $query = new Query([
                 'contentId' => $contentId,
                 'collections' => $collections,
@@ -216,6 +222,8 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('AnonymizeCollectionAction')) {
+
+            $this->denyAccessUnlessGranted('ez:infocollector:anonymize');
 
             foreach ($collections as $collection) {
                 $this->anonymizer->anonymizeCollection($collection);
@@ -240,7 +248,7 @@ class AdminController extends Controller
      */
     public function handleCollectionAction(Request $request)
     {
-//        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $collectionId = $request->request->get('CollectionId');
         $contentId = $request->request->get('ContentId');
@@ -257,6 +265,9 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('DeleteFieldAction')) {
+
+            $this->denyAccessUnlessGranted('ez:infocollector:delete');
+
             $query = new Query([
                 'contentId' => $contentId,
                 'collectionId' => $collectionId,
@@ -270,6 +281,9 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('AnonymizeFieldAction')) {
+
+            $this->denyAccessUnlessGranted('ez:infocollector:anymize');
+
             $this->anonymizer->anonymizeCollection($collectionId, $fields);
 
             $this->addFlashMessage('success', 'field_anonymized', $count);
@@ -278,6 +292,9 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('DeleteCollectionAction')) {
+
+            $this->denyAccessUnlessGranted('ez:infocollector:delete');
+
             $query = new Query([
                 'contentId' => $contentId,
                 'collections' => [$collectionId],
@@ -291,6 +308,9 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('AnonymizeCollectionAction')) {
+
+            $this->denyAccessUnlessGranted('ez:infocollector:anymize');
+
             $this->anonymizer->anonymizeCollection($collectionId);
 
             $this->addFlashMessage("success", "collection_anonymized");

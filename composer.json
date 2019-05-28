@@ -26,7 +26,9 @@
         "ezsystems/ezpublish-kernel": "^7.4",
         "swiftmailer/swiftmailer": "^6.0",
         "league/csv": "^8.0",
-        "twig/twig": "^2.5"
+        "twig/twig": "^2.5",
+        "doctrine/doctrine-migrations-bundle": "^2.0",
+        "lolautruche/ez-core-extra-bundle": "^2.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",

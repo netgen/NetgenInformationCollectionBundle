@@ -29,7 +29,7 @@ class InformationCollectedListener implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             Events::INFORMATION_COLLECTED => 'onInformationCollected',
@@ -41,7 +41,7 @@ class InformationCollectedListener implements EventSubscriberInterface
      *
      * @param InformationCollected $event
      */
-    public function onInformationCollected(InformationCollected $event)
+    public function onInformationCollected(InformationCollected $event): void
     {
         $this->actionAggregate->act($event);
     }

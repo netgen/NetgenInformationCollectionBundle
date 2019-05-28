@@ -53,7 +53,7 @@ class TreeController extends Controller
      */
     public function getChildrenAction($isRoot = false)
     {
-//        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $result = array();
 

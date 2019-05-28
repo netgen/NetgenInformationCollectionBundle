@@ -16,7 +16,7 @@ use Exception;
 class DataAnonymizerCommand extends ContainerAwareCommand
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Anonymizer\AnonymizerServiceFacade
+     * @var \Netgen\InformationCollection\Core\Persistence\Anonymizer\AnonymizerServiceFacade
      */
     protected $anonymizer;
 

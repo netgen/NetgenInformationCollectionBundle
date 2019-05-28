@@ -40,7 +40,7 @@ final class ExportController extends Controller
      */
     public function exportAction($contentId, Request $request)
     {
-//        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
         $content = $this->contentService->loadContent($contentId);
 
