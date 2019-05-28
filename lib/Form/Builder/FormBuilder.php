@@ -2,10 +2,8 @@
 
 namespace Netgen\InformationCollection\Form\Builder;
 
-use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionMapper;
 use Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Form\Type;
+namespace Netgen\InformationCollection\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ExportType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('dateFrom', DateType::class, [
             'required' => false,

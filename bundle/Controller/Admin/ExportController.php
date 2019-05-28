@@ -6,7 +6,7 @@ use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use Netgen\InformationCollection\API\Service\Exporter;
 use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
-use Netgen\Bundle\InformationCollectionBundle\Form\Type\ExportType;
+use Netgen\InformationCollection\Form\Type\ExportType;
 use Symfony\Component\HttpFoundation\Request;
 use League\Csv\Writer;
 use SplTempFileObject;
