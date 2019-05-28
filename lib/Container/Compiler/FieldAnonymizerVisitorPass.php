@@ -26,7 +26,7 @@ class FieldAnonymizerVisitorPass implements CompilerPassInterface
      */
     private $visitorTag = 'netgen_information_collection.anonymizer.visitor.field';
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has($this->aggregateVisitorId)) {
             return;

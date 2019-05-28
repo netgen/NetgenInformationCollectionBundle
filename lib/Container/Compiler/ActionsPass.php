@@ -13,7 +13,7 @@ class ActionsPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition('netgen_information_collection.action.registry')) {
             return;
