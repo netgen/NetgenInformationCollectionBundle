@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Service;
 
-use Netgen\Bundle\InformationCollectionBundle\API\Service\Exporter;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\Export;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\ExportCriteria;
+use Netgen\InformationCollection\API\Service\Exporter;
+use Netgen\InformationCollection\API\Value\Export\Export;
+use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
 use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
@@ -59,7 +59,7 @@ class ExporterService implements Exporter
     /**
      * {@inheritdoc}
      */
-    public function export(ExportCriteria $criteria)
+    public function export(ExportCriteria $criteria): Export
     {
         $fields = $this->contentTypeUtils->getInfoCollectorFields($criteria->content->id);
         $fields['created'] = $this->translator->trans('netgen_information_collection_admin_export_created', [], 'netgen_information_collection_admin');

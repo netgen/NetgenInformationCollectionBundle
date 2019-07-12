@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netgen\InformationCollection\API\Mailer;
+namespace Netgen\InformationCollection\API;
 
 interface MailerInterface
 {
