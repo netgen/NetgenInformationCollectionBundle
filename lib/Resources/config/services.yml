@@ -40,3 +40,19 @@ services:
         class: Netgen\InformationCollection\Core\Mapper\DomainObjectMapper
         arguments:
             - '@ezpublish.api.repository'
+
+
+    netgen_information_collection.twig.extension.rendering:
+        class: Netgen\InformationCollection\Templating\Twig\Extension\FieldRenderingExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    netgen_information_collection.twig.runtime.rendering:
+        class: Netgen\InformationCollection\Templating\Twig\Extension\FieldRenderingRuntime
+        # public: false
+        arguments:
+            - '@twig'
+            - '@ezpublish.config.resolver'
+        tags:
+            - { name: twig.runtime }

@@ -44,4 +44,28 @@ class AttributeValue extends ValueObject
 
         return '';
     }
+
+    /**
+     * @return int
+     */
+    public function getDataInt(): int
+    {
+        return $this->dataInt;
+    }
+
+    /**
+     * @return float
+     */
+    public function getDataFloat(): float
+    {
+        return $this->dataFloat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDataText(): string
+    {
+        return $this->dataText;
+    }
 }

@@ -1,0 +1,14 @@
+{% trans_default_domain "netgen_information_collection_fields" %}
+
+{% block ezstring_field %}
+{% spaceless %}
+    {% set field_value = attribute.value %}
+    {{ field_value.dataText }}
+{% endspaceless %}
+{% endblock %}
+
+{% block default_field %}
+    {% spaceless %}
+        {{ attribute.value }}
+    {% endspaceless %}
+{% endblock %}
