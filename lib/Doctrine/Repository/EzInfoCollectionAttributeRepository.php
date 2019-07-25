@@ -5,6 +5,16 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Doctrine\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\ORMInvalidArgumentException;
+use eZ\Publish\API\Repository\Values\Content\Content;
+use Netgen\InformationCollection\API\Exception\RemoveAttributeFailedException;
+use Netgen\InformationCollection\API\Exception\RetrieveCountException;
+use Netgen\InformationCollection\API\Exception\StoringAttributeFailedException;
+use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
+use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
 
 class EzInfoCollectionAttributeRepository extends EntityRepository
@@ -19,27 +29,54 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
         return new EzInfoCollectionAttribute();
     }
 
+    public function createNewFromValues(Content $content, EzInfoCollection $collection, FieldValue $fieldValue, string $fieldDefIdentifier): EzInfoCollectionAttribute
+    {
+        $ezInfoAttribute = $this->getInstance();
+
+        $ezInfoAttribute->setContentObjectId($content->contentInfo->id);
+        $ezInfoAttribute->setInformationCollectionId($collection->getId());
+        $ezInfoAttribute->setContentClassAttributeId($fieldValue->getFieldDefinitionId());
+        $ezInfoAttribute->setContentObjectAttributeId($content->getField($fieldDefIdentifier)->id);
+        $ezInfoAttribute->setDataInt($fieldValue->getDataInt());
+        $ezInfoAttribute->setDataFloat($fieldValue->getDataFloat());
+        $ezInfoAttribute->setDataText($fieldValue->getDataText());
+
+        return $ezInfoAttribute;
+    }
+
     /**
      * Save object.
      *
      * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute $infoCollectionAttribute
+     *
+     * @throws StoringAttributeFailedException
      */
     public function save(EzInfoCollectionAttribute $infoCollectionAttribute)
     {
-        $this->_em->persist($infoCollectionAttribute);
-        $this->_em->flush($infoCollectionAttribute);
+        try {
+            $this->_em->persist($infoCollectionAttribute);
+            $this->_em->flush($infoCollectionAttribute);
+        } catch (ORMException | ORMInvalidArgumentException $exception) {
+            throw new StoringAttributeFailedException('', '');
+        }
     }
 
     /**
      * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute[] $attributes
+     *
+     * @throws ORMException
      */
     public function remove(array $attributes)
     {
-        foreach ($attributes as $attribute) {
-            $this->_em->remove($attribute);
-        }
+        try {
+            foreach ($attributes as $attribute) {
+                $this->_em->remove($attribute);
+            }
 
-        $this->_em->flush();
+            $this->_em->flush();
+        } catch (ORMException | ORMInvalidArgumentException $exception) {
+            throw  new RemoveAttributeFailedException('', '');
+        }
     }
 
     public function findByCollectionIdAndFieldDefinitionIds($collectionId, $fieldDefinitionIds)
@@ -68,12 +105,16 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
 
     public function getCountByContentId($contentId)
     {
-        return (int) $this->createQueryBuilder('eica')
-            ->andWhere('eica.contentObjectId = :contentId')
-            ->setParameter('contentId', $contentId)
-            ->select('COUNT(eica) as children_count')
-            ->getQuery()
-            ->getSingleScalarResult();
+        try {
+            return (int)$this->createQueryBuilder('eica')
+                ->andWhere('eica.contentObjectId = :contentId')
+                ->setParameter('contentId', $contentId)
+                ->select('COUNT(eica) as children_count')
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NonUniqueResultException | NoResultException $exception) {
+            throw new RetrieveCountException('', '');
+        }
     }
 
     public function search($contentId, $searchText)

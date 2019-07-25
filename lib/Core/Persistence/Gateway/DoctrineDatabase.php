@@ -31,7 +31,7 @@ class DoctrineDatabase
      *
      * @return int
      */
-    public function getContentsWithCollectionsCount()
+    public function getContentsWithCollectionsCount(): int
     {
         $query = $this->connection->createQueryBuilder();
         $query->select(
@@ -59,7 +59,7 @@ class DoctrineDatabase
 
         $statement = $query->execute();
 
-        return (int) $statement->fetchColumn();
+        return (int)$statement->fetchColumn();
     }
 
     /**

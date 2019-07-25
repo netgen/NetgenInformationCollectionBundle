@@ -1,2 +1,10 @@
 imports:
     - { resource: controllers.yml }
+
+services:
+    netgen_information_collection.param_converter.collection:
+        class: Netgen\Bundle\InformationCollectionBundle\ParamConverter\CollectionParamConverter
+        arguments:
+            - '@netgen_information_collection.api.service'
+        tags:
+            - { name: request.param_converter }

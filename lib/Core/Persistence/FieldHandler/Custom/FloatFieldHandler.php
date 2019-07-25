@@ -33,9 +33,6 @@ class FloatFieldHandler implements CustomLegacyFieldHandlerInterface
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {
-        return new FieldValue([
-            'fieldDefinitionId' => $fieldDefinition->id,
-            'dataFloat' => $value->value,
-        ]);
+        return FieldValue::withFloatValue($fieldDefinition->id, $value->value);
     }
 }

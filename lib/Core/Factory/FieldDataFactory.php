@@ -42,19 +42,13 @@ class FieldDataFactory
         $handler = $this->registry->handle($value);
 
         if (null === $handler) {
-            return new FieldValue([
-                'fieldDefinitionId' => $fieldDefinition->id,
-                'dataText' => (string) $value,
-            ]);
+            return new FieldValue($fieldDefinition->id, (string)$value);
         }
 
         if ($handler instanceof CustomLegacyFieldHandlerInterface) {
             return $handler->getLegacyValue($value, $fieldDefinition);
         }
 
-        return new FieldValue([
-            'fieldDefinitionId' => $fieldDefinition->id,
-            'dataText' => $handler->toString($value, $fieldDefinition),
-        ]);
+        return new FieldValue($fieldDefinition->id, $handler->toString($value, $fieldDefinition));
     }
 }

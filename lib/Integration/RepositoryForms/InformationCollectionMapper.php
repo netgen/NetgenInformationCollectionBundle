@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Integration\RepositoryForms;
 
+use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\API\Repository\Values\ValueObject;
-use eZ\Publish\SPI\Search\Field;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\Mapper\FormDataMapperInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +20,7 @@ class InformationCollectionMapper implements FormDataMapperInterface
      * @param \eZ\Publish\API\Repository\Values\ValueObject|\eZ\Publish\API\Repository\Values\Content\Content $contentDraft
      * @param array $params
      *
-     * @return InformationCollectionData
+     * @return InformationCollectionStruct
      */
     public function mapToFormData(ValueObject $contentDraft, array $params = [])
     {
@@ -30,23 +30,33 @@ class InformationCollectionMapper implements FormDataMapperInterface
         $params = $optionsResolver->resolve($params);
         $languageCode = $params['languageCode'];
 
-        $data = new InformationCollectionData(['contentDraft' => $contentDraft]);
-        $data->initialLanguageCode = $languageCode;
-
         $fields = $contentDraft->getFieldsByLanguage($languageCode);
+
+        $informationCollectionFields = [];
+
         /** @var FieldDefinition $fieldDef */
         foreach ($params['contentType']->fieldDefinitions as $fieldDef) {
             if ($fieldDef->isInfoCollector) {
                 $field = $fields[$fieldDef->identifier];
-                $data->addFieldData(new FieldData([
-                    'fieldDefinition' => $fieldDef,
-                    'field' => $field,
-                    'value' => $field->value,
-                ]));
+
+                $fieldData = new FieldData(
+                    [
+                        'fieldDefinition' => $fieldDef,
+                        'field' => $field,
+                        'value' => $field->value,
+                    ]
+                );
+
+                $informationCollectionFields[] = $fieldData;
             }
         }
 
-        return $data;
+        return new InformationCollectionStruct(
+            $contentDraft,
+            $params['contentType'],
+            $informationCollectionFields,
+            $languageCode
+        );
     }
 
     private function configureOptions(OptionsResolver $optionsResolver)

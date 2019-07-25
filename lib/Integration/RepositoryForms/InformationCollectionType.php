@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Integration\RepositoryForms;
 
-use eZ\Publish\API\Repository\Values\Content\ContentStruct;
 use EzSystems\RepositoryForms\Form\Type\Content\BaseContentType;
+use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InformationCollectionType extends AbstractType
@@ -39,7 +37,7 @@ class InformationCollectionType extends AbstractType
         $resolver
             ->setDefaults([
                 'drafts_enabled' => false,
-                'data_class' => InformationCollectionData::class,
+                'data_class' => InformationCollectionStruct::class,
                 'translation_domain' => 'ezrepoforms_content',
             ]);
     }

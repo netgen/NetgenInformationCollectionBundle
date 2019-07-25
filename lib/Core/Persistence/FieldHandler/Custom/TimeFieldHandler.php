@@ -33,9 +33,6 @@ class TimeFieldHandler implements CustomLegacyFieldHandlerInterface
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {
-        return new FieldValue([
-            'fieldDefinitionId' => $fieldDefinition->id,
-            'dataInt' => $value->time,
-        ]);
+        return FieldValue::withIntValue($fieldDefinition->id, $value->time);
     }
 }

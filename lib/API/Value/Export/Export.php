@@ -11,10 +11,32 @@ class Export extends ValueObject
     /**
      * @var array
      */
-    public $header;
+    protected $header;
 
     /**
      * @var array
      */
-    public $contents;
+    protected $contents;
+
+    public function __construct(array $header, array $contents)
+    {
+        $this->header = $header;
+        $this->contents = $contents;
+    }
+
+    /**
+     * @return array
+     */
+    public function getContents(): array
+    {
+        return $this->contents;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHeader(): array
+    {
+        return $this->header;
+    }
 }

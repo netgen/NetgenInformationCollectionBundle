@@ -10,8 +10,8 @@
 
     {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
-    <h1>{{ 'netgen_information_collection_admin_view_title'|trans({'%collection_id%': collection.entity.id, '%content_name%': ez_content_name(collection.content)}) }}</h1>
-    <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.entity.modified|date("Y.m.d H:i"), '%user_name%': ez_content_name(collection.user.content)}) }}</h6>
+    <h1>{{ 'netgen_information_collection_admin_view_title'|trans({'%collection_id%': collection.id, '%content_name%': ez_content_name(collection.content)}) }}</h1>
+    <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.modified|date("Y.m.d H:i"), '%user_name%': ez_content_name(collection.creator.content)}) }}</h6>
 
     <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection') }}">
 
@@ -23,7 +23,7 @@
             <button type="submit" name="AnonymizeCollectionAction" class="ng-ui-btn">{{ 'netgen_information_collection_admin_view_anonymize'|trans }}</button>
         </div>
 
-        <input type="hidden" value="{{ collection.entity.id }}" name="CollectionId">
+        <input type="hidden" value="{{ collection.id }}" name="CollectionId">
         <input type="hidden" value="{{ collection.content.id }}" name="ContentId">
 
         {% for attribute in collection.attributes %}
@@ -32,10 +32,10 @@
                     <input id="{{ attribute.field.id }}" name="FieldId[]" value="{{ attribute.field.id }}" title="Select collections for removal." type="checkbox" data-enable="Item">
                     <label for="{{ attribute.field.id }}">
                         <span class="attribute-name">
-                            {{ ez_field_name(content, attribute.field.identifier) }}:
+                            {{ ez_field_name(content, attribute.field.fieldDefIdentifier) }}:
                         </span>
                         <span class="attribute-value">
-                            {{ attribute.entity.value }}
+                            {{ attribute.value }}
                         </span>
                     </label>
                 </div>

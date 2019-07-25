@@ -33,9 +33,6 @@ class IntegerFieldHandler implements CustomLegacyFieldHandlerInterface
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {
-        return new FieldValue([
-            'fieldDefinitionId' => $fieldDefinition->id,
-            'dataInt' => $value->value,
-        ]);
+        return FieldValue::withIntValue($fieldDefinition->id, $value->value);
     }
 }

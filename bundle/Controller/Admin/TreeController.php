@@ -2,9 +2,11 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
+use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use Netgen\InformationCollection\API\Service\InformationCollection;
 use Netgen\InformationCollection\API\Value\Content;
+use Netgen\InformationCollection\API\Value\Filter\ContentId;
 use Netgen\InformationCollection\API\Value\Filter\Query;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\RouterInterface;
@@ -53,7 +55,8 @@ class TreeController extends Controller
      */
     public function getChildrenAction($isRoot = false)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $attribute = new Attribute('infocollector', 'read');
+        $this->denyAccessUnlessGranted($attribute);
 
         $result = array();
 
@@ -61,12 +64,10 @@ class TreeController extends Controller
             $result[] = $this->getRootTreeData();
         } else {
 
-            $query = new Query([
-                'limit' => $this->getConfigResolver()->getParameter('admin.tree_limit', 'netgen_information_collection'),
-            ]);
+            $query = Query::withLimit($this->getConfigResolver()->getParameter('admin.tree_limit', 'netgen_information_collection'));
 
             $objects = $this->service->getObjectsWithCollections($query);
-            foreach ($objects->contents as $content) {
+            foreach ($objects->getContents() as $content) {
                 $result[] = $this->getCollections($content, $isRoot);
             }
         }
@@ -81,12 +82,12 @@ class TreeController extends Controller
      */
     protected function getRootTreeData()
     {
-        $count = $this->service->getObjectsWithCollections(Query::count());
+        $count = $this->service->getObjectsWithCollectionsCount();
 
         return array(
             'id' => '0',
             'parent' => '#',
-            'text' => $this->translator->trans('netgen_information_collection_admin_collected_information', ['%count%' => $count->count], 'netgen_information_collection_admin'),
+            'text' => $this->translator->trans('netgen_information_collection_admin_collected_information', ['%count%' => $count->getCount()], 'netgen_information_collection_admin'),
             'children' => true,
             'state' => array(
                 'opened' => true,
@@ -112,21 +113,18 @@ class TreeController extends Controller
     {
         $languages = $this->getConfigResolver()->getParameter('languages');
 
-        $query = new Query([
-            'contentId' => $content->content->id,
-            'limit' => Query::COUNT_QUERY,
-        ]);
+        $query = ContentId::countWithContentId($content->getContent()->id);
 
-        $count = $this->service->getCollections($query);
+        $count = $this->service->getCollectionsCount($query);
 
         return array(
-            'id' => $content->content->id,
+            'id' => $content->getContent()->id,
             'parent' => $isRoot ? '#' : '0',
-            'text' => $content->contentType->getName($languages[0]) . ' (' . strval($count->count) . ')',
+            'text' => $content->getContent()->getName($languages[0]) . ' (' . strval($count->getCount()) . ')',
             'children' => false,
             'a_attr' => array(
-                'href' => $this->router->generate('netgen_information_collection.route.admin.collection_list', ['contentId' => $content->content->id]),
-                'rel' => $content->content->id,
+                'href' => $this->router->generate('netgen_information_collection.route.admin.collection_list', ['contentId' => $content->getContent()->id]),
+                'rel' => $content->getContent()->id,
             ),
             'state' => array(
                 'opened' => $isRoot,
@@ -135,7 +133,7 @@ class TreeController extends Controller
                 'context_menu' => array(
                     array(
                         'name' => 'export',
-                        'url' => $this->router->generate('netgen_information_collection.route.admin.export', ['contentId' => $content->content->id]),
+                        'url' => $this->router->generate('netgen_information_collection.route.admin.export', ['contentId' => $content->getContent()->id]),
                         'text' => $this->translator->trans('netgen_information_collection_admin_export_export', [], 'netgen_information_collection_admin'),
                     ),
                 ),

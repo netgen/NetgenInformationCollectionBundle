@@ -1,8 +1,8 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Form\Captcha;
+namespace Netgen\InformationCollection\API\Value\Captcha;
 
-use Netgen\Bundle\InformationCollectionBundle\API\Service\CaptchaValue;
+use Netgen\InformationCollection\API\Service\CaptchaValue;
 use ReCaptcha\ReCaptcha as BaseReCaptcha;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -26,7 +26,7 @@ class ReCaptcha implements CaptchaValue
     /**
      * @inheritdoc
      */
-    public function isValid(Request $request)
+    public function isValid(Request $request): bool
     {
         $response = $this->reCaptcha->verify(
             $request->request->get('g-recaptcha-response'), $request->getClientIp()
@@ -40,9 +40,8 @@ class ReCaptcha implements CaptchaValue
      *
      * @return \ReCaptcha\ReCaptcha
      */
-    public function getInnerCaptcha()
+    public function getInnerCaptcha(): \ReCaptcha\ReCaptcha
     {
         return $this->reCaptcha;
     }
-
 }

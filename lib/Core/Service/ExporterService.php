@@ -5,55 +5,38 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Core\Service;
 
 use Netgen\InformationCollection\API\Service\Exporter;
+use Netgen\InformationCollection\API\Service\InformationCollection;
+use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\Export\Export;
 use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
-use Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils;
-use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
-use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
-use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
-use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
+use Netgen\InformationCollection\Core\Persistence\ContentTypeUtils;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class ExporterService implements Exporter
 {
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository
-     */
-    protected $ezInfoCollectionRepository;
-
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository
-     */
-    protected $ezInfoCollectionAttributeRepository;
-
-    /**
-     * @var TranslatorInterface
+     * @var \Symfony\Component\Translation\TranslatorInterface
      */
     protected $translator;
 
     /**
-     * @var ContentTypeUtils
+     * @var \Netgen\InformationCollection\Core\Persistence\ContentTypeUtils
      */
     protected $contentTypeUtils;
 
     /**
-     * ExporterService constructor.
-     *
-     * @param \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository $ezInfoCollectionRepository
-     * @param \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
-     * @param \Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils $contentTypeUtils
+     * @var \Netgen\InformationCollection\API\Service\InformationCollection
      */
+    protected $informationCollection;
+
     public function __construct(
-        EzInfoCollectionRepository $ezInfoCollectionRepository,
-        EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository,
+        InformationCollection $informationCollection,
         TranslatorInterface $translator,
         ContentTypeUtils $contentTypeUtils
     ) {
-        $this->ezInfoCollectionRepository = $ezInfoCollectionRepository;
-        $this->ezInfoCollectionAttributeRepository = $ezInfoCollectionAttributeRepository;
         $this->translator = $translator;
         $this->contentTypeUtils = $contentTypeUtils;
+        $this->informationCollection = $informationCollection;
     }
 
     /**
@@ -61,25 +44,25 @@ class ExporterService implements Exporter
      */
     public function export(ExportCriteria $criteria): Export
     {
-        $fields = $this->contentTypeUtils->getInfoCollectorFields($criteria->content->id);
+        $fields = $this->contentTypeUtils
+            ->getInfoCollectorFields($criteria->getContent()->id);
+
         $fields['created'] = $this->translator->trans('netgen_information_collection_admin_export_created', [], 'netgen_information_collection_admin');
 
-        $collections = $this->ezInfoCollectionRepository->findBy(['contentObjectId' => $criteria->content->id]);
+        $collections = $this->informationCollection->getCollections($criteria->getContent()->id);
 
         $rows = [];
 
-        /** @var EzInfoCollection $collection */
-        foreach ($collections as $collection) {
+        foreach ($collections->getCollections() as $collection) {
             $row = [];
-            $attributes = $this->ezInfoCollectionAttributeRepository->findBy(['informationCollectionId' => $collection->getId()]);
 
             foreach ($fields as $fieldId => $fieldName) {
                 if ($fieldId === 'created') {
-                    $row[] = $this->getCreatedDate($collection);
+                    $row[] = $collection->getCreated()->format('d-m-Y');
                     continue;
                 }
 
-                $row[] = $this->getAttributeValue($fieldId, $attributes);
+                $row[] = $this->getAttributeValue($fieldId, $collection->getAttributes());
             }
 
             $rows[] = $row;
@@ -87,27 +70,7 @@ class ExporterService implements Exporter
 
         $header = array_values($fields);
 
-        return new Export(
-            [
-                'header' => $header,
-                'contents' => $rows,
-            ]
-        );
-    }
-
-    /**
-     * Get create date from EzInfoCollection as string.
-     *
-     * @param \Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection $ezInfoCollection
-     *
-     * @return string
-     */
-    protected function getCreatedDate(EzInfoCollection $ezInfoCollection)
-    {
-        $date = new \DateTimeImmutable();
-        $date->setTimestamp($ezInfoCollection->getCreated());
-
-        return $date->format('Y-m-d');
+        return new Export($header, $rows);
     }
 
     /**
@@ -120,9 +83,9 @@ class ExporterService implements Exporter
      */
     protected function getAttributeValue($fieldId, $attributes)
     {
-        /** @var EzInfoCollectionAttribute $attribute */
+        /** @var Attribute $attribute */
         foreach ($attributes as $attribute) {
-            if ($fieldId === $attribute->getContentClassAttributeId()) {
+            if ($fieldId === $attribute->getFieldDefinition()->id) {
                 $value = $attribute->getValue();
                 $value = str_replace('"', '""', $value);
                 $value = str_replace(';', ', ', $value);

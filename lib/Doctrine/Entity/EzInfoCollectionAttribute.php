@@ -173,21 +173,4 @@ class EzInfoCollectionAttribute
     {
         return $this->informationCollectionId;
     }
-
-    public function getValue()
-    {
-        if (!empty($this->dataText)) {
-            return $this->dataText;
-        }
-
-        if (!empty($this->dataInt)) {
-            return $this->dataInt;
-        }
-
-        if (!empty($this->dataFloat)) {
-            return $this->dataFloat;
-        }
-
-        return '';
-    }
 }

@@ -21,6 +21,7 @@ class InformationCollectionPolicyProvider implements PolicyProviderInterface
                 'read' => [],
                 'delete' => [],
                 'anonymize' => [],
+                'export' => [],
             ],
         ]);
 

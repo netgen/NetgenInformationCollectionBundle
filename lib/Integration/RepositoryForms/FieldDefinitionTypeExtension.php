@@ -2,6 +2,7 @@
 
 namespace Netgen\InformationCollection\Integration\RepositoryForms;
 
+use EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,7 +11,7 @@ class FieldDefinitionTypeExtension extends AbstractTypeExtension
 {
     public function getExtendedType()
     {
-        return \EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType::class;
+        return FieldDefinitionType::class;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

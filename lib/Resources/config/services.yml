@@ -35,3 +35,8 @@ services:
         class: Netgen\InformationCollection\Integration\RepositoryForms\FieldDefinitionTypeExtension
         tags:
             - { name: form.type_extension, extended_type: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType }
+
+    netgen_information_collection.domain_object_mapper:
+        class: Netgen\InformationCollection\Core\Mapper\DomainObjectMapper
+        arguments:
+            - '@ezpublish.api.repository'

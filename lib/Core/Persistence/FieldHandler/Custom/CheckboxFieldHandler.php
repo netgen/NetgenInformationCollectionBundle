@@ -25,7 +25,7 @@ class CheckboxFieldHandler implements CustomLegacyFieldHandlerInterface
      */
     public function toString(Value $value, FieldDefinition $fieldDefinition): string
     {
-        return (string) $value;
+        return (string)$value;
     }
 
     /**
@@ -33,9 +33,6 @@ class CheckboxFieldHandler implements CustomLegacyFieldHandlerInterface
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {
-        return new FieldValue([
-            'fieldDefinitionId' => $fieldDefinition->id,
-            'dataInt' => (int) $value->bool,
-        ]);
+        return FieldValue::withIntValue($fieldDefinition->id, (int)$value->bool);
     }
 }

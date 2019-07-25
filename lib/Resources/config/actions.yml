@@ -10,13 +10,9 @@ services:
     netgen_information_collection.action.db:
         class: Netgen\InformationCollection\Core\Action\DatabaseAction
         arguments:
-            - '@netgen_information_collection.factory.field_data'
-            - '@netgen_information_collection.repository.ez_info_collection'
-            - '@netgen_information_collection.repository.ez_info_collection_attribute'
-            - '@ezpublish.api.repository'
-            - '@eZ\Publish\API\Repository\PermissionResolver'
+            - '@netgen_information_collection.api.service'
         tags:
-            - { name: netgen_information_collection.action, alias: database, priority: 300 }
+            - { name: netgen_information_collection.action, action: database, priority: 300 }
 
 #    netgen_information_collection.action.email:
 #        class: Netgen\InformationCollection\Core\Action\EmailAction

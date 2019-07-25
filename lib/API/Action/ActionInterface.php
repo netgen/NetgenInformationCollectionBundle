@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Action;
 
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+
 interface ActionInterface
 {
     /**
@@ -13,5 +15,5 @@ interface ActionInterface
      *
      * @throws \Netgen\InformationCollection\API\Exception\ActionFailedException
      */
-    public function act(\Netgen\InformationCollection\API\Value\Event\InformationCollected $event): void;
+    public function act(InformationCollected $event): void;
 }

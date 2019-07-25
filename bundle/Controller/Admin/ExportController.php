@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
+use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use Netgen\InformationCollection\API\Service\Exporter;
@@ -40,7 +41,8 @@ final class ExportController extends Controller
      */
     public function exportAction($contentId, Request $request)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $attribute = new Attribute('infocollector', 'export');
+        $this->denyAccessUnlessGranted($attribute);
 
         $content = $this->contentService->loadContent($contentId);
 
@@ -53,13 +55,7 @@ final class ExportController extends Controller
 
         if ($form->isValid() && $form->get('export')->isClicked()) {
 
-            $exportCriteria = new ExportCriteria(
-                [
-                    'content' => $content,
-                    'from' => $form->getData('dateFrom'),
-                    'to' => $form->getData('dateTo'),
-                ]
-            );
+            $exportCriteria = new ExportCriteria($content, $form->getData('dateFrom'), $form->getData('dateTo'));
 
             $export = $this->exporter->export($exportCriteria);
 
@@ -67,8 +63,8 @@ final class ExportController extends Controller
             $writer->setDelimiter(",");
             $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
             $writer->setOutputBOM(Writer::BOM_UTF8); //adding the BOM sequence on output
-            $writer->insertOne($export->header);
-            $writer->insertAll($export->contents);
+            $writer->insertOne($export->getHeader());
+            $writer->insertAll($export->getContents());
 
             $writer->output('export.csv');
             return new Response('');

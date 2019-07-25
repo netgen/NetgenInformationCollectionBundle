@@ -33,9 +33,6 @@ class DateFieldHandler implements CustomLegacyFieldHandlerInterface
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {
-        return new FieldValue([
-            'fieldDefinitionId' => $fieldDefinition->id,
-            'dataInt' => $value->date->getTimestamp(),
-        ]);
+        return FieldValue::withIntValue($fieldDefinition->id, $value->date->getTimestamp());
     }
 }

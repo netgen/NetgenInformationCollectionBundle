@@ -7,12 +7,34 @@ namespace Netgen\InformationCollection\API\Value;
 class ContentsWithCollections extends ValueObject
 {
     /**
-     * @var int
+     * @var \Netgen\InformationCollection\API\Value\Content[]
      */
-    public $count;
+    protected $contents;
 
     /**
-     * @var \Netgen\InformationCollection\API\Value\Content
+     * @var int
      */
-    public $contents;
+    protected $count;
+
+    public function __construct(array $contents, int $count)
+    {
+        $this->count = $count;
+        $this->contents = $contents;
+    }
+
+    /**
+     * @return \Netgen\InformationCollection\API\Value\Content[]
+     */
+    public function getContents(): array
+    {
+        return $this->contents;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCount(): int
+    {
+        return $this->count;
+    }
 }

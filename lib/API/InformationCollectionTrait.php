@@ -55,7 +55,7 @@ trait InformationCollectionTrait
         return array(
             'is_valid' => $isValid,
             'form' => $form->createView(),
-            'collected_fields' => $form->getData()->fieldsData,
+            'collected_fields' => $form->getData()->getFieldsData(),
         );
     }
 }

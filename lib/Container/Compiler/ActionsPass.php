@@ -23,16 +23,16 @@ class ActionsPass implements CompilerPassInterface
 
         foreach ($container->findTaggedServiceIds('netgen_information_collection.action') as $id => $attributes) {
             foreach ($attributes as $attribute) {
-                if (!isset($attribute['alias'])) {
+                if (!isset($attribute['action'])) {
                     throw new LogicException(
                         "'netgen_information_collection.action' service tag " .
-                        "needs an 'alias' attribute to identify the action. None given."
+                        "needs an 'action' attribute to identify the action. None given."
                     );
                 }
 
                 $priority = isset($attribute['priority']) ? $attribute['priority'] : Priority::DEFAULT_PRIORITY;
 
-                if ($priority > Priority::MAX_PRIORITY && $attribute['alias'] !== 'database') {
+                if ($priority > Priority::MAX_PRIORITY && $attribute['action'] !== 'database') {
                     throw new LogicException(
                         "Service {$id} uses priority greater than allowed. " .
                         'Priority must be lower than or equal to ' . Priority::MAX_PRIORITY . '.'
@@ -49,7 +49,7 @@ class ActionsPass implements CompilerPassInterface
                 $actionAggregate->addMethodCall(
                     'addAction',
                     array(
-                        $attribute['alias'],
+                        $attribute['action'],
                         new Reference($id),
                         $priority,
                     )

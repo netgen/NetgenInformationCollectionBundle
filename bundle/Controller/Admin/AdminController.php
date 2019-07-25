@@ -2,12 +2,20 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
+use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\InformationCollection\API\Service\InformationCollection;
+use Netgen\InformationCollection\API\Value\Collection;
+use Netgen\InformationCollection\API\Value\Filter\CollectionFields;
+use Netgen\InformationCollection\API\Value\Filter\Collections;
+use Netgen\InformationCollection\API\Value\Filter\ContentId;
+use Netgen\InformationCollection\API\Value\Filter\Contents;
 use Netgen\InformationCollection\API\Value\Filter\Query;
+use Netgen\InformationCollection\API\Value\Filter\SearchQuery;
 use Netgen\InformationCollection\Core\Pagination\InformationCollectionCollectionListAdapter;
 use Netgen\InformationCollection\Core\Pagination\InformationCollectionCollectionListSearchAdapter;
 use Netgen\InformationCollection\Core\Pagination\InformationCollectionContentsAdapter;
@@ -67,9 +75,9 @@ class AdminController extends Controller
      */
     public function overviewAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->checkReadPermissions();
 
-        $adapter = new InformationCollectionContentsAdapter($this->service, Query::count());
+        $adapter = new InformationCollectionContentsAdapter($this->service, Query::countQuery());
         $pager = $this->getPager($adapter, (int) $request->query->get('page'));
 
         return $this->render("NetgenInformationCollectionBundle:admin:overview.html.twig", ['objects' => $pager]);
@@ -79,17 +87,15 @@ class AdminController extends Controller
      * Displays list of collection for selected Content
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $contentId
+     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function collectionListAction(Request $request, $contentId)
+    public function collectionListAction(Request $request, Content $content)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->checkReadPermissions();
 
-        $content = $this->contentService->loadContent($contentId);
-        $query = Query::withContent($contentId);
-        $adapter = new InformationCollectionCollectionListAdapter($this->service, $query);
+        $adapter = new InformationCollectionCollectionListAdapter($this->service, ContentId::withContentId($content->id));
         $pager = $this->getPager($adapter, (int)$request->query->get('page'));
 
         return $this->render("NetgenInformationCollectionBundle:admin:collection_list.html.twig", [
@@ -102,20 +108,16 @@ class AdminController extends Controller
      * Handles collection search
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $contentId
+     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function searchAction(Request $request, $contentId)
+    public function searchAction(Request $request, Content $content)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->checkReadPermissions();
 
-        $content = $this->contentService->loadContent($contentId);
+        $query = SearchQuery::withContentAndSearchText($content->id, $request->query->get('searchText'));
 
-        $query = new Query([
-            'contentId' => $contentId,
-            'searchText' => $request->query->get('searchText'),
-        ]);
         $adapter = new InformationCollectionCollectionListSearchAdapter($this->service, $query);
         $pager = $this->getPager($adapter, (int)$request->query->get('page'));
 
@@ -134,15 +136,13 @@ class AdminController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewAction($collectionId)
+    public function viewAction(Collection $collection)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
-
-        $collection = $this->service->getCollection(new Query(['collectionId' => $collectionId]));
+        $this->checkReadPermissions();
 
         return $this->render("NetgenInformationCollectionBundle:admin:view.html.twig", [
             'collection' => $collection,
-            'content' => $collection->content,
+            'content' => $collection->getContent(),
         ]);
     }
 
@@ -155,7 +155,7 @@ class AdminController extends Controller
      */
     public function handleContentsAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->checkReadPermissions();
 
         $contents = $request->request->get('ContentId', []);
         $count = count($contents);
@@ -168,11 +168,10 @@ class AdminController extends Controller
 
         if ($request->request->has('DeleteCollectionByContentAction')) {
 
-            $this->denyAccessUnlessGranted('ez:infocollector:delete');
+            $this->checkDeletePermissions();
 
-            $query = new Query([
-                'contents' => $contents,
-            ]);
+            $query = new Contents($contents);
+
             $this->service->deleteCollectionByContent($query);
 
             $this->addFlashMessage('success', 'content_removed', $count);
@@ -194,7 +193,7 @@ class AdminController extends Controller
      */
     public function handleCollectionListAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->checkReadPermissions();
 
         $contentId = $request->request->get('ContentId');
         $collections = $request->request->get('CollectionId', []);
@@ -208,12 +207,10 @@ class AdminController extends Controller
 
         if ($request->request->has('DeleteCollectionAction')) {
 
-            $this->denyAccessUnlessGranted('ez:infocollector:delete');
+            $this->checkDeletePermissions();
 
-            $query = new Query([
-                'contentId' => $contentId,
-                'collections' => $collections,
-            ]);
+            $query = new Collections($contentId, $collections);
+
             $this->service->deleteCollections($query);
 
             $this->addFlashMessage('success', 'collection_removed', $count);
@@ -223,7 +220,7 @@ class AdminController extends Controller
 
         if ($request->request->has('AnonymizeCollectionAction')) {
 
-            $this->denyAccessUnlessGranted('ez:infocollector:anonymize');
+            $this->checkAnonymizePermissions();
 
             foreach ($collections as $collection) {
                 $this->anonymizer->anonymizeCollection($collection);
@@ -248,7 +245,7 @@ class AdminController extends Controller
      */
     public function handleCollectionAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ez:infocollector:read');
+        $this->checkReadPermissions();
 
         $collectionId = $request->request->get('CollectionId');
         $contentId = $request->request->get('ContentId');
@@ -266,13 +263,10 @@ class AdminController extends Controller
 
         if ($request->request->has('DeleteFieldAction')) {
 
-            $this->denyAccessUnlessGranted('ez:infocollector:delete');
+            $this->checkDeletePermissions();
 
-            $query = new Query([
-                'contentId' => $contentId,
-                'collectionId' => $collectionId,
-                'fields' => $fields,
-            ]);
+            $query = new CollectionFields($contentId, $collectionId, $fields);
+
             $this->service->deleteCollectionFields($query);
 
             $this->addFlashMessage('success', 'field_removed', $count);
@@ -282,7 +276,7 @@ class AdminController extends Controller
 
         if ($request->request->has('AnonymizeFieldAction')) {
 
-            $this->denyAccessUnlessGranted('ez:infocollector:anymize');
+            $this->checkAnonymizePermissions();
 
             $this->anonymizer->anonymizeCollection($collectionId, $fields);
 
@@ -293,12 +287,9 @@ class AdminController extends Controller
 
         if ($request->request->has('DeleteCollectionAction')) {
 
-            $this->denyAccessUnlessGranted('ez:infocollector:delete');
+            $this->checkDeletePermissions();
 
-            $query = new Query([
-                'contentId' => $contentId,
-                'collections' => [$collectionId],
-            ]);
+            $query = new Collections($contentId, [$collectionId]);
             $this->service->deleteCollections($query);
 
             $this->addFlashMessage("success", "collection_removed");
@@ -309,7 +300,7 @@ class AdminController extends Controller
 
         if ($request->request->has('AnonymizeCollectionAction')) {
 
-            $this->denyAccessUnlessGranted('ez:infocollector:anymize');
+            $this->checkAnonymizePermissions();
 
             $this->anonymizer->anonymizeCollection($collectionId);
 
@@ -365,4 +356,21 @@ class AdminController extends Controller
         return $pager;
     }
 
+    protected function checkReadPermissions()
+    {
+        $attribute = new Attribute('infocollector', 'read');
+        $this->denyAccessUnlessGranted($attribute);
+    }
+
+    protected function checkDeletePermissions()
+    {
+        $attribute = new Attribute('infocollector', 'delete');
+        $this->denyAccessUnlessGranted($attribute);
+    }
+
+    protected function checkAnonymizePermissions()
+    {
+        $attribute = new Attribute('infocollector', 'anonymize');
+        $this->denyAccessUnlessGranted($attribute);
+    }
 }

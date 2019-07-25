@@ -1,6 +1,6 @@
 {
     "name": "netgen/information-collection-bundle",
-    "description": "Information collection alike feature for eZ Publish 5/eZ Platform",
+    "description": "Information collection alike feature for eZ Platform",
     "type": "ezplatform-bundle",
     "keywords": [
         "ezpublish",
@@ -15,6 +15,12 @@
         {
             "name": "Netgen",
             "homepage": "http://www.netgenlabs.com"
+        },
+        {
+            "name": "Mario Blažek",
+            "email": "mario.b@netgen.hr",
+            "homepage": "https://marioblazek.dev",
+            "role": "Developer"
         }
     ],
     "require": {
@@ -24,9 +30,10 @@
         "ezsystems/ezplatform-admin-ui": "^1.5 || ^2.0",
         "ezsystems/repository-forms": "^2.5 || ^3.0",
         "ezsystems/ezpublish-kernel": "^7.5 || ^8.0",
-        "swiftmailer/swiftmailer": "^6.0",
-        "league/csv": "^8.0",
+        "swiftmailer/swiftmailer": "^6.2",
+        "league/csv": "^8.2",
         "twig/twig": "^2.5",
+        "google/recaptcha": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^2.0",
         "lolautruche/ez-core-extra-bundle": "^2.2"
     },

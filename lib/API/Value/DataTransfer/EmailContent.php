@@ -12,27 +12,27 @@ class EmailContent extends ValueObject
     /**
      * @var string
      */
-    public $recipient;
+    protected $recipient;
 
     /**
      * @var string
      */
-    public $subject;
+    protected $subject;
 
     /**
      * @var string
      */
-    public $sender;
+    protected $sender;
 
     /**
      * @var string
      */
-    public $body;
+    protected $body;
 
     /**
      * @var BinaryFile[]|null
      */
-    public $attachments;
+    protected $attachments;
 
     /**
      * EmailData constructor.
@@ -43,7 +43,7 @@ class EmailContent extends ValueObject
      * @param string $body
      * @param BinaryFile[] $attachments
      */
-    public function __construct(string $recipient, string $sender, string $subject, string $body, array $attachments = null)
+    public function __construct(string $recipient, string $sender, string $subject, string $body, ?array $attachments = null)
     {
         $this->recipient = $recipient;
         $this->subject = $subject;

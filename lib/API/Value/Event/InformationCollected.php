@@ -9,15 +9,15 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\SPI\Persistence\Content\ContentInfo;
 use Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent;
-use Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionData;
+use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Symfony\Component\EventDispatcher\Event;
 
 final class InformationCollected extends Event
 {
     /**
-     * @var \Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionData
+     * @var \Netgen\InformationCollection\API\Value\InformationCollectionStruct
      */
-    protected $data;
+    protected $struct;
 
     /**
      * @var \Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent
@@ -32,16 +32,16 @@ final class InformationCollected extends Event
     /**
      * InformationCollected constructor.
      *
-     * @param \Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionData $data
+     * @param \Netgen\InformationCollection\API\Value\InformationCollectionStruct $struct
      * @param \eZ\Publish\API\Repository\Values\Content\Content $additionalContent
      */
     public function __construct(
-        InformationCollectionData $data,
+        InformationCollectionStruct $struct,
         Location $location,
         AdditionalContent $additionalContent
     )
     {
-        $this->data = $data;
+        $this->struct = $struct;
         $this->additionalContent = $additionalContent;
         $this->location = $location;
     }
@@ -49,11 +49,11 @@ final class InformationCollected extends Event
     /**
      * Return collected data.
      *
-     * @return \Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionData
+     * @return \Netgen\InformationCollection\API\Value\InformationCollectionStruct
      */
-    public function getInformationCollectionStruct(): InformationCollectionData
+    public function getInformationCollectionStruct(): InformationCollectionStruct
     {
-        return $this->data;
+        return $this->struct;
     }
 
     /**
@@ -63,8 +63,7 @@ final class InformationCollected extends Event
      */
     public function getContentType(): ContentType
     {
-        return $this->data
-            ->contentDraft
+        return $this->struct
             ->getContentType();
     }
 
@@ -75,8 +74,8 @@ final class InformationCollected extends Event
      */
     public function getContent(): Content
     {
-        return $this->data
-            ->contentDraft;
+        return $this->struct
+            ->getContent();
     }
 
     /**
@@ -84,8 +83,8 @@ final class InformationCollected extends Event
      */
     public function getContentInfo(): ContentInfo
     {
-        return $this->data
-            ->contentDraft
+        return $this->struct
+            ->getContent()
             ->contentInfo;
     }
 

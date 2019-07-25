@@ -4,8 +4,18 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Doctrine\Repository;
 
+use DateTimeImmutable;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\ORMInvalidArgumentException;
+use Netgen\InformationCollection\API\Exception\RemoveCollectionFailedException;
+use Netgen\InformationCollection\API\Exception\RetrieveCountException;
+use Netgen\InformationCollection\API\Exception\StoringCollectionFailedException;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
+use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\API\Repository\Values\User\User;
 
 class EzInfoCollectionRepository extends EntityRepository
 {
@@ -19,24 +29,53 @@ class EzInfoCollectionRepository extends EntityRepository
         return new EzInfoCollection();
     }
 
+    public function createNewFromValues(Content $content, User $user): EzInfoCollection
+    {
+        $ezInfo = $this->getInstance();
+        $dt = new DateTimeImmutable();
+
+        $ezInfo->setContentObjectId($content->contentInfo->id);
+        $ezInfo->setUserIdentifier($user->login);
+        $ezInfo->setCreatorId($user->id);
+        $ezInfo->setCreated($dt->getTimestamp());
+        $ezInfo->setModified($dt->getTimestamp());
+
+        return $ezInfo;
+    }
+
     /**
      * Save object.
      *
      * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection $informationCollection
+     *
+     * @throws StoringCollectionFailedException
      */
     public function save(EzInfoCollection $informationCollection)
     {
-        $this->_em->persist($informationCollection);
-        $this->_em->flush($informationCollection);
+        try {
+            $this->_em->persist($informationCollection);
+            $this->_em->flush($informationCollection);
+        } catch (ORMException | ORMInvalidArgumentException $e) {
+            throw new StoringCollectionFailedException('', '');
+        }
     }
 
+    /**
+     * @param array $collections
+     *
+     * @throws RemoveCollectionFailedException
+     */
     public function remove(array $collections)
     {
-        foreach ($collections as $collection) {
-            $this->_em->remove($collection);
-        }
+        try {
+            foreach ($collections as $collection) {
+                $this->_em->remove($collection);
+            }
 
-        $this->_em->flush();
+            $this->_em->flush();
+        } catch (ORMException | ORMInvalidArgumentException $e) {
+            throw new RemoveCollectionFailedException('', '');
+        }
     }
 
     public function findByContentId($contentId)
@@ -64,11 +103,15 @@ class EzInfoCollectionRepository extends EntityRepository
 
     public function getChildrenCount($contentId)
     {
-        return (int) $this->createQueryBuilder('ezc')
-            ->andWhere('ezc.contentObjectId = :contentId')
-            ->setParameter('contentId', $contentId)
-            ->select('COUNT(ezc) as children_count')
-            ->getQuery()
-            ->getSingleScalarResult();
+        try {
+            return (int)$this->createQueryBuilder('ezc')
+                ->andWhere('ezc.contentObjectId = :contentId')
+                ->setParameter('contentId', $contentId)
+                ->select('COUNT(ezc) as children_count')
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NonUniqueResultException | NoResultException $e) {
+            throw new RetrieveCountException('', '');
+        }
     }
 }
