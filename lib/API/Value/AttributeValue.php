@@ -35,11 +35,11 @@ class AttributeValue extends ValueObject
         }
 
         if (!empty($this->dataInt)) {
-            return $this->dataInt;
+            return (string)$this->dataInt;
         }
 
         if (!empty($this->dataFloat)) {
-            return $this->dataFloat;
+            return (string)$this->dataFloat;
         }
 
         return '';

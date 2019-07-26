@@ -7,6 +7,17 @@
 {% endspaceless %}
 {% endblock %}
 
+{% block ezboolean_field %}
+    {% spaceless %}
+        {% set field_value = attribute.value %}
+        {% if field_value %}
+            {{ 'field_value.yes'|trans }}
+        {% else %}
+            {{ 'field_value.no'|trans }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
+
 {% block default_field %}
     {% spaceless %}
         {{ attribute.value }}
