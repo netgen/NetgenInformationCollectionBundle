@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\API;
 
 final class Priority
@@ -7,15 +9,15 @@ final class Priority
     /**
      * Defines somehow default priority for action.
      */
-    const DEFAULT_PRIORITY = 0;
+    public const DEFAULT_PRIORITY = 0;
 
     /**
      * Defines highest priority for action.
      */
-    const MAX_PRIORITY = 255;
+    public const MAX_PRIORITY = 255;
 
     /**
      * Defines lowest priority for action.
      */
-    const MIN_PRIORITY = -255;
+    public const MIN_PRIORITY = -255;
 }

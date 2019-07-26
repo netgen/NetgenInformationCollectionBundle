@@ -23,7 +23,6 @@ class InformationCollectionCollectionListAdapter extends BaseAdapter
     public function getNbResults()
     {
         if (!isset($this->nbResults)) {
-
             $query = ContentId::countWithContentId($this->query->getContentId());
 
             $this->nbResults = $this->informationCollectionService

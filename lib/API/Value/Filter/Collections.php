@@ -9,12 +9,12 @@ final class Collections
     /**
      * @var array
      */
-    protected $collections;
+    private $collections;
 
     /**
      * @var int
      */
-    protected $contentId;
+    private $contentId;
 
     public function __construct(int $contentId, array $collections)
     {

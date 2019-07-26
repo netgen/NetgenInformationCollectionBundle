@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollectionBundle\Form\Captcha;
 
 use eZ\Publish\API\Repository\ContentTypeService;
@@ -32,7 +34,7 @@ class CaptchaService implements CaptchaServiceInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isEnabled(Location $location)
     {
@@ -42,7 +44,7 @@ class CaptchaService implements CaptchaServiceInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getSiteKey(Location $location)
     {
@@ -52,7 +54,7 @@ class CaptchaService implements CaptchaServiceInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getCaptcha(Location $location)
     {
@@ -62,7 +64,6 @@ class CaptchaService implements CaptchaServiceInterface
             $reCaptcha = new \ReCaptcha\ReCaptcha($config['secret']);
 
             if (!empty($config['options'])) {
-
                 if (!empty($config['options']['hostname'])) {
                     $reCaptcha->setExpectedHostname($config['options']['hostname']);
                 }
@@ -87,13 +88,13 @@ class CaptchaService implements CaptchaServiceInterface
     }
 
     /**
-     * Returns filtered config for current Location
+     * Returns filtered config for current Location.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      *
-     * @return array
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     *
+     * @return array
      */
     protected function getConfig(Location $location)
     {
@@ -105,7 +106,7 @@ class CaptchaService implements CaptchaServiceInterface
     }
 
     /**
-     * Returns filtered config for current ContentType
+     * Returns filtered config for current ContentType.
      *
      * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
      *
@@ -121,7 +122,7 @@ class CaptchaService implements CaptchaServiceInterface
     }
 
     /**
-     * Checks if override exist for given ContentType
+     * Checks if override exist for given ContentType.
      *
      * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
      *
@@ -130,7 +131,7 @@ class CaptchaService implements CaptchaServiceInterface
     protected function hasConfigForContentType(ContentType $contentType)
     {
         if (!empty($this->config['override_by_type'])) {
-            if (in_array($contentType->identifier, array_keys($this->config['override_by_type']))) {
+            if (in_array($contentType->identifier, array_keys($this->config['override_by_type']), true)) {
                 return true;
             }
         }
@@ -139,13 +140,13 @@ class CaptchaService implements CaptchaServiceInterface
     }
 
     /**
-     * Helper method for retrieving ContentType from Location
+     * Helper method for retrieving ContentType from Location.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      *
-     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     *
+     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
      */
     protected function getContentType(Location $location)
     {

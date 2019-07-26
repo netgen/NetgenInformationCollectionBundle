@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Core\Factory;
 
 use function array_key_exists;
-use Netgen\InformationCollection\API\Value\Event\InformationCollected;
-use Netgen\InformationCollection\API\Exception\MissingValueException;
-use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
-use Netgen\InformationCollection\API\Value\DataTransfer\TemplateContent;
 use Netgen\InformationCollection\API\Constants;
+use Netgen\InformationCollection\API\Exception\MissingValueException;
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use function trim;
 
 class AutoResponderDataFactory extends EmailDataFactory
@@ -114,6 +112,7 @@ class AutoResponderDataFactory extends EmailDataFactory
         }
 
         $message = Constants::FIELD_AUTO_RESPONDER_SUBJECT . '|' . ConfigurationConstants::EMAIL_SUBJECT;
+
         throw new MissingValueException($message);
     }
 }

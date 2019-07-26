@@ -43,7 +43,7 @@ class TemplateContent extends ValueObject
     /**
      * @return \Netgen\InformationCollection\API\Value\Event\InformationCollected
      */
-    public function getEvent(): \Netgen\InformationCollection\API\Value\Event\InformationCollected
+    public function getEvent(): InformationCollected
     {
         return $this->event;
     }
@@ -51,7 +51,7 @@ class TemplateContent extends ValueObject
     /**
      * @return \eZ\Publish\API\Repository\Values\Content\Content
      */
-    public function getContent(): \eZ\Publish\API\Repository\Values\Content\Content
+    public function getContent(): Content
     {
         return $this->content;
     }
@@ -59,7 +59,7 @@ class TemplateContent extends ValueObject
     /**
      * @return \Twig\TemplateWrapper
      */
-    public function getTemplateWrapper(): \Twig\TemplateWrapper
+    public function getTemplateWrapper(): TemplateWrapper
     {
         return $this->templateWrapper;
     }

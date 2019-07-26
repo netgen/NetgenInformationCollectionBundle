@@ -8,8 +8,8 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\AttributeValue;
 use Netgen\InformationCollection\API\Value\Collection;
@@ -22,22 +22,22 @@ final class DomainObjectMapper
     /**
      * @var \eZ\Publish\API\Repository\Repository
      */
-    protected $repository;
+    private $repository;
 
     /**
      * @var \eZ\Publish\API\Repository\ContentService
      */
-    protected $contentService;
+    private $contentService;
 
     /**
      * @var \eZ\Publish\API\Repository\ContentTypeService
      */
-    protected $contentTypeService;
+    private $contentTypeService;
 
     /**
      * @var \eZ\Publish\API\Repository\UserService
      */
-    protected $userService;
+    private $userService;
 
     public function __construct(Repository $repository)
     {
@@ -95,32 +95,36 @@ final class DomainObjectMapper
     {
         $classField = null;
         foreach ($content->getFields() as $field) {
-            if ($field->id == $attribute->getContentObjectAttributeId()) {
+            if ($field->id === $attribute->getContentObjectAttributeId()) {
                 $classField = $field;
+
                 break;
             }
         }
 
         $value = new AttributeValue($attribute->getDataInt(), $attribute->getDataFloat(), $attribute->getDataText());
         dump($classField);
+
         return new Attribute(
-            $attribute->getId(), $content, $classField, $fieldDefinition, $value
+            $attribute->getId(),
+            $content,
+            $classField,
+            $fieldDefinition,
+            $value
         );
     }
 
-    protected function getUser($userId)
+    private function getUser($userId)
     {
         try {
             return $this->repository
                 ->getUserService()
                 ->loadUser($userId);
-
         } catch (NotFoundException $exception) {
-
         }
     }
 
-    protected function getDateTime(int $timestamp): DateTimeInterface
+    private function getDateTime(int $timestamp): DateTimeInterface
     {
         $date = new DateTimeImmutable();
         $date->setTimestamp($timestamp);

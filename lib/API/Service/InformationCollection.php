@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Service;
 
+use Netgen\InformationCollection\API\Value\Collection;
 use Netgen\InformationCollection\API\Value\CollectionCount;
+use Netgen\InformationCollection\API\Value\Collections;
+use Netgen\InformationCollection\API\Value\ContentsWithCollections;
 use Netgen\InformationCollection\API\Value\Filter\CollectionFields;
 use Netgen\InformationCollection\API\Value\Filter\CollectionId;
+use Netgen\InformationCollection\API\Value\Filter\Collections as FilterCollections;
 use Netgen\InformationCollection\API\Value\Filter\ContentId;
 use Netgen\InformationCollection\API\Value\Filter\Contents;
 use Netgen\InformationCollection\API\Value\Filter\Query;
-use Netgen\InformationCollection\API\Value\Filter\Collections as FilterCollections;
-use Netgen\InformationCollection\API\Value\ContentsWithCollections;
-use Netgen\InformationCollection\API\Value\Collections;
-use Netgen\InformationCollection\API\Value\Collection;
 use Netgen\InformationCollection\API\Value\Filter\SearchCountQuery;
 use Netgen\InformationCollection\API\Value\Filter\SearchQuery;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
@@ -49,7 +49,7 @@ interface InformationCollection
     public function getCollectionsCount(ContentId $contentId): CollectionCount;
 
     /**
-     * Returns collections for given content object
+     * Returns collections for given content object.
      *
      * @param \Netgen\InformationCollection\API\Value\Filter\ContentId $contentId
      *
@@ -58,7 +58,7 @@ interface InformationCollection
     public function getCollections(ContentId $contentId): Collections;
 
     /**
-     * Returns single collection
+     * Returns single collection.
      *
      * @param \Netgen\InformationCollection\API\Value\Filter\CollectionId $collectionId
      *
@@ -67,7 +67,7 @@ interface InformationCollection
     public function getCollection(CollectionId $collectionId): Collection;
 
     /**
-     * Returns collection based on search criteria
+     * Returns collection based on search criteria.
      *
      * @param \Netgen\InformationCollection\API\Value\Filter\SearchQuery $query
      *
@@ -76,7 +76,7 @@ interface InformationCollection
     public function search(SearchQuery $query): Collections;
 
     /**
-     * Returns collection count based on search criteria
+     * Returns collection count based on search criteria.
      *
      * @param \Netgen\InformationCollection\API\Value\Filter\SearchCountQuery $query
      *
@@ -85,21 +85,21 @@ interface InformationCollection
     public function searchCount(SearchCountQuery $query): SearchCount;
 
     /**
-     * Removes selected collection fields
+     * Removes selected collection fields.
      *
      * @param \Netgen\InformationCollection\API\Value\Filter\CollectionFields
      */
     public function deleteCollectionFields(CollectionFields $collectionFields): void;
 
     /**
-     * Removes whole collections
+     * Removes whole collections.
      *
      * @param \Netgen\InformationCollection\API\Value\Filter\Collections $collections
      */
     public function deleteCollections(FilterCollections $collections): void;
 
     /**
-     * Removes whole collections per content
+     * Removes whole collections per content.
      *
      * @param \Netgen\InformationCollection\API\Value\Filter\Contents $contents
      */

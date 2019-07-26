@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Core\Mailer;
 
 use Netgen\InformationCollection\API\Exception\EmailNotSentException;
-use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
 use Netgen\InformationCollection\API\MailerInterface;
+use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
 
 class Mailer implements MailerInterface
 {

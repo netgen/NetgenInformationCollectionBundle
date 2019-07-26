@@ -11,7 +11,7 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 final class InformationCollectionStruct extends ValueObject
 {
     /**
-     * The language code of the version
+     * The language code of the version.
      *
      * @var string
      */

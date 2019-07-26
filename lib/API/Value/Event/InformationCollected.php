@@ -39,8 +39,7 @@ final class InformationCollected extends Event
         InformationCollectionStruct $struct,
         Location $location,
         AdditionalContent $additionalContent
-    )
-    {
+    ) {
         $this->struct = $struct;
         $this->additionalContent = $additionalContent;
         $this->location = $location;

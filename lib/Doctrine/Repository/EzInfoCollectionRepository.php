@@ -10,12 +10,12 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
+use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\API\Repository\Values\User\User;
 use Netgen\InformationCollection\API\Exception\RemoveCollectionFailedException;
 use Netgen\InformationCollection\API\Exception\RetrieveCountException;
 use Netgen\InformationCollection\API\Exception\StoringCollectionFailedException;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\User\User;
 
 class EzInfoCollectionRepository extends EntityRepository
 {
@@ -89,7 +89,7 @@ class EzInfoCollectionRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findByContentIdOlderThan($contentId, \DateTimeImmutable $date)
+    public function findByContentIdOlderThan($contentId, DateTimeImmutable $date)
     {
         $qb = $this->createQueryBuilder('ezc');
 
@@ -104,7 +104,7 @@ class EzInfoCollectionRepository extends EntityRepository
     public function getChildrenCount($contentId)
     {
         try {
-            return (int)$this->createQueryBuilder('ezc')
+            return (int) $this->createQueryBuilder('ezc')
                 ->andWhere('ezc.contentObjectId = :contentId')
                 ->setParameter('contentId', $contentId)
                 ->select('COUNT(ezc) as children_count')

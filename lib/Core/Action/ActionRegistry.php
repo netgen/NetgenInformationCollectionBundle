@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Core\Action;
 
 use function in_array;
-use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+use Netgen\InformationCollection\API\Action\ActionInterface;
+use Netgen\InformationCollection\API\Action\CrucialActionInterface;
 use Netgen\InformationCollection\API\Exception\ActionFailedException;
 use Netgen\InformationCollection\API\Priority;
-use Netgen\InformationCollection\API\Action\CrucialActionInterface;
-use Netgen\InformationCollection\API\Action\ActionInterface;
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use Psr\Log\LoggerInterface;
 use function usort;
 
@@ -138,7 +138,7 @@ class ActionRegistry implements ActionInterface
      */
     protected function prepareActions()
     {
-        usort($this->actions, function ($one, $two) {
+        usort($this->actions, static function ($one, $two) {
             if ($one['priority'] === $two['priority']) {
                 return 0;
             }

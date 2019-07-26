@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Container\Compiler;
 
 use Netgen\InformationCollection\API\Priority;
@@ -30,7 +32,7 @@ class ActionsPass implements CompilerPassInterface
                     );
                 }
 
-                $priority = isset($attribute['priority']) ? $attribute['priority'] : Priority::DEFAULT_PRIORITY;
+                $priority = $attribute['priority'] ?? Priority::DEFAULT_PRIORITY;
 
                 if ($priority > Priority::MAX_PRIORITY && $attribute['action'] !== 'database') {
                     throw new LogicException(
@@ -48,11 +50,11 @@ class ActionsPass implements CompilerPassInterface
 
                 $actionAggregate->addMethodCall(
                     'addAction',
-                    array(
+                    [
                         $attribute['action'],
                         new Reference($id),
                         $priority,
-                    )
+                    ]
                 );
             }
         }

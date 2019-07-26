@@ -6,5 +6,4 @@ namespace Netgen\InformationCollection\API\Value\Filter;
 
 final class SearchCountQuery extends SearchQuery
 {
-
 }

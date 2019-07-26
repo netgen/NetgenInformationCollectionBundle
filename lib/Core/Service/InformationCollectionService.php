@@ -17,20 +17,20 @@ use Netgen\InformationCollection\API\Value\Collections;
 use Netgen\InformationCollection\API\Value\ContentsWithCollections;
 use Netgen\InformationCollection\API\Value\Filter\CollectionFields;
 use Netgen\InformationCollection\API\Value\Filter\CollectionId;
+use Netgen\InformationCollection\API\Value\Filter\Collections as FilterCollections;
 use Netgen\InformationCollection\API\Value\Filter\ContentId;
 use Netgen\InformationCollection\API\Value\Filter\Contents;
 use Netgen\InformationCollection\API\Value\Filter\Query;
 use Netgen\InformationCollection\API\Value\Filter\SearchCountQuery;
 use Netgen\InformationCollection\API\Value\Filter\SearchQuery;
-use Netgen\InformationCollection\API\Value\Filter\Collections as FilterCollections;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Netgen\InformationCollection\API\Value\ObjectCount;
 use Netgen\InformationCollection\API\Value\SearchCount;
 use Netgen\InformationCollection\Core\Factory\FieldDataFactory;
 use Netgen\InformationCollection\Core\Mapper\DomainObjectMapper;
 use Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase;
-use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
 
 class InformationCollectionService implements InformationCollection
 {
@@ -55,7 +55,7 @@ class InformationCollectionService implements InformationCollection
     protected $gateway;
 
     /**
-     * @var \Netgen\InformationCollection\Core\Factory\FieldDataFactory $factory
+     * @var \Netgen\InformationCollection\Core\Factory\FieldDataFactory
      */
     protected $fieldsFactory;
 
@@ -110,7 +110,6 @@ class InformationCollectionService implements InformationCollection
             throw new PersistingFailedException('collection', $e->getMessage());
         }
 
-
         foreach ($struct->getFieldsData() as $fieldDefIdentifier => $value) {
             if ($value === null) {
                 continue;
@@ -127,7 +126,6 @@ class InformationCollectionService implements InformationCollection
             }
         }
     }
-
 
     public function getObjectsWithCollectionsCount(): ObjectCount
     {
@@ -258,7 +256,8 @@ class InformationCollectionService implements InformationCollection
                     'contentObjectId' => $collectionFields->getContentId(),
                     'informationCollectionId' => $collectionFields->getCollectionId(),
                     'contentClassAttributeId' => $collectionFields->getFields(),
-                ]);
+                ]
+            );
 
         $this->ezInfoCollectionAttributeRepository->remove($attributes);
     }
@@ -302,6 +301,7 @@ class InformationCollectionService implements InformationCollection
 
     /**
      * @param UserReference $userReference
+     * @param mixed $userId
      *
      * @return \eZ\Publish\API\Repository\Values\User\User
      */
@@ -311,11 +311,8 @@ class InformationCollectionService implements InformationCollection
             return $this->repository
                 ->getUserService()
                 ->loadUser($userId);
-
         } catch (NotFoundException $exception) {
-
         }
-
     }
 
     /**

@@ -2,9 +2,9 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
+use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
-use eZ\Publish\API\Repository\ContentService;
 use Netgen\InformationCollection\API\Service\Exporter;
 use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
 use Netgen\InformationCollection\Form\Type\ExportType;
@@ -16,35 +16,32 @@ use Symfony\Component\HttpFoundation\Response;
 final class ExportController extends Controller
 {
     /**
-     * @var \eZ\Publish\API\Repository\ContentService
-     */
-    protected $contentService;
-
-    /**
      * @var \Netgen\InformationCollection\API\Service\Exporter
      */
     protected $exporter;
 
-    public function __construct(ContentService $contentService, Exporter $exporter)
+    /**
+     * \Netgen\InformationCollection\API\Service\Exporter constructor.
+     *
+     * @param Exporter $exporter
+     */
+    public function __construct(Exporter $exporter)
     {
-        $this->contentService = $contentService;
         $this->exporter = $exporter;
     }
 
     /**
      * Handles export
      *
-     * @param int $contentId
+     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function exportAction($contentId, Request $request)
+    public function exportAction(Content $content, Request $request): Response
     {
         $attribute = new Attribute('infocollector', 'export');
         $this->denyAccessUnlessGranted($attribute);
-
-        $content = $this->contentService->loadContent($contentId);
 
         $form = $this->createForm(ExportType::class);
         $form->handleRequest($request);
@@ -55,7 +52,13 @@ final class ExportController extends Controller
 
         if ($form->isValid() && $form->get('export')->isClicked()) {
 
-            $exportCriteria = new ExportCriteria($content, $form->getData('dateFrom'), $form->getData('dateTo'));
+            $exportCriteria = new ExportCriteria(
+                $content,
+                $form->getData()['dateFrom'],
+                $form->getData()['dateTo'],
+                $form->getData()['offset'],
+                $form->getData()['limit']
+            );
 
             $export = $this->exporter->export($exportCriteria);
 

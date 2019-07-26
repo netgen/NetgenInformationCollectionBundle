@@ -73,22 +73,27 @@ class FieldValue extends ValueObject
     public static function withStringValue(int $fieldDefinitionId, string $dataText): self
     {
         return new self(
-            $fieldDefinitionId, $dataText
+            $fieldDefinitionId,
+            $dataText
         );
     }
 
     public static function withIntValue(int $fieldDefinitionId, int $dataInt): self
     {
         return new self(
-            $fieldDefinitionId, '', $dataInt
+            $fieldDefinitionId,
+            '',
+            $dataInt
         );
     }
 
     public static function withFloatValue(int $fieldDefinitionId, float $dataFloat): self
     {
         return new self(
-            $fieldDefinitionId, '', 0, $dataFloat
+            $fieldDefinitionId,
+            '',
+            0,
+            $dataFloat
         );
     }
-
 }

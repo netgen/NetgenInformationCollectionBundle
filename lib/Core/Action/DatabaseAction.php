@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Action;
 
+use Netgen\InformationCollection\API\Action\ActionInterface;
+use Netgen\InformationCollection\API\Action\CrucialActionInterface;
+use Netgen\InformationCollection\API\Exception\ActionFailedException;
 use Netgen\InformationCollection\API\Exception\PersistingFailedException;
 use Netgen\InformationCollection\API\Service\InformationCollection;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
-use Netgen\InformationCollection\API\Exception\ActionFailedException;
-use Netgen\InformationCollection\API\Action\ActionInterface;
-use Netgen\InformationCollection\API\Action\CrucialActionInterface;
 
 class DatabaseAction implements ActionInterface, CrucialActionInterface
 {

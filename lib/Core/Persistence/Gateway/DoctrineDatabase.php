@@ -7,7 +7,7 @@ namespace Netgen\InformationCollection\Core\Persistence\Gateway;
 use Doctrine\DBAL\Connection;
 use PDO;
 
-class DoctrineDatabase
+final class DoctrineDatabase
 {
     /**
      * @var \Doctrine\DBAL\Connection
@@ -35,7 +35,7 @@ class DoctrineDatabase
     {
         $query = $this->connection->createQueryBuilder();
         $query->select(
-                'COUNT(DISTINCT eic.contentobject_id) AS count'
+            'COUNT(DISTINCT eic.contentobject_id) AS count'
             )
             ->from($this->connection->quoteIdentifier('ezinfocollection'), 'eic')
             ->innerJoin(
@@ -59,7 +59,7 @@ class DoctrineDatabase
 
         $statement = $query->execute();
 
-        return (int)$statement->fetchColumn();
+        return (int) $statement->fetchColumn();
     }
 
     /**
@@ -72,7 +72,7 @@ class DoctrineDatabase
      *
      * @return array
      */
-    public function getObjectsWithCollections($limit, $offset)
+    public function getObjectsWithCollections(int $limit, int $offset): array
     {
         $contentIdsQuery = $this->connection->createQueryBuilder();
         $contentIdsQuery
@@ -94,10 +94,7 @@ class DoctrineDatabase
         $query
             ->select(
                 'eco.id AS content_id',
-                'eco.name',
-                'ecot.main_node_id',
-                'ecc.serialized_name_list',
-                'ecc.identifier AS class_identifier'
+                'ecot.main_node_id'
             )
             ->from($this->connection->quoteIdentifier('ezcontentobject'), 'eco')
             ->leftJoin(
@@ -122,7 +119,10 @@ class DoctrineDatabase
                 $query->expr()->eq('ecc.version', 0)
             )
             ->andWhere($query->expr()->in('eco.id', $contents))
-            ->groupBy($this->connection->quoteIdentifier('ecot.main_node_id'))
+            ->groupBy([
+                $this->connection->quoteIdentifier('ecot.main_node_id'),
+                $this->connection->quoteIdentifier('content_id'),
+            ])
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 

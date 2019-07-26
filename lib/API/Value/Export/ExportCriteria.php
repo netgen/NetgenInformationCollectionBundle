@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value\Export;
 
+use DateTimeInterface;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use Netgen\InformationCollection\API\Value\ValueObject;
-use DateTimeInterface;
 
 class ExportCriteria extends ValueObject
 {
@@ -25,11 +25,23 @@ class ExportCriteria extends ValueObject
      */
     protected $to;
 
-    public function __construct(Content $content, DateTimeInterface $from, DateTimeInterface $to)
+    /**
+     * @var int
+     */
+    protected $offset;
+
+    /**
+     * @var int
+     */
+    protected $limit;
+
+    public function __construct(Content $content, DateTimeInterface $from, DateTimeInterface $to, int $offset, int $limit)
     {
         $this->content = $content;
         $this->from = $from;
         $this->to = $to;
+        $this->offset = $offset;
+        $this->limit = $limit;
     }
 
     /**
@@ -54,5 +66,21 @@ class ExportCriteria extends ValueObject
     public function getTo(): DateTimeInterface
     {
         return $this->to;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOffset(): int
+    {
+        return $this->offset;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimit(): int
+    {
+        return $this->limit;
     }
 }

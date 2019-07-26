@@ -9,17 +9,17 @@ final class CollectionFields
     /**
      * @var int
      */
-    protected $contentId;
+    private $contentId;
 
     /**
      * @var int
      */
-    protected $collectionId;
+    private $collectionId;
 
     /**
      * @var array
      */
-    protected $fields;
+    private $fields;
 
     public function __construct(int $contentId, int $collectionId, array $fields)
     {

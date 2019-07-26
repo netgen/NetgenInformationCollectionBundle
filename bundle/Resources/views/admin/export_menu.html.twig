@@ -29,6 +29,26 @@
             {{ form_widget(form.dateTo) }}
         </div>
 
+        <div class="ng-ui-input">
+            <label for="{{ form.offset.vars.id }}">
+                {{ form.offset.vars.label|trans }}:
+            </label>
+
+            {{ form_errors(form.offset) }}
+
+            {{ form_widget(form.offset) }}
+        </div>
+
+        <div class="ng-ui-input">
+            <label for="{{ form.limit.vars.id }}">
+                {{ form.limit.vars.label|trans }}:
+            </label>
+
+            {{ form_errors(form.limit) }}
+
+            {{ form_widget(form.limit) }}
+        </div>
+
         <div class="ng-ui-btn-group">
             <button type="submit" name="{{ form.export.vars.full_name }}" class="ng-ui-btn">
                 {{ form.export.vars.label|trans }}

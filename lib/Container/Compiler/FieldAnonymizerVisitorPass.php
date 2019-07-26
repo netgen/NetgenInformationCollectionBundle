@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Container\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -38,7 +40,7 @@ class FieldAnonymizerVisitorPass implements CompilerPassInterface
 
         foreach ($visitors as $id => $tags) {
             foreach ($tags as $tag) {
-                $priority = isset($tag['priority']) ? (int)$tag['priority'] : 0;
+                $priority = isset($tag['priority']) ? (int) $tag['priority'] : 0;
                 $visitorsByPriority[$priority][] = new Reference($id);
             }
         }

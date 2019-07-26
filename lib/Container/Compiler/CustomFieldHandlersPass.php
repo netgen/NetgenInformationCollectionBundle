@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Container\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -8,8 +10,8 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class CustomFieldHandlersPass implements CompilerPassInterface
 {
-    const FIELD_HANDLER_REGISTRY = 'netgen_information_collection.field_handler.registry';
-    const FIELD_HANDLER = 'netgen_information_collection.field_handler.custom';
+    public const FIELD_HANDLER_REGISTRY = 'netgen_information_collection.field_handler.registry';
+    public const FIELD_HANDLER = 'netgen_information_collection.field_handler.custom';
 
     /**
      * {@inheritdoc}
@@ -25,9 +27,9 @@ class CustomFieldHandlersPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds(self::FIELD_HANDLER) as $id => $attributes) {
             $actionAggregate->addMethodCall(
                 'addHandler',
-                array(
+                [
                     new Reference($id),
-                )
+                ]
             );
         }
     }

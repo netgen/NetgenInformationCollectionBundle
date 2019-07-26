@@ -9,7 +9,7 @@ final class CollectionId
     /**
      * @var int
      */
-    protected $id;
+    private $id;
 
     public function __construct(int $id)
     {

@@ -13,5 +13,5 @@ interface MailerInterface
      *
      * @throws \Netgen\InformationCollection\API\Exception\EmailNotSentException
      */
-    public function createAndSendMessage(\Netgen\InformationCollection\API\Value\DataTransfer\EmailContent $content): void;
+    public function createAndSendMessage(Value\DataTransfer\EmailContent $content): void;
 }

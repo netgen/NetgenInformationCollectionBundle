@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Action;
 
-use Netgen\InformationCollection\API\Value\Event\InformationCollected;
-use Netgen\InformationCollection\API\Exception\ActionFailedException;
 use Netgen\InformationCollection\API\Action\ActionInterface;
+use Netgen\InformationCollection\API\Exception\ActionFailedException;
 use Netgen\InformationCollection\API\Exception\EmailNotSentException;
-use Netgen\InformationCollection\Core\Factory\EmailDataFactory;
 use Netgen\InformationCollection\API\Mailer\MailerInterface;
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+use Netgen\InformationCollection\Core\Factory\EmailDataFactory;
 
 class EmailAction implements ActionInterface
 {

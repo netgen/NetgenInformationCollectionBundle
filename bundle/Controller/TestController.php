@@ -31,8 +31,6 @@ class TestController extends BaseController
 
         $form->handleRequest($request);
 
-        dump($form->getData());
-
 
         return $this->render('@NetgenInformationCollection/test.html.twig', ['form' => $form->createView()]);
     }

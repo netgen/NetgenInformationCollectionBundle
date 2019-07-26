@@ -106,7 +106,7 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
     public function getCountByContentId($contentId)
     {
         try {
-            return (int)$this->createQueryBuilder('eica')
+            return (int) $this->createQueryBuilder('eica')
                 ->andWhere('eica.contentObjectId = :contentId')
                 ->setParameter('contentId', $contentId)
                 ->select('COUNT(eica) as children_count')

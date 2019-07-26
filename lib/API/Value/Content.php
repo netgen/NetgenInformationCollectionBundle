@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value;
 
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
+use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 
 final class Content extends ValueObject
 {
@@ -46,8 +46,7 @@ final class Content extends ValueObject
         Collection $lastCollection,
         int $childCount,
         bool $hasLocation
-    )
-    {
+    ) {
         $this->hasLocation = $hasLocation;
         $this->content = $content;
         $this->contentType = $contentType;

@@ -40,8 +40,7 @@ services:
     netgen_information_collection.service.exporter:
         class: Netgen\InformationCollection\Core\Service\ExporterService
         arguments:
-            - "@netgen_information_collection.repository.ez_info_collection"
-            - "@netgen_information_collection.repository.ez_info_collection_attribute"
+            - "@netgen_information_collection.api.service"
             - "@translator"
             - "@netgen_information_collection.utils.content_type"
 

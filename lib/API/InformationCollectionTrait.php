@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\API;
 
 use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
 use eZ\Publish\Core\MVC\Symfony\View\LocationValueView;
+use Netgen\InformationCollection\API\Form\DynamicFormBuilderInterface;
 use Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use Symfony\Component\HttpFoundation\Request;
-use Netgen\InformationCollection\API\Form\DynamicFormBuilderInterface;
 
 trait InformationCollectionTrait
 {
@@ -52,10 +54,10 @@ trait InformationCollectionTrait
             $dispatcher->dispatch(Events::INFORMATION_COLLECTED, $event);
         }
 
-        return array(
+        return [
             'is_valid' => $isValid,
             'form' => $form->createView(),
             'collected_fields' => $form->getData()->getFieldsData(),
-        );
+        ];
     }
 }

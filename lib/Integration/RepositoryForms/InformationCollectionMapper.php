@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Integration\RepositoryForms;
 
-use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\API\Repository\Values\ValueObject;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\Mapper\FormDataMapperInterface;
+use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InformationCollectionMapper implements FormDataMapperInterface
@@ -43,7 +43,6 @@ class InformationCollectionMapper implements FormDataMapperInterface
                     [
                         'fieldDefinition' => $fieldDef,
                         'field' => $field,
-                        'value' => $field->value,
                     ]
                 );
 

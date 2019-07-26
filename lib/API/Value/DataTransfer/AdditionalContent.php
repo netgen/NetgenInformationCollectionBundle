@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\API\Value\DataTransfer;
 
-use Netgen\InformationCollection\API\Value\ValueObject;
 use eZ\Publish\API\Repository\Values\Content\Content;
+use Netgen\InformationCollection\API\Value\ValueObject;
 
 class AdditionalContent extends ValueObject
 {

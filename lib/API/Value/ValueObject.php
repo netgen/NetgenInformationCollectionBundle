@@ -6,5 +6,4 @@ namespace Netgen\InformationCollection\API\Value;
 
 abstract class ValueObject
 {
-
 }

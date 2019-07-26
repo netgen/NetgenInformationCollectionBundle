@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\API\Value\Captcha;
 
 use Netgen\InformationCollection\API\Service\CaptchaValue;
@@ -24,23 +26,24 @@ class ReCaptcha implements CaptchaValue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid(Request $request): bool
     {
         $response = $this->reCaptcha->verify(
-            $request->request->get('g-recaptcha-response'), $request->getClientIp()
+            $request->request->get('g-recaptcha-response'),
+            $request->getClientIp()
         );
 
         return $response->isSuccess();
     }
 
     /**
-     * Returns aggregated captcha implementation
+     * Returns aggregated captcha implementation.
      *
      * @return \ReCaptcha\ReCaptcha
      */
-    public function getInnerCaptcha(): \ReCaptcha\ReCaptcha
+    public function getInnerCaptcha(): BaseReCaptcha
     {
         return $this->reCaptcha;
     }

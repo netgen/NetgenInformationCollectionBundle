@@ -8,8 +8,8 @@ use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\FieldType\Value;
 use Netgen\InformationCollection\API\FieldHandler\CustomFieldHandlerInterface;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
-use Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegistry;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
+use Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegistry;
 
 class FieldDataFactory
 {
@@ -42,7 +42,7 @@ class FieldDataFactory
         $handler = $this->registry->handle($value);
 
         if (null === $handler) {
-            return new FieldValue($fieldDefinition->id, (string)$value);
+            return new FieldValue($fieldDefinition->id, (string) $value);
         }
 
         if ($handler instanceof CustomLegacyFieldHandlerInterface) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Integration\RepositoryForms;
 
 use EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType;

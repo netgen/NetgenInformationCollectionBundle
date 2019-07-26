@@ -9,8 +9,8 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
-use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
 
 class AnonymizerService implements Anonymizer
 {

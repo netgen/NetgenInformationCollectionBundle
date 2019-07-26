@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Form\Builder;
 
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\Content;
+use Netgen\InformationCollection\API\Form\DynamicFormBuilderInterface;
 use Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionMapper;
 use Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Netgen\InformationCollection\API\Form\DynamicFormBuilderInterface;
 
 class FormBuilder implements DynamicFormBuilderInterface
 {
@@ -64,11 +66,9 @@ class FormBuilder implements DynamicFormBuilderInterface
             'contentType' => $contentType,
         ]);
 
-        $builder = $this->formFactory->create(InformationCollectionType::class, $data, [
+        return $this->formFactory->create(InformationCollectionType::class, $data, [
             'languageCode' => $content->contentInfo->mainLanguageCode,
             'mainLanguageCode' => $content->contentInfo->mainLanguageCode,
         ]);
-
-        return $builder;
     }
 }

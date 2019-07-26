@@ -9,12 +9,10 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
 use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
-use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+use Netgen\InformationCollection\API\Constants;
 use Netgen\InformationCollection\API\Exception\MissingEmailBlockException;
 use Netgen\InformationCollection\API\Exception\MissingValueException;
-use Netgen\InformationCollection\API\Value\DataTransfer\TemplateContent;
-use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
-use Netgen\InformationCollection\API\Constants;
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use function trim;
 use Twig_Environment;
 

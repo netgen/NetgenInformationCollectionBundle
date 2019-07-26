@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Listener;
 
-use Netgen\InformationCollection\Core\Action\ActionRegistry;
-use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use Netgen\InformationCollection\API\Events;
+use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+use Netgen\InformationCollection\Core\Action\ActionRegistry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class InformationCollectedListener implements EventSubscriberInterface

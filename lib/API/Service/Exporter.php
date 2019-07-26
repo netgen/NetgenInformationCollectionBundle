@@ -10,7 +10,7 @@ use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
 interface Exporter
 {
     /**
-     * Generate Export for give ExportCriteria.
+     * Generate Export for given ExportCriteria.
      *
      * @param \Netgen\InformationCollection\API\Value\Export\ExportCriteria $criteria
      *

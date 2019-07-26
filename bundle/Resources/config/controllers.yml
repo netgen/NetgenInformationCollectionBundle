@@ -22,7 +22,6 @@ services:
         parent: ezpublish.controller.base
         public: true
         arguments:
-            - "@ezpublish.api.service.content"
             - "@netgen_information_collection.service.exporter"
 
 
