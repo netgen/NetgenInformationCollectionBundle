@@ -6,6 +6,8 @@
 {% set disableSubtree = disableSubtree|default([]) %}
 {% if app.request.attributes.has('contentId') %}
     {% set pathString = '/0/' ~ app.request.attributes.get('contentId') %}
+{% elseif app.request.query.has('contentId') %}
+    {% set pathString = '/0/' ~ app.request.query.get('contentId') %}
 {% endif %}
 
 {% block item_tree %}

@@ -1,3 +1,7 @@
 .ic-app {
     min-height: calc(100vh - 99px);
 }
+
+.ic-app .ng-ui-container {
+    max-width: none;
+}

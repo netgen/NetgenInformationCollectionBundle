@@ -77,7 +77,7 @@
                             {{ object.modified|date("Y.m.d H:i") }}
                         </td>
                         <td class="number" align="right">
-                            <a href="{{ path("netgen_information_collection.route.admin.view", {"collectionId": collection_id}) }}">
+                            <a href="{{ path("netgen_information_collection.route.admin.view", {"collectionId": collection_id, "contentId": content.id}) }}">
                                 {{ collection_id }}
                             </a>
                         </td>
