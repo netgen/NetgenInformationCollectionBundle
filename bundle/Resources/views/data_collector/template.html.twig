@@ -1,0 +1,30 @@
+{% trans_default_domain 'netgen_information_collection_admin' %}
+
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        {# this is the content displayed as a panel in the toolbar #}
+        <span class="icon">
+            {{ include('@NetgenInformationCollection/data_collector/ic-icon-color.svg.twig') }}
+        </span>
+
+        <span class="sf-toolbar-value">{{ collector.collectedItemsCount }}</span>
+        <span class="sf-toolbar-label">{{ 'netgen_information_collection_profiler_items'|trans }}</span>
+    {% endset %}
+
+    {% if collector.collectedItemsCount %}
+        {% set text %}
+            {# this is the content displayed when hovering the mouse over
+               the toolbar panel #}
+            {% for item, value in collector.collectedItems %}
+                <div class="sf-toolbar-info-piece">
+                    <b>{{ item }}</b>
+                    <span class="sf-toolbar-status">{{ value.value }}</span>
+                </div>
+            {% endfor %}
+        {% endset %}
+
+        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: false }) }}
+    {% endif %}
+{% endblock %}

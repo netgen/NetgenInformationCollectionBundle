@@ -35,6 +35,8 @@ netgen_information_collection_admin_view_anonymize_field: 'Anonymize selected fi
 
 netgen_information_collection_admin_back: 'Back'
 
+netgen_information_collection_profiler_items: 'items'
+
 netgen_information_collection_admin_export_created: 'Created'
 netgen_information_collection_admin_export_export: 'Export'
 netgen_information_collection_admin_export_cancel: 'Cancel'

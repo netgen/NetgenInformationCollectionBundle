@@ -8,3 +8,9 @@ services:
             - '@netgen_information_collection.api.service'
         tags:
             - { name: request.param_converter }
+
+    netgen_information_collection.collector:
+        class: Netgen\Bundle\InformationCollectionBundle\DataCollector\InformationCollectionCollector
+        public: false
+        tags:
+            - { name: data_collector, template: '@NetgenInformationCollection/data_collector/template.html.twig', id: 'netgen_information_collection_collector' }
