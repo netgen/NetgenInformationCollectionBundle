@@ -1,6 +1,5 @@
 .idea/
 coverage/
-extension/
 vendor/
 var/
 .tmp/
