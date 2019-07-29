@@ -25,12 +25,12 @@ class InformationCollectionCollector extends DataCollector
         ];
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->data = [];
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'netgen_information_collection_collector';
     }

@@ -3,6 +3,7 @@ imports:
 
 services:
     netgen_information_collection.command.anonymize:
+        class: Netgen\Bundle\InformationCollectionBundle\Command\DataAnonymizerCommand
         arguments:
             - '@netgen_information_collection.anonymizer_facade.service'
         tags:
