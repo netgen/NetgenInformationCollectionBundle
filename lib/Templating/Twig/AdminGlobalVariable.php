@@ -16,7 +16,7 @@ class AdminGlobalVariable
      *
      * @param string $pageLayoutTemplate
      */
-    public function setPageLayoutTemplate(?string $pageLayoutTemplate = null)
+    public function setPageLayoutTemplate(?string $pageLayoutTemplate = null): void
     {
         $this->pageLayoutTemplate = $pageLayoutTemplate;
     }
