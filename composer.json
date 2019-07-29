@@ -41,7 +41,10 @@
         "phpunit/phpunit": "^8.2",
         "matthiasnoback/symfony-config-test": "~4.0",
         "matthiasnoback/symfony-dependency-injection-test": "~4.0",
-        "friendsofphp/php-cs-fixer": "^2.15"
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "phpstan/phpstan": "^0.11",
+        "phpstan/phpstan-strict-rules": "^0.11",
+        "phpstan/phpstan-phpunit": "^0.11"
     },
     "autoload": {
         "psr-4": {
@@ -58,7 +61,8 @@
     "scripts": {
         "test": "@php vendor/bin/phpunit -c phpunit.xml --colors=always",
         "fix": "@php vendor/bin/php-cs-fixer fix",
-        "coverage": "@php -dzend_extension=xdebug.so vendor/bin/phpunit -c phpunit.xml --colors=always"
+        "coverage": "@php -dzend_extension=xdebug.so vendor/bin/phpunit -c phpunit.xml --colors=always",
+        "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --level=7 --ansi lib bundle"
     },
     "extra": {
         "branch-alias": {

@@ -11,7 +11,7 @@ use Netgen\InformationCollection\API\Exception\PersistingFailedException;
 use Netgen\InformationCollection\API\Service\InformationCollection;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 
-class DatabaseAction implements ActionInterface, CrucialActionInterface
+final class DatabaseAction implements ActionInterface, CrucialActionInterface
 {
     /**
      * @var InformationCollection

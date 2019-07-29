@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Controller;
 
+use eZ\Publish\Core\MVC\Symfony\View\BaseView;
 use eZ\Publish\Core\MVC\Symfony\View\CachableView;
 use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
 use Netgen\InformationCollection\API\InformationCollectionTrait;
@@ -27,7 +28,9 @@ class InformationCollectionController implements ContainerAwareInterface
     {
         $parameters = $this->collectInformation($view, $request, new AdditionalContent());
 
-        $view->addParameters($parameters);
+        if ($view instanceof BaseView) {
+            $view->addParameters($parameters);
+        }
 
         if ($view instanceof CachableView) {
             $view->setCacheEnabled(false);

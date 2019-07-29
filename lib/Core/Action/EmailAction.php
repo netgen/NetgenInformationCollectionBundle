@@ -4,48 +4,13 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Action;
 
-use Netgen\InformationCollection\API\Action\ActionInterface;
 use Netgen\InformationCollection\API\Exception\ActionFailedException;
 use Netgen\InformationCollection\API\Exception\EmailNotSentException;
-use Netgen\InformationCollection\API\Mailer\MailerInterface;
-use Netgen\InformationCollection\API\Value\Event\InformationCollected;
-use Netgen\InformationCollection\Core\Factory\EmailDataFactory;
 
-class EmailAction implements ActionInterface
+final class EmailAction extends BaseEmailAction
 {
-    /**
-     * @var \Netgen\InformationCollection\API\Mailer\MailerInterface
-     */
-    protected $mailer;
-
-    /**
-     * @var \Netgen\InformationCollection\Core\Factory\EmailDataFactory
-     */
-    protected $factory;
-
-    /**
-     * EmailAction constructor.
-     *
-     * @param \Netgen\InformationCollection\Core\Factory\EmailDataFactory $factory
-     * @param \Netgen\InformationCollection\API\Mailer\MailerInterface $mailer
-     */
-    public function __construct(EmailDataFactory $factory, MailerInterface $mailer)
+    protected function throwException(EmailNotSentException $exception)
     {
-        $this->mailer = $mailer;
-        $this->factory = $factory;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function act(InformationCollected $event): void
-    {
-        $emailData = $this->factory->build($event);
-
-        try {
-            $this->mailer->createAndSendMessage($emailData);
-        } catch (EmailNotSentException $e) {
-            throw new ActionFailedException('email', $e->getMessage());
-        }
+        throw new ActionFailedException('email', $exception->getMessage());
     }
 }

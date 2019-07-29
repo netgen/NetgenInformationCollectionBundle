@@ -2,6 +2,12 @@ imports:
     - { resource: controllers.yml }
 
 services:
+    netgen_information_collection.command.anonymize:
+        arguments:
+            - '@netgen_information_collection.anonymizer_facade.service'
+        tags:
+            - { name: console.command }
+
     netgen_information_collection.param_converter.collection:
         class: Netgen\Bundle\InformationCollectionBundle\ParamConverter\CollectionParamConverter
         arguments:

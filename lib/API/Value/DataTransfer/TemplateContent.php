@@ -17,11 +17,6 @@ class TemplateContent extends ValueObject
     protected $event;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Content
-     */
-    protected $content;
-
-    /**
      * @var \Twig\TemplateWrapper
      */
     protected $templateWrapper;
@@ -30,13 +25,11 @@ class TemplateContent extends ValueObject
      * TemplateData constructor.
      *
      * @param \Netgen\InformationCollection\API\Value\Event\InformationCollected $event
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      * @param \Twig\TemplateWrapper $templateWrapper
      */
-    public function __construct(InformationCollected $event, Content $content, TemplateWrapper $templateWrapper)
+    public function __construct(InformationCollected $event, TemplateWrapper $templateWrapper)
     {
         $this->event = $event;
-        $this->content = $content;
         $this->templateWrapper = $templateWrapper;
     }
 
@@ -53,7 +46,7 @@ class TemplateContent extends ValueObject
      */
     public function getContent(): Content
     {
-        return $this->content;
+        return $this->event->getContent();
     }
 
     /**

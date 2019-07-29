@@ -41,7 +41,7 @@ class InformationCollectionAdminView implements ViewInterface
     protected $startPage;
 
     /**
-     * @var
+     * @var int
      */
     protected $endPage;
 

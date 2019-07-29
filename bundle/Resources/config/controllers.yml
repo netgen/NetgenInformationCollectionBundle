@@ -16,6 +16,7 @@ services:
             - "@netgen_information_collection.anonymizer.service"
             - "@ezpublish.api.service.content"
             - "@ezpublish.config.resolver"
+            - "@translator"
 
     netgen_information_collection.controller.export:
         class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\ExportController

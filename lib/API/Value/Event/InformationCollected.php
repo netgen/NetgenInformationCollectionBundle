@@ -7,7 +7,7 @@ namespace Netgen\InformationCollection\API\Value\Event;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\SPI\Persistence\Content\ContentInfo;
+use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Symfony\Component\EventDispatcher\Event;
@@ -33,7 +33,8 @@ final class InformationCollected extends Event
      * InformationCollected constructor.
      *
      * @param \Netgen\InformationCollection\API\Value\InformationCollectionStruct $struct
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $additionalContent
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @param \Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent $additionalContent
      */
     public function __construct(
         InformationCollectionStruct $struct,

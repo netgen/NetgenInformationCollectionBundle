@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Netgen\InformationCollectionBundle\Form\Captcha;
+namespace Netgen\InformationCollection\Core\Service;
 
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use Netgen\Bundle\InformationCollectionBundle\API\Service\CaptchaService as CaptchaServiceInterface;
+use Netgen\InformationCollection\API\Service\CaptchaService as CaptchaServiceInterface;
+use Netgen\InformationCollection\API\Service\CaptchaValue;
+use Netgen\InformationCollection\API\Value\Captcha\ReCaptcha;
+use Netgen\InformationCollection\API\Value\Captcha\NullObject;
 
 class CaptchaService implements CaptchaServiceInterface
 {
@@ -24,7 +27,7 @@ class CaptchaService implements CaptchaServiceInterface
     /**
      * CaptchaService constructor.
      *
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentTypeService
+     * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
      * @param array $config
      */
     public function __construct(ContentTypeService $contentTypeService, $config = [])
@@ -36,7 +39,7 @@ class CaptchaService implements CaptchaServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function isEnabled(Location $location)
+    public function isEnabled(Location $location): bool
     {
         $config = $this->getConfig($location);
 
@@ -46,7 +49,7 @@ class CaptchaService implements CaptchaServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function getSiteKey(Location $location)
+    public function getSiteKey(Location $location): string
     {
         $config = $this->getConfig($location);
 
@@ -56,7 +59,7 @@ class CaptchaService implements CaptchaServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function getCaptcha(Location $location)
+    public function getCaptcha(Location $location): CaptchaValue
     {
         $config = $this->getConfig($location);
 
@@ -102,7 +105,7 @@ class CaptchaService implements CaptchaServiceInterface
             $this->getContentType($location)
         );
 
-        return array_replace($this->config, $contentTypeConfig);
+        return (array)array_replace($this->config, $contentTypeConfig);
     }
 
     /**

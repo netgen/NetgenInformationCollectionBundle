@@ -10,17 +10,22 @@ use Netgen\InformationCollection\API\Value\ValueObject;
 class AdditionalContent extends ValueObject
 {
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Content
+     * @var \eZ\Publish\API\Repository\Values\Content\Content|null
      */
     protected $content;
 
+    /**
+     * AdditionalContent constructor.
+     *
+     * @param Content|null $content
+     */
     public function __construct(?Content $content = null)
     {
         $this->content = $content;
     }
 
     /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Content
+     * @return \eZ\Publish\API\Repository\Values\Content\Content|null
      */
     public function getContent(): ?Content
     {

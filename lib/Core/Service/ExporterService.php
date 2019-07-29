@@ -66,7 +66,7 @@ class ExporterService implements Exporter
                     continue;
                 }
 
-                $row[] = $this->getAttributeValue($fieldId, $collection->getAttributes());
+                $row[] = $this->getAttributeValue((int)$fieldId, $collection->getAttributes());
             }
 
             $rows[] = $row;
@@ -85,17 +85,21 @@ class ExporterService implements Exporter
      *
      * @return string
      */
-    protected function getAttributeValue($fieldId, $attributes)
+    protected function getAttributeValue(int $fieldId, array $attributes)
     {
         /** @var Attribute $attribute */
         foreach ($attributes as $attribute) {
             if ($fieldId === $attribute->getFieldDefinition()->id) {
                 $value = $attribute->getValue();
-                $value = str_replace('"', '""', $value);
-                $value = str_replace(';', ', ', $value);
+                $value = str_replace('"', '""', (string)$value);
+                $value = str_replace(';', ', ', (string)$value);
                 $value = strip_tags($value);
 
-                return preg_replace(['/\r|\n/'], [' '], $value);
+                $res = preg_replace(['/\r|\n/'], [' '], $value);
+
+                if ($res === null) {
+                    return '';
+                }
             }
         }
 

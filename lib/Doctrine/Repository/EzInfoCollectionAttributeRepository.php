@@ -10,6 +10,7 @@ use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\API\Repository\Values\Content\Field;
 use Netgen\InformationCollection\API\Exception\RemoveAttributeFailedException;
 use Netgen\InformationCollection\API\Exception\RetrieveCountException;
 use Netgen\InformationCollection\API\Exception\StoringAttributeFailedException;
@@ -36,7 +37,12 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
         $ezInfoAttribute->setContentObjectId($content->contentInfo->id);
         $ezInfoAttribute->setInformationCollectionId($collection->getId());
         $ezInfoAttribute->setContentClassAttributeId($fieldValue->getFieldDefinitionId());
-        $ezInfoAttribute->setContentObjectAttributeId($content->getField($fieldDefIdentifier)->id);
+
+        $field = $content->getField($fieldDefIdentifier);
+        if ($field instanceof Field) {
+            $ezInfoAttribute->setContentObjectAttributeId($field->id);
+        }
+
         $ezInfoAttribute->setDataInt($fieldValue->getDataInt());
         $ezInfoAttribute->setDataFloat($fieldValue->getDataFloat());
         $ezInfoAttribute->setDataText($fieldValue->getDataText());

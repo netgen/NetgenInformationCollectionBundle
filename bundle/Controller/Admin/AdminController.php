@@ -22,6 +22,7 @@ use Netgen\InformationCollection\Core\Pagination\InformationCollectionContentsAd
 use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class AdminController extends Controller
 {
@@ -44,6 +45,10 @@ class AdminController extends Controller
      * @var \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer
      */
     protected $anonymizer;
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
 
     /**
      * AdminController constructor.
@@ -52,18 +57,21 @@ class AdminController extends Controller
      * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer $anonymizer
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
+     * @param \Symfony\Component\Translation\TranslatorInterface $translator
      */
     public function __construct(
         InformationCollection $service,
         Anonymizer $anonymizer,
         ContentService $contentService,
-        ConfigResolverInterface $configResolver
+        ConfigResolverInterface $configResolver,
+        TranslatorInterface $translator
     )
     {
         $this->service = $service;
         $this->contentService = $contentService;
         $this->configResolver = $configResolver;
         $this->anonymizer = $anonymizer;
+        $this->translator = $translator;
     }
 
     /**
@@ -132,7 +140,7 @@ class AdminController extends Controller
     /**
      * Displays individual collection details
      *
-     * @param int $collectionId
+     * @param \Netgen\InformationCollection\API\Value\Collection $collection
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -319,14 +327,14 @@ class AdminController extends Controller
      *
      * @param string $messageType
      * @param string $message
-     * @param string $count
+     * @param int $count
      * @param array $parameters
      */
-    protected function addFlashMessage($messageType, $message, $count = 1, array $parameters = array())
+    protected function addFlashMessage(string $messageType, string $message, int $count = 1, array $parameters = array())
     {
         $this->addFlash(
             'netgen_information_collection.' . $messageType,
-            $this->container->get('translator')->transChoice(
+            $this->translator->transChoice(
                 $messageType . '.' . $message,
                 $count,
                 $parameters,
@@ -339,11 +347,11 @@ class AdminController extends Controller
      * Returns configured instance of Pagerfanta
      *
      * @param \Pagerfanta\Adapter\AdapterInterface $adapter
-     * @param $currentPage
+     * @param int $currentPage
      *
      * @return \Pagerfanta\Pagerfanta
      */
-    protected function getPager(AdapterInterface $adapter, $currentPage)
+    protected function getPager(AdapterInterface $adapter, int $currentPage): Pagerfanta
     {
         $currentPage = (int) $currentPage;
         $pager = new Pagerfanta($adapter);
@@ -356,19 +364,19 @@ class AdminController extends Controller
         return $pager;
     }
 
-    protected function checkReadPermissions()
+    protected function checkReadPermissions(): void
     {
         $attribute = new Attribute('infocollector', 'read');
         $this->denyAccessUnlessGranted($attribute);
     }
 
-    protected function checkDeletePermissions()
+    protected function checkDeletePermissions(): void
     {
         $attribute = new Attribute('infocollector', 'delete');
         $this->denyAccessUnlessGranted($attribute);
     }
 
-    protected function checkAnonymizePermissions()
+    protected function checkAnonymizePermissions(): void
     {
         $attribute = new Attribute('infocollector', 'anonymize');
         $this->denyAccessUnlessGranted($attribute);

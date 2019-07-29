@@ -75,6 +75,14 @@ final class InformationCollectionStruct extends ValueObject
         return $this->fields;
     }
 
+    /**
+     * @return \EzSystems\RepositoryForms\Data\Content\FieldData[]
+     */
+    public function getCollectedFields(): array
+    {
+       return $this->fields;
+    }
+
     protected function addFieldData(FieldData $fieldData)
     {
         $this->fields[$fieldData->fieldDefinition->identifier] = $fieldData;

@@ -29,6 +29,47 @@ class EzInfoCollectionRepository extends EntityRepository
         return new EzInfoCollection();
     }
 
+    public function loadCollection(int $collectionId)
+    {
+        $collection = $this->findOneBy(['id' => $collectionId]);
+
+        if ($collection instanceof EzInfoCollection) {
+            return $collection;
+        }
+    }
+
+    public function getFirstCollection(int $contentId): EzInfoCollection
+    {
+        $collection = $this->findOneBy(
+            [
+                'contentObjectId' => $contentId,
+            ],
+            [
+                'created' => 'ASC',
+            ]
+        );
+
+        if ($collection instanceof EzInfoCollection) {
+            return $collection;
+        }
+    }
+
+    public function getLastCollection(int $contentId): EzInfoCollection
+    {
+        $collection = $this->findOneBy(
+            [
+                'contentObjectId' => $contentId,
+            ],
+            [
+                'created' => 'DESC',
+            ]
+        );
+
+        if ($collection instanceof EzInfoCollection) {
+            return $collection;
+        }
+    }
+
     public function createNewFromValues(Content $content, User $user): EzInfoCollection
     {
         $ezInfo = $this->getInstance();

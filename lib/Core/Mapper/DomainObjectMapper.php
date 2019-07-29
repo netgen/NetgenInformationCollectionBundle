@@ -9,7 +9,9 @@ use DateTimeInterface;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
+use eZ\Publish\API\Repository\Values\Content\Field;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
+use eZ\Publish\Core\Repository\Values\ContentType\ContentType as CoreContentType;
 use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\AttributeValue;
 use Netgen\InformationCollection\API\Value\Collection;
@@ -65,6 +67,7 @@ final class DomainObjectMapper
     public function mapCollection(EzInfoCollection $collection, array $attributes): Collection
     {
         $content = $this->contentService->loadContent($collection->getContentObjectId());
+        /** @var CoreContentType $contentType */
         $contentType = $this->contentTypeService
             ->loadContentType(
                 $content->contentInfo->contentTypeId
@@ -93,7 +96,7 @@ final class DomainObjectMapper
 
     public function mapAttribute(EzInfoCollectionAttribute $attribute, APIContent $content, FieldDefinition $fieldDefinition): Attribute
     {
-        $classField = null;
+        $classField = new Field();
         foreach ($content->getFields() as $field) {
             if ($field->id === $attribute->getContentObjectAttributeId()) {
                 $classField = $field;

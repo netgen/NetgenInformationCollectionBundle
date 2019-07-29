@@ -10,9 +10,9 @@ use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Security\PolicyProvider\Po
 class InformationCollectionPolicyProvider implements PolicyProviderInterface
 {
     /**
-     * @param ConfigBuilderInterface $configBuilder
+     * @param \eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ConfigBuilderInterface $configBuilder
      *
-     * @return $this
+     * @return array
      */
     public function addPolicies(ConfigBuilderInterface $configBuilder)
     {
@@ -25,6 +25,6 @@ class InformationCollectionPolicyProvider implements PolicyProviderInterface
             ],
         ]);
 
-        return $this;
+        return [];
     }
 }

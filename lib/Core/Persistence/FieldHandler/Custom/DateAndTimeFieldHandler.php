@@ -25,11 +25,16 @@ class DateAndTimeFieldHandler implements CustomLegacyFieldHandlerInterface
      */
     public function toString(Value $value, FieldDefinition $fieldDefinition): string
     {
-        return (string) $value;
+        if ($value instanceof DateAndTimeValue) {
+            return (string) $value;
+        }
+
     }
 
     /**
-     * {@inheritdoc}
+     * @param \eZ\Publish\Core\FieldType\DateAndTime\Value $value
+     *
+     * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {

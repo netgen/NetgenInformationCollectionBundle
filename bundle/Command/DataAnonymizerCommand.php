@@ -2,7 +2,8 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Netgen\InformationCollection\Core\Persistence\Anonymizer\AnonymizerServiceFacade;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\HelpCommand;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,8 +14,10 @@ use DateInterval;
 use DateTime;
 use Exception;
 
-class DataAnonymizerCommand extends ContainerAwareCommand
+class DataAnonymizerCommand extends Command
 {
+    protected static $defaultName = 'nginfocollector:anonymize';
+
     /**
      * @var \Netgen\InformationCollection\Core\Persistence\Anonymizer\AnonymizerServiceFacade
      */
@@ -24,6 +27,14 @@ class DataAnonymizerCommand extends ContainerAwareCommand
      * @var \DateInterval
      */
     protected $period;
+
+    public function __construct(AnonymizerServiceFacade $anonymizerServiceFacade)
+    {
+        $this->anonymizer = $anonymizerServiceFacade;
+
+        // Parent constructor call is mandatory for commands registered as services
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -76,7 +87,7 @@ class DataAnonymizerCommand extends ContainerAwareCommand
             $count = $this->anonymizer->anonymize($contentId, $fields, $this->getDateFromPeriod());
             $output->writeln("<info>Done.</info>");
             $output->writeln("<info>Anonymized #{$count} collections.</info>");
-            return;
+            return 0;
         }
 
         $output->writeln("<info>Canceled.</info>");
@@ -84,12 +95,13 @@ class DataAnonymizerCommand extends ContainerAwareCommand
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->anonymizer = $this->getContainer()->get('netgen_information_collection.anonymizer_facade.service');
-
         if (!empty($input->getOption('period'))) {
 
             try {
-                $this->period = new DateInterval($input->getOption('period'));
+                $period = $input->getOption('period');
+                if (is_string($period)) {
+                    $this->period = new DateInterval($period);
+                }
             } catch (Exception $exception) {
                 $output->writeln("Please enter valid DateInterval string.");
                 exit(0);
@@ -113,10 +125,18 @@ class DataAnonymizerCommand extends ContainerAwareCommand
 
         if (!is_null($input->getOption('field-identifiers'))) {
 
-            $ids = explode(",", $input->getOption('field-identifiers'));
-            $ids = array_filter($ids);
+            $ids = [];
+            $fieldIdentifiers = $input->getOption('field-identifiers');
 
-            return array_unique($ids);
+            if (is_string($fieldIdentifiers)) {
+                $ids = explode(",", $fieldIdentifiers);
+            }
+
+            if (is_array($fieldIdentifiers)) {
+                $ids = array_filter($fieldIdentifiers);
+            }
+
+            return array_unique((array)$ids);
         }
 
         return [];

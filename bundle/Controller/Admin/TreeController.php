@@ -32,7 +32,7 @@ class TreeController extends Controller
     /**
      * TreeController constructor.
      *
-     * @param \Netgen\InformationCollection\API\Service\InformationCollection
+     * @param \Netgen\InformationCollection\API\Service\InformationCollection $service
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
      * @param \Symfony\Component\Routing\RouterInterface $router
      */

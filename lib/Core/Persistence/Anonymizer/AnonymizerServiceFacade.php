@@ -49,11 +49,11 @@ final class AnonymizerServiceFacade
      *
      * @param int $contentId Content id
      * @param array $fields Fields list
-     * @param DateTime|null $date Anonymize collections older that this date
+     * @param \DateTimeImmutable|null $date Anonymize collections older that this date
      *
      * @return int
      */
-    public function anonymize($contentId, array $fields = [], \DateTimeImmutable $date = null)
+    public function anonymize($contentId, array $fields = [], ?\DateTimeImmutable $date = null)
     {
         $fieldsWithIds = $this->getFieldIds($contentId, $fields);
 
@@ -73,13 +73,12 @@ final class AnonymizerServiceFacade
     /**
      * Map field id's to list of field identifiers.
      *
-     * @param int $content
+     * @param int $contentId
      * @param array $fieldIdentifiers
-     * @param mixed $contentId
      *
      * @return array
      */
-    private function getFieldIds($contentId, array $fieldIdentifiers)
+    private function getFieldIds(int $contentId, array $fieldIdentifiers)
     {
         $ids = [];
         foreach ($fieldIdentifiers as $identifier) {

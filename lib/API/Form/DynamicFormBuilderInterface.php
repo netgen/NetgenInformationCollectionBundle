@@ -15,7 +15,7 @@ interface DynamicFormBuilderInterface
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      *
-     * @return \Symfony\Component\Form\FormBuilderInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createForm(Content $content): FormInterface;
 
@@ -24,7 +24,7 @@ interface DynamicFormBuilderInterface
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      *
-     * @return \Symfony\Component\Form\FormBuilderInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createFormWithAjax(Content $content): FormBuilderInterface;
+    public function createFormWithAjax(Content $content): FormInterface;
 }

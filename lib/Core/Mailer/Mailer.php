@@ -33,9 +33,9 @@ class Mailer implements MailerInterface
         $message = new \Swift_Message();
 
         try {
-            $message->setTo($data->getRecipient());
+            $message->setTo($data->getRecipients());
         } catch (\Swift_RfcComplianceException $e) {
-            throw new EmailNotSentException('recipient', $e->getMessage());
+            throw new EmailNotSentException('recipients', $e->getMessage());
         }
 
         try {

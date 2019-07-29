@@ -41,8 +41,6 @@ class FormBuilder implements DynamicFormBuilderInterface
      *
      * @param FormFactoryInterface $formFactory
      * @param ContentTypeService $contentTypeService
-     * @param RouterInterface $router
-     * @param bool $useCsrf
      */
     public function __construct(FormFactoryInterface $formFactory, ContentTypeService $contentTypeService)
     {
@@ -50,7 +48,7 @@ class FormBuilder implements DynamicFormBuilderInterface
         $this->contentTypeService = $contentTypeService;
     }
 
-    public function createFormWithAjax(Content $content): FormBuilderInterface
+    public function createFormWithAjax(Content $content): FormInterface
     {
         throw new \RuntimeException('This method is not implemented.');
     }

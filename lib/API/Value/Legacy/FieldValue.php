@@ -18,7 +18,7 @@ class FieldValue extends ValueObject
     /**
      * @var float
      */
-    protected $dataFloat = 0;
+    protected $dataFloat = 0.0;
 
     /**
      * @var int
@@ -30,7 +30,7 @@ class FieldValue extends ValueObject
      */
     protected $dataText = '';
 
-    public function __construct(int $fieldDefinitionId, string $dataText, int $dataInt = 0, float $dataFloat = 0)
+    public function __construct(int $fieldDefinitionId, string $dataText, int $dataInt = 0, float $dataFloat = 0.0)
     {
         $this->fieldDefinitionId = $fieldDefinitionId;
         $this->dataInt = $dataInt;

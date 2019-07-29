@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\DependencyInjection;
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
+use Netgen\InformationCollection\API\ConfigurationConstants;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -99,7 +100,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
 
         foreach ($configs as $fileName => $extensionName) {
             $configFile = __DIR__ . '/../../lib/Resources/config/' . $fileName;
-            $config = Yaml::parse(file_get_contents($configFile));
+            $config = Yaml::parse((string)file_get_contents($configFile));
             $container->prependExtensionConfig($extensionName, $config);
             $container->addResource(new FileResource($configFile));
         }

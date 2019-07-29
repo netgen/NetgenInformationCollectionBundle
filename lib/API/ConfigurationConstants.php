@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\DependencyInjection;
+namespace Netgen\InformationCollection\API;
 
 class ConfigurationConstants
 {

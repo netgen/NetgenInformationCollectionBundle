@@ -29,7 +29,9 @@ class CheckboxFieldHandler implements CustomLegacyFieldHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param \eZ\Publish\Core\FieldType\Checkbox\Value $value
+     *
+     * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {

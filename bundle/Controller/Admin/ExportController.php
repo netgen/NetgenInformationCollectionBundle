@@ -9,6 +9,7 @@ use Netgen\InformationCollection\API\Service\Exporter;
 use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
 use Netgen\InformationCollection\Form\Type\ExportType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\ClickableInterface;
 use League\Csv\Writer;
 use SplTempFileObject;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,11 +47,11 @@ final class ExportController extends Controller
         $form = $this->createForm(ExportType::class);
         $form->handleRequest($request);
 
-        if ($form->get('cancel')->isClicked()) {
+        if ($form->get('cancel') instanceof ClickableInterface && $form->get('cancel')->isClicked()) {
             return $this->redirect($this->generateUrl('netgen_information_collection.route.admin.overview'));
         }
 
-        if ($form->isValid() && $form->get('export')->isClicked()) {
+        if ($form->isValid() && $form->get('export') instanceof ClickableInterface && $form->get('export')->isClicked()) {
 
             $exportCriteria = new ExportCriteria(
                 $content,

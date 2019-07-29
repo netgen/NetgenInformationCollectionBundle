@@ -111,7 +111,7 @@ class InformationCollectionService implements InformationCollection
         }
 
         foreach ($struct->getFieldsData() as $fieldDefIdentifier => $value) {
-            if ($value === null) {
+            if ($value->value === null) {
                 continue;
             }
 
@@ -145,27 +145,15 @@ class InformationCollectionService implements InformationCollection
         foreach ($objects as $object) {
             $contentId = (int) $object['content_id'];
 
-            $firstCollection = $this->ezInfoCollectionRepository->findOneBy(
-                [
-                    'contentObjectId' => $contentId,
-                ],
-                [
-                    'created' => 'ASC',
-                ]
-            );
-
-            $lastCollection = $this->ezInfoCollectionRepository->findOneBy(
-                [
-                    'contentObjectId' => $contentId,
-                ],
-                [
-                    'created' => 'DESC',
-                ]
-            );
-
             $childCount = $this->ezInfoCollectionRepository->getChildrenCount($contentId);
 
-            $contents[] = $this->objectMapper->mapContent($object, $firstCollection, $lastCollection, $childCount);
+            $contents[] = $this->objectMapper
+                ->mapContent(
+                    $object,
+                    $this->ezInfoCollectionRepository->getFirstCollection($contentId),
+                    $this->ezInfoCollectionRepository->getLastCollection($contentId),
+                    $childCount
+                );
         }
 
         return new ContentsWithCollections($contents, count($contents));
@@ -288,7 +276,7 @@ class InformationCollectionService implements InformationCollection
     {
         $collections = $this->ezInfoCollectionRepository
             ->findBy([
-                'contentObjectId' => $contents->getContents(),
+                'contentObjectId' => $contents->getContentIds(),
             ]);
 
         foreach ($collections as $collection) {
@@ -300,7 +288,7 @@ class InformationCollectionService implements InformationCollection
     }
 
     /**
-     * @param UserReference $userReference
+     * @param int $userId
      * @param mixed $userId
      *
      * @return \eZ\Publish\API\Repository\Values\User\User
@@ -322,7 +310,7 @@ class InformationCollectionService implements InformationCollection
      */
     protected function loadCollection($collectionId)
     {
-        $collection = $this->ezInfoCollectionRepository->findOneBy(['id' => $collectionId]);
+        $collection = $this->ezInfoCollectionRepository->loadCollection($collectionId);
         $attributes = $this->ezInfoCollectionAttributeRepository->findBy(
             [
                 'informationCollectionId' => $collectionId,

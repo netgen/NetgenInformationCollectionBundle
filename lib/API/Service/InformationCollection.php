@@ -80,14 +80,14 @@ interface InformationCollection
      *
      * @param \Netgen\InformationCollection\API\Value\Filter\SearchCountQuery $query
      *
-     * @return \Netgen\InformationCollection\API\Value\Collections
+     * @return \Netgen\InformationCollection\API\Value\SearchCount
      */
     public function searchCount(SearchCountQuery $query): SearchCount;
 
     /**
      * Removes selected collection fields.
      *
-     * @param \Netgen\InformationCollection\API\Value\Filter\CollectionFields
+     * @param \Netgen\InformationCollection\API\Value\Filter\CollectionFields $collectionFields
      */
     public function deleteCollectionFields(CollectionFields $collectionFields): void;
 

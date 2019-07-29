@@ -10,9 +10,9 @@ use Netgen\InformationCollection\API\Value\ValueObject;
 class EmailContent extends ValueObject
 {
     /**
-     * @var string
+     * @var array
      */
-    protected $recipient;
+    protected $recipients;
 
     /**
      * @var string
@@ -20,7 +20,7 @@ class EmailContent extends ValueObject
     protected $subject;
 
     /**
-     * @var string
+     * @var array
      */
     protected $sender;
 
@@ -30,22 +30,22 @@ class EmailContent extends ValueObject
     protected $body;
 
     /**
-     * @var BinaryFile[]|null
+     * @var BinaryFile[]
      */
-    protected $attachments;
+    protected $attachments = [];
 
     /**
      * EmailData constructor.
      *
-     * @param string $recipient
-     * @param string $sender
+     * @param array $recipients
+     * @param array $sender
      * @param string $subject
      * @param string $body
      * @param BinaryFile[] $attachments
      */
-    public function __construct(string $recipient, string $sender, string $subject, string $body, ?array $attachments = null)
+    public function __construct(array $recipients, array $sender, string $subject, string $body, array $attachments = [])
     {
-        $this->recipient = $recipient;
+        $this->recipients = $recipients;
         $this->subject = $subject;
         $this->sender = $sender;
         $this->body = $body;
@@ -53,11 +53,11 @@ class EmailContent extends ValueObject
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getRecipient(): string
+    public function getRecipients(): array
     {
-        return $this->recipient;
+        return $this->recipients;
     }
 
     /**
@@ -69,9 +69,9 @@ class EmailContent extends ValueObject
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getSender(): string
+    public function getSender(): array
     {
         return $this->sender;
     }
@@ -95,7 +95,7 @@ class EmailContent extends ValueObject
     /**
      * @return BinaryFile[]
      */
-    public function getAttachments(): ?array
+    public function getAttachments(): array
     {
         return $this->attachments;
     }

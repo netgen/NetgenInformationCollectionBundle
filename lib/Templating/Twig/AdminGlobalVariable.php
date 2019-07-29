@@ -7,7 +7,7 @@ namespace Netgen\InformationCollection\Templating\Twig;
 class AdminGlobalVariable
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $pageLayoutTemplate;
 
@@ -16,7 +16,7 @@ class AdminGlobalVariable
      *
      * @param string $pageLayoutTemplate
      */
-    public function setPageLayoutTemplate($pageLayoutTemplate = null)
+    public function setPageLayoutTemplate(?string $pageLayoutTemplate = null)
     {
         $this->pageLayoutTemplate = $pageLayoutTemplate;
     }
@@ -26,7 +26,7 @@ class AdminGlobalVariable
      *
      * @return string
      */
-    public function getPageLayoutTemplate()
+    public function getPageLayoutTemplate(): ?string
     {
         return $this->pageLayoutTemplate;
     }

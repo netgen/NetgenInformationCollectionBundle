@@ -29,10 +29,12 @@ class TimeFieldHandler implements CustomLegacyFieldHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param \eZ\Publish\Core\FieldType\Time\Value $value
+     *
+     * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {
-        return FieldValue::withIntValue($fieldDefinition->id, $value->time);
+        return FieldValue::withIntValue($fieldDefinition->id, (int)$value->time);
     }
 }

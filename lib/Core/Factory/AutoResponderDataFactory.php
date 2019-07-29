@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Core\Factory;
 
 use function array_key_exists;
+use eZ\Publish\API\Repository\Values\Content\Field;
 use Netgen\InformationCollection\API\Constants;
+use Netgen\InformationCollection\API\ConfigurationConstants;
 use Netgen\InformationCollection\API\Exception\MissingValueException;
+use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
+use Netgen\InformationCollection\API\Value\DataTransfer\TemplateContent;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use function trim;
 
@@ -17,24 +21,23 @@ class AutoResponderDataFactory extends EmailDataFactory
      *
      * @param InformationCollected $value
      *
-     * @return EmailData
+     * @return EmailContent
      */
-    public function build(InformationCollected $value)
+    public function build(InformationCollected $value): EmailContent
     {
         $location = $value->getLocation();
         $contentType = $value->getContentType();
-        $content = $this->contentService->loadContent($location->contentId);
 
         $template = $this->resolveTemplate($contentType->identifier);
 
         $templateWrapper = $this->twig->load($template);
-        $data = new TemplateData($value, $content, $templateWrapper);
+        $data = new TemplateContent($value, $templateWrapper);
 
         $body = $this->resolveBody($data);
 
-        return new EmailData(
+        return new EmailContent(
             $this->resolveRecipient($data),
-            $this->resolve($data, Constants::FIELD_SENDER, Constants::FIELD_TYPE_EMAIL),
+            [$this->resolve($data, Constants::FIELD_SENDER, Constants::FIELD_TYPE_EMAIL)],
             $this->resolveSubject($data),
             $body
         );
@@ -43,11 +46,11 @@ class AutoResponderDataFactory extends EmailDataFactory
     /**
      * Returns resolved parameter.
      *
-     * @param TemplateData $data
+     * @param TemplateContent $data
      *
-     * @return string
+     * @return array
      */
-    protected function resolveRecipient(TemplateData $data)
+    protected function resolveRecipient(TemplateContent $data)
     {
         $fields = $data->getEvent()->getInformationCollectionStruct()->getCollectedFields();
         if ($data->getTemplateWrapper()->hasBlock(Constants::FIELD_RECIPIENT)) {
@@ -60,7 +63,20 @@ class AutoResponderDataFactory extends EmailDataFactory
                 ]
             );
 
-            return trim($rendered);
+            $rendered = trim($rendered);
+        }
+
+        if (!empty($rendered)) {
+
+            $emails = explode(',', $rendered);
+
+            $emails = array_filter($emails, function($var) {
+                return filter_var($var, FILTER_VALIDATE_EMAIL);
+            });
+
+            if (!empty($emails)) {
+                return $emails;
+            }
         }
 
         $field = 'email';
@@ -69,7 +85,7 @@ class AutoResponderDataFactory extends EmailDataFactory
         }
 
         if (array_key_exists($field, $fields)) {
-            return $fields[$field]->email;
+            return [$fields[$field]->email];
         }
 
         throw new MissingValueException($field);
@@ -78,11 +94,11 @@ class AutoResponderDataFactory extends EmailDataFactory
     /**
      * Returns resolved parameter.
      *
-     * @param TemplateData $data
+     * @param TemplateContent $data
      *
      * @return string
      */
-    protected function resolveSubject(TemplateData $data)
+    protected function resolveSubject(TemplateContent $data)
     {
         $fields = $data->getEvent()->getInformationCollectionStruct()->getCollectedFields();
         if ($data->getTemplateWrapper()->hasBlock(Constants::FIELD_AUTO_RESPONDER_SUBJECT)) {
@@ -104,7 +120,9 @@ class AutoResponderDataFactory extends EmailDataFactory
         ) {
             $fieldValue = $this->translationHelper->getTranslatedField($content, Constants::FIELD_AUTO_RESPONDER_SUBJECT);
 
-            return $fieldValue->value->text;
+            if ($fieldValue instanceof Field) {
+                return $fieldValue->value->text;
+            }
         }
 
         if (!empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES][ConfigurationConstants::EMAIL_SUBJECT])) {

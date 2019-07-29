@@ -41,7 +41,7 @@ class FieldDataFactory
         /** @var CustomFieldHandlerInterface $handler */
         $handler = $this->registry->handle($value);
 
-        if (null === $handler) {
+        if (!$handler instanceof CustomFieldHandlerInterface) {
             return new FieldValue($fieldDefinition->id, (string) $value);
         }
 

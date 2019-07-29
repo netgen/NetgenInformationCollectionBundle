@@ -75,7 +75,7 @@ final class Collection extends ValueObject
     }
 
     /**
-     * @return int
+     * @return \DateTimeInterface
      */
     public function getCreated(): DateTimeInterface
     {
@@ -83,7 +83,7 @@ final class Collection extends ValueObject
     }
 
     /**
-     * @return int
+     * @return \DateTimeInterface
      */
     public function getModified(): DateTimeInterface
     {
