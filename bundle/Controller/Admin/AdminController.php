@@ -88,7 +88,7 @@ class AdminController extends Controller
         $adapter = new InformationCollectionContentsAdapter($this->service, Query::countQuery());
         $pager = $this->getPager($adapter, (int) $request->query->get('page'));
 
-        return $this->render("NetgenInformationCollectionBundle:admin:overview.html.twig", ['objects' => $pager]);
+        return $this->render("@NetgenInformationCollection/admin/overview.html.twig", ['objects' => $pager]);
     }
 
     /**
@@ -106,7 +106,7 @@ class AdminController extends Controller
         $adapter = new InformationCollectionCollectionListAdapter($this->service, ContentId::withContentId($content->id));
         $pager = $this->getPager($adapter, (int)$request->query->get('page'));
 
-        return $this->render("NetgenInformationCollectionBundle:admin:collection_list.html.twig", [
+        return $this->render("@NetgenInformationCollection/admin/collection_list.html.twig", [
             'objects' => $pager,
             'content' => $content,
         ]);
@@ -129,7 +129,7 @@ class AdminController extends Controller
         $adapter = new InformationCollectionCollectionListSearchAdapter($this->service, $query);
         $pager = $this->getPager($adapter, (int)$request->query->get('page'));
 
-        return $this->render("NetgenInformationCollectionBundle:admin:collection_list.html.twig",
+        return $this->render("@NetgenInformationCollection/admin/collection_list.html.twig",
             [
                 'objects' => $pager,
                 'content' => $content,
@@ -148,7 +148,7 @@ class AdminController extends Controller
     {
         $this->checkReadPermissions();
 
-        return $this->render("NetgenInformationCollectionBundle:admin:view.html.twig", [
+        return $this->render("@NetgenInformationCollection/admin/view.html.twig", [
             'collection' => $collection,
             'content' => $collection->getContent(),
         ]);

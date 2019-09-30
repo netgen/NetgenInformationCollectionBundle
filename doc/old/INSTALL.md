@@ -66,7 +66,7 @@ netgen_information_collection:
             action_config:
                 email:
                     templates:
-                        default: 'AcmeBundle:email:default.html.twig'
+                        default: '@Acme/email/default.html.twig'
                     default_variables:
                         sender: 'sender@example.com'
                         recipient: 'recipient@example.com'
@@ -77,7 +77,7 @@ netgen_information_collection:
                     - database
 ```
 
-Don't forget to create default email template. 
+Don't forget to create default email template.
 
 ### Clear the caches
 

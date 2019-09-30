@@ -9,28 +9,28 @@ class MissingEmailBlockExceptionTest extends TestCase
 {
     /**
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailBlockException
-     * @expectedExceptionMessage Missing email block in AcmeBundle::email.html.twig template, currently there is none available.
+     * @expectedExceptionMessage Missing email block in @Acme/email.html.twig template, currently there is none available.
      */
     public function testExceptionWithNoBlocks()
     {
-        throw new MissingEmailBlockException('AcmeBundle::email.html.twig', array());
+        throw new MissingEmailBlockException('@Acme/email.html.twig', array());
     }
 
     /**
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailBlockException
-     * @expectedExceptionMessage Missing email block in AcmeBundle::email.html.twig template, currently there is email available.
+     * @expectedExceptionMessage Missing email block in @Acme/email.html.twig template, currently there is email available.
      */
     public function testExceptionWithSingleBlock()
     {
-        throw new MissingEmailBlockException('AcmeBundle::email.html.twig', array('email'));
+        throw new MissingEmailBlockException('@Acme/email.html.twig', array('email'));
     }
 
     /**
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailBlockException
-     * @expectedExceptionMessage Missing email block in AcmeBundle::email.html.twig template, currently there are recipient, email available.
+     * @expectedExceptionMessage Missing email block in @Acme/email.html.twig template, currently there are recipient, email available.
      */
     public function testExceptionWithMultipleBlocks()
     {
-        throw new MissingEmailBlockException('AcmeBundle::email.html.twig', array('recipient', 'email'));
+        throw new MissingEmailBlockException('@Acme/email.html.twig', array('recipient', 'email'));
     }
 }

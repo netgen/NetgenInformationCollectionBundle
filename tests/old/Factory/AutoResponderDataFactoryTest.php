@@ -80,9 +80,9 @@ class AutoResponderDataFactoryTest extends TestCase
     {
         $this->config = array(
             'templates' => array(
-                'default' => 'AcmeBundle::email.html.twig',
+                'default' => '@Acme/email.html.twig',
                 'content_types' => array(
-                    'test_content_type' => 'AcmeBundle::test_content_type.html.twig',
+                    'test_content_type' => '@Acme/test_content_type.html.twig',
                 )
             ),
             'default_variables' => array(

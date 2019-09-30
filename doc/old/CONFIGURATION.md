@@ -6,7 +6,7 @@ Some advanced use cases.
 ## Specifiying which action to run per content type
 
 By default all actions set by *default* under *actions* tree will be executed for all content types.
- 
+
 ```yaml
 actions:
     default:
@@ -48,8 +48,8 @@ In case when want to split email templates per content type, rather than using d
 action_config:
     email:
         templates:
-            default: 'AcmeBundle:email:default.html.twig'
+            default: '@Acme/email/default.html.twig'
             content_types:
-                my_content_type: 'AcmeBundle:email:my_content_type.html.twig'
-                my_content_type2: 'AcmeBundle:email:my_content_type2.html.twig'
+                my_content_type: '@Acme/email/my_content_type.html.twig'
+                my_content_type2: '@Acme/email/my_content_type2.html.twig'
 ```
