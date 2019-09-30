@@ -37,7 +37,7 @@
                                 {% if object.hasLocation %}</a>{% endif %}
                             </td>
                             <td>
-                                {{ ez_trans_prop(object.contentType, "name") }}
+                                {{ object.contentType.identifier }}
                             </td>
                             <td>
                                 {{ object.firstCollection.created|date("Y.m.d H:i") }}
