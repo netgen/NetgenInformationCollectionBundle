@@ -20,8 +20,14 @@ class Configuration extends SiteAccessConfiguration
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root(ConfigurationConstants::SETTINGS_ROOT);
+        $treeBuilder = new TreeBuilder(ConfigurationConstants::SETTINGS_ROOT);
+
+        // Keep compatibility with symfony/config < 4.2
+        if (!method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->root(ConfigurationConstants::SETTINGS_ROOT);
+        } else {
+            $rootNode = $treeBuilder->getRootNode();
+        }
 
         if ($rootNode instanceof ArrayNodeDefinition) {
             $nodeBuilder = $this->generateScopeBaseNode($rootNode);
