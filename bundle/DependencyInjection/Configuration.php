@@ -26,6 +26,7 @@ class Configuration extends SiteAccessConfiguration
         $this->addCaptchaSection($nodeBuilder);
         $this->addActionsSection($nodeBuilder);
         $this->addActionConfigSection($nodeBuilder);
+        $this->addCsvExportSection($nodeBuilder);
 
         $nodeBuilder->end();
 
@@ -35,7 +36,7 @@ class Configuration extends SiteAccessConfiguration
     private function addCaptchaSection(NodeBuilder $nodeBuilder)
     {
         $nodeBuilder
-            ->arrayNode('captcha')
+            ->arrayNode(ConfigurationConstants::CAPTCHA)
                 ->addDefaultsIfNotSet()
                 ->children()
                     ->booleanNode('enabled')
@@ -203,6 +204,20 @@ class Configuration extends SiteAccessConfiguration
                         ->end()
                         ->end()
                     ->end()
+                ->end()
+            ->end();
+    }
+
+    private function addCsvExportSection(NodeBuilder $nodeBuilder)
+    {
+        $nodeBuilder
+            ->arrayNode(ConfigurationConstants::CSV_EXPORT)
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('delimiter')->defaultValue(',')->end()
+                    // by default use windows line endings for compatibility with some csv libraries
+                    ->scalarNode('newline')->defaultValue("\r\n")->end()
+                    ->scalarNode('enclosure')->defaultValue("\"")->end()
                 ->end()
             ->end();
     }

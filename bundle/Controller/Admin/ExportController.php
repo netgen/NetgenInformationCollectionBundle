@@ -24,10 +24,16 @@ class ExportController extends Controller
      */
     protected $exporter;
 
-    public function __construct(ContentService $contentService, Exporter $exporter)
+    /**
+     * @var array
+     */
+    protected $exportConfiguration;
+
+    public function __construct(ContentService $contentService, Exporter $exporter, array $exportConfiguration)
     {
         $this->contentService = $contentService;
         $this->exporter = $exporter;
+        $this->exportConfiguration = $exportConfiguration;
     }
 
     /**
@@ -64,8 +70,9 @@ class ExportController extends Controller
             $export = $this->exporter->export($exportCriteria);
 
             $writer = Writer::createFromFileObject(new SplTempFileObject());
-            $writer->setDelimiter(",");
-            $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
+            $writer->setDelimiter($this->exportConfiguration['delimiter']);
+            $writer->setEnclosure($this->exportConfiguration['enclosure']);
+            $writer->setNewline($this->exportConfiguration['newline']);
             $writer->setOutputBOM(Writer::BOM_UTF8); //adding the BOM sequence on output
             $writer->insertOne($export->header);
             $writer->insertAll($export->contents);
@@ -102,8 +109,9 @@ class ExportController extends Controller
         $export = $this->exporter->exportAll($exportCriteria);
 
         $writer = Writer::createFromFileObject(new SplTempFileObject());
-        $writer->setDelimiter(",");
-        $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
+        $writer->setDelimiter($this->exportConfiguration['delimiter']);
+        $writer->setEnclosure($this->exportConfiguration['enclosure']);
+        $writer->setNewline($this->exportConfiguration['newline']);
         $writer->setOutputBOM(Writer::BOM_UTF8); //adding the BOM sequence on output
         $writer->insertOne($export->header);
         $writer->insertAll($export->contents);

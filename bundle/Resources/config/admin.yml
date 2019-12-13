@@ -16,6 +16,7 @@ services:
         arguments:
             - "@ezpublish.api.service.content"
             - "@netgen_information_collection.service.exporter"
+            - "$csv_export;netgen_information_collection$"
 
     netgen_information_collection.api.service:
         class: Netgen\Bundle\InformationCollectionBundle\Core\Service\InformationCollectionService
