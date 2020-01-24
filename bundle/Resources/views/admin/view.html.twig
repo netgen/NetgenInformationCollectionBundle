@@ -35,7 +35,11 @@
                             {{ ez_field_name(content, attribute.field.identifier) }}:
                         </span>
                         <span class="attribute-value">
-                            {{ attribute.entity.value }}
+                            {% if attribute.field.fieldTypeIdentifier == 'enhancedezbinaryfile' %}
+                                <a href="{{ path('netgen_enhancedezbinaryfile.route.download_binary_file', { 'infocollectionAttributeId': attribute.entity.id }) }}">{{ 'netgen_information_collection_admin_view_download'|trans }}: {{ attribute.field.identifier }}</a>
+                            {% else %}
+                                {{ attribute.entity.value }}
+                            {% endif %}
                         </span>
                     </label>
                 </div>

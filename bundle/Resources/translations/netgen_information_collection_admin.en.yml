@@ -29,6 +29,7 @@ netgen_information_collection_admin_collection_no_collections_results: "Displayi
 
 netgen_information_collection_admin_view_title: 'Collection #%collection_id% for %content_name%'
 netgen_information_collection_admin_view_subtitle: 'Last modified: %date%, %user_name%'
+netgen_information_collection_admin_view_download: 'Download link'
 netgen_information_collection_admin_view_delete: 'Delete'
 netgen_information_collection_admin_view_anonymize: 'Anonymize'
 netgen_information_collection_admin_view_delete_field: 'Delete selected fields'

@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.7.0] - 2020-01-24
+### Added
+- Implemented Information collection policy provider
+- Enabled download controller for enhanced binary file
+
 ## [1.6.8] - 2019-04-26
 ### Added
 - A bit more looser coupling to `doctrine/orm` version

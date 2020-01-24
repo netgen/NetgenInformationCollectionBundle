@@ -2,6 +2,8 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle;
 
+use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\EzPublishCoreExtension;
+use Netgen\Bundle\InformationCollectionBundle\PolicyProvider\InformationCollectionPolicyProvider;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\ActionsPass;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\CustomFieldHandlersPass;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\Compiler\FieldAnonymizerVisitorPass;
@@ -20,5 +22,10 @@ class NetgenInformationCollectionBundle extends Bundle
         $container->addCompilerPass(new ActionsPass());
         $container->addCompilerPass(new CustomFieldHandlersPass());
         $container->addCompilerPass(new FieldAnonymizerVisitorPass());
+
+        $eZExtension = $container->getExtension('ezpublish');
+        if ($eZExtension instanceof EzPublishCoreExtension) {
+            $eZExtension->addPolicyProvider(new InformationCollectionPolicyProvider());
+        }
     }
 }
