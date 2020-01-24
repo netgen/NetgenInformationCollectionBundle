@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.7.1] - 2020-01-24
+### Added
+- Exposed default_variables to email templates
+
 ## [1.7.0] - 2020-01-24
 ### Added
 - Implemented Information collection policy provider
