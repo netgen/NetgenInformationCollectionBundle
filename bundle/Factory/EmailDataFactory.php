@@ -115,6 +115,8 @@ class EmailDataFactory
                     'event' => $data->getEvent(),
                     'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
                     'content' => $data->getContent(),
+                    'default_variables' => !empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES])
+                        ? $this->config[ConfigurationConstants::DEFAULT_VARIABLES] : null,
                 )
             );
 
@@ -159,6 +161,8 @@ class EmailDataFactory
                     'event' => $data->getEvent(),
                     'collected_fields' => $data->getEvent()->getInformationCollectionStruct()->getCollectedFields(),
                     'content' => $data->getContent(),
+                    'default_variables' => !empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES])
+                        ? $this->config[ConfigurationConstants::DEFAULT_VARIABLES] : null,
                 )
             );
 

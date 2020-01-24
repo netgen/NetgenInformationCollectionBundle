@@ -58,6 +58,8 @@ class AutoResponderDataFactory extends EmailDataFactory
                     'event' => $data->getEvent(),
                     'collected_fields' => $fields,
                     'content' => $data->getContent(),
+                    'default_variables' => !empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES])
+                        ? $this->config[ConfigurationConstants::DEFAULT_VARIABLES] : null,
                 )
             );
 
@@ -93,6 +95,8 @@ class AutoResponderDataFactory extends EmailDataFactory
                     'event' => $data->getEvent(),
                     'collected_fields' => $fields,
                     'content' => $data->getContent(),
+                    'default_variables' => !empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES])
+                        ? $this->config[ConfigurationConstants::DEFAULT_VARIABLES] : null,
                 )
             );
 
