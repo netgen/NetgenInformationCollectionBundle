@@ -97,9 +97,7 @@ class ExporterService implements Exporter
 
                 $res = preg_replace(['/\r|\n/'], [' '], $value);
 
-                if ($res === null) {
-                    return '';
-                }
+                return $res ?? '';
             }
         }
 
