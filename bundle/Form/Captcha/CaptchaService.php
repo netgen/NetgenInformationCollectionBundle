@@ -5,30 +5,31 @@ namespace Netgen\Bundle\InformationCollectionBundle\Form\Captcha;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\API\Service\CaptchaService as CaptchaServiceInterface;
 
 class CaptchaService implements CaptchaServiceInterface
 {
-    /**
-     * @var array
-     */
-    protected $config;
-
     /**
      * @var \eZ\Publish\API\Repository\ContentTypeService
      */
     protected $contentTypeService;
 
     /**
+     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     */
+    protected $configResolver;
+
+    /**
      * CaptchaService constructor.
      *
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentTypeService
-     * @param array $config
+     * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
+     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
      */
-    public function __construct(ContentTypeService $contentTypeService, $config = [])
+    public function __construct(ContentTypeService $contentTypeService, ConfigResolverInterface $configResolver)
     {
-        $this->config = $config;
         $this->contentTypeService = $contentTypeService;
+        $this->configResolver = $configResolver;
     }
 
     /**
@@ -101,7 +102,7 @@ class CaptchaService implements CaptchaServiceInterface
             $this->getContentType($location)
         );
 
-        return array_replace($this->config, $contentTypeConfig);
+        return array_replace($this->getConfigFromResolver(), $contentTypeConfig);
     }
 
     /**
@@ -114,7 +115,7 @@ class CaptchaService implements CaptchaServiceInterface
     protected function getConfigForContentType(ContentType $contentType)
     {
         if ($this->hasConfigForContentType($contentType)) {
-            return $this->config['override_by_type'][$contentType->identifier];
+            return $this->getConfigFromResolver()['override_by_type'][$contentType->identifier];
         }
 
         return [];
@@ -129,8 +130,10 @@ class CaptchaService implements CaptchaServiceInterface
      */
     protected function hasConfigForContentType(ContentType $contentType)
     {
-        if (!empty($this->config['override_by_type'])) {
-            if (in_array($contentType->identifier, array_keys($this->config['override_by_type']))) {
+        $config = $this->getConfigFromResolver()['override_by_type'];
+
+        if (!empty($config)) {
+            if (in_array($contentType->identifier, array_keys($config))) {
                 return true;
             }
         }
@@ -151,5 +154,15 @@ class CaptchaService implements CaptchaServiceInterface
     {
         return $this->contentTypeService
             ->loadContentType($location->contentInfo->contentTypeId);
+    }
+
+    /**
+     * Returns the value of captcha config from the resolver for the current scope.
+     *
+     * @return array
+     */
+    protected function getConfigFromResolver()
+    {
+        return $this->configResolver->getParameter('captcha', 'netgen_information_collection');
     }
 }
