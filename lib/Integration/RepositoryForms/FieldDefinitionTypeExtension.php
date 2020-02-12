@@ -16,6 +16,11 @@ class FieldDefinitionTypeExtension extends AbstractTypeExtension
         return FieldDefinitionType::class;
     }
 
+    public static function getExtendedTypes(): iterable
+    {
+        return [FieldDefinitionType::class];
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $isTranslation = $options['languageCode'] !== $options['mainLanguageCode'];
