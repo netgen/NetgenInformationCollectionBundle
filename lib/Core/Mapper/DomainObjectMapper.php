@@ -128,9 +128,6 @@ final class DomainObjectMapper
 
     private function getDateTime(int $timestamp): DateTimeInterface
     {
-        $date = new DateTimeImmutable();
-        $date->setTimestamp($timestamp);
-
-        return $date;
+        return DateTimeImmutable::createFromFormat('U', (string) $timestamp);
     }
 }
