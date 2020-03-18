@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.8.0] - 2020-03-18
+### Added
+- CSV delimiters can now be customized with semantic config - thx @darinda
+
+### Changed
+- Form ID is now dynamically generated - tnx @RandyCupic
+- Bumped versions of frontend dependencies (jquery, fstream, underscore.string, lodash.mergewith, cached-path-relative and lodash) 
+
+### Fixed 
+- Accessing collections created by nonexistent users
+
 ## [1.7.1] - 2020-01-24
 ### Added
 - Exposed default_variables to email templates
