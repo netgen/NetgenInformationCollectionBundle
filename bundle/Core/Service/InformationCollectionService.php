@@ -4,6 +4,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Core\Service;
 
 use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
 use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Attribute;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collection;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collections;
@@ -273,13 +274,17 @@ class InformationCollectionService implements InformationCollection
     /**
      * @param int $userId
      *
-     * @return \eZ\Publish\API\Repository\Values\User\User
+     * @return \eZ\Publish\API\Repository\Values\User\User|null
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
     protected function getUser($userId)
     {
-        return $this->repository->getUserService()->loadUser($userId);
+        try {
+            return $this->repository->getUserService()->loadUser($userId);
+        } catch (NotFoundException $e) {
+            return null;
+        }
     }
 
     /**

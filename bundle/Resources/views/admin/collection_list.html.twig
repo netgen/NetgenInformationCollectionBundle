@@ -1,3 +1,5 @@
+{# object \Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collection #}
+
 {% trans_default_domain 'netgen_information_collection_admin' %}
 
 {% extends netgen_information_collection_admin.pageLayoutTemplate %}
@@ -66,12 +68,16 @@
                     {% set collection_id = object.entity.id %}
                     <tr>
                         <td>
-                            <input data-enable="Item" id="{{ collection_id }}" name="CollectionId[]" value="{{ collection_id }}" title="Select collections for removal." type="checkbox" data-enable="Item">
+                            <input data-enable="Item" id="{{ collection_id }}" name="CollectionId[]" value="{{ collection_id }}" title="{{ 'netgen_information_collection_admin_collection_select_for_removal'|trans }}." type="checkbox" data-enable="Item">
                             <label for="{{ collection_id }}">
                             </label>
                         </td>
                         <td>
-                            {{ ez_content_name(object.user.content) }}
+                            {% if object.user is not empty %}
+                                {{ ez_content_name(object.user.content) }}
+                            {% else %}
+                                {{ 'netgen_information_collection_admin_collection_unknown_user'|trans }}
+                            {% endif %}
                         </td>
                         <td>
                             {{ object.entity.created|date("Y.m.d H:i") }}

@@ -1,3 +1,5 @@
+{# collection \Netgen\Bundle\InformationCollectionBundle\API\Value\ValueObject\Collection #}
+
 {% trans_default_domain 'netgen_information_collection_admin' %}
 
 {% extends netgen_information_collection_admin.pageLayoutTemplate %}
@@ -11,7 +13,11 @@
     {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
     <h1>{{ 'netgen_information_collection_admin_view_title'|trans({'%collection_id%': collection.entity.id, '%content_name%': ez_content_name(collection.content)}) }}</h1>
-    <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.entity.modified|date("Y.m.d H:i"), '%user_name%': ez_content_name(collection.user.content)}) }}</h6>
+    {% set collection_user = 'netgen_information_collection_admin_collection_unknown_user'|trans %}
+    {% if collection.user is not empty %}
+        {% set collection_user = ez_content_name(collection.user.content) %}
+    {% endif %}
+    <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.entity.modified|date("Y.m.d H:i"), '%user_name%': collection_user }) }}</h6>
 
     <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection') }}">
 
