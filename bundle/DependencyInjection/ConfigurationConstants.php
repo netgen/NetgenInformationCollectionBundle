@@ -10,6 +10,10 @@ class ConfigurationConstants
 
     const ACTION_CONFIG = 'action_config';
 
+    const CSV_EXPORT = 'csv_export';
+
+    const CAPTCHA = 'captcha';
+
     const TEMPLATES = 'templates';
 
     const DEFAULT_VARIABLES = 'default_variables';

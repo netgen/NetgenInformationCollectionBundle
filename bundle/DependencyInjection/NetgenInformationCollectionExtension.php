@@ -36,7 +36,8 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
         $configArrays = array(
             ConfigurationConstants::ACTIONS,
             ConfigurationConstants::ACTION_CONFIG,
-            'captcha',
+            ConfigurationConstants::CAPTCHA,
+            ConfigurationConstants::CSV_EXPORT,
         );
 
         $scopes = array_merge(array('default'), $container->getParameter('ezpublish.siteaccess.list'));
@@ -48,7 +49,6 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
                 if (!$container->hasParameter($paramName)) {
                     continue;
                 }
-
                 $scopeConfig = $container->getParameter($paramName);
                 foreach ((array) $scopeConfig as $key => $value) {
                     $container->setParameter($paramName . '.' . $key, $value);
