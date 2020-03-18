@@ -71,7 +71,8 @@ class FormBuilder
         $data = new DataWrapper(new InformationCollectionStruct(), $contentType, $location);
 
         $formBuilder = $this->formFactory
-            ->createBuilder(
+            ->createNamedBuilder(
+                $contentType->identifier . '_' . $location->id,
                 Kernel::VERSION_ID < 20800 ?
                     'ezforms_information_collection' :
                     InformationCollectionType::class,
