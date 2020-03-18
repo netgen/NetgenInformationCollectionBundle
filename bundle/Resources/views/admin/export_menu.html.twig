@@ -29,6 +29,16 @@
             {{ form_widget(form.dateTo) }}
         </div>
 
+        <div class="ng-ui-input">
+            <label for="{{ form.exportType.vars.id }}">
+                {{ form.exportType.vars.label|trans }}:
+            </label>
+
+            {{ form_errors(form.exportType) }}
+
+            {{ form_widget(form.exportType) }}
+        </div>
+
         <div class="ng-ui-btn-group">
             <button type="submit" name="{{ form.export.vars.full_name }}" class="ng-ui-btn">
                 {{ form.export.vars.label|trans }}

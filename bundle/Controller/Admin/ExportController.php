@@ -4,12 +4,17 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\Bundle\InformationCollectionBundle\API\Service\Exporter;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\Export;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\ExportCriteria;
 use Netgen\Bundle\InformationCollectionBundle\Form\Type\ExportType;
 use Symfony\Component\HttpFoundation\Request;
 use League\Csv\Writer;
 use SplTempFileObject;
+use PHPExcel;
+use PHPExcel_IOFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 class ExportController extends Controller
@@ -25,14 +30,25 @@ class ExportController extends Controller
     protected $exporter;
 
     /**
+     * @var \eZ\Publish\Core\Helper\TranslationHelper
+     */
+    protected $translationHelper;
+
+    /**
      * @var array
      */
     protected $exportConfiguration;
 
-    public function __construct(ContentService $contentService, Exporter $exporter, array $exportConfiguration)
+    public function __construct(
+        ContentService $contentService,
+        Exporter $exporter,
+        TranslationHelper $translationHelper,
+        array $exportConfiguration
+    )
     {
         $this->contentService = $contentService;
         $this->exporter = $exporter;
+        $this->translationHelper = $translationHelper;
         $this->exportConfiguration = $exportConfiguration;
     }
 
@@ -69,16 +85,11 @@ class ExportController extends Controller
 
             $export = $this->exporter->export($exportCriteria);
 
-            $writer = Writer::createFromFileObject(new SplTempFileObject());
-            $writer->setDelimiter($this->exportConfiguration['delimiter']);
-            $writer->setEnclosure($this->exportConfiguration['enclosure']);
-            $writer->setNewline($this->exportConfiguration['newline']);
-            $writer->setOutputBOM(Writer::BOM_UTF8); //adding the BOM sequence on output
-            $writer->insertOne($export->header);
-            $writer->insertAll($export->contents);
+            if ($form->getData()['exportType'] === 'csv') {
+                return $this->createCsvResponse($export, $content);
+            }
 
-            $writer->output('export.csv');
-            return new Response('');
+            return $this->createXlsResponse($export, $content);
         }
 
         return $this->render("@NetgenInformationCollection/admin/export_menu.html.twig",
@@ -90,23 +101,53 @@ class ExportController extends Controller
     }
 
     /**
-     * Handles export
+     * Handles data export in CSV format
      *
      * @param int $contentId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function exportAllAction($contentId)
+    public function exportCsvAction($contentId)
     {
-        $content = $this->contentService->loadContent($contentId);
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
 
+        $content = $this->contentService->loadContent($contentId);
+        $export = $this->getExportByContent($content);
+
+        return $this->createCsvResponse($export, $content);
+    }
+
+    /**
+     * Handles data export in XLS format
+     *
+     * @param int $contentId
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function exportXlsAction($contentId)
+    {
+        $this->denyAccessUnlessGranted('ez:infocollector:read');
+
+        $content = $this->contentService->loadContent($contentId);
+        $export = $this->getExportByContent($content);
+
+        return $this->createXlsResponse($export, $content);
+    }
+
+    protected function getExportByContent(Content $content)
+    {
         $exportCriteria = new ExportCriteria(
             [
                 'content' => $content,
             ]
         );
 
-        $export = $this->exporter->exportAll($exportCriteria);
+        return $this->exporter->exportAll($exportCriteria);
+    }
+
+    protected function createCsvResponse(Export $export, Content $content)
+    {
+        $contentName = $this->translationHelper->getTranslatedContentName($content);
 
         $writer = Writer::createFromFileObject(new SplTempFileObject());
         $writer->setDelimiter($this->exportConfiguration['delimiter']);
@@ -116,8 +157,34 @@ class ExportController extends Controller
         $writer->insertOne($export->header);
         $writer->insertAll($export->contents);
 
-        $writer->output('export.csv');
+        $writer->output($contentName . '.csv');
         return new Response('');
+    }
 
+    protected function createXlsResponse(Export $export, Content $content)
+    {
+        $contentName = $this->translationHelper->getTranslatedContentName($content);
+
+        array_unshift($export->contents, $export->header);
+
+        $excel = new PHPExcel();
+        $excel->setActiveSheetIndex(0);
+
+        $activeSheet = $excel->getActiveSheet();
+        $activeSheet->setTitle($contentName);
+
+        $activeSheet->fromArray($export->contents);
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="' . $contentName . '.xls"');
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($excel, 'Excel5');
+
+        $objWriter->save('php://output');
+
+        unset($objWriter);
+
+        return new Response('');
     }
 }

@@ -25,12 +25,12 @@ class ExporterService implements Exporter
     protected $ezInfoCollectionAttributeRepository;
 
     /**
-     * @var TranslatorInterface
+     * @var \Symfony\Component\Translation\TranslatorInterface
      */
     protected $translator;
 
     /**
-     * @var ContentTypeUtils
+     * @var \Netgen\Bundle\InformationCollectionBundle\Core\Persistence\ContentTypeUtils
      */
     protected $contentTypeUtils;
 

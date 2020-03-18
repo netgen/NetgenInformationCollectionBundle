@@ -45,7 +45,12 @@ netgen_information_collection.route.admin.export:
     defaults: { _controller: netgen_information_collection.controller.export:exportAction }
     methods: [GET, POST]
 
-netgen_information_collection.route.admin.export_all:
-    path: /netgen/informationcollection/export-all/{contentId}
-    defaults: { _controller: netgen_information_collection.controller.export:exportAllAction }
+netgen_information_collection.route.admin.export_csv:
+    path: /netgen/informationcollection/export-csv/{contentId}
+    defaults: { _controller: netgen_information_collection.controller.export:exportCsvAction }
+    methods: [GET, POST]
+
+netgen_information_collection.route.admin.export_xls:
+    path: /netgen/informationcollection/export-xls/{contentId}
+    defaults: { _controller: netgen_information_collection.controller.export:exportXlsAction }
     methods: [GET, POST]

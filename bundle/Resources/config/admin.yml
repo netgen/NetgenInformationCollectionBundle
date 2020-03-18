@@ -16,6 +16,7 @@ services:
         arguments:
             - "@ezpublish.api.service.content"
             - "@netgen_information_collection.service.exporter"
+            - "@ezpublish.translation_helper"
             - "$csv_export;netgen_information_collection$"
 
     netgen_information_collection.api.service:

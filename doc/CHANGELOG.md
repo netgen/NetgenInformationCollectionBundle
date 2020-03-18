@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.8.0] - 2020-03-18
 ### Added
 - CSV delimiters can now be customized with semantic config - thx @darinda
+- Export to Microsoft Excel (.xls) functionality
 
 ### Changed
 - Form ID is now dynamically generated - tnx @RandyCupic
