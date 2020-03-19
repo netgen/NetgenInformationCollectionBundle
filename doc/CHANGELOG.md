@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.9.0] - *
+### Changed
+- Parameters are now consumed through ConfigResolver (instead of being injected)
+
 ## [1.8.1] - 2020-03-19
 ### Fixed
 - Referencing nonexistent variable in the form template
