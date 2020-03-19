@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed 
 - Accessing collections created by nonexistent users
 - Translate ContentType name with TranslationHelper in tree
+- URL's generated without siteaccess context on overview page
 
 ## [1.7.1] - 2020-01-24
 ### Added
