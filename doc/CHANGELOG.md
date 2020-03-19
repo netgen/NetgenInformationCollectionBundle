@@ -6,7 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.8.0] - *
+## [1.8.1] - 2020-03-19
+### Fixed
+- Referencing nonexistent variable in the form template
+
+## [1.8.0] - 2020-03-19
 ### Added
 - CSV delimiters can now be customized with semantic config - thx @darinda
 - Export to Microsoft Excel (.xls) functionality
