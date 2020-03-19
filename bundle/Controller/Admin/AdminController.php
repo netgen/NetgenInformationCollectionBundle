@@ -133,6 +133,7 @@ class AdminController extends Controller
             [
                 'objects' => $pager,
                 'content' => $content,
+                'formatters' => $this->formatterRegistry->getExportResponseFormatters(),
             ]
         );
     }
