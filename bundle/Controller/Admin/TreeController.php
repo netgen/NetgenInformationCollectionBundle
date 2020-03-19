@@ -131,7 +131,7 @@ class TreeController extends Controller
         return array(
             'id' => $content->content->id,
             'parent' => $isRoot ? '#' : '0',
-            'text' => $this->translationHelper->getTranslatedByMethod($content->contentType, 'getName') . ' (' . strval($count->count) . ')',
+            'text' => $this->translationHelper->getTranslatedContentName($content->content) . ' (' . strval($count->count) . ')',
             'children' => false,
             'a_attr' => array(
                 'href' => $this->router->generate('netgen_information_collection.route.admin.collection_list', ['contentId' => $content->content->id]),
