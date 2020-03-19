@@ -14,7 +14,7 @@ netgen_information_collection.route.admin.collection_list_search:
     methods: [GET]
 
 netgen_information_collection.route.admin.view:
-    path: /netgen/informationcollection/view/{collectionId}
+    path: /netgen/informationcollection/view/{contentId}/{collectionId}
     defaults: { _controller: netgen_information_collection.controller.admin:viewAction }
     methods: [GET]
 

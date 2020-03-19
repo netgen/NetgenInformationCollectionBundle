@@ -119,8 +119,6 @@ class TreeController extends Controller
      */
     protected function getCollections(Content $content, $isRoot = false)
     {
-        $languages = $this->getConfigResolver()->getParameter('languages');
-
         $query = new Query([
             'contentId' => $content->content->id,
             'limit' => Query::COUNT_QUERY,

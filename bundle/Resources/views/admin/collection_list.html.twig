@@ -90,7 +90,7 @@
                             {{ object.entity.modified|date("Y.m.d H:i") }}
                         </td>
                         <td class="number" align="right">
-                            <a href="{{ path("netgen_information_collection.route.admin.view", {"collectionId": collection_id}) }}">
+                            <a href="{{ path("netgen_information_collection.route.admin.view", {"contentId": content.id, "collectionId": collection_id}) }}">
                                 {{ collection_id }}
                             </a>
                         </td>
