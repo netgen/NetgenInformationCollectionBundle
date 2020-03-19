@@ -1,12 +1,6 @@
-parameters:
-    netgen_information_collection.factory.email_data.class: Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory
-    netgen_information_collection.factory.field_data.class: Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory
-    netgen_information_collection.factory.auto_responder_data.class: Netgen\Bundle\InformationCollectionBundle\Factory\AutoResponderDataFactory
-    netgen_information_collection.factory.captcha.class: Netgen\Bundle\InformationCollectionBundle\Form\Captcha\CaptchaService
-
 services:
     netgen_information_collection.factory.email_data:
-        class: '%netgen_information_collection.factory.email_data.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory
         arguments:
             - "@ezpublish.config.resolver"
             - '@ezpublish.translation_helper'
@@ -15,7 +9,7 @@ services:
             - '@twig'
 
     netgen_information_collection.factory.auto_responder_data:
-        class: '%netgen_information_collection.factory.auto_responder_data.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Factory\AutoResponderDataFactory
         arguments:
             - "@ezpublish.config.resolver"
             - '@ezpublish.translation_helper'
@@ -24,12 +18,12 @@ services:
             - '@twig'
 
     netgen_information_collection.factory.field_data:
-        class: '%netgen_information_collection.factory.field_data.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory
         arguments:
             - '@netgen_information_collection.field_handler.registry'
 
     netgen_information_collection.factory.captcha:
-        class: '%netgen_information_collection.factory.captcha.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Form\Captcha\CaptchaService
         arguments:
             - "@ezpublish.api.service.content_type"
             - "@ezpublish.config.resolver"

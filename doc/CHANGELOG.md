@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.9.0] - *
 ### Changed
 - Parameters are now consumed through ConfigResolver (instead of being injected)
+- Removed service definition class parameters
 
 ## [1.8.1] - 2020-03-19
 ### Fixed

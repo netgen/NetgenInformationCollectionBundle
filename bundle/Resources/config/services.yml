@@ -6,31 +6,9 @@ imports:
     - { resource: admin.yml }
     - { resource: anonymizers.yml }
 
-parameters:
-    # Controllers
-    netgen_information_collection.controller.class: Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController
-    netgen_information_collection_legacy.controller.class: Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionLegacyController
-    netgen_information_collection.form.builder.class: Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder
-    # END of Controllers
-
-    # Listeners
-    netgen_information_collection.listener.class: Netgen\Bundle\InformationCollectionBundle\Listener\InformationCollectedListener
-    # END of Listeners
-
-    # Handler registry
-    netgen_information_collection.field_handler.registry.class: Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry
-    # END of Handler registry
-
-    # Mailer
-    netgen_information_collection.mailer.class: Netgen\Bundle\InformationCollectionBundle\Mailer\Mailer
-    # END of Mailer
-
-    # Twig
-    netgen_information_collection.twig.extension.class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\InformationCollectionExtension
-    # END of Twig
 services:
     netgen_information_collection.controller:
-        class: '%netgen_information_collection.controller.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController
         calls:
             - [setContainer, ['@service_container']]
 
@@ -38,7 +16,7 @@ services:
         alias: 'netgen_information_collection.controller'
 
     netgen_information_collection_legacy.controller:
-        class: '%netgen_information_collection_legacy.controller.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionLegacyController
         calls:
             - [setContainer, ['@service_container']]
 
@@ -46,7 +24,7 @@ services:
         alias: 'netgen_information_collection_legacy.controller'
 
     netgen_information_collection.form.builder:
-        class: '%netgen_information_collection.form.builder.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder
         arguments:
             - '@form.factory'
             - '@ezpublish.api.service.content_type'
@@ -54,22 +32,22 @@ services:
             - '%netgen.default.information_collection.form.use_csrf%'
 
     netgen_information_collection.listener:
-        class: '%netgen_information_collection.listener.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Listener\InformationCollectedListener
         arguments:
             - '@netgen_information_collection.action.registry'
         tags:
             - { name: kernel.event_subscriber }
 
     netgen_information_collection.field_handler.registry:
-        class: '%netgen_information_collection.field_handler.registry.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry
 
     netgen_information_collection.mailer:
-        class: '%netgen_information_collection.mailer.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Mailer\Mailer
         arguments:
             - '@mailer'
 
     netgen_information_collection.twig.extension:
-        class: '%netgen_information_collection.twig.extension.class%'
+        class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\InformationCollectionExtension
         arguments:
             - '@netgen_information_collection.factory.captcha'
         tags:
