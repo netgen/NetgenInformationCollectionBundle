@@ -6,6 +6,7 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\Constants;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
@@ -45,26 +46,32 @@ class EmailDataFactory
     protected $twig;
 
     /**
+     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     */
+    protected $configResolver;
+
+    /**
      * EmailDataFactory constructor.
      *
-     * @param array $config
+     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
      * @param \eZ\Publish\Core\Helper\FieldHelper $fieldHelper
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \Twig_Environment $twig
      */
     public function __construct(
-        array $config,
+        ConfigResolverInterface $configResolver,
         TranslationHelper $translationHelper,
         FieldHelper $fieldHelper,
         ContentService $contentService,
         Twig_Environment $twig
     ) {
-        $this->config = $config;
         $this->translationHelper = $translationHelper;
         $this->fieldHelper = $fieldHelper;
         $this->contentService = $contentService;
         $this->twig = $twig;
+        $this->configResolver = $configResolver;
+        $this->config = $this->configResolver->getParameter('action_config.email', 'netgen_information_collection');
     }
 
     /**

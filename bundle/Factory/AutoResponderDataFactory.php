@@ -2,17 +2,46 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Factory;
 
+use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\Core\Helper\FieldHelper;
+use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\Constants;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\MissingValueException;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
+use Twig_Environment;
 use function array_key_exists;
 use function trim;
 
 class AutoResponderDataFactory extends EmailDataFactory
 {
+    /**
+     * EmailDataFactory constructor.
+     *
+     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
+     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
+     * @param \eZ\Publish\Core\Helper\FieldHelper $fieldHelper
+     * @param \eZ\Publish\API\Repository\ContentService $contentService
+     * @param \Twig_Environment $twig
+     */
+    public function __construct(
+        ConfigResolverInterface $configResolver,
+        TranslationHelper $translationHelper,
+        FieldHelper $fieldHelper,
+        ContentService $contentService,
+        Twig_Environment $twig
+    ) {
+        $this->translationHelper = $translationHelper;
+        $this->fieldHelper = $fieldHelper;
+        $this->contentService = $contentService;
+        $this->twig = $twig;
+        $this->configResolver = $configResolver;
+        $this->config = $this->configResolver->getParameter('action_config.auto_responder', 'netgen_information_collection');
+    }
+
     /**
      * Factory method.
      *

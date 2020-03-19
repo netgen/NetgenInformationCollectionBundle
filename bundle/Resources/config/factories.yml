@@ -8,7 +8,7 @@ services:
     netgen_information_collection.factory.email_data:
         class: '%netgen_information_collection.factory.email_data.class%'
         arguments:
-            - "$action_config.email;netgen_information_collection$"
+            - "@ezpublish.config.resolver"
             - '@ezpublish.translation_helper'
             - '@ezpublish.field_helper'
             - '@ezpublish.api.service.content'
@@ -17,7 +17,7 @@ services:
     netgen_information_collection.factory.auto_responder_data:
         class: '%netgen_information_collection.factory.auto_responder_data.class%'
         arguments:
-            - "$action_config.auto_responder;netgen_information_collection$"
+            - "@ezpublish.config.resolver"
             - '@ezpublish.translation_helper'
             - '@ezpublish.field_helper'
             - '@ezpublish.api.service.content'

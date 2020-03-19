@@ -2,21 +2,23 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Templating\Twig;
 
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
+
 class AdminGlobalVariable
 {
     /**
-     * @var string
+     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
      */
-    protected $pageLayoutTemplate;
+    protected $configResolver;
 
     /**
-     * Sets the pagelayout template.
+     * AdminGlobalVariable constructor.
      *
-     * @param string $pageLayoutTemplate
+     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
      */
-    public function setPageLayoutTemplate($pageLayoutTemplate = null)
+    public function __construct(ConfigResolverInterface $configResolver)
     {
-        $this->pageLayoutTemplate = $pageLayoutTemplate;
+        $this->configResolver = $configResolver;
     }
 
     /**
@@ -26,6 +28,6 @@ class AdminGlobalVariable
      */
     public function getPageLayoutTemplate()
     {
-        return $this->pageLayoutTemplate;
+        return $this->configResolver->getParameter('admin.pagelayout', 'netgen_information_collection');
     }
 }

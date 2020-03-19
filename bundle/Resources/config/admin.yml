@@ -41,10 +41,8 @@ services:
     netgen_information_collection.templating.admin_global_variable:
         class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\AdminGlobalVariable
         public: true
-        # We need the lazy flag due to usage of dynamic parameters
-        lazy: true
-        calls:
-            - [setPageLayoutTemplate, ["$admin.pagelayout;netgen_information_collection$"]]
+        arguments:
+            - "@ezpublish.config.resolver"
 
     netgen_information_collection.core.persistence.gateway.doctrine:
         class: Netgen\Bundle\InformationCollectionBundle\Core\Persistence\Gateway\DoctrineDatabase
@@ -86,7 +84,7 @@ services:
         class: Netgen\Bundle\InformationCollectionBundle\Core\Export\CsvExportResponseFormatter
         arguments:
             - "@ezpublish.translation_helper"
-            - "$csv_export;netgen_information_collection$"
+            - "@ezpublish.config.resolver"
         tags:
             - { name: netgen_information_collection.export.formatter }
 

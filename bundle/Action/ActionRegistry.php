@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
@@ -15,15 +16,10 @@ class ActionRegistry
     /**
      * @var array
      */
-    protected $config;
-
-    /**
-     * @var array
-     */
     protected $actions;
 
     /**
-     * @var LoggerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
 
@@ -33,16 +29,21 @@ class ActionRegistry
     protected $debug = false;
 
     /**
+     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     */
+    protected $configResolver;
+
+    /**
      * ActionAggregate constructor.
      *
-     * @param array $config
-     * @param LoggerInterface $logger
+     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
+     * @param \Psr\Log\LoggerInterface $logger
      */
-    public function __construct($config, LoggerInterface $logger)
+    public function __construct(ConfigResolverInterface $configResolver, LoggerInterface $logger)
     {
-        $this->config = $config;
         $this->actions = array();
         $this->logger = $logger;
+        $this->configResolver = $configResolver;
     }
 
     /**
@@ -119,12 +120,14 @@ class ActionRegistry
      */
     protected function prepareConfig($contentTypeIdentifier)
     {
-        if (!empty($this->config[ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier])) {
-            return $this->config[ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier];
+        $config = $this->configResolver->getParameter('actions', 'netgen_information_collection');
+
+        if (!empty($config[ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier])) {
+            return $config[ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier];
         }
 
-        if (!empty($this->config['default'])) {
-            return  $this->config['default'];
+        if (!empty($config['default'])) {
+            return  $config['default'];
         }
 
         return array();
