@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
+use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Content;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query;
@@ -28,20 +29,28 @@ class TreeController extends Controller
     protected $service;
 
     /**
+     * @var \eZ\Publish\Core\Helper\TranslationHelper
+     */
+    private $translationHelper;
+
+    /**
      * TreeController constructor.
      *
      * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
      * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
      */
     public function __construct(
         InformationCollection $service,
         TranslatorInterface $translator,
-        RouterInterface $router
+        RouterInterface $router,
+        TranslationHelper $translationHelper
     ) {
         $this->translator = $translator;
         $this->router = $router;
         $this->service = $service;
+        $this->translationHelper = $translationHelper;
     }
 
     /**
@@ -122,7 +131,7 @@ class TreeController extends Controller
         return array(
             'id' => $content->content->id,
             'parent' => $isRoot ? '#' : '0',
-            'text' => $content->contentType->getName($languages[0]) . ' (' . strval($count->count) . ')',
+            'text' => $this->translationHelper->getTranslatedByMethod($content->contentType, 'getName') . ' (' . strval($count->count) . ')',
             'children' => false,
             'a_attr' => array(
                 'href' => $this->router->generate('netgen_information_collection.route.admin.collection_list', ['contentId' => $content->content->id]),

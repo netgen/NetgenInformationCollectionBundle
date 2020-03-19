@@ -36,6 +36,7 @@ services:
             - "@netgen_information_collection.api.service"
             - "@translator"
             - "@router"
+            - "@ezpublish.translation_helper"
 
     netgen_information_collection.templating.admin_global_variable:
         class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\AdminGlobalVariable
