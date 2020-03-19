@@ -7,9 +7,19 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 class AdminGlobalVariable
 {
     /**
+     * @var string
+     */
+    protected $pageLayoutTemplate;
+
+    /**
      * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
      */
     protected $configResolver;
+
+    /**
+     * @var bool
+     */
+    protected $isDefault = true;
 
     /**
      * AdminGlobalVariable constructor.
@@ -19,6 +29,13 @@ class AdminGlobalVariable
     public function __construct(ConfigResolverInterface $configResolver)
     {
         $this->configResolver = $configResolver;
+        $this->pageLayoutTemplate = $configResolver->getParameter('admin.pagelayout', 'netgen_information_collection');
+    }
+
+    public function setPageLayoutTemplate($pageLayoutTemplate)
+    {
+        $this->pageLayoutTemplate = $pageLayoutTemplate;
+        $this->isDefault = false;
     }
 
     /**
@@ -28,6 +45,10 @@ class AdminGlobalVariable
      */
     public function getPageLayoutTemplate()
     {
-        return $this->configResolver->getParameter('admin.pagelayout', 'netgen_information_collection');
+        if ($this->isDefault) {
+            $this->pageLayoutTemplate = $this->configResolver->getParameter('admin.pagelayout', 'netgen_information_collection');
+        }
+
+        return $this->pageLayoutTemplate;
     }
 }
