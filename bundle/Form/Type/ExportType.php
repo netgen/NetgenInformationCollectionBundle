@@ -2,20 +2,31 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form\Type;
 
-use eZ\Publish\API\Repository\Repository;
-use Netgen\Bundle\InformationCollectionBundle\API\Value\Export\ExportCriteria;
+use Netgen\Bundle\InformationCollectionBundle\Core\Export\ExportResponseFormatterRegistry;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ExportType extends AbstractType
 {
+    /**
+     * @var \Netgen\Bundle\InformationCollectionBundle\Core\Export\ExportResponseFormatterRegistry
+     */
+    protected $exportResponseFormatterRegistry;
+
+    /**
+     * ExportType constructor.
+     *
+     * @param \Netgen\Bundle\InformationCollectionBundle\Core\Export\ExportResponseFormatterRegistry $exportResponseFormatterRegistry
+     */
+    public function __construct(ExportResponseFormatterRegistry $exportResponseFormatterRegistry)
+    {
+        $this->exportResponseFormatterRegistry = $exportResponseFormatterRegistry;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('dateFrom', DateType::class, [
@@ -40,12 +51,14 @@ class ExportType extends AbstractType
             ],
         ]);
 
+        $availableFormatters = [];
+        foreach ($this->exportResponseFormatterRegistry->getExportResponseFormatters() as $formatter) {
+            $availableFormatters['netgen_information_collection_admin_export_type_' . $formatter->getIdentifier()] = $formatter->getIdentifier();
+        }
+
         $builder->add('exportType', ChoiceType::class, [
             'required' => true,
-            'choices' => [
-                'netgen_information_collection_admin_export_type_csv' => 'csv',
-                'netgen_information_collection_admin_export_type_xls' => 'xls',
-            ],
+            'choices' => $availableFormatters,
             'translation_domain' => 'netgen_information_collection_admin',
             'label' => 'netgen_information_collection_admin_export_type',
             'constraints' => [
@@ -56,6 +69,7 @@ class ExportType extends AbstractType
         $builder->add('export', SubmitType::class, [
             'label' => 'netgen_information_collection_admin_export_export',
             'translation_domain' => 'netgen_information_collection_admin',
+            'disabled' => empty($availableFormatters) ? true : false,
         ]);
 
         $builder->add('cancel', SubmitType::class, [

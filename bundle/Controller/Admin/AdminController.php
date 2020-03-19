@@ -8,6 +8,7 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection;
 use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Query;
+use Netgen\Bundle\InformationCollectionBundle\Core\Export\ExportResponseFormatterRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionCollectionListSearchAdapter;
 use Netgen\Bundle\InformationCollectionBundle\Core\Pagination\InformationCollectionContentsAdapter;
@@ -38,24 +39,32 @@ class AdminController extends Controller
     protected $anonymizer;
 
     /**
+     * @var \Netgen\Bundle\InformationCollectionBundle\Core\Export\ExportResponseFormatterRegistry
+     */
+    protected $formatterRegistry;
+
+    /**
      * AdminController constructor.
      *
      * @param \Netgen\Bundle\InformationCollectionBundle\API\Service\InformationCollection $service
      * @param \Netgen\Bundle\InformationCollectionBundle\API\Persistence\Anonymizer\Anonymizer $anonymizer
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
+     * @param \Netgen\Bundle\InformationCollectionBundle\Core\Export\ExportResponseFormatterRegistry $formatterRegistry
      */
     public function __construct(
         InformationCollection $service,
         Anonymizer $anonymizer,
         ContentService $contentService,
-        ConfigResolverInterface $configResolver
+        ConfigResolverInterface $configResolver,
+        ExportResponseFormatterRegistry $formatterRegistry
     )
     {
         $this->service = $service;
         $this->contentService = $contentService;
         $this->configResolver = $configResolver;
         $this->anonymizer = $anonymizer;
+        $this->formatterRegistry = $formatterRegistry;
     }
 
     /**
@@ -95,6 +104,7 @@ class AdminController extends Controller
         return $this->render("NetgenInformationCollectionBundle:admin:collection_list.html.twig", [
             'objects' => $pager,
             'content' => $content,
+            'formatters' => $this->formatterRegistry->getExportResponseFormatters(),
         ]);
     }
 

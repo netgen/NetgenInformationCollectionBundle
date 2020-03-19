@@ -8,6 +8,7 @@ services:
             - "@netgen_information_collection.anonymizer.service"
             - "@ezpublish.api.service.content"
             - "@ezpublish.config.resolver"
+            - "@netgen_information_collection.core.export.registry"
 
     netgen_information_collection.controller.export:
         class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\ExportController
@@ -16,8 +17,7 @@ services:
         arguments:
             - "@ezpublish.api.service.content"
             - "@netgen_information_collection.service.exporter"
-            - "@ezpublish.translation_helper"
-            - "$csv_export;netgen_information_collection$"
+            - "@netgen_information_collection.core.export.registry"
 
     netgen_information_collection.api.service:
         class: Netgen\Bundle\InformationCollectionBundle\Core\Service\InformationCollectionService
@@ -77,3 +77,28 @@ services:
         arguments:
             - "@ezpublish.api.service.content_type"
             - "@ezpublish.api.service.content"
+
+    netgen_information_collection.core.export.registry:
+        class: Netgen\Bundle\InformationCollectionBundle\Core\Export\ExportResponseFormatterRegistry
+
+    netgen_information_collection.core.export.fomatter.csv:
+        class: Netgen\Bundle\InformationCollectionBundle\Core\Export\CsvExportResponseFormatter
+        arguments:
+            - "@ezpublish.translation_helper"
+            - "$csv_export;netgen_information_collection$"
+        tags:
+            - { name: netgen_information_collection.export.formatter }
+
+    netgen_information_collection.core.export.formatter.xls:
+        class: Netgen\Bundle\InformationCollectionBundle\Core\Export\XlsExportResponseFormatter
+        arguments:
+            - "@ezpublish.translation_helper"
+        tags:
+            - { name: netgen_information_collection.export.formatter }
+
+    netgen_information_collection.form.type.export:
+        class: Netgen\Bundle\InformationCollectionBundle\Form\Type\ExportType
+        arguments:
+            - "@netgen_information_collection.core.export.registry"
+        tags:
+            - { name: form.type }

@@ -20,12 +20,13 @@
         <form name="ic_export" method="get" action="{{ path('netgen_information_collection.route.admin.export', {'contentId':content.id}) }}">
             <div class="ng-ui-input">
                 <input type="submit" value="{{ 'netgen_information_collection_admin_collection_export'|trans }}" class="ng-ui-btn">
-                <a href="{{ path('netgen_information_collection.route.admin.export_csv', {'contentId':content.id}) }}" class="ng-ui-btn">
-                    {{ 'netgen_information_collection_admin_export_export_all_csv'|trans }}
-                </a>
-                <a href="{{ path('netgen_information_collection.route.admin.export_xls', {'contentId':content.id}) }}" class="ng-ui-btn">
-                    {{ 'netgen_information_collection_admin_export_export_all_xls'|trans }}
-                </a>
+
+                {% for formatter in formatters %}
+                    <a href="{{ path('netgen_information_collection.route.admin.export_all', {'contentId':content.id, 'exportIdentifier': formatter.identifier}) }}" class="ng-ui-btn">
+                        {% set formatter_button_label = 'netgen_information_collection_admin_export_type_' ~ formatter.identifier ~ '_label' %}
+                        {{ formatter_button_label|trans }}
+                    </a>
+                {% endfor %}
             </div>
         </form>
 
