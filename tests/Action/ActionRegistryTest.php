@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Action;
 
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Action\ActionInterface;
@@ -89,6 +90,11 @@ class ActionRegistryTest extends TestCase
      */
     protected $event2;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $configResolver;
+
     public function setUp()
     {
         $this->config = array(
@@ -147,10 +153,12 @@ class ActionRegistryTest extends TestCase
             ->setMethods(array('error', 'emergency', 'alert', 'debug', 'critical', 'notice', 'info', 'warning', 'log'))
             ->getMock();
 
-        $this->registry = new ActionRegistry($this->config, $this->logger);
-        $this->registryForPriority = new ActionRegistry($this->config2, $this->logger);
-        $this->registryWithEmptyConf = new ActionRegistry($this->emptyConfig, $this->logger);
-        $this->registryWithOnlyDefaultConf = new ActionRegistry($this->onlyDefaultConfig, $this->logger);
+        $this->configResolver = $this->createMock(ConfigResolverInterface::class);
+
+        $this->registry = new ActionRegistry($this->configResolver, $this->logger);
+        $this->registryForPriority = new ActionRegistry($this->configResolver, $this->logger);
+        $this->registryWithEmptyConf = new ActionRegistry($this->configResolver, $this->logger);
+        $this->registryWithOnlyDefaultConf = new ActionRegistry($this->configResolver, $this->logger);
 
         $contentType = new ContentType(array(
             'identifier' => 'ng_feedback_form',
@@ -191,6 +199,11 @@ class ActionRegistryTest extends TestCase
         $this->action2->expects($this->never())
             ->method('act');
 
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('actions', 'netgen_information_collection')
+            ->willReturn($this->config);
+
         $this->registry->act($this->event);
     }
 
@@ -204,6 +217,11 @@ class ActionRegistryTest extends TestCase
 
         $this->action2->expects($this->once())
             ->method('act');
+
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('actions', 'netgen_information_collection')
+            ->willReturn($this->config);
 
         $this->registry->act($this->event2);
     }
@@ -219,6 +237,11 @@ class ActionRegistryTest extends TestCase
         $this->action2->expects($this->once())
             ->method('act');
 
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('actions', 'netgen_information_collection')
+            ->willReturn($this->onlyDefaultConfig);
+
         $this->registryWithOnlyDefaultConf->act($this->event2);
     }
 
@@ -232,6 +255,11 @@ class ActionRegistryTest extends TestCase
 
         $this->action2->expects($this->never())
             ->method('act');
+
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('actions', 'netgen_information_collection')
+            ->willReturn($this->emptyConfig);
 
         $this->registryWithEmptyConf->act($this->event2);
     }
@@ -253,6 +281,11 @@ class ActionRegistryTest extends TestCase
 
         $this->action2->expects($this->never())
             ->method('act');
+
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('actions', 'netgen_information_collection')
+            ->willReturn($this->config);
 
         $this->registry->act($this->event);
     }
@@ -298,6 +331,11 @@ class ActionRegistryTest extends TestCase
 
         $this->action3->expects($this->once())
             ->method('act');
+
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('actions', 'netgen_information_collection')
+            ->willReturn($this->config2);
 
         $this->registryForPriority->act($this->event);
 
@@ -350,6 +388,11 @@ class ActionRegistryTest extends TestCase
         $this->action3->expects($this->once())
             ->method('act');
 
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('actions', 'netgen_information_collection')
+            ->willReturn($this->config2);
+
         $this->registryForPriority->act($this->event);
 
         $registryReflection = new ReflectionObject($this->registryForPriority);
@@ -365,6 +408,11 @@ class ActionRegistryTest extends TestCase
 
         $this->action1->expects($this->never())
             ->method('act');
+
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('actions', 'netgen_information_collection')
+            ->willReturn($this->config2);
 
         $this->registryForPriority->setDebug(true);
 
@@ -397,6 +445,11 @@ class ActionRegistryTest extends TestCase
 
         $this->action2->expects($this->never())
             ->method('act');
+
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('actions', 'netgen_information_collection')
+            ->willReturn($this->config);
 
         $this->registry->setDebug(true);
         $this->registry->act($this->event);
