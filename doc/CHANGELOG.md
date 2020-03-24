@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.9.0] - *
+## [1.9.0] - 2020-03-24
 ### Changed
 - Parameters are now consumed through ConfigResolver (instead of being injected)
 - Removed service definition class parameters
