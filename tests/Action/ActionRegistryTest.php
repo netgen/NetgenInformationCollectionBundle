@@ -409,10 +409,9 @@ class ActionRegistryTest extends TestCase
         $this->action1->expects($this->never())
             ->method('act');
 
-        $this->configResolver->expects($this->once())
+        $this->configResolver->expects($this->never())
             ->method('getParameter')
-            ->with('actions', 'netgen_information_collection')
-            ->willReturn($this->config2);
+            ->with('actions', 'netgen_information_collection');
 
         $this->registryForPriority->setDebug(true);
 

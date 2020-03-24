@@ -8,6 +8,7 @@ use eZ\Publish\Core\FieldType\EmailAddress\Value as EmailValue;
 use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
 use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\Repository\ContentService;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
@@ -75,6 +76,11 @@ class EmailDataFactoryTest extends TestCase
      */
     protected $versionInfo;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $configResolver;
+
     public function setUp()
     {
         $this->config = array(
@@ -127,13 +133,8 @@ class EmailDataFactoryTest extends TestCase
             )),
         ));
 
-        $this->factory = new EmailDataFactory(
-            $this->config,
-            $this->translationHelper,
-            $this->fieldHelper,
-            $this->contentService,
-            $this->twig
-        );
+        $this->configResolver = $this->createMock(ConfigResolverInterface::class);
+
         parent::setUp();
     }
 
@@ -149,8 +150,13 @@ class EmailDataFactoryTest extends TestCase
 
         $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
 
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('action_config.email', 'netgen_information_collection')
+            ->willReturn($this->config);
+
         $this->factory = new EmailDataFactory(
-            $this->config,
+            $this->configResolver,
             $this->translationHelper,
             $this->fieldHelper,
             $this->contentService,
@@ -256,8 +262,13 @@ TEMPLATE;
 
         $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
 
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('action_config.email', 'netgen_information_collection')
+            ->willReturn($this->config);
+
         $this->factory = new EmailDataFactory(
-            $this->config,
+            $this->configResolver,
             $this->translationHelper,
             $this->fieldHelper,
             $this->contentService,
@@ -344,6 +355,19 @@ TEMPLATE;
             )
         );
 
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('action_config.email', 'netgen_information_collection')
+            ->willReturn($this->config);
+
+        $this->factory = new EmailDataFactory(
+            $this->configResolver,
+            $this->translationHelper,
+            $this->fieldHelper,
+            $this->contentService,
+            $this->twig
+        );
+
         $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
 
         $recipientField = new Field(array(
@@ -423,6 +447,19 @@ TEMPLATE;
         );
 
         $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
+
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('action_config.email', 'netgen_information_collection')
+            ->willReturn($this->config);
+
+        $this->factory = new EmailDataFactory(
+            $this->configResolver,
+            $this->translationHelper,
+            $this->fieldHelper,
+            $this->contentService,
+            $this->twig
+        );
 
         $recipientField = new Field(array(
             'value' => new EmailValue('recipient@test.com'),

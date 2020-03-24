@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Factory;
 
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\Factory\AutoResponderDataFactory;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Field;
@@ -76,6 +77,11 @@ class AutoResponderDataFactoryTest extends TestCase
      */
     protected $versionInfo;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $configResolver;
+
     public function setUp()
     {
         $this->config = array(
@@ -128,13 +134,8 @@ class AutoResponderDataFactoryTest extends TestCase
             )),
         ));
 
-        $this->factory = new AutoResponderDataFactory(
-            $this->config,
-            $this->translationHelper,
-            $this->fieldHelper,
-            $this->contentService,
-            $this->twig
-        );
+        $this->configResolver = $this->createMock(ConfigResolverInterface::class);
+
         parent::setUp();
     }
 
@@ -150,8 +151,13 @@ class AutoResponderDataFactoryTest extends TestCase
 
         $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
 
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('action_config.auto_responder', 'netgen_information_collection')
+            ->willReturn($this->config);
+
         $this->factory = new AutoResponderDataFactory(
-            $this->config,
+            $this->configResolver,
             $this->translationHelper,
             $this->fieldHelper,
             $this->contentService,
@@ -239,8 +245,13 @@ class AutoResponderDataFactoryTest extends TestCase
 
         $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
 
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('action_config.auto_responder', 'netgen_information_collection')
+            ->willReturn($this->config);
+
         $this->factory = new AutoResponderDataFactory(
-            $this->config,
+            $this->configResolver,
             $this->translationHelper,
             $this->fieldHelper,
             $this->contentService,

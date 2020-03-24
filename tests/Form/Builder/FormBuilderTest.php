@@ -5,6 +5,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Tests\FieldHandler;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\ContentTypeService;
 use eZ\Publish\Core\Repository\Values\Content\Location;
+use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
@@ -42,7 +43,7 @@ class FormBuilderTest extends TestCase
     {
         $this->formFactory = $this->getMockBuilder(FormFactory::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('createBuilder', 'setAction'))
+            ->setMethods(array('createBuilder', 'setAction', 'createNamedBuilder'))
             ->getMock();
 
         $this->contentTypeService = $this->getMockBuilder(ContentTypeService::class)
@@ -67,17 +68,23 @@ class FormBuilderTest extends TestCase
     public function testFormBuildUp()
     {
         $location = new Location(array(
+            'id' => 456,
             'contentInfo' => new ContentInfo(array(
                 'contentTypeId' => 123,
             )),
         ));
 
+        $contentType = new ContentType([
+            'identifier' => 'test_content_type',
+        ]);
+
         $this->contentTypeService->expects($this->once())
             ->method('loadContentType')
-            ->with(123);
+            ->with(123)
+            ->willReturn($contentType);
 
         $this->formFactory->expects($this->once())
-            ->method('createBuilder')
+            ->method('createNamedBuilder')
             ->willReturn($this->innerFormBuilder);
 
         $this->innerFormBuilder->expects($this->never())
@@ -96,12 +103,17 @@ class FormBuilderTest extends TestCase
             )),
         ));
 
+        $contentType = new ContentType([
+            'identifier' => 'test_content_type',
+        ]);
+
         $this->contentTypeService->expects($this->once())
             ->method('loadContentType')
-            ->with(123);
+            ->with(123)
+            ->willReturn($contentType);
 
         $this->formFactory->expects($this->once())
-            ->method('createBuilder')
+            ->method('createNamedBuilder')
             ->willReturn($this->innerFormBuilder);
 
         $this->innerFormBuilder->expects($this->once())

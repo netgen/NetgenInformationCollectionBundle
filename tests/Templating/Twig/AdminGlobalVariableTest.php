@@ -2,21 +2,31 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Templating\Twig;
 
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\Templating\Twig\AdminGlobalVariable;
 use PHPUnit\Framework\TestCase;
 
 class AdminGlobalVariableTest extends TestCase
 {
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockBuilder
+     */
+    protected $configResolver;
+
+    public function setUp()
+    {
+        $this->configResolver = $this->createMock(ConfigResolverInterface::class);
+    }
+
     public function testGetterSetter()
     {
-        $admin = new AdminGlobalVariable();
+        $admin = new AdminGlobalVariable($this->configResolver);
 
-        $this->assertNull($admin->getPageLayoutTemplate());
+        $this->configResolver->expects($this->once())
+            ->method('getParameter')
+            ->with('admin.pagelayout', 'netgen_information_collection')
+            ->willReturn('some_template');
 
-        $admin->setPageLayoutTemplate('this_is_my_page_layout');
-        $this->assertEquals('this_is_my_page_layout', $admin->getPageLayoutTemplate());
-
-        $admin->setPageLayoutTemplate();
-        $this->assertNull($admin->getPageLayoutTemplate());
+        $this->assertEquals('some_template', $admin->getPageLayoutTemplate());
     }
 }
