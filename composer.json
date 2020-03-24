@@ -14,7 +14,12 @@
     "authors": [
         {
             "name": "Netgen",
-            "homepage": "http://www.netgenlabs.com"
+            "homepage": "https://netgen.io"
+        },
+        {
+            "name": "Mario Blažek",
+            "homepage": "https://marioblazek.dev",
+            "role": "Developer"
         }
     ],
     "require": {
