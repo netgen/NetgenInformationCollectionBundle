@@ -15,11 +15,6 @@ services:
     information_collection:
         alias: 'netgen_information_collection.controller'
 
-    netgen_information_collection_legacy.controller:
-        class: Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionLegacyController
-        calls:
-            - [setContainer, ['@service_container']]
-
     information_collection_legacy:
         alias: 'netgen_information_collection_legacy.controller'
 

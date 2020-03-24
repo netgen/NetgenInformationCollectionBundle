@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.10.0] - *
+
+### Added
+- Information collection now supports eZ Publish kernel 7.5 and newer
+- Twig 2.0 is required
+
+### Changed
+
+### Fixed
+
 ## [1.9.0] - 2020-03-24
 ### Changed
 - Parameters are now consumed through ConfigResolver (instead of being injected)

@@ -40,12 +40,6 @@ class FieldHandlerRegistryTest extends TestCase
         parent::setUp();
     }
 
-    public function testAddingHandlers()
-    {
-        $this->registry->addHandler($this->customHandler1);
-        $this->registry->addHandler($this->customHandler2);
-    }
-
     public function testItReturnsProperHandler()
     {
         $value = new TestValue(2);

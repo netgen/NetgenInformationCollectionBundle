@@ -181,12 +181,6 @@ class ActionRegistryTest extends TestCase
         parent::setUp();
     }
 
-    public function testAddingActions()
-    {
-        $this->registry->addAction('database', $this->action1, 1);
-        $this->registry->addAction('email', $this->action2, 100);
-    }
-
     public function testAct()
     {
         $this->registry->addAction('database', $this->action1, 1);

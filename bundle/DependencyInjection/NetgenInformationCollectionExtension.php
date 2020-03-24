@@ -63,8 +63,6 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
             'twig.yml' => 'twig',
         );
 
-        $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
-
         foreach ($configs as $fileName => $extensionName) {
             $configFile = __DIR__ . '/../Resources/config/' . $fileName;
             $config = Yaml::parse(file_get_contents($configFile));

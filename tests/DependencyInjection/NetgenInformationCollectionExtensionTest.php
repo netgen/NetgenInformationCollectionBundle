@@ -11,6 +11,8 @@ class NetgenInformationCollectionExtensionTest extends AbstractExtensionTestCase
     {
         $this->container->setParameter('ezpublish.siteaccess.list', array());
         $this->load();
+
+        $this->assertEquals(array(), $this->container->getParameter('ezpublish.siteaccess.list'));
     }
 
     protected function getContainerExtensions()
