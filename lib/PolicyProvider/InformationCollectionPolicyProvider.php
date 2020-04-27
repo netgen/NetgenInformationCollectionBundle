@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\PolicyProvider;
 
+use Netgen\InformationCollection\API\Permissions;
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ConfigBuilderInterface;
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Security\PolicyProvider\PolicyProviderInterface;
 
@@ -17,11 +18,11 @@ class InformationCollectionPolicyProvider implements PolicyProviderInterface
     public function addPolicies(ConfigBuilderInterface $configBuilder)
     {
         $configBuilder->addConfig([
-            'infocollector' => [
-                'read' => [],
-                'delete' => [],
-                'anonymize' => [],
-                'export' => [],
+            Permissions::NAME => [
+                Permissions::POLICY_READ => [],
+                Permissions::POLICY_DELETE => [],
+                Permissions::POLICY_ANONYMIZE => [],
+                Permissions::POLICY_EXPORT => [],
             ],
         ]);
 
