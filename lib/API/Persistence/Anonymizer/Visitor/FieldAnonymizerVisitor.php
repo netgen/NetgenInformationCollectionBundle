@@ -5,27 +5,28 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor;
 
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
+use Netgen\InformationCollection\API\Value\Attribute;
+use Netgen\InformationCollection\API\Value\AttributeValue;
 
 abstract class FieldAnonymizerVisitor
 {
     /**
      * Accept the given $ezInfoCollectionAttribute for visiting.
      *
-     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute $ezInfoCollectionAttribute
+     * @param \Netgen\InformationCollection\API\Value\Attribute $attribute
      * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
      *
      * @return bool
      */
-    abstract public function accept(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType): bool;
+    abstract public function accept(Attribute $attribute, ContentType $contentType): bool;
 
     /**
      * Visit given $ezInfoCollectionAttribute and return string.
      *
-     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute $ezInfoCollectionAttribute
+     * @param \Netgen\InformationCollection\API\Value\Attribute $attribute
      * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
      *
-     * @return string
+     * @return \Netgen\InformationCollection\API\Value\AttributeValue
      */
-    abstract public function visit(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType): string;
+    abstract public function visit(Attribute $attribute, ContentType $contentType): AttributeValue;
 }

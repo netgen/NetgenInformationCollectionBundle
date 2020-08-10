@@ -115,7 +115,6 @@ final class DomainObjectMapper
         $value = new AttributeValue($attribute->getDataInt(), $attribute->getDataFloat(), $attribute->getDataText());
         return new Attribute(
             $attribute->getId(),
-            $content,
             $classField,
             $fieldDefinition,
             $value

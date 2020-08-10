@@ -14,6 +14,8 @@ use eZ\Publish\API\Repository\Values\Content\Field;
 use Netgen\InformationCollection\API\Exception\RemoveAttributeFailedException;
 use Netgen\InformationCollection\API\Exception\RetrieveCountException;
 use Netgen\InformationCollection\API\Exception\StoringAttributeFailedException;
+use Netgen\InformationCollection\API\Value\Attribute;
+use Netgen\InformationCollection\API\Value\Filter\CollectionId;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
@@ -96,6 +98,25 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
             ->setParameter('fields', $fieldDefinitionIds)
             ->getQuery()
             ->getResult();
+    }
+
+    public function updateByCollectionId(CollectionId $collectionId, Attribute $attribute)
+    {
+        $entity = $this->findOneBy([
+            'informationCollectionId' => $collectionId->getCollectionId(),
+            'id' => $attribute->getId(),
+        ]);
+
+        if (!$entity instanceof EzInfoCollectionAttribute) {
+            throw new \InvalidArgumentException('Attribute not found.');
+        }
+
+        $entity->setDataFloat($attribute->getValue()->getDataFloat());
+        $entity->setDataInt($attribute->getValue()->getDataInt());
+        $entity->setDataText($attribute->getValue()->getDataText());
+
+        $this->_em->persist($entity);
+        $this->_em->flush();
     }
 
     public function findByCollectionId($collectionId)

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Service;
 
+use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\Collection;
 use Netgen\InformationCollection\API\Value\CollectionCount;
 use Netgen\InformationCollection\API\Value\Collections;
@@ -104,4 +105,12 @@ interface InformationCollection
      * @param \Netgen\InformationCollection\API\Value\Filter\Contents $contents
      */
     public function deleteCollectionByContent(Contents $contents): void;
+
+    /**
+     * Updates Attribute value for given Attribute.
+     *
+     * @param \Netgen\InformationCollection\API\Value\Filter\CollectionId $collectionId
+     * @param \Netgen\InformationCollection\API\Value\Attribute $attribute
+     */
+    public function updateCollectionAttribute(CollectionId $collectionId, Attribute $attribute): void;
 }

@@ -6,7 +6,8 @@ namespace Netgen\InformationCollection\Core\Persistence\Anonymizer\Visitor\Field
 
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor;
-use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
+use Netgen\InformationCollection\API\Value\Attribute;
+use Netgen\InformationCollection\API\Value\AttributeValue;
 use OutOfBoundsException;
 
 class Aggregate extends FieldAnonymizerVisitor
@@ -37,7 +38,7 @@ class Aggregate extends FieldAnonymizerVisitor
     /**
      * {@inheritdoc}
      */
-    public function accept(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType): bool
+    public function accept(Attribute $attribute, ContentType $contentType): bool
     {
         return true;
     }
@@ -45,11 +46,11 @@ class Aggregate extends FieldAnonymizerVisitor
     /**
      * {@inheritdoc}
      */
-    public function visit(EzInfoCollectionAttribute $ezInfoCollectionAttribute, ContentType $contentType): string
+    public function visit(Attribute $attribute, ContentType $contentType): AttributeValue
     {
         foreach ($this->visitors as $visitor) {
-            if ($visitor->accept($ezInfoCollectionAttribute, $contentType)) {
-                return $visitor->visit($ezInfoCollectionAttribute, $contentType);
+            if ($visitor->accept($attribute, $contentType)) {
+                return $visitor->visit($attribute, $contentType);
             }
         }
 

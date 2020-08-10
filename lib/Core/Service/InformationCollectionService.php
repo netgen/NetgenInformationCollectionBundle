@@ -11,6 +11,7 @@ use Netgen\InformationCollection\API\Exception\PersistingFailedException;
 use Netgen\InformationCollection\API\Exception\StoringAttributeFailedException;
 use Netgen\InformationCollection\API\Exception\StoringCollectionFailedException;
 use Netgen\InformationCollection\API\Service\InformationCollection;
+use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\Collection;
 use Netgen\InformationCollection\API\Value\CollectionCount;
 use Netgen\InformationCollection\API\Value\Collections;
@@ -285,6 +286,14 @@ class InformationCollectionService implements InformationCollection
         }
 
         $this->ezInfoCollectionRepository->remove($collections);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateCollectionAttribute(CollectionId $collectionId, Attribute $attribute): void
+    {
+        $this->ezInfoCollectionAttributeRepository->updateByCollectionId($collectionId, $attribute);
     }
 
     /**

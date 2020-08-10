@@ -10,8 +10,7 @@ services:
         class: Netgen\InformationCollection\Core\Persistence\Anonymizer\AnonymizerService
         arguments:
             - "@ezpublish.api.repository"
-            - "@netgen_information_collection.repository.ez_info_collection"
-            - "@netgen_information_collection.repository.ez_info_collection_attribute"
+            - "@netgen_information_collection.api.service"
             - "@netgen_information_collection.anonymizer.visitor.field.aggregate"
 
     netgen_information_collection.anonymizer.visitor.field.aggregate:
@@ -23,3 +22,8 @@ services:
         class: Netgen\InformationCollection\Core\Persistence\Anonymizer\Visitor\Field\Simple
         tags:
             - { name: netgen_information_collection.anonymizer.visitor.field, priority: -255 }
+
+    netgen_information_collection.anonymizer.visitor.field.email:
+        class: Netgen\InformationCollection\Core\Persistence\Anonymizer\Visitor\Field\Email
+        tags:
+            - { name: netgen_information_collection.anonymizer.visitor.field }

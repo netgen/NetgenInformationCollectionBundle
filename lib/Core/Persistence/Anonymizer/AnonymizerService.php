@@ -8,22 +8,13 @@ use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor;
-use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
-use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
-use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
+use Netgen\InformationCollection\API\Service\InformationCollection;
+use Netgen\InformationCollection\API\Value\Collection;
+use Netgen\InformationCollection\API\Value\Filter\CollectionId;
+use Netgen\InformationCollection\API\Value\Attribute;
 
 class AnonymizerService implements Anonymizer
 {
-    /**
-     * @var \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository
-     */
-    protected $collectionRepository;
-
-    /**
-     * @var \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository
-     */
-    protected $collectionAttributeRepository;
-
     /**
      * @var \eZ\Publish\API\Repository\Repository
      */
@@ -35,77 +26,96 @@ class AnonymizerService implements Anonymizer
     protected $fieldAnonymizerVisitor;
 
     /**
+     * @var \Netgen\InformationCollection\API\Service\InformationCollection
+     */
+    protected $informationCollection;
+
+    /**
      * Anonymizer constructor.
      *
      * @param \eZ\Publish\API\Repository\Repository $repository
-     * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository $collectionRepository
-     * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository $collectionAttributeRepository
+     * @param \Netgen\InformationCollection\API\Service\InformationCollection $informationCollection
      * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor $fieldAnonymizerVisitor
      */
     public function __construct(
         Repository $repository,
-        EzInfoCollectionRepository $collectionRepository,
-        EzInfoCollectionAttributeRepository $collectionAttributeRepository,
+        InformationCollection $informationCollection,
         FieldAnonymizerVisitor $fieldAnonymizerVisitor
     ) {
-        $this->collectionRepository = $collectionRepository;
-        $this->collectionAttributeRepository = $collectionAttributeRepository;
+        $this->informationCollection = $informationCollection;
         $this->repository = $repository;
         $this->fieldAnonymizerVisitor = $fieldAnonymizerVisitor;
     }
 
-    public function anonymizeCollection($collectionId, array $fields = []): void
+    public function anonymizeCollection(int $collectionId, array $fields = []): void
     {
-        $collection = $this->collectionRepository->find($collectionId);
-
-        if (!$collection instanceof EzInfoCollection) {
-            return;
-        }
+        $collectionId = new CollectionId($collectionId);
+        $collection = $this->informationCollection->getCollection($collectionId);
 
         $this->destroyData($collection, $fields);
     }
 
     /**
-     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection $collection
+     * @param \Netgen\InformationCollection\API\Value\Collection $collection
      * @param array $fields
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    protected function destroyData(EzInfoCollection $collection, array $fields = [])
+    protected function destroyData(Collection $collection, array $fields = [])
     {
-        $content = $this->repository
-            ->getContentService()
-            ->loadContent($collection->getContentObjectId());
-
         $contentType = $this->repository
             ->getContentTypeService()
-            ->loadContentType($content->contentInfo->contentTypeId);
+            ->loadContentType($collection->getContent()->contentInfo->contentTypeId);
 
-        $query = [
-            'informationCollectionId' => $collection->getId(),
-        ];
+        $attributes = $this->filterAttributes($collection, $fields);
 
-        if (!empty($fields)) {
-            $query['contentClassAttributeId'] = $fields;
+        if (empty($attributes)) {
+            throw new \OutOfRangeException("The is no valid fields selected for anonymization");
         }
 
-        $attributes = $this->collectionAttributeRepository
-            ->findBy($query);
-
-        $this->anonymize($attributes, $contentType);
+        $collectionId = new CollectionId($collection->getId());
+        $this->anonymize($collectionId, $attributes, $contentType);
     }
 
     /**
-     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute[] $attributes
+     * @param \Netgen\InformationCollection\API\Value\Attribute[] $attributes
      */
-    protected function anonymize(array $attributes, ContentType $contentType)
+    protected function anonymize(CollectionId $collectionId, array $attributes, ContentType $contentType)
     {
         foreach ($attributes as $attribute) {
             $value = $this->fieldAnonymizerVisitor->visit($attribute, $contentType);
-            $attribute->setDataText($value);
 
-            $this->collectionAttributeRepository->save($attribute);
+            $attributeToUpdate = Attribute::createFromAttributeAndValue($attribute, $value);
+
+            $this->informationCollection->updateCollectionAttribute($collectionId, $attributeToUpdate);
         }
+    }
+
+    /**
+     * Filter attributes based on the user selection of fields to anonymize
+     *
+     * @param Collection $collection
+     * @param array $fields
+     *
+     * @return array
+     */
+    protected function filterAttributes(Collection $collection, array $fields): array
+    {
+        if (empty($fields)) {
+            return $collection->getAttributes();
+        }
+
+        $attributes = $collection->getAttributes();
+
+        $filtered = [];
+        foreach ($attributes as $attribute) {
+
+            if (in_array($attribute->getFieldDefinition()->id, $fields)) {
+                $filtered[] = $attribute;
+            }
+        }
+
+        return $filtered;
     }
 }

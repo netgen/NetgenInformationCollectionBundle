@@ -60,6 +60,10 @@
         "coverage": "@php -dzend_extension=xdebug.so vendor/bin/phpunit -c phpunit.xml --colors=always",
         "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --level=7 --ansi lib bundle"
     },
+    "suggest": {
+        "phpoffice/phpexcel": "To enable the XLS export functionality",
+        "league/csv": "To enable the CSV export functionality",
+    },
     "extra": {
         "branch-alias": {
             "2.x": "3.0.x-dev"
