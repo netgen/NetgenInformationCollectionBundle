@@ -35,7 +35,7 @@ class ExportCriteria extends ValueObject
      */
     protected $limit;
 
-    public function __construct(Content $content, DateTimeInterface $from, DateTimeInterface $to, int $offset, int $limit)
+    public function __construct(Content $content, DateTimeInterface $from, DateTimeInterface $to, int $offset = 0, int $limit = 100)
     {
         $this->content = $content;
         $this->from = $from;

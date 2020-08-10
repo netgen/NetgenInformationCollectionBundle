@@ -22,12 +22,29 @@ services:
             - "@ezpublish.config.resolver"
             - "@translator"
 
-    netgen_information_collection.controller.export:
-        class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\ExportController
-        parent: ezpublish.controller.base
+    netgen_information_collection.controller.export.export:
+        class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\Export\Export
         public: true
         arguments:
+            - "@ezpublish.api.service.content"
             - "@netgen_information_collection.service.exporter"
+            - "@netgen_information_collection.core.export.registry"
+        tags:
+            - { name: controller.service_arguments }
+        calls:
+            - [setContainer, ["@service_container"]]
+
+    netgen_information_collection.controller.export.export_all:
+        class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\Export\ExportAll
+        public: true
+        arguments:
+            - "@ezpublish.api.service.content"
+            - "@netgen_information_collection.service.exporter"
+            - "@netgen_information_collection.core.export.registry"
+        tags:
+            - { name: controller.service_arguments }
+        calls:
+            - [setContainer, ["@service_container"]]
 
 
     netgen_information_collection.controller.tree:

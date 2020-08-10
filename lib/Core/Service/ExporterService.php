@@ -11,7 +11,7 @@ use Netgen\InformationCollection\API\Value\Export\Export;
 use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
 use Netgen\InformationCollection\API\Value\Filter\ContentId;
 use Netgen\InformationCollection\Core\Persistence\ContentTypeUtils;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ExporterService implements Exporter
 {
@@ -51,7 +51,7 @@ class ExporterService implements Exporter
         $fields['created'] = $this->translator->trans('netgen_information_collection_admin_export_created', [], 'netgen_information_collection_admin');
 
         $collections = $this->informationCollection->getCollections(
-            new ContentId($criteria->getContent()->id, 0, 100)
+            new ContentId($criteria->getContent()->id, $criteria->getOffset(), $criteria->getLimit())
         );
 
         $rows = [];

@@ -49,3 +49,30 @@ services:
         arguments:
             - "@ezpublish.api.service.content_type"
             - "@ezpublish.api.service.content"
+
+    netgen_information_collection.core.export.registry:
+        class: Netgen\InformationCollection\Core\Export\ExportResponseFormatterRegistry
+        arguments:
+            - !tagged_iterator netgen_information_collection.export.formatter
+
+    netgen_information_collection.core.export.fomatter.csv:
+        class: Netgen\InformationCollection\Core\Export\CsvExportResponseFormatter
+        arguments:
+            - "@ezpublish.translation_helper"
+            - "@ezpublish.config.resolver"
+        tags:
+            - { name: netgen_information_collection.export.formatter }
+
+    netgen_information_collection.core.export.formatter.xls:
+        class: Netgen\InformationCollection\Core\Export\XlsExportResponseFormatter
+        arguments:
+            - "@ezpublish.translation_helper"
+        tags:
+            - { name: netgen_information_collection.export.formatter }
+
+    netgen_information_collection.form.type.export:
+        class: Netgen\InformationCollection\Form\Type\ExportType
+        arguments:
+            - "@netgen_information_collection.core.export.registry"
+        tags:
+            - { name: form.type }

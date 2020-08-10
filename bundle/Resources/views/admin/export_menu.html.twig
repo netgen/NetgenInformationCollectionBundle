@@ -7,59 +7,69 @@
     <h1>{{ 'netgen_information_collection_admin_export_title'|trans }}</h1>
 
     {{ form_start(form) }}
-        {{ form_errors(form) }}
+    {{ form_errors(form) }}
 
-        <div class="ng-ui-input">
-            <label for="{{ form.dateFrom.vars.id }}">
-                {{ form.dateFrom.vars.label|trans }}:
-            </label>
+    <div class="ng-ui-input">
+        <label for="{{ form.dateFrom.vars.id }}">
+            {{ form.dateFrom.vars.label|trans }}:
+        </label>
 
-            {{ form_errors(form.dateFrom) }}
+        {{ form_errors(form.dateFrom) }}
 
-            {{ form_widget(form.dateFrom) }}
-        </div>
+        {{ form_widget(form.dateFrom) }}
+    </div>
 
-        <div class="ng-ui-input">
-            <label for="{{ form.dateTo.vars.id }}">
-                {{ form.dateTo.vars.label|trans }}:
-            </label>
+    <div class="ng-ui-input">
+        <label for="{{ form.dateTo.vars.id }}">
+            {{ form.dateTo.vars.label|trans }}:
+        </label>
 
-            {{ form_errors(form.dateTo) }}
+        {{ form_errors(form.dateTo) }}
 
-            {{ form_widget(form.dateTo) }}
-        </div>
+        {{ form_widget(form.dateTo) }}
+    </div>
 
-        <div class="ng-ui-input">
-            <label for="{{ form.offset.vars.id }}">
-                {{ form.offset.vars.label|trans }}:
-            </label>
+    <div class="ng-ui-input">
+        <label for="{{ form.exportType.vars.id }}">
+            {{ form.exportType.vars.label|trans }}:
+        </label>
 
-            {{ form_errors(form.offset) }}
+        {{ form_errors(form.exportType) }}
 
-            {{ form_widget(form.offset) }}
-        </div>
+        {{ form_widget(form.exportType) }}
+    </div>
 
-        <div class="ng-ui-input">
-            <label for="{{ form.limit.vars.id }}">
-                {{ form.limit.vars.label|trans }}:
-            </label>
+    <div class="ng-ui-input">
+        <label for="{{ form.offset.vars.id }}">
+            {{ form.offset.vars.label|trans }}:
+        </label>
 
-            {{ form_errors(form.limit) }}
+        {{ form_errors(form.offset) }}
 
-            {{ form_widget(form.limit) }}
-        </div>
+        {{ form_widget(form.offset) }}
+    </div>
 
-        <div class="ng-ui-btn-group">
-            <button type="submit" name="{{ form.export.vars.full_name }}" class="ng-ui-btn">
-                {{ form.export.vars.label|trans }}
-            </button>
-            {% do form.export.setRendered %}
-            <button type="submit" name="{{ form.cancel.vars.full_name }}" class="ng-ui-btn">
-                {{ form.cancel.vars.label|trans }}
-            </button>
-            {% do form.cancel.setRendered %}
-            {{ form_row(form.cancel) }}
-        </div>
+    <div class="ng-ui-input">
+        <label for="{{ form.limit.vars.id }}">
+            {{ form.limit.vars.label|trans }}:
+        </label>
+
+        {{ form_errors(form.limit) }}
+
+        {{ form_widget(form.limit) }}
+    </div>
+
+    <div class="ng-ui-btn-group">
+        <button type="submit" name="{{ form.export.vars.full_name }}" class="ng-ui-btn" {% if form.export.vars.disabled %}disabled{% endif %}>
+            {{ form.export.vars.label|trans }}
+        </button>
+
+        {% do form.export.setRendered %}
+        <button type="submit" name="{{ form.cancel.vars.full_name }}" class="ng-ui-btn">
+            {{ form.cancel.vars.label|trans }}
+        </button>
+        {% do form.cancel.setRendered %}
+    </div>
 
     {{ form_end(form) }}
 
