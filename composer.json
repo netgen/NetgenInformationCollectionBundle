@@ -31,7 +31,6 @@
         "ezsystems/ezplatform-content-forms": "^1.0",
         "ezsystems/ezplatform-kernel": "^1.0",
         "symfony/swiftmailer-bundle": "^3.4",
-        "league/csv": "^9.6",
         "twig/twig": "^3.0",
         "google/recaptcha": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^3.0"
@@ -62,11 +61,11 @@
     },
     "suggest": {
         "phpoffice/phpexcel": "To enable the XLS export functionality",
-        "league/csv": "To enable the CSV export functionality",
+        "league/csv": "To enable the CSV export functionality"
     },
     "extra": {
         "branch-alias": {
-            "2.x": "3.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     }
 }
