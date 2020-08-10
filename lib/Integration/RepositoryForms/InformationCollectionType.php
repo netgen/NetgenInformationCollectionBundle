@@ -4,13 +4,28 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Integration\RepositoryForms;
 
-use EzSystems\RepositoryForms\Form\Type\Content\BaseContentType;
+use EzSystems\EzPlatformContentForms\FieldType\FieldTypeFormMapperDispatcherInterface;
+use EzSystems\EzPlatformContentForms\Form\Type\Content\BaseContentType;
+use EzSystems\EzPlatformContentForms\Form\Type\Content\ContentFieldType;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InformationCollectionType extends AbstractType
 {
+    /**
+     * @var FieldTypeFormMapperDispatcherInterface
+     */
+    private $fieldTypeFormMapper;
+
+    public function __construct(FieldTypeFormMapperDispatcherInterface $fieldTypeFormMapper)
+    {
+        $this->fieldTypeFormMapper = $fieldTypeFormMapper;
+    }
+
     public function getName()
     {
         $this->getBlockPrefix();
@@ -18,19 +33,13 @@ class InformationCollectionType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ezrepoforms_information_collection';
+        return 'information_collection';
     }
 
     public function getParent()
     {
         return BaseContentType::class;
     }
-
-//    public function buildForm(FormBuilderInterface $builder, array $options)
-//    {
-//        $builder
-//            ->add('publish', SubmitType::class, ['label' => 'content.publish_button']);
-//    }
 
     public function configureOptions(OptionsResolver $resolver)
     {

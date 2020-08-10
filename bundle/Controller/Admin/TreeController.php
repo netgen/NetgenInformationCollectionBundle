@@ -10,12 +10,12 @@ use Netgen\InformationCollection\API\Value\Filter\ContentId;
 use Netgen\InformationCollection\API\Value\Filter\Query;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TreeController extends Controller
 {
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface
      */
     protected $translator;
 
@@ -33,7 +33,7 @@ class TreeController extends Controller
      * TreeController constructor.
      *
      * @param \Netgen\InformationCollection\API\Service\InformationCollection $service
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
      * @param \Symfony\Component\Routing\RouterInterface $router
      */
     public function __construct(

@@ -32,11 +32,10 @@ final class InformationCollectionStruct extends ValueObject
      */
     protected $fields;
 
-    public function __construct(Content $content, ContentType $contentType, array $fields, string $languageCode)
+    public function __construct(Content $content, ContentType $contentType, array $fields)
     {
         $this->content = $content;
         $this->contentType = $contentType;
-        $this->languageCode = $languageCode;
 
         foreach ($fields as $field) {
             $this->addFieldData($field);
@@ -48,7 +47,7 @@ final class InformationCollectionStruct extends ValueObject
      */
     public function getLanguageCode(): string
     {
-        return $this->languageCode;
+        return $this->content->contentInfo->mainLanguageCode;
     }
 
     /**

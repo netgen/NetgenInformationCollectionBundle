@@ -21,11 +21,9 @@ class Aggregate extends FieldAnonymizerVisitor
      *
      * @param array $visitors
      */
-    public function __construct(array $visitors = [])
+    public function __construct(iterable $visitors)
     {
-        foreach ($visitors as $visitor) {
-            $this->addVisitor($visitor);
-        }
+        $this->visitors = $visitors;
     }
 
     /**

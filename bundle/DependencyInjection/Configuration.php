@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\DependencyInjection;
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\Configuration as SiteAccessConfiguration;
+use Netgen\InformationCollection\Core\Action\EmailAction;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
@@ -165,7 +166,7 @@ class Configuration extends SiteAccessConfiguration
                                     ->end()
                                 ->end()
                             ->end()
-                        ->arrayNode(ConfigurationConstants::ACTION_EMAIL)
+                        ->arrayNode(EmailAction::class)
                             ->children()
                                 ->arrayNode(ConfigurationConstants::TEMPLATES)
                                     ->children()

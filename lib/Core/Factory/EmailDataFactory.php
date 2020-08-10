@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Factory;
 
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Netgen\InformationCollection\Core\Action\EmailAction;
 use function array_key_exists;
 use eZ\Publish\API\Repository\Values\Content\Field;
 use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
@@ -24,7 +26,7 @@ class EmailDataFactory extends BaseEmailDataFactory
     /**
      * @var array
      */
-    protected $config;
+    protected $configResolver;
 
     /**
      * @var \eZ\Publish\Core\Helper\TranslationHelper
@@ -50,12 +52,13 @@ class EmailDataFactory extends BaseEmailDataFactory
      * @param \Twig\Environment $twig
      */
     public function __construct(
-        array $config,
+        ConfigResolverInterface $configResolver,
         TranslationHelper $translationHelper,
         FieldHelper $fieldHelper,
         Environment $twig
     ) {
-        $this->config = $config;
+        $this->configResolver = $configResolver;
+        $this->config = $this->configResolver->getParameter('action_config.' . EmailAction::class, 'netgen_information_collection');
         $this->translationHelper = $translationHelper;
         $this->fieldHelper = $fieldHelper;
         $this->twig = $twig;

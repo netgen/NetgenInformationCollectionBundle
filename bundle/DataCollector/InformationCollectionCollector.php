@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 class InformationCollectionCollector extends DataCollector
 {
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
         $collectedItemsCount = 0;
         $collectedItems = null;

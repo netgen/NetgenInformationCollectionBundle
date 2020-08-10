@@ -7,7 +7,7 @@ namespace Netgen\InformationCollection\Integration\EzPlatformAdmin\EventListener
 use EzSystems\EzPlatformAdminUiBundle\EzPlatformAdminUiBundle;
 use Netgen\InformationCollection\Templating\Twig\AdminGlobalVariable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class SetPageLayoutListener implements EventSubscriberInterface
@@ -44,7 +44,7 @@ class SetPageLayoutListener implements EventSubscriberInterface
         ];
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(RequestEvent $event)
     {
         if (!$event->isMasterRequest()) {
             return;

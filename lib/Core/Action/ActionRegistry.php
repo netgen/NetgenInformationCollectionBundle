@@ -10,15 +10,16 @@ use Netgen\InformationCollection\API\Action\CrucialActionInterface;
 use Netgen\InformationCollection\API\Exception\ActionFailedException;
 use Netgen\InformationCollection\API\Priority;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Psr\Log\LoggerInterface;
 use function usort;
 
 class ActionRegistry implements ActionInterface
 {
     /**
-     * @var array
+     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
      */
-    protected $config;
+    protected $configResolver;
 
     /**
      * @var array
@@ -41,38 +42,22 @@ class ActionRegistry implements ActionInterface
      * @param array $config
      * @param LoggerInterface $logger
      */
-    public function __construct(array $config, LoggerInterface $logger)
+    public function __construct(iterable $actions, ConfigResolverInterface $configResolver, LoggerInterface $logger)
     {
-        $this->config = $config;
-        $this->actions = [];
+        $this->actions = $actions;
+        $this->configResolver = $configResolver;
+        $this->config = $configResolver->getParameter('actions', 'netgen_information_collection');
         $this->logger = $logger;
-    }
-
-    /**
-     * Adds action to stack.
-     *
-     * @param string $name
-     * @param ActionInterface $action
-     * @param int $priority
-     */
-    public function addAction(string $name, ActionInterface $action, int $priority = Priority::DEFAULT_PRIORITY): void
-    {
-        $this->actions[] = [
-            'name' => $name,
-            'action' => $action,
-            'priority' => $priority,
-        ];
     }
 
     public function act(InformationCollected $event): void
     {
-        $this->prepareActions();
         $config = $this->prepareConfig($event->getContentType()->identifier);
 
         foreach ($this->actions as $action) {
-            if ($this->canActionAct($action['name'], $config)) {
+            if ($this->canActionAct($action, $config)) {
                 try {
-                    $action['action']->act($event);
+                    $action->act($event);
                 } catch (ActionFailedException $e) {
                     $this->logger
                         ->error($e->getMessage());
@@ -81,7 +66,7 @@ class ActionRegistry implements ActionInterface
                         throw $e;
                     }
 
-                    if ($action['action'] instanceof CrucialActionInterface) {
+                    if ($action instanceof CrucialActionInterface) {
                         break;
                     }
                 }
@@ -102,14 +87,14 @@ class ActionRegistry implements ActionInterface
     /**
      * Check if given action can act.
      *
-     * @param string $name
+     * @param ActionInterface $action
      * @param array $config
      *
      * @return bool
      */
-    protected function canActionAct($name, array $config)
+    protected function canActionAct(ActionInterface $action, array $config): bool
     {
-        return in_array($name, $config, true);
+        return in_array(get_class($action), $config, true);
     }
 
     /**
@@ -120,30 +105,16 @@ class ActionRegistry implements ActionInterface
      *
      * @return array
      */
-    protected function prepareConfig($contentTypeIdentifier)
+    protected function prepareConfig($contentTypeIdentifier): array
     {
         if (!empty($this->config['content_types'][$contentTypeIdentifier])) {
             return $this->config['content_types'][$contentTypeIdentifier];
         }
 
         if (!empty($this->config['default'])) {
-            return  $this->config['default'];
+            return $this->config['default'];
         }
 
         return [];
-    }
-
-    /**
-     * Sorts actions by priority.
-     */
-    protected function prepareActions()
-    {
-        usort($this->actions, static function ($one, $two) {
-            if ($one['priority'] === $two['priority']) {
-                return 0;
-            }
-
-            return ($one['priority'] > $two['priority']) ? -1 : 1;
-        });
     }
 }

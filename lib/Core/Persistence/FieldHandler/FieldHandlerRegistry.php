@@ -7,7 +7,7 @@ namespace Netgen\InformationCollection\Core\Persistence\FieldHandler;
 use eZ\Publish\Core\FieldType\Value;
 use Netgen\InformationCollection\API\FieldHandler\CustomFieldHandlerInterface;
 
-class FieldHandlerRegistry
+final class FieldHandlerRegistry
 {
     /**
      * @var array
@@ -19,7 +19,7 @@ class FieldHandlerRegistry
      *
      * @param array $handlers
      */
-    public function __construct(array $handlers = [])
+    public function __construct(iterable $handlers)
     {
         $this->handlers = $handlers;
     }

@@ -12,6 +12,7 @@ parameters:
 services:
     netgen_information_collection.form.builder:
         class: Netgen\InformationCollection\Form\Builder\FormBuilder
+        public: true
         arguments:
             - '@form.factory'
             - '@ezpublish.api.service.content_type'
@@ -25,6 +26,8 @@ services:
 
     netgen_information_collection.field_handler.registry:
         class: Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegistry
+        arguments:
+            - !tagged_iterator netgen_information_collection.field_handler.custom
 
     netgen_information_collection.mailer:
         class: Netgen\InformationCollection\Core\Mailer\Mailer
@@ -34,7 +37,7 @@ services:
     netgen_information_collection.form.extension.field_definition:
         class: Netgen\InformationCollection\Integration\RepositoryForms\FieldDefinitionTypeExtension
         tags:
-            - { name: form.type_extension, extended_type: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType }
+            - { name: form.type_extension, extended_type: EzSystems\EzPlatformAdminUi\Form\Type\FieldDefinition\FieldDefinitionType }
 
     netgen_information_collection.domain_object_mapper:
         class: Netgen\InformationCollection\Core\Mapper\DomainObjectMapper
@@ -56,3 +59,10 @@ services:
             - '@ezpublish.config.resolver'
         tags:
             - { name: twig.runtime }
+
+    netgen_information_collection.form.information_collection_type:
+        class: Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionType
+        arguments:
+            - "@ezplatform.content_forms.field_type_form_mapper.dispatcher"
+        tags:
+            - { name: form.type }

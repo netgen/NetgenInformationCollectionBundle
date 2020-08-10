@@ -51,7 +51,7 @@ trait InformationCollectionTrait
             $dispatcher = $this->container
                 ->get('event_dispatcher');
 
-            $dispatcher->dispatch(Events::INFORMATION_COLLECTED, $event);
+            $dispatcher->dispatch($event, Events::INFORMATION_COLLECTED);
         }
 
         return [

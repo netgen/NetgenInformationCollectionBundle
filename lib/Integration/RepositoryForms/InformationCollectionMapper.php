@@ -8,12 +8,12 @@ use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\API\Repository\Values\ValueObject;
-use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\Data\Mapper\FormDataMapperInterface;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use EzSystems\EzPlatformContentForms\Data\Mapper\FormDataMapperInterface;
+use EzSystems\EzPlatformContentForms\Data\Content\FieldData;
 
-class InformationCollectionMapper implements FormDataMapperInterface
+final class InformationCollectionMapper
 {
     /**
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
@@ -23,23 +23,14 @@ class InformationCollectionMapper implements FormDataMapperInterface
      *
      * @return InformationCollectionStruct
      */
-    public function mapToFormData(ValueObject $contentDraft, array $params = [])
+    public function mapToFormData(Content $content, ContentType $contentType)
     {
-        $optionsResolver = new OptionsResolver();
-        $this->configureOptions($optionsResolver);
-
-        $params = $optionsResolver->resolve($params);
-        $languageCode = $params['languageCode'];
-
-        $fields = [];
-        if ($contentDraft instanceof Content) {
-            $fields = $contentDraft->getFieldsByLanguage($languageCode);
-        }
+        $fields = $content->getFieldsByLanguage($content->contentInfo->mainLanguageCode);
 
         $informationCollectionFields = [];
 
         /** @var FieldDefinition $fieldDef */
-        foreach ($params['contentType']->fieldDefinitions as $fieldDef) {
+        foreach ($contentType->fieldDefinitions as $fieldDef) {
             if ($fieldDef->isInfoCollector) {
                 $field = $fields[$fieldDef->identifier];
 
@@ -55,17 +46,9 @@ class InformationCollectionMapper implements FormDataMapperInterface
         }
 
         return new InformationCollectionStruct(
-            $contentDraft,
-            $params['contentType'],
-            $informationCollectionFields,
-            $languageCode
+            $content,
+            $contentType,
+            $informationCollectionFields
         );
-    }
-
-    private function configureOptions(OptionsResolver $optionsResolver)
-    {
-        $optionsResolver
-            ->setRequired(['languageCode', 'contentType'])
-            ->setAllowedTypes('contentType', ContentType::class);
     }
 }

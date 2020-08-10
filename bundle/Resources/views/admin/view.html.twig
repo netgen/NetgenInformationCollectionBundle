@@ -29,8 +29,8 @@
         {% for attribute in collection.attributes %}
             <div class="list-object list-object-divider">
                 <div class="ng-ui-input">
-                    <input id="{{ attribute.field.id }}" name="FieldId[]" value="{{ attribute.field.id }}" title="Select collections for removal." type="checkbox" data-enable="Item">
-                    <label for="{{ attribute.field.id }}">
+                    <input id="{{ attribute.fieldDefinition.id }}" name="FieldId[]" value="{{ attribute.fieldDefinition.id }}" title="Select collections for removal." type="checkbox" data-enable="Item">
+                    <label for="{{ attribute.fieldDefinition.id }}">
                         <span class="attribute-name">
                             {{ ez_field_name(content, attribute.field.fieldDefIdentifier) }}:
                         </span>

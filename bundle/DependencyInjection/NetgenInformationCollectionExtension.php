@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\DependencyInjection;
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
+use Netgen\InformationCollection\API\Action\ActionInterface;
 use Netgen\InformationCollection\API\ConfigurationConstants;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -61,6 +62,9 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
                 }
             }
         }
+
+        $container->registerForAutoconfiguration(ActionInterface::class)
+            ->addTag('netgen_information_collection.action');
     }
 
     public function prepend(ContainerBuilder $container)
@@ -90,7 +94,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
         $container->prependExtensionConfig('doctrine', $config);
     }
 
-    protected function addTwigConfig(ContainerBuilder $container)
+    protected function addTwigConfig(ContainerBuilder $container): void
     {
         $configs = array(
             'twig.yml' => 'twig',

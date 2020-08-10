@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Integration\RepositoryForms;
 
-use EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType;
+use EzSystems\EzPlatformAdminUi\Form\Type\FieldDefinition\FieldDefinitionType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;

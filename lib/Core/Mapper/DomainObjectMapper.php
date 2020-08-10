@@ -11,6 +11,8 @@ use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\API\Repository\Values\Content\Field;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCollection;
+use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType as CoreContentType;
 use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\AttributeValue;
@@ -73,13 +75,18 @@ final class DomainObjectMapper
                 $content->contentInfo->contentTypeId
             );
 
+        $fieldDefinitions = $contentType->getFieldDefinitions();
         $attributeValues = [];
+
         foreach ($attributes as $attr) {
-            if (empty($contentType->fieldDefinitionsById[$attr->getContentClassAttributeId()])) {
+
+            $fieldDefinition = $this->getFieldDefinition($fieldDefinitions, $attr);
+
+            if (!$fieldDefinition instanceof FieldDefinition) {
                 continue;
             }
 
-            $attributeValues[] = $this->mapAttribute($attr, $content, $contentType->fieldDefinitionsById[$attr->getContentClassAttributeId()]);
+            $attributeValues[] = $this->mapAttribute($attr, $content, $fieldDefinition);
         }
 
         $user = $this->getUser($collection->getCreatorId());
@@ -106,7 +113,6 @@ final class DomainObjectMapper
         }
 
         $value = new AttributeValue($attribute->getDataInt(), $attribute->getDataFloat(), $attribute->getDataText());
-
         return new Attribute(
             $attribute->getId(),
             $content,
@@ -116,7 +122,7 @@ final class DomainObjectMapper
         );
     }
 
-    private function getUser($userId)
+    private function getUser($userId): ?User
     {
         try {
             return $this->repository
@@ -129,5 +135,19 @@ final class DomainObjectMapper
     private function getDateTime(int $timestamp): DateTimeInterface
     {
         return DateTimeImmutable::createFromFormat('U', (string) $timestamp);
+    }
+
+    private function getFieldDefinition(FieldDefinitionCollection $fieldDefinitionCollection, EzInfoCollectionAttribute $attribute): ?FieldDefinition
+    {
+        /** @var FieldDefinitionCollection $collection */
+        $collection = $fieldDefinitionCollection->filter(function(FieldDefinition $definition) use ($attribute) {
+            return $definition->id === $attribute->getContentClassAttributeId();
+        });
+
+        if ($collection->isEmpty()) {
+            return null;
+        }
+
+        return $collection->first();
     }
 }

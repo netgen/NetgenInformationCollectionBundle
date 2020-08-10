@@ -16,6 +16,8 @@ services:
 
     netgen_information_collection.anonymizer.visitor.field.aggregate:
         class: Netgen\InformationCollection\Core\Persistence\Anonymizer\Visitor\Field\Aggregate
+        arguments:
+            - !tagged_iterator netgen_information_collection.anonymizer.visitor.field
 
     netgen_information_collection.anonymizer.visitor.field.simple:
         class: Netgen\InformationCollection\Core\Persistence\Anonymizer\Visitor\Field\Simple

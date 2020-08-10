@@ -2,10 +2,9 @@ services:
     netgen_information_collection.factory.email_data:
         class: Netgen\InformationCollection\Core\Factory\EmailDataFactory
         arguments:
-            - "$action_config.email;netgen_information_collection$"
+            - '@ezpublish.config.resolver'
             - '@ezpublish.translation_helper'
             - '@ezpublish.field_helper'
-            - '@ezpublish.api.service.content'
             - '@twig'
 
     netgen_information_collection.factory.auto_responder_data:
@@ -14,7 +13,6 @@ services:
             - "$action_config.auto_responder;netgen_information_collection$"
             - '@ezpublish.translation_helper'
             - '@ezpublish.field_helper'
-            - '@ezpublish.api.service.content'
             - '@twig'
 
     netgen_information_collection.factory.field_data:

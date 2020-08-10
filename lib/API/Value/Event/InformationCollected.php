@@ -10,7 +10,7 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 final class InformationCollected extends Event
 {

@@ -59,10 +59,7 @@ class FormBuilder implements DynamicFormBuilderInterface
 
         $informationCollectionMapper = new InformationCollectionMapper();
 
-        $data = $informationCollectionMapper->mapToFormData($content, [
-            'languageCode' => $content->contentInfo->mainLanguageCode,
-            'contentType' => $contentType,
-        ]);
+        $data = $informationCollectionMapper->mapToFormData($content, $contentType);
 
         return $this->formFactory->create(InformationCollectionType::class, $data, [
             'languageCode' => $content->contentInfo->mainLanguageCode,

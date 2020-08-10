@@ -22,7 +22,7 @@ use Netgen\InformationCollection\Core\Pagination\InformationCollectionContentsAd
 use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AdminController extends Controller
 {
@@ -45,8 +45,9 @@ class AdminController extends Controller
      * @var \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer
      */
     protected $anonymizer;
+
     /**
-     * @var TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface
      */
     private $translator;
 
@@ -57,7 +58,7 @@ class AdminController extends Controller
      * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer $anonymizer
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
      */
     public function __construct(
         InformationCollection $service,
@@ -332,11 +333,12 @@ class AdminController extends Controller
      */
     protected function addFlashMessage(string $messageType, string $message, int $count = 1, array $parameters = array())
     {
+        $parameters = array_merge($parameters, ['count' => $count]);
+
         $this->addFlash(
             'netgen_information_collection.' . $messageType,
-            $this->translator->transChoice(
+            $this->translator->trans(
                 $messageType . '.' . $message,
-                $count,
                 $parameters,
                 'netgen_information_collection_flash'
             )

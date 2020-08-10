@@ -2,7 +2,8 @@ services:
     netgen_information_collection.action.registry:
         class: Netgen\InformationCollection\Core\Action\ActionRegistry
         arguments:
-            - "$actions;netgen_information_collection$"
+            - !tagged_iterator netgen_information_collection.action
+            - "@ezpublish.config.resolver"
             - "@logger"
         calls:
             - [setDebug, ['%kernel.debug%']]
@@ -12,15 +13,15 @@ services:
         arguments:
             - '@netgen_information_collection.api.service'
         tags:
-            - { name: netgen_information_collection.action, action: database, priority: 300 }
+            - { name: netgen_information_collection.action, priority: 300 }
 
-#    netgen_information_collection.action.email:
-#        class: Netgen\InformationCollection\Core\Action\EmailAction
-#        arguments:
-#            - '@netgen_information_collection.factory.email_data'
-#            - '@netgen_information_collection.mailer'
-#        tags:
-#            - { name: netgen_information_collection.action, alias: email }
+    netgen_information_collection.action.email:
+        class: Netgen\InformationCollection\Core\Action\EmailAction
+        arguments:
+            - '@netgen_information_collection.mailer'
+            - '@netgen_information_collection.factory.email_data'
+        tags:
+            - { name: netgen_information_collection.action }
 
 #    netgen_information_collection.action.auto_responder:
 #        class: Netgen\InformationCollection\Core\Action\AutoResponderAction

@@ -1,10 +1,14 @@
 services:
     netgen_information_collection.controller:
         class: Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController
+        public: true
+        tags:
+            - { name: controller.service_arguments }
         calls:
             - [setContainer, ['@service_container']]
 
     information_collection:
+        public: true
         alias: 'netgen_information_collection.controller'
 
     netgen_information_collection.controller.admin:
