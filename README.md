@@ -23,17 +23,17 @@ When the object is viewed, each collector attribute will be displayed using the 
 Instead of just outputting the attributes' contents, the collector templates provide interfaces for data input. 
 The generated input interface depends on the datatype that represents the attribute. ( From eZ [documentation](https://doc.ez.no/eZ-Publish/Technical-manual/3.9/Concepts-and-basics/Content-management/Information-collection)).
 
-This bundle reimplements information collection feature in eZ Publish 5/Platform stack.
+This bundle reimplements information collection feature in eZ Platform/Ibexa stack.
 
 License, docs and installation instructions
--------------------------------------
+-------------------------------------------
 
 [License](LICENSE)
 
-[Installation instructions](doc/INSTALL.md)
+[Installation instructions](https://docs.netgen.io/projects/info-collection/en/latest/#)
 
-[Upgrade instructions](doc/UPGRADE.md)
+[Upgrade instructions](https://docs.netgen.io/projects/info-collection/en/latest/#)
 
-[Documentation](doc/DOC.md)
+[Documentation](https://docs.netgen.io/projects/info-collection/en/latest/#)
 
-[Changelog](doc/CHANGELOG.md)
+[Changelog](https://docs.netgen.io/projects/info-collection/en/latest/#)
