@@ -28,7 +28,7 @@ master_doc = 'index'
 
 project = 'Netgen Information Collection'
 copyright = 'Netgen'
-author = 'Netgen'
+author = 'Mario Blazek'
 
 version = ''
 release = ''
@@ -47,7 +47,7 @@ html_theme_options = {
 }
 
 html_context = {
-    'copyright_url': 'https://www.netgenlabs.com',
+    'copyright_url': 'https://netgen.io',
     'current_year': datetime.utcnow().year
 }
 
