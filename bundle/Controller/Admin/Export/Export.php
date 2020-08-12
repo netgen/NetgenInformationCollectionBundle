@@ -41,12 +41,14 @@ final class Export extends AbstractController
 
     public function __invoke($contentId, Request $request)
     {
-        $attribute = new Attribute('infocollector', 'read');
+        $attribute = new Attribute('infocollector', 'export');
         $this->denyAccessUnlessGranted($attribute);
 
         $content = $this->contentService->loadContent($contentId);
 
-        $form = $this->createForm(ExportType::class);
+        $form = $this->createForm(ExportType::class, null, [
+            'contentId' => $content->id,
+        ]);
         $form->handleRequest($request);
 
         if ($form->get('cancel')->isClicked()) {
@@ -55,19 +57,11 @@ final class Export extends AbstractController
 
         if ($form->get('export')->isClicked() && $form->isSubmitted() && $form->isValid()) {
 
-            $exportCriteria = new ExportCriteria(
-                [
-                    'content' => $content,
-                    'from' => $form->getData()['dateFrom'],
-                    'to' => $form->getData()['dateTo'],
-                ]
-            );
+            /** @var ExportCriteria $data */
+            $data = $form->getData();
+            $export = $this->exporter->export($data);
 
-            $export = $this->exporter->export($exportCriteria);
-
-            $formatter = $this->formatterRegistry->getExportResponseFormatter(
-                $form->getData()['exportType']
-            );
+            $formatter = $this->formatterRegistry->getExportResponseFormatter($data->getExportIdentifier());
 
             return $formatter->format($export, $content);
         }

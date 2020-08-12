@@ -5,10 +5,13 @@ namespace Netgen\Bundle\InformationCollectionBundle\DependencyInjection;
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
 use Netgen\InformationCollection\API\Action\ActionInterface;
 use Netgen\InformationCollection\API\ConfigurationConstants;
+use Netgen\InformationCollection\Core\Export\CsvExportResponseFormatter;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Yaml\Yaml;
@@ -63,8 +66,8 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
             }
         }
 
-        $container->registerForAutoconfiguration(ActionInterface::class)
-            ->addTag('netgen_information_collection.action');
+        $this->setUpAutoConfiguration($container);
+        $this->registerServiceDefinitions($container);
     }
 
     public function prepend(ContainerBuilder $container)
@@ -107,6 +110,48 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
             $config = Yaml::parse((string)file_get_contents($configFile));
             $container->prependExtensionConfig($extensionName, $config);
             $container->addResource(new FileResource($configFile));
+        }
+    }
+
+    protected function setUpAutoConfiguration(ContainerBuilder $container): void
+    {
+        $container->registerForAutoconfiguration(ActionInterface::class)
+            ->addTag('netgen_information_collection.action');
+    }
+
+    protected function registerServiceDefinitions(ContainerBuilder $container): void
+    {
+        $definitions = [];
+
+        if (class_exists('\League\Csv\Writer')) {
+            $csvExportFormatter = new Definition(
+                \Netgen\InformationCollection\Core\Export\CsvExportResponseFormatter::class
+            );
+            $csvExportFormatter->addTag('netgen_information_collection.export.formatter');
+            $csvExportFormatter->addArgument(new Reference('ezpublish.translation_helper'));
+            $csvExportFormatter->addArgument(new Reference('ezpublish.config.resolver'));
+            $csvExportFormatter->setPublic(false);
+            $csvExportFormatter->setAutowired(false);
+            $csvExportFormatter->setAutoconfigured(false);
+
+            $definitions[] = $csvExportFormatter;
+        }
+
+        if (class_exists('\PHPExcel')) {
+            $xlsExportFormatter = new Definition(
+                \Netgen\InformationCollection\Core\Export\XlsExportResponseFormatter::class
+            );
+            $xlsExportFormatter->addTag('netgen_information_collection.export.formatter');
+            $xlsExportFormatter->addArgument(new Reference('ezpublish.translation_helper'));
+            $xlsExportFormatter->setPublic(false);
+            $xlsExportFormatter->setAutowired(false);
+            $xlsExportFormatter->setAutoconfigured(false);
+
+            $definitions[] = $xlsExportFormatter;
+        }
+
+        if (!empty($definitions)) {
+            $container->addDefinitions($definitions);
         }
     }
 }

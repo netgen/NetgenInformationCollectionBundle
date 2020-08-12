@@ -14,8 +14,9 @@ class InformationCollectionCollector extends DataCollector
     {
         $collectedItemsCount = 0;
         $collectedItems = null;
-        if ($request->get('ezrepoforms_information_collection') !== null) {
-            $collectedItems = $request->get('ezrepoforms_information_collection')['fieldsData'];
+
+        if ($request->get('information_collection') !== null) {
+            $collectedItems = $request->get('information_collection')['fieldsData'];
             $collectedItemsCount = count($collectedItems);
         }
 

@@ -14,6 +14,7 @@ use Netgen\InformationCollection\API\Value\Filter\CollectionId;
 use Netgen\InformationCollection\API\Value\Filter\Collections as FilterCollections;
 use Netgen\InformationCollection\API\Value\Filter\ContentId;
 use Netgen\InformationCollection\API\Value\Filter\Contents;
+use Netgen\InformationCollection\API\Value\Filter\FilterCriteria;
 use Netgen\InformationCollection\API\Value\Filter\Query;
 use Netgen\InformationCollection\API\Value\Filter\SearchCountQuery;
 use Netgen\InformationCollection\API\Value\Filter\SearchQuery;
@@ -57,6 +58,15 @@ interface InformationCollection
      * @return \Netgen\InformationCollection\API\Value\Collections
      */
     public function getCollections(ContentId $contentId): Collections;
+
+    /**
+     * Returns collections for given content object.
+     *
+     * @param \Netgen\InformationCollection\API\Value\Filter\ContentId $contentId
+     *
+     * @return \Netgen\InformationCollection\API\Value\Collections
+     */
+    public function filterCollections(FilterCriteria $criteria): Collections;
 
     /**
      * Returns single collection.

@@ -21,6 +21,7 @@ use Netgen\InformationCollection\API\Value\Filter\CollectionId;
 use Netgen\InformationCollection\API\Value\Filter\Collections as FilterCollections;
 use Netgen\InformationCollection\API\Value\Filter\ContentId;
 use Netgen\InformationCollection\API\Value\Filter\Contents;
+use Netgen\InformationCollection\API\Value\Filter\FilterCriteria;
 use Netgen\InformationCollection\API\Value\Filter\Query;
 use Netgen\InformationCollection\API\Value\Filter\SearchCountQuery;
 use Netgen\InformationCollection\API\Value\Filter\SearchQuery;
@@ -184,6 +185,11 @@ class InformationCollectionService implements InformationCollection
         }
 
         return new Collections($objects, count($objects));
+    }
+
+    public function filterCollections(FilterCriteria $criteria): Collections
+    {
+        // TODO: Implement filterCollections() method.
     }
 
     public function searchCount(SearchCountQuery $query): SearchCount

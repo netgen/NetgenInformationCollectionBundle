@@ -49,6 +49,7 @@ netgen_information_collection_admin_export_type_phpexcel_xls_export_label: 'Expo
 netgen_information_collection_admin_offset: 'Offset'
 netgen_information_collection_admin_limit: 'Limit'
 netgen_information_collection_admin_export_title: 'Choose the timeframe for export'
+netgen_information_collection_admin_export_no_formatters: 'No formatters found'
 
 netgen_information_collection_admin_collected_information: 'Collected information (%count%)'
 netgen_information_collection_admin_missing_location: 'Content does not have a valid location.'

@@ -13,6 +13,8 @@ use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 
 final class DatabaseAction implements ActionInterface, CrucialActionInterface
 {
+    public static $defaultName = 'database';
+
     /**
      * @var InformationCollection
      */
@@ -34,7 +36,7 @@ final class DatabaseAction implements ActionInterface, CrucialActionInterface
             $this->informationCollection
                 ->createCollection($struct);
         } catch (PersistingFailedException $e) {
-            throw new ActionFailedException('database', $e->getMessage());
+            throw new ActionFailedException(static::$defaultName, $e->getMessage());
         }
     }
 }

@@ -7,7 +7,14 @@
     <h1>{{ 'netgen_information_collection_admin_export_title'|trans }}</h1>
 
     {{ form_start(form) }}
-    {{ form_errors(form) }}
+
+    {% if form.vars.errors|length > 0 %}
+    <ul>
+    {% for error in form.vars.errors %}
+        <li>{{ error.message|trans }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
 
     <div class="ng-ui-input">
         <label for="{{ form.dateFrom.vars.id }}">

@@ -5,82 +5,27 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\API\Value\Export;
 
 use DateTimeInterface;
-use eZ\Publish\API\Repository\Values\Content\Content;
-use Netgen\InformationCollection\API\Value\ValueObject;
+use Netgen\InformationCollection\API\Value\Filter\ContentId;
+use Netgen\InformationCollection\API\Value\Filter\FilterCriteria;
 
-class ExportCriteria extends ValueObject
+final class ExportCriteria extends FilterCriteria
 {
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Content
+     * @var string
      */
-    protected $content;
+    protected $exportIdentifier;
 
-    /**
-     * @var \DateTimeInterface
-     */
-    protected $from;
-
-    /**
-     * @var \DateTimeInterface
-     */
-    protected $to;
-
-    /**
-     * @var int
-     */
-    protected $offset;
-
-    /**
-     * @var int
-     */
-    protected $limit;
-
-    public function __construct(Content $content, DateTimeInterface $from, DateTimeInterface $to, int $offset = 0, int $limit = 100)
+    public function __construct(ContentId $contentId, DateTimeInterface $from, DateTimeInterface $to, string $exportIdentifier)
     {
-        $this->content = $content;
-        $this->from = $from;
-        $this->to = $to;
-        $this->offset = $offset;
-        $this->limit = $limit;
+        parent::__construct($contentId, $from, $to);
+        $this->exportIdentifier = $exportIdentifier;
     }
 
     /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Content
+     * @return string
      */
-    public function getContent(): Content
+    public function getExportIdentifier(): string
     {
-        return $this->content;
-    }
-
-    /**
-     * @return \DateTimeInterface
-     */
-    public function getFrom(): DateTimeInterface
-    {
-        return $this->from;
-    }
-
-    /**
-     * @return \DateTimeInterface
-     */
-    public function getTo(): DateTimeInterface
-    {
-        return $this->to;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOffset(): int
-    {
-        return $this->offset;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLimit(): int
-    {
-        return $this->limit;
+        return $this->exportIdentifier;
     }
 }

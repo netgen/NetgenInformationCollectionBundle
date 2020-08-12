@@ -13,3 +13,4 @@ final class Events
      */
     public const INFORMATION_COLLECTED = 'netgen_information_collection.events.information_collected';
 }
+

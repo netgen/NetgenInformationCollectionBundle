@@ -9,8 +9,10 @@ use Netgen\InformationCollection\API\Exception\EmailNotSentException;
 
 final class EmailAction extends BaseEmailAction
 {
+    public static $defaultName = 'email';
+
     protected function throwException(EmailNotSentException $exception)
     {
-        throw new ActionFailedException('email', $exception->getMessage());
+        throw new ActionFailedException(static::$defaultName, $exception->getMessage());
     }
 }

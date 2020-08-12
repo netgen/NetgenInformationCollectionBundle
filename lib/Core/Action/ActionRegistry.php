@@ -8,54 +8,52 @@ use function in_array;
 use Netgen\InformationCollection\API\Action\ActionInterface;
 use Netgen\InformationCollection\API\Action\CrucialActionInterface;
 use Netgen\InformationCollection\API\Exception\ActionFailedException;
-use Netgen\InformationCollection\API\Priority;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Psr\Log\LoggerInterface;
-use function usort;
+use function get_class;
 
-class ActionRegistry implements ActionInterface
+final class ActionRegistry implements ActionInterface
 {
-    /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
-     */
-    protected $configResolver;
-
     /**
      * @var array
      */
-    protected $actions;
+    private $actions;
 
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    protected $logger;
+    private $logger;
 
     /**
      * @var bool
      */
-    protected $debug = false;
+    private $debug = false;
+
+    /**
+     * @var \Netgen\InformationCollection\Core\Action\ConfigurationUtility
+     */
+    private $utility;
 
     /**
      * ActionAggregate constructor.
      *
-     * @param array $config
-     * @param LoggerInterface $logger
+     * @param array $actions
+     * @param \Netgen\InformationCollection\Core\Action\ConfigurationUtility $utility
+     * @param \Psr\Log\LoggerInterface $logger
      */
-    public function __construct(iterable $actions, ConfigResolverInterface $configResolver, LoggerInterface $logger)
+    public function __construct(iterable $actions, ConfigurationUtility $utility, LoggerInterface $logger)
     {
         $this->actions = $actions;
-        $this->configResolver = $configResolver;
-        $this->config = $configResolver->getParameter('actions', 'netgen_information_collection');
         $this->logger = $logger;
+        $this->utility = $utility;
     }
 
     public function act(InformationCollected $event): void
     {
-        $config = $this->prepareConfig($event->getContentType()->identifier);
+        $config = $this->utility->getConfigPerContentType($event->getContentType());
 
         foreach ($this->actions as $action) {
-            if ($this->canActionAct($action, $config)) {
+            if ($this->utility->isActionAllowedToRun($action, $config)) {
                 try {
                     $action->act($event);
                 } catch (ActionFailedException $e) {
@@ -82,39 +80,5 @@ class ActionRegistry implements ActionInterface
     public function setDebug($debug)
     {
         $this->debug = $debug;
-    }
-
-    /**
-     * Check if given action can act.
-     *
-     * @param ActionInterface $action
-     * @param array $config
-     *
-     * @return bool
-     */
-    protected function canActionAct(ActionInterface $action, array $config): bool
-    {
-        return in_array(get_class($action), $config, true);
-    }
-
-    /**
-     * Returns configuration for given content type identifier if exists
-     * or default one.
-     *
-     * @param string $contentTypeIdentifier
-     *
-     * @return array
-     */
-    protected function prepareConfig($contentTypeIdentifier): array
-    {
-        if (!empty($this->config['content_types'][$contentTypeIdentifier])) {
-            return $this->config['content_types'][$contentTypeIdentifier];
-        }
-
-        if (!empty($this->config['default'])) {
-            return $this->config['default'];
-        }
-
-        return [];
     }
 }
