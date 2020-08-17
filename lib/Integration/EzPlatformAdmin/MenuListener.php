@@ -20,7 +20,11 @@ class MenuListener implements EventSubscriberInterface
     public function onMenuConfigure(ConfigureMenuEvent $event)
     {
         $menu = $event->getMenu();
-
+        
+        if (!isset($menu[MainMenuBuilder::ITEM_ADMIN])) {
+            return;
+        }
+        
         $menu[MainMenuBuilder::ITEM_ADMIN]->addChild(
             'information_collection',
             [
