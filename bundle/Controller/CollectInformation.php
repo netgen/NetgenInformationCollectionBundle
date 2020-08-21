@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 
-class InformationCollectionController implements ContainerAwareInterface
+class CollectInformation implements ContainerAwareInterface
 {
     use InformationCollectionTrait;
     use ContainerAwareTrait;
@@ -24,7 +24,7 @@ class InformationCollectionController implements ContainerAwareInterface
      *
      * @return ContentValueView
      */
-    public function displayAndHandle(ContentValueView $view, Request $request)
+    public function __invoke(ContentValueView $view, Request $request)
     {
         $parameters = $this->collectInformation($view, $request, new AdditionalContent());
 
