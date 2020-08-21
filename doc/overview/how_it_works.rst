@@ -10,7 +10,7 @@ some fields to content type. It must contain following:
 * some other fields with success text or something else (those are not mandatory)
 
 In case when content type does not contain recipient, sender or subject, bundle by default will use values specified in yaml configuration (*default_variables* tree).
-Then define content view for given content type (*content_view.yml*) specifiying *netgen_information_collection.controller:displayAndHandle* as controller:
+Then define content view for given content type (*content_view.yml*) specifiying *netgen_information_collection.controller.collect_information* as controller:
 
 .. code-block:: yaml
 
@@ -21,7 +21,7 @@ Then define content view for given content type (*content_view.yml*) specifiying
                     full:
                         my_content_type_with_information_collectors:
                             template: '@Acme/content/full/my_content_type.html.twig'
-                            controller: 'netgen_information_collection.controller:displayAndHandle'
+                            controller: netgen_information_collection.controller.collect_information
                             match:
                                 Identifier\ContentType: my_content_type
 
