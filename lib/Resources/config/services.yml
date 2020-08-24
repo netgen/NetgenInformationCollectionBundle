@@ -62,6 +62,11 @@ services:
 
     netgen_information_collection.form.information_collection_type:
         class: Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionType
+        tags:
+            - { name: form.type }
+
+    netgen_information_collection.form.information_collection_field_type:
+        class: Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionFieldType
         arguments:
             - "@ezplatform.content_forms.field_type_form_mapper.dispatcher"
         tags:

@@ -2,7 +2,17 @@ Symfony dependency injection tags
 =================================
 
 The following lists all dependency injection tags and their usage available
-in Netgen Layouts:
+in Netgen Information Collection:
+
+.. note::
+
+    All available Symfony dependency injection tags defined by Netgen Information Collection Bundle
+    are registered for autoconfiguration. So if, within you service definition file have autoconfiguration
+    enabled, your services are going to be tagged automatically. For more information about autoconfiguration
+    please refer to `Symfony documentation`_.
+
+.. _`Symfony documentation`: https://symfony.com/doc/current/service_container.html#the-autoconfigure-option
+
 
 ``netgen_information_collection.action``
 ----------------------------------------

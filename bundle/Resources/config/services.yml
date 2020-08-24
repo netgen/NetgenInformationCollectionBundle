@@ -19,5 +19,8 @@ services:
     netgen_information_collection.collector:
         class: Netgen\Bundle\InformationCollectionBundle\DataCollector\InformationCollectionCollector
         public: false
+        arguments:
+            - '@ezpublish.api.repository'
+            - '@ezpublish.translation_helper'
         tags:
             - { name: data_collector, template: '@NetgenInformationCollection/data_collector/template.html.twig', id: 'netgen_information_collection_collector' }
