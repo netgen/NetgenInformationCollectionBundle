@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API;
 
+use eZ\Publish\Core\MVC\Symfony\View\BaseView;
+use eZ\Publish\Core\MVC\Symfony\View\CachableView;
 use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
 use eZ\Publish\Core\MVC\Symfony\View\LocationValueView;
-use Netgen\InformationCollection\API\Form\DynamicFormBuilderInterface;
-use Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent;
-use Netgen\InformationCollection\API\Value\Event\InformationCollected;
-use Symfony\Component\HttpFoundation\Request;
+use Netgen\InformationCollection\Handler;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 trait InformationCollectionTrait
 {
@@ -17,12 +17,11 @@ trait InformationCollectionTrait
      * Builds Form, checks if Form is valid and dispatches InformationCollected event.
      *
      * @param \eZ\Publish\Core\MVC\Symfony\View\ContentValueView $view
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent $additionalContent
+     * @param array $options
      *
      * @return array
      */
-    protected function collectInformation(ContentValueView $view, Request $request, AdditionalContent $additionalContent): array
+    protected function collectInformation(ContentValueView $view, array $options): ContentValueView
     {
         $isValid = false;
 
@@ -30,34 +29,33 @@ trait InformationCollectionTrait
             throw new \BadMethodCallException('eZ view needs to implement LocationValueView interface');
         }
 
-        /** @var DynamicFormBuilderInterface $formBuilder */
-        $formBuilder = $this->container
-            ->get('netgen_information_collection.form.builder');
+        /** @var Handler $handler */
+        $handler = $this->container->get('netgen_information_collection.handler');
+        /** @var RequestStack $requestStack */
+        $requestStack = $this->container->get('request_stack');
 
-        $form = $formBuilder->createForm($view->getContent());
-
+        $form = $handler->getForm($view->getContent(), $view->getLocation());
+        $request = $requestStack->getCurrentRequest();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $isValid = true;
 
-            $event = new InformationCollected(
-                $form->getData(),
-                $view->getLocation(),
-                $additionalContent
-            );
-
-            /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher */
-            $dispatcher = $this->container
-                ->get('event_dispatcher');
-
-            $dispatcher->dispatch($event, Events::INFORMATION_COLLECTED);
+            $handler->handle($form->getData(), $options);
         }
 
-        return [
-            'is_valid' => $isValid,
-            'form' => $form->createView(),
-            'collected_fields' => $form->getData()->getFieldsData(),
-        ];
+        if ($view instanceof BaseView) {
+            $view->addParameters([
+                'is_valid' => $isValid,
+                'form' => $form->createView(),
+                'collected_fields' => $form->getData()->getFieldsData(),
+            ]);
+        }
+
+        if ($view instanceof CachableView) {
+            $view->setCacheEnabled(false);
+        }
+
+        return $view;
     }
 }

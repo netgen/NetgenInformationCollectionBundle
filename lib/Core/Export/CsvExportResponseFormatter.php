@@ -44,7 +44,8 @@ final class CsvExportResponseFormatter implements ExportResponseFormatter
     {
         $contentName = $this->translationHelper->getTranslatedContentName($content);
 
-        $config = $this->configResolver->getParameter('csv_export', 'netgen_information_collection');
+        $config = $this->configResolver->getParameter('export', 'netgen_information_collection');
+        $config = $config['csv'];
 
         $writer = Writer::createFromFileObject(new SplTempFileObject());
         $writer->setDelimiter($config['delimiter']);

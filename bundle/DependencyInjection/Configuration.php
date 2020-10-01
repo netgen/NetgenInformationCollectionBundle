@@ -22,19 +22,14 @@ class Configuration extends SiteAccessConfiguration
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder(ConfigurationConstants::SETTINGS_ROOT);
-
-        // Keep compatibility with symfony/config < 4.2
-        if (!method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->root(ConfigurationConstants::SETTINGS_ROOT);
-        } else {
-            $rootNode = $treeBuilder->getRootNode();
-        }
+        $rootNode = $treeBuilder->getRootNode();
 
         if ($rootNode instanceof ArrayNodeDefinition) {
             $nodeBuilder = $this->generateScopeBaseNode($rootNode);
             $this->addCaptchaSection($nodeBuilder);
             $this->addActionsSection($nodeBuilder);
             $this->addActionConfigSection($nodeBuilder);
+            $this->addExportSection($nodeBuilder);
 
             $nodeBuilder->end();
         }
@@ -59,11 +54,23 @@ class Configuration extends SiteAccessConfiguration
                             ->scalarNode('site_key')->cannotBeEmpty()->end()
                             ->arrayNode('options')
                                 ->children()
-                                    ->scalarNode('hostname')->cannotBeEmpty()->end()
-                                    ->scalarNode('apk_package_name')->cannotBeEmpty()->end()
-                                    ->scalarNode('action')->cannotBeEmpty()->end()
-                                    ->scalarNode('score_threshold')->cannotBeEmpty()->end()
-                                    ->scalarNode('challenge_timeout')->cannotBeEmpty()->end()
+                                    ->scalarNode('action')->cannotBeEmpty()->info('This only available in Captcha V3')->end()
+                                    ->enumNode('type')
+                                        ->values(['invisible', 'checkbox'])
+                                        ->defaultValue('checkbox')
+                                        ->cannotBeEmpty()
+                                    ->end()
+                                    ->enumNode('theme')
+                                        ->values(['dark', 'light'])
+                                        ->defaultValue('light')
+                                        ->cannotBeEmpty()
+                                    ->end()
+                                    ->enumNode('size')
+                                        ->values(['normal', 'compact'])
+                                        ->defaultValue('normal')
+                                        ->info('It is only taken into account if you are using the V2 with checkbox option')
+                                        ->cannotBeEmpty()
+                                    ->end()
                                 ->end()
                             ->end()
                         ->end()
@@ -77,19 +84,21 @@ class Configuration extends SiteAccessConfiguration
                 ->end()
                 ->arrayNode('options')
                     ->children()
-                        ->scalarNode('hostname')
+                        ->scalarNode('action')->cannotBeEmpty()->info('This only available in Captcha V3')->end()
+                        ->enumNode('type')
+                            ->values(['invisible', 'checkbox'])
+                            ->defaultValue('checkbox')
                             ->cannotBeEmpty()
                         ->end()
-                        ->scalarNode('apk_package_name')
+                        ->enumNode('theme')
+                            ->values(['dark', 'light'])
+                            ->defaultValue('light')
                             ->cannotBeEmpty()
                         ->end()
-                        ->scalarNode('action')
-                            ->cannotBeEmpty()
-                        ->end()
-                        ->scalarNode('score_threshold')
-                            ->cannotBeEmpty()
-                        ->end()
-                        ->scalarNode('challenge_timeout')
+                        ->enumNode('size')
+                            ->values(['normal', 'compact'])
+                            ->defaultValue('normal')
+                            ->info('It is only taken into account if you are using the V2 with checkbox option')
                             ->cannotBeEmpty()
                         ->end()
                     ->end()
@@ -184,7 +193,7 @@ class Configuration extends SiteAccessConfiguration
                                 ->end()
                                 ->arrayNode(ConfigurationConstants::ATTACHMENTS)
                                     ->children()
-                                        ->scalarNode(ConfigurationConstants::SETTINGS_DEFAULT)
+                                        ->scalarNode('enabled')
                                             ->isRequired()
                                             ->defaultValue(true)
                                         ->end()
@@ -214,6 +223,25 @@ class Configuration extends SiteAccessConfiguration
                             ->end()
                         ->end()
                     ->end()
+            ->end();
+    }
+
+    private function addExportSection(NodeBuilder $nodeBuilder)
+    {
+        $nodeBuilder
+            ->arrayNode('export')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->arrayNode('csv')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('delimiter')->defaultValue(',')->end()
+                            // by default use windows line endings for compatibility with some csv libraries
+                            ->scalarNode('newline')->defaultValue("\r\n")->end()
+                            ->scalarNode('enclosure')->defaultValue("\"")->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
     }
 }

@@ -11,7 +11,7 @@ services:
             - "@netgen_information_collection.domain_object_mapper"
 
     netgen_information_collection.templating.admin_global_variable:
-        class: Netgen\InformationCollection\Templating\Twig\AdminGlobalVariable
+        class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\AdminGlobalVariable
         public: true
         # We need the lazy flag due to usage of dynamic parameters
         lazy: true
@@ -56,7 +56,7 @@ services:
             - !tagged_iterator netgen_information_collection.export.formatter
 
     netgen_information_collection.form.type.export:
-        class: Netgen\InformationCollection\Form\Type\ExportType
+        class: Netgen\Bundle\InformationCollectionBundle\Form\ExportType
         arguments:
             - "@netgen_information_collection.core.export.registry"
         tags:

@@ -5,3 +5,4 @@
 * :doc:`/cookbook/custom_export_formatter`
 * :doc:`/cookbook/custom_value_view`
 * :doc:`/cookbook/ajax`
+* :doc:`/cookbook/override_something_on_form`

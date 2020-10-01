@@ -3,9 +3,9 @@
 namespace Netgen\Bundle\InformationCollectionBundle\DependencyInjection;
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
+use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
 use Netgen\InformationCollection\API\Action\ActionInterface;
 use Netgen\InformationCollection\API\ConfigurationConstants;
-use Netgen\InformationCollection\Core\Export\CsvExportResponseFormatter;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -43,28 +43,30 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
         $libResourceLoader->load('parameters.yml');
         $libResourceLoader->load('default_settings.yml');
 
-        $processor = new ConfigurationProcessor($container, ConfigurationConstants::SETTINGS_ROOT);
-        $configArrays = array(
-            ConfigurationConstants::ACTIONS,
-            ConfigurationConstants::ACTION_CONFIG,
-        );
 
-        $scopes = array_merge(array('default'), $container->getParameter('ezpublish.siteaccess.list'));
-
-        foreach ($configArrays as $configArray) {
-            $processor->mapConfigArray($configArray, $config);
-            foreach ($scopes as $scope) {
-                $paramName = ConfigurationConstants::SETTINGS_ROOT . '.' . $scope . '.' . $configArray;
-                if (!$container->hasParameter($paramName)) {
-                    continue;
-                }
-
-                $scopeConfig = $container->getParameter($paramName);
-                foreach ((array) $scopeConfig as $key => $value) {
-                    $container->setParameter($paramName . '.' . $key, $value);
-                }
-            }
-        }
+        $this->processSemanticConfig($container, $config);
+//        $processor = new ConfigurationProcessor($container, ConfigurationConstants::SETTINGS_ROOT);
+//        $configArrays = array(
+//            ConfigurationConstants::ACTIONS,
+//            ConfigurationConstants::ACTION_CONFIG,
+//        );
+//
+//        $scopes = array_merge(array('default'), $container->getParameter('ezpublish.siteaccess.list'));
+//
+//        foreach ($configArrays as $configArray) {
+//            $processor->mapConfigArray($configArray, $config);
+//            foreach ($scopes as $scope) {
+//                $paramName = ConfigurationConstants::SETTINGS_ROOT . '.' . $scope . '.' . $configArray;
+//                if (!$container->hasParameter($paramName)) {
+//                    continue;
+//                }
+//
+//                $scopeConfig = $container->getParameter($paramName);
+//                foreach ((array) $scopeConfig as $key => $value) {
+//                    $container->setParameter($paramName . '.' . $key, $value);
+//                }
+//            }
+//        }
 
         $this->setUpAutoConfiguration($container);
         $this->registerServiceDefinitions($container);
@@ -74,6 +76,23 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
     {
         $this->addTwigConfig($container);
         $this->addDoctrineConfig($container);
+    }
+
+    /**
+     * Processes semantic config and translates it to container parameters.
+     */
+    private function processSemanticConfig(ContainerBuilder $container, array $config): void
+    {
+        $processor = new ConfigurationProcessor($container, ConfigurationConstants::SETTINGS_ROOT);
+        $processor->mapConfig(
+            $config,
+            static function ($config, $scope, ContextualizerInterface $c): void {
+                $c->setContextualParameter('actions', $scope, $config['actions']);
+                $c->setContextualParameter('action_config', $scope, $config['action_config']);
+                $c->setContextualParameter('captcha', $scope, $config['captcha']);
+                $c->setContextualParameter('export', $scope, $config['export']);
+            }
+        );
     }
 
     protected function addDoctrineConfig(ContainerBuilder $container)
@@ -137,7 +156,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
             $definitions[] = $csvExportFormatter;
         }
 
-        if (class_exists('\PHPExcel')) {
+        if (class_exists('\PhpOffice\PhpSpreadsheet\Spreadsheet')) {
             $xlsExportFormatter = new Definition(
                 \Netgen\InformationCollection\Core\Export\XlsExportResponseFormatter::class
             );
@@ -147,7 +166,17 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
             $xlsExportFormatter->setAutowired(false);
             $xlsExportFormatter->setAutoconfigured(false);
 
+            $xlsxExportFormatter = new Definition(
+                \Netgen\InformationCollection\Core\Export\XlsxExportResponseFormatter::class
+            );
+            $xlsxExportFormatter->addTag('netgen_information_collection.export.formatter');
+            $xlsxExportFormatter->addArgument(new Reference('ezpublish.translation_helper'));
+            $xlsxExportFormatter->setPublic(false);
+            $xlsxExportFormatter->setAutowired(false);
+            $xlsxExportFormatter->setAutoconfigured(false);
+
             $definitions[] = $xlsExportFormatter;
+            $definitions[] = $xlsxExportFormatter;
         }
 
         if (!empty($definitions)) {

@@ -58,7 +58,7 @@ class EmailDataFactory extends BaseEmailDataFactory
         Environment $twig
     ) {
         $this->configResolver = $configResolver;
-        $this->config = $this->configResolver->getParameter('action_config.' . EmailAction::$defaultName, 'netgen_information_collection');
+        $this->config = $this->configResolver->getParameter('action_config', 'netgen_information_collection')[EmailAction::$defaultName];
         $this->translationHelper = $translationHelper;
         $this->fieldHelper = $fieldHelper;
         $this->twig = $twig;

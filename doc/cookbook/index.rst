@@ -13,5 +13,6 @@ WIP.
     custom_export_formatter
     custom_value_view
     ajax
+    override_something_on_form
 
 .. include:: /cookbook/map.rst.inc

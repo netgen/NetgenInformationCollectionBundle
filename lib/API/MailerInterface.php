@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API;
 
+use Symfony\Component\Mime\Email;
+
 interface MailerInterface
 {
     /**
-     * Creates and sends email message.
+     * Sends email message.
      *
-     * @param \Netgen\InformationCollection\API\Value\DataTransfer\EmailContent $content
+     * @param \Symfony\Component\Mime\Email $content
      *
      * @throws \Netgen\InformationCollection\API\Exception\EmailNotSentException
      */
-    public function createAndSendMessage(Value\DataTransfer\EmailContent $content): void;
+    public function sendEmail(Email $content): void;
 }

@@ -30,10 +30,14 @@ class ReCaptcha implements CaptchaValue
      */
     public function isValid(Request $request): bool
     {
+        $clientIp = $request->getClientIp() === '::1' ? 'localhost' : $request->getClientIp();
+
         $response = $this->reCaptcha->verify(
             $request->request->get('g-recaptcha-response'),
-            $request->getClientIp()
+            $clientIp
         );
+
+        dump($response);
 
         return $response->isSuccess();
     }

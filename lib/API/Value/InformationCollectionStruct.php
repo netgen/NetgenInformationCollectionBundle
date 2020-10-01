@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\API\Value;
 
 use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 
@@ -32,7 +33,12 @@ final class InformationCollectionStruct extends ValueObject
      */
     protected $fields;
 
-    public function __construct(Content $content, ContentType $contentType, array $fields)
+    /**
+     * @var \eZ\Publish\API\Repository\Values\Content\Location
+     */
+    private $location;
+
+    public function __construct(Content $content, Location $location, ContentType $contentType, array $fields)
     {
         $this->content = $content;
         $this->contentType = $contentType;
@@ -40,6 +46,7 @@ final class InformationCollectionStruct extends ValueObject
         foreach ($fields as $field) {
             $this->addFieldData($field);
         }
+        $this->location = $location;
     }
 
     /**
@@ -56,6 +63,14 @@ final class InformationCollectionStruct extends ValueObject
     public function getContent(): Content
     {
         return $this->content;
+    }
+
+    /**
+     * @return \eZ\Publish\API\Repository\Values\Content\Location
+     */
+    public function getLocation(): Location
+    {
+        return $this->location;
     }
 
     /**

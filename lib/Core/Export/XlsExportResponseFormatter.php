@@ -7,8 +7,8 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\InformationCollection\API\Export\ExportResponseFormatter;
 use Netgen\InformationCollection\API\Value\Export\Export;
 use Symfony\Component\HttpFoundation\Response;
-use PHPExcel;
-use PHPExcel_IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 final class XlsExportResponseFormatter implements ExportResponseFormatter
 {
@@ -36,11 +36,8 @@ final class XlsExportResponseFormatter implements ExportResponseFormatter
     {
         $contentName = $this->translationHelper->getTranslatedContentName($content);
 
-        array_unshift($export->getContents(), $export->getHeader());
-        $excel = new PHPExcel();
-        $excel->setActiveSheetIndex(0);
-
-        $activeSheet = $excel->getActiveSheet();
+        $spreadsheet = new Spreadsheet();
+        $activeSheet = $spreadsheet->getActiveSheet();
 
         try {
             $activeSheet->setTitle(substr($contentName, 0, 30));
@@ -48,15 +45,16 @@ final class XlsExportResponseFormatter implements ExportResponseFormatter
             $activeSheet->setTitle('Information collection export');
         }
 
-        $activeSheet->fromArray($export->getContents());
+        $activeSheet->fromArray($export->getHeader(), null, 'A1', true);
+        $activeSheet->fromArray($export->getContents(), null, 'A2', true);
+
+
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="' . $contentName . '.xls"');
         header('Cache-Control: max-age=0');
 
-        $objWriter = PHPExcel_IOFactory::createWriter($excel, 'Excel5');
-
-        $objWriter->save('php://output');
-        unset($objWriter);
+        $writer = new Xls($spreadsheet);
+        $writer->save('php://output');
 
         return new Response('');
     }

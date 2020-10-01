@@ -16,7 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ExporterService implements Exporter
 {
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface
      */
     protected $translator;
 
@@ -46,12 +46,12 @@ class ExporterService implements Exporter
     public function export(ExportCriteria $criteria): Export
     {
         $fields = $this->contentTypeUtils
-            ->getInfoCollectorFields($criteria->getContent()->id);
+            ->getInfoCollectorFields($criteria->getContentId()->getContentId());
 
         $fields['created'] = $this->translator->trans('netgen_information_collection_admin_export_created', [], 'netgen_information_collection_admin');
 
         $collections = $this->informationCollection->getCollections(
-            new ContentId($criteria->getContent()->id, $criteria->getOffset(), $criteria->getLimit())
+            new ContentId($criteria->getContentId()->getContentId(), $criteria->getContentId()->getOffset(), $criteria->getContentId()->getLimit())
         );
 
         $rows = [];

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Action;
 
+use Netgen\InformationCollection\API\Events;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use function in_array;
 use Netgen\InformationCollection\API\Action\ActionInterface;
 use Netgen\InformationCollection\API\Action\CrucialActionInterface;
@@ -35,17 +37,23 @@ final class ActionRegistry implements ActionInterface
     private $utility;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    /**
      * ActionAggregate constructor.
      *
      * @param array $actions
      * @param \Netgen\InformationCollection\Core\Action\ConfigurationUtility $utility
      * @param \Psr\Log\LoggerInterface $logger
      */
-    public function __construct(iterable $actions, ConfigurationUtility $utility, LoggerInterface $logger)
+    public function __construct(iterable $actions, ConfigurationUtility $utility, LoggerInterface $logger, EventDispatcherInterface $eventDispatcher)
     {
         $this->actions = $actions;
         $this->logger = $logger;
         $this->utility = $utility;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function act(InformationCollected $event): void
@@ -54,9 +62,18 @@ final class ActionRegistry implements ActionInterface
 
         foreach ($this->actions as $action) {
             if ($this->utility->isActionAllowedToRun($action, $config)) {
+
+                $event = $this->eventDispatcher->dispatch($event, Events::BEFORE_ACTION_EXECUTION);
+
                 try {
                     $action->act($event);
+
+                    $event = $this->eventDispatcher->dispatch($event, Events::AFTER_ACTION_EXECUTION);
+
                 } catch (ActionFailedException $e) {
+
+                    $event = $this->eventDispatcher->dispatch($event, Events::ACTION_EXECUTION_FAIL);
+
                     $this->logger
                         ->error($e->getMessage());
 
@@ -65,6 +82,7 @@ final class ActionRegistry implements ActionInterface
                     }
 
                     if ($action instanceof CrucialActionInterface) {
+                        $event = $this->eventDispatcher->dispatch($event, Events::CRUCIAL_ACTION_EXECUTION_FAIL);
                         break;
                     }
                 }

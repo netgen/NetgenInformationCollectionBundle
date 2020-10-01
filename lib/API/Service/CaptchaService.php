@@ -34,4 +34,13 @@ interface CaptchaService
      * @return string
      */
     public function getSiteKey(Location $location): string;
+
+    /**
+     * Returns the captcha configuration for given Location.
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     *
+     * @return string
+     */
+    public function getConfig(Location $location): array;
 }

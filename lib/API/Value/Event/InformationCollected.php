@@ -8,7 +8,6 @@ use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -20,9 +19,9 @@ final class InformationCollected extends Event
     protected $struct;
 
     /**
-     * @var \Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent
+     * @var array
      */
-    protected $additionalContent;
+    protected $options;
 
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location
@@ -34,16 +33,14 @@ final class InformationCollected extends Event
      *
      * @param \Netgen\InformationCollection\API\Value\InformationCollectionStruct $struct
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     * @param \Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent $additionalContent
+     * @param array $options
      */
     public function __construct(
         InformationCollectionStruct $struct,
-        Location $location,
-        AdditionalContent $additionalContent
+        array $options
     ) {
         $this->struct = $struct;
-        $this->additionalContent = $additionalContent;
-        $this->location = $location;
+        $this->options = $options;
     }
 
     /**
@@ -93,17 +90,17 @@ final class InformationCollected extends Event
      */
     public function getLocation(): Location
     {
-        return $this->location;
+        return $this->struct
+            ->getLocation();
     }
 
     /**
-     * Returns additional content
-     * This can be ez content or site api content.
+     * Returns options
      *
-     * @return \Netgen\InformationCollection\API\Value\DataTransfer\AdditionalContent
+     * @return array
      */
-    public function getAdditionalContent(): AdditionalContent
+    public function getOptions(): array
     {
-        return $this->additionalContent;
+        return $this->options;
     }
 }

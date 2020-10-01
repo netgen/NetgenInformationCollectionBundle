@@ -1,0 +1,83 @@
+{% block captcha_row %}
+    <script type="text/javascript">
+        /**
+         * The callback function executed
+         * once all the Google dependencies have loaded
+         */
+        function onGoogleReCaptchaApiLoad() {
+            var widgets = document.querySelectorAll('[data-toggle="recaptcha"]');
+            for (var i = 0; i < widgets.length; i++) {
+                renderReCaptcha(widgets[i]);
+            }
+        }
+    </script>
+    <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onGoogleReCaptchaApiLoad&render=explicit&hl={{app.request.locale}}" async defer></script>
+
+    <script type="text/javascript">
+        /**
+         * Render the given widget as a reCAPTCHA
+         * from the data-type attribute
+         */
+        function renderReCaptcha(widget) {
+            var form = widget.closest('form');
+            var widgetType = widget.getAttribute('data-type');
+            var widgetAction = widget.getAttribute('data-action');
+            var widgetParameters = {
+                'sitekey': widget.getAttribute('data-site-key'),
+                'size': widget.getAttribute('data-size'),
+                'theme': widget.getAttribute('data-theme'),
+            };
+
+            if (widgetType == 'invisible') {
+                widgetParameters['callback'] = function () {
+                    form.submit()
+                };
+                widgetParameters['size'] = "invisible";
+            }
+
+            var widgetId = grecaptcha.render(widget, widgetParameters);
+            console.log(widgetAction);
+            if (widgetType == 'invisible') {
+                bindChallengeToSubmitButtons(form, widgetId, widgetAction);
+            }
+        }
+
+        /**
+         * Prevent the submit buttons from submitting a form
+         * and invoke the challenge for the given captcha id
+         */
+        function bindChallengeToSubmitButtons(form, reCaptchaId, action) {
+            getSubmitButtons(form).forEach(function (button) {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log(action);
+                    if (action) {
+                        grecaptcha.execute(reCaptchaId, {action: action});
+                    } else {
+                        grecaptcha.execute(reCaptchaId);
+                    }
+                });
+            });
+        }
+
+        /**
+         * Get the submit buttons from the given form
+         */
+        function getSubmitButtons(form) {
+            var buttons = form.querySelectorAll('button, input');
+            var submitButtons = [];
+
+            for (var i= 0; i < buttons.length; i++) {
+                var button = buttons[i];
+                if (button.getAttribute('type') == 'submit') {
+                    submitButtons.push(button);
+                }
+            }
+
+            return submitButtons;
+        }
+    </script>
+
+    <div id="{{ id }}" data-toggle="recaptcha" data-action="{{ captcha_action }}" data-type="{{ type }}" data-size="{{ size }}" data-theme="{{ theme }}" data-site-key="{{ site_key }}">
+    </div>
+{% endblock %}

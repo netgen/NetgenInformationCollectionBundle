@@ -7,6 +7,7 @@ namespace Netgen\InformationCollection\Core\Service;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\InformationCollection\API\Service\CaptchaService as CaptchaServiceInterface;
 use Netgen\InformationCollection\API\Service\CaptchaValue;
 use Netgen\InformationCollection\API\Value\Captcha\ReCaptcha;
@@ -23,6 +24,10 @@ class CaptchaService implements CaptchaServiceInterface
      * @var \eZ\Publish\API\Repository\ContentTypeService
      */
     protected $contentTypeService;
+    /**
+     * @var ConfigResolverInterface
+     */
+    private $configResolver;
 
     /**
      * CaptchaService constructor.
@@ -30,10 +35,11 @@ class CaptchaService implements CaptchaServiceInterface
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
      * @param array $config
      */
-    public function __construct(ContentTypeService $contentTypeService, $config = [])
+    public function __construct(ContentTypeService $contentTypeService, ConfigResolverInterface $configResolver)
     {
-        $this->config = $config;
+        $this->config = $configResolver->getParameter('captcha', 'netgen_information_collection');
         $this->contentTypeService = $contentTypeService;
+        $this->configResolver = $configResolver;
     }
 
     /**
@@ -67,23 +73,24 @@ class CaptchaService implements CaptchaServiceInterface
             $reCaptcha = new \ReCaptcha\ReCaptcha($config['secret']);
 
             if (!empty($config['options'])) {
-                if (!empty($config['options']['hostname'])) {
-                    $reCaptcha->setExpectedHostname($config['options']['hostname']);
-                }
-                if (!empty($config['options']['apk_package_name'])) {
-                    $reCaptcha->setExpectedApkPackageName($config['options']['apk_package_name']);
-                }
+//                if (!empty($config['options']['hostname'])) {
+                    $reCaptcha->setExpectedHostname('localhost');
+//                }
+//                if (!empty($config['options']['apk_package_name'])) {
+//                    $reCaptcha->setExpectedApkPackageName($config['options']['apk_package_name']);
+//                }
                 if (!empty($config['options']['action'])) {
                     $reCaptcha->setExpectedAction($config['options']['action']);
                 }
-                if (!empty($config['options']['score_threshold'])) {
-                    $reCaptcha->setScoreThreshold($config['options']['score_threshold']);
-                }
-                if (!empty($config['options']['challenge_timeout'])) {
-                    $reCaptcha->setChallengeTimeout($config['options']['challenge_timeout']);
-                }
+//                if (!empty($config['options']['score_threshold'])) {
+//                    $reCaptcha->setScoreThreshold($config['options']['score_threshold']);
+//                }
+//                if (!empty($config['options']['challenge_timeout'])) {
+//                    $reCaptcha->setChallengeTimeout($config['options']['challenge_timeout']);
+//                }
             }
 
+            dump($reCaptcha);
             return new ReCaptcha($reCaptcha);
         }
 
@@ -99,7 +106,7 @@ class CaptchaService implements CaptchaServiceInterface
      *
      * @return array
      */
-    protected function getConfig(Location $location)
+    public function getConfig(Location $location): array
     {
         $contentTypeConfig = $this->getConfigForContentType(
             $this->getContentType($location)

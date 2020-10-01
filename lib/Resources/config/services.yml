@@ -10,15 +10,8 @@ imports:
 parameters:
 
 services:
-    netgen_information_collection.form.builder:
-        class: Netgen\InformationCollection\Form\Builder\FormBuilder
-        public: true
-        arguments:
-            - '@form.factory'
-            - '@ezpublish.api.service.content_type'
-
     netgen_information_collection.listener:
-        class: Netgen\InformationCollection\Listener\InformationCollectedListener
+        class: Netgen\Bundle\InformationCollectionBundle\Listener\InformationCollectedListener
         arguments:
             - '@netgen_information_collection.action.registry'
         tags:
@@ -35,7 +28,7 @@ services:
             - '@mailer'
 
     netgen_information_collection.form.extension.field_definition:
-        class: Netgen\InformationCollection\Integration\RepositoryForms\FieldDefinitionTypeExtension
+        class: Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\FieldDefinitionTypeExtension
         tags:
             - { name: form.type_extension, extended_type: EzSystems\EzPlatformAdminUi\Form\Type\FieldDefinition\FieldDefinitionType }
 
@@ -46,13 +39,13 @@ services:
 
 
     netgen_information_collection.twig.extension.rendering:
-        class: Netgen\InformationCollection\Templating\Twig\Extensions\FieldRenderingExtension
+        class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\Extensions\FieldRenderingExtension
         public: false
         tags:
             - { name: twig.extension }
 
     netgen_information_collection.twig.runtime.rendering:
-        class: Netgen\InformationCollection\Templating\Twig\Extensions\FieldRenderingRuntime
+        class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\Extensions\FieldRenderingRuntime
         # public: false
         arguments:
             - '@twig'
@@ -61,13 +54,41 @@ services:
             - { name: twig.runtime }
 
     netgen_information_collection.form.information_collection_type:
-        class: Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionType
+        class: Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\InformationCollectionType
+        arguments:
+            - '@netgen_information_collection.captcha.service'
         tags:
             - { name: form.type }
 
     netgen_information_collection.form.information_collection_field_type:
-        class: Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionFieldType
+        class: Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\InformationCollectionFieldType
         arguments:
             - "@ezplatform.content_forms.field_type_form_mapper.dispatcher"
+        tags:
+            - { name: form.type }
+
+    netgen_information_collection.handler:
+        class: Netgen\InformationCollection\Handler
+        public: true
+        arguments:
+            - "@form.factory"
+            - "@ezpublish.api.service.content_type"
+            - "@event_dispatcher"
+
+    netgen_information_collection.captcha.service:
+        class: Netgen\InformationCollection\Core\Service\CaptchaService
+        arguments:
+            - '@ezpublish.api.service.content_type'
+            - '@ezpublish.config.resolver'
+
+    netgen_information_collection.export.json:
+        class: Netgen\InformationCollection\Core\Export\JsonExportResponseFormatter
+        tags:
+            - { name: netgen_information_collection.export.formatter }
+
+    netgen_information_collection.form.captcha_type:
+        class: Netgen\Bundle\InformationCollectionBundle\Form\CaptchaType
+        arguments:
+            - '@netgen_information_collection.listener.captcha_validation'
         tags:
             - { name: form.type }

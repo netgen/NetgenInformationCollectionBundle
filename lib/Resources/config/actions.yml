@@ -5,6 +5,7 @@ services:
             - !tagged_iterator netgen_information_collection.action
             - "@netgen_information_collection.action.config_utility"
             - "@logger"
+            - "@event_dispatcher"
         calls:
             - [setDebug, ['%kernel.debug%']]
 

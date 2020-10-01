@@ -24,3 +24,11 @@ services:
             - '@ezpublish.translation_helper'
         tags:
             - { name: data_collector, template: '@NetgenInformationCollection/data_collector/template.html.twig', id: 'netgen_information_collection_collector' }
+
+
+    netgen_information_collection.listener.captcha_validation:
+        class: Netgen\Bundle\InformationCollectionBundle\Listener\CaptchaValidationListener
+        arguments:
+            - '@request_stack'
+            - '@netgen_information_collection.captcha.service'
+            - '@translator'

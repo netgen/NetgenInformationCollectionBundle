@@ -33,7 +33,9 @@
         "symfony/swiftmailer-bundle": "^3.4",
         "twig/twig": "^3.0",
         "google/recaptcha": "^1.2",
-        "doctrine/doctrine-migrations-bundle": "^3.0"
+        "doctrine/doctrine-migrations-bundle": "^3.0",
+        "symfony/mailer": "^5.1",
+        "phpoffice/phpspreadsheet": "^1.14"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.2",
@@ -60,7 +62,7 @@
         "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --level=7 --ansi lib bundle"
     },
     "suggest": {
-        "phpoffice/phpexcel": "To enable the XLS export functionality",
+        "phpoffice/phpspreadsheet": "To enable the XLS and XLSX export functionalities",
         "league/csv": "To enable the CSV export functionality"
     },
     "extra": {

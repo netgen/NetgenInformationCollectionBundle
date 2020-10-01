@@ -10,7 +10,7 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
-use Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionType;
+use Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\InformationCollectionType;
 
 class InformationCollectionCollector extends DataCollector
 {

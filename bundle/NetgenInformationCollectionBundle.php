@@ -3,7 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle;
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\EzPublishCoreExtension;
-use Netgen\InformationCollection\PolicyProvider\InformationCollectionPolicyProvider;
+use Netgen\Bundle\InformationCollectionBundle\EzPlatform\PolicyProvider\InformationCollectionPolicyProvider;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

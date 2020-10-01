@@ -3,13 +3,13 @@ parameters:
 
 services:
     netgen_information_collection.ezplatform_admin.menu:
-        class: Netgen\InformationCollection\Integration\EzPlatformAdmin\MenuListener
+        class: Netgen\Bundle\InformationCollectionBundle\EzPlatform\EzPlatformAdmin\MenuListener
         public: true
         tags:
             - { name: kernel.event_subscriber }
 
     netgen_information_collection.ezadminui.event_listener.set_page_layout:
-        class: Netgen\InformationCollection\Integration\EzPlatformAdmin\EventListener\SetPageLayoutListener
+        class: Netgen\Bundle\InformationCollectionBundle\EzPlatform\EzPlatformAdmin\EventListener\SetPageLayoutListener
         arguments:
             - "@netgen_information_collection.templating.admin_global_variable"
             - "%ezpublish.siteaccess.groups_by_siteaccess%"

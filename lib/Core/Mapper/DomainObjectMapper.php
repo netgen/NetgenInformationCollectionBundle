@@ -18,6 +18,7 @@ use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\AttributeValue;
 use Netgen\InformationCollection\API\Value\Collection;
 use Netgen\InformationCollection\API\Value\Content;
+use Netgen\InformationCollection\API\Value\NullUser;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
 
@@ -121,14 +122,17 @@ final class DomainObjectMapper
         );
     }
 
-    private function getUser($userId): ?User
+    private function getUser($userId): User
     {
         try {
             return $this->repository
                 ->getUserService()
                 ->loadUser($userId);
         } catch (NotFoundException $exception) {
+
         }
+
+        return new NullUser();
     }
 
     private function getDateTime(int $timestamp): DateTimeInterface
