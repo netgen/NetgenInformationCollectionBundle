@@ -4,6 +4,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Form\Builder;
 
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\EzFormsBundle\Form\Type\InformationCollectionType;
@@ -20,9 +21,9 @@ class FormBuilder
     protected $formFactory;
 
     /**
-     * @var bool
+     * @var ConfigResolverInterface
      */
-    protected $useCsrf;
+    protected $configResolver;
 
     /**
      * @var ContentTypeService
@@ -40,16 +41,16 @@ class FormBuilder
      * @param FormFactoryInterface $formFactory
      * @param ContentTypeService $contentTypeService
      * @param RouterInterface $router
-     * @param bool $useCsrf
+     * @param ConfigResolverInterface $configResolver
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         ContentTypeService $contentTypeService,
         RouterInterface $router,
-        $useCsrf
+        ConfigResolverInterface $configResolver
     ) {
         $this->formFactory = $formFactory;
-        $this->useCsrf = $useCsrf;
+        $this->configResolver = $configResolver;
         $this->contentTypeService = $contentTypeService;
         $this->router = $router;
     }
@@ -69,6 +70,7 @@ class FormBuilder
         $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
 
         $data = new DataWrapper(new InformationCollectionStruct(), $contentType, $location);
+        $useCsrf = $this->configResolver->getParameter('information_collection.form.use_csrf', 'netgen');
 
         $formBuilder = $this->formFactory
             ->createNamedBuilder(
@@ -78,7 +80,7 @@ class FormBuilder
                     InformationCollectionType::class,
                 $data,
                 array(
-                    'csrf_protection' => $this->useCsrf,
+                    'csrf_protection' => $useCsrf,
                 )
             );
 

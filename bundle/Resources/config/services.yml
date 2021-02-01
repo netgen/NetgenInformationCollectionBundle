@@ -29,7 +29,7 @@ services:
             - '@form.factory'
             - '@ezpublish.api.service.content_type'
             - '@router'
-            - '%netgen.default.information_collection.form.use_csrf%'
+            - '@ezpublish.config.resolver'
 
     netgen_information_collection.listener:
         class: Netgen\Bundle\InformationCollectionBundle\Listener\InformationCollectedListener
