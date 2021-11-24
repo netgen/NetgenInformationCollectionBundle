@@ -25,7 +25,7 @@ services:
     netgen_information_collection.mailer:
         class: Netgen\InformationCollection\Core\Mailer\Mailer
         arguments:
-            - '@mailer'
+            - 'Netgen\InformationCollection\API\MailerInterface'
 
     netgen_information_collection.form.extension.field_definition:
         class: Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\FieldDefinitionTypeExtension
@@ -92,3 +92,5 @@ services:
             - '@netgen_information_collection.listener.captcha_validation'
         tags:
             - { name: form.type }
+
+    # Autowire the providers

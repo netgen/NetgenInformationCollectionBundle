@@ -32,7 +32,7 @@
                     <input id="{{ attribute.fieldDefinition.id }}" name="FieldId[]" value="{{ attribute.fieldDefinition.id }}" title="Select collections for removal." type="checkbox" data-enable="Item">
                     <label for="{{ attribute.fieldDefinition.id }}">
                         <span class="attribute-name">
-                            {{ ez_field_name(content, attribute.field.fieldDefIdentifier) }}:
+                            {{ ez_field_name(content, attribute.fieldDefinition.identifier) }}:
                         </span>
                         <span class="attribute-value">
                             {{ info_collection_render_field(collection, attribute) }}

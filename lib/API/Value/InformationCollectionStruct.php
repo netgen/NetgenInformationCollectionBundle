@@ -7,7 +7,7 @@ namespace Netgen\InformationCollection\API\Value;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use EzSystems\RepositoryForms\Data\Content\FieldData;
+use EzSystems\EzPlatformContentForms\Data\Content\FieldData;
 
 final class InformationCollectionStruct extends ValueObject
 {
@@ -82,7 +82,7 @@ final class InformationCollectionStruct extends ValueObject
     }
 
     /**
-     * @return \EzSystems\RepositoryForms\Data\Content\FieldData[]
+     * @return FieldData[]
      */
     public function getFieldsData(): array
     {
@@ -90,7 +90,7 @@ final class InformationCollectionStruct extends ValueObject
     }
 
     /**
-     * @return \EzSystems\RepositoryForms\Data\Content\FieldData[]
+     * @return FieldData[]
      */
     public function getCollectedFields(): array
     {

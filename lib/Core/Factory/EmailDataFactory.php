@@ -274,9 +274,13 @@ class EmailDataFactory extends BaseEmailDataFactory
     protected function getBinaryFileFields(array $collectedFields)
     {
         $filtered = [];
-        foreach ($collectedFields as $identifier => $value) {
-            if ($value instanceof BinaryFile) {
-                $filtered[] = $value;
+
+        /**
+         * @var $collectedField \EzSystems\EzPlatformContentForms\Data\Content\FieldData
+         */
+        foreach ($collectedFields as $identifier => $collectedField) {
+            if ($collectedField->value instanceof BinaryFile) {
+                $filtered[] = $collectedField;
             }
         }
 

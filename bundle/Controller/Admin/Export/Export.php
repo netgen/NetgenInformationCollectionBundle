@@ -3,12 +3,12 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin\Export;
 
 use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
+use Netgen\Bundle\InformationCollectionBundle\Form\ExportType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
 use Netgen\InformationCollection\API\Service\Exporter;
 use Netgen\InformationCollection\Core\Export\ExportResponseFormatterRegistry;
 use Symfony\Component\HttpFoundation\Request;
-use Netgen\InformationCollection\Form\Type\ExportType;
 use eZ\Publish\API\Repository\ContentService;
 
 final class Export extends AbstractController

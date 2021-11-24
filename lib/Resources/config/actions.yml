@@ -21,11 +21,10 @@ services:
         tags:
             - { name: netgen_information_collection.action, priority: 300 }
 
-    netgen_information_collection.action.email:
-        class: Netgen\InformationCollection\Core\Action\EmailAction
+    Netgen\InformationCollection\Core\Action\EmailAction:
         arguments:
-            - '@netgen_information_collection.mailer'
-            - '@netgen_information_collection.factory.email_data'
+            - '@Netgen\InformationCollection\API\MailerInterface'
+            - '@Netgen\InformationCollection\Core\EmailDataProvider\DefaultProvider'
         tags:
             - { name: netgen_information_collection.action }
 
