@@ -45,8 +45,8 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
         $qb = $this->createQueryBuilder('eica');
 
         return $qb->select('eica')
-            ->where('eica.informationCollectionId = :collection-id')
-            ->setParameter('collection-id', $collectionId)
+            ->where('eica.informationCollectionId = :collectionId')
+            ->setParameter('collectionId', $collectionId)
             ->andWhere($qb->expr()->in('eica.contentClassAttributeId', ':fields'))
             ->setParameter('fields', $fieldDefinitionIds)
             ->getQuery()
@@ -58,8 +58,8 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
         $qb = $this->createQueryBuilder('eica');
 
         return $qb->select('eica')
-            ->where('eica.informationCollectionId = :collection-id')
-            ->setParameter('collection-id', $collectionId)
+            ->where('eica.informationCollectionId = :collectionId')
+            ->setParameter('collectionId', $collectionId)
             ->getQuery()
             ->getResult();
     }
