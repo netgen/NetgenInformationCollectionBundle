@@ -256,7 +256,7 @@ class EmailDataFactory extends BaseEmailDataFactory
         if (array_key_exists($contentTypeIdentifier, $this->config[ConfigurationConstants::ATTACHMENTS][ConfigurationConstants::CONTENT_TYPES])) {
             $send = $this->config[ConfigurationConstants::ATTACHMENTS][ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier];
         } else {
-            $send = $this->config[ConfigurationConstants::ATTACHMENTS][ConfigurationConstants::SETTINGS_DEFAULT];
+            $send = $this->config[ConfigurationConstants::ATTACHMENTS]['enabled'];
         }
 
         if (!$send) {

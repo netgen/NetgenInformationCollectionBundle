@@ -18,6 +18,14 @@
     {% endapply %}
 {% endblock %}
 
+{% block enhancedezbinaryfile_field %}
+    {% apply spaceless %}
+        <a href={{ path('netgen_enhancedezbinaryfile.route.download_binary_file', {infocollectionAttributeId: attribute.id}) }}>
+            Download
+        </a>
+    {% endapply %}
+{% endblock %}
+
 {% block default_field %}
     {% apply spaceless %}
         {{ attribute.value }}

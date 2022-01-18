@@ -48,6 +48,7 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
 
         foreach ($struct->getFieldsData() as $fieldsDatum) {
             $builder->add($fieldsDatum->fieldDefinition->identifier, InformationCollectionFieldType::class, [
+                //'label' => false,
                 'languageCode' => $options['languageCode'],
                 'mainLanguageCode' => $options['mainLanguageCode'],
             ]);

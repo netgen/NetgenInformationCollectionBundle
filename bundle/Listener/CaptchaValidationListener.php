@@ -50,8 +50,11 @@ class CaptchaValidationListener implements EventSubscriberInterface
             ->getConfig()
             ->getOption('captcha_value');
 
-//        $request = $this->requestStack->getCurrentRequest();
-        $request = Request::createFromGlobals();
+        $request = $this->requestStack->getCurrentRequest();
+//        $request = Request::createFromGlobals();
+
+        $submittedHostName = $request->getHost();
+        $captchaValue->getInnerCaptcha()->setExpectedHostname($submittedHostName);
 
         $text = 'The captcha is invalid. Please try again.';
 

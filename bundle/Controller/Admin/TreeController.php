@@ -120,7 +120,7 @@ class TreeController extends Controller
         return array(
             'id' => $content->getContent()->id,
             'parent' => $isRoot ? '#' : '0',
-            'text' => $content->getContent()->getName($languages[0]) . ' (' . strval($count->getCount()) . ')',
+            'text' => $content->getContent()->getName(in_array($languages[0], $content->getContent()->getVersionInfo()->languageCodes) ? $languages[0] : null) . ' (' . strval($count->getCount()) . ')',
             'children' => false,
             'a_attr' => array(
                 'href' => $this->router->generate('netgen_information_collection.route.admin.collection_list', ['contentId' => $content->getContent()->id]),

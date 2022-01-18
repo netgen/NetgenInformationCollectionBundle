@@ -53,6 +53,16 @@ services:
         tags:
             - { name: twig.runtime }
 
+    Netgen\Bundle\InformationCollectionBundle\Templating\Twig\Extensions\CaptchaExtension:
+        autowire: true
+        autoconfigure: true
+
+    Netgen\Bundle\InformationCollectionBundle\Templating\Twig\Extensions\CaptchaRuntime:
+        autowire: true
+        autoconfigure: true
+        tags:
+            - { name: twig.runtime }
+
     netgen_information_collection.form.information_collection_type:
         class: Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\InformationCollectionType
         arguments:
