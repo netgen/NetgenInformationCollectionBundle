@@ -13,10 +13,8 @@ services:
     netgen_information_collection.templating.admin_global_variable:
         class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\AdminGlobalVariable
         public: true
-        # We need the lazy flag due to usage of dynamic parameters
-        lazy: true
-        calls:
-            - [setPageLayoutTemplate, ["$admin.pagelayout;netgen_information_collection$"]]
+        arguments:
+            - "@ezpublish.config.resolver"
 
     netgen_information_collection.core.persistence.gateway.doctrine:
         class: Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase
