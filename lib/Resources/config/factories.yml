@@ -10,7 +10,7 @@ services:
     netgen_information_collection.factory.auto_responder_data:
         class: Netgen\InformationCollection\Core\Factory\AutoResponderDataFactory
         arguments:
-            - "$action_config.auto_responder;netgen_information_collection$"
+            - '@ezpublish.config.resolver'
             - '@ezpublish.translation_helper'
             - '@ezpublish.field_helper'
             - '@twig'
