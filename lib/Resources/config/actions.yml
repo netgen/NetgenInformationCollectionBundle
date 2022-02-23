@@ -12,7 +12,7 @@ services:
     netgen_information_collection.action.config_utility:
         class: Netgen\InformationCollection\Core\Action\ConfigurationUtility
         arguments:
-            - "@ezpublish.config.resolver"
+            - "@ibexa.config.resolver"
 
     netgen_information_collection.action.db:
         class: Netgen\InformationCollection\Core\Action\DatabaseAction

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms;
+namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\RepositoryForms;
 
-use EzSystems\EzPlatformContentForms\Data\Content\FieldData;
-use EzSystems\EzPlatformContentForms\FieldType\FieldTypeFormMapperDispatcherInterface;
+use Ibexa\Contracts\ContentForms\Data\Content\FieldData;
+use Ibexa\ContentForms\FieldType\FieldTypeFormMapperDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class InformationCollectionFieldType extends AbstractType
 {
     /**
-     * @var \EzSystems\EzPlatformContentForms\FieldType\FieldTypeFormMapperDispatcherInterface
+     * @var \Ibexa\ContentForms\FieldType\FieldTypeFormMapperDispatcherInterface
      */
     private $fieldTypeFormMapper;
 

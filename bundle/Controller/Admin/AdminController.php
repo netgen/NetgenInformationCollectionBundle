@@ -2,11 +2,11 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
-use eZ\Bundle\EzPublishCoreBundle\Controller;
-use eZ\Publish\API\Repository\ContentService;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Core\MVC\Symfony\Security\Authorization\Attribute;
+use Ibexa\Bundle\Core\Controller;
+use Ibexa\Contracts\Core\Repository\ContentService;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\InformationCollection\API\Service\InformationCollection;
 use Netgen\InformationCollection\API\Value\Collection;
@@ -32,12 +32,12 @@ class AdminController extends Controller
     protected $service;
 
     /**
-     * @var \eZ\Publish\API\Repository\ContentService
+     * @var \Ibexa\Contracts\Core\Repository\ContentService
      */
     protected $contentService;
 
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     * @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
      */
     protected $configResolver;
 
@@ -56,8 +56,8 @@ class AdminController extends Controller
      *
      * @param \Netgen\InformationCollection\API\Service\InformationCollection $service
      * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer $anonymizer
-     * @param \eZ\Publish\API\Repository\ContentService $contentService
-     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
+     * @param \Ibexa\Contracts\Core\Repository\ContentService $contentService
+     * @param \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface $configResolver
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
      */
     public function __construct(
@@ -96,7 +96,7 @@ class AdminController extends Controller
      * Displays list of collection for selected Content
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Content $content
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -117,7 +117,7 @@ class AdminController extends Controller
      * Handles collection search
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Content $content
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

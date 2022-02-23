@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\InformationCollectionBundle\Templating\Twig\Extensions;
 
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\Collection;
 use Twig\Environment;
@@ -20,7 +20,7 @@ class FieldRenderingRuntime
     protected $environment;
 
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     * @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
      */
     protected $configResolver;
 

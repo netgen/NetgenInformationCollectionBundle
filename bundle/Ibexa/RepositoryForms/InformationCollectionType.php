@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms;
+namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\RepositoryForms;
 
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\Form\CaptchaType;
 use Netgen\InformationCollection\API\Service\CaptchaService;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;

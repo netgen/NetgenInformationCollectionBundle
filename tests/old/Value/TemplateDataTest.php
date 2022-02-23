@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Value;
 
-use eZ\Publish\Core\Repository\Values\Content\Content;
+use Ibexa\Core\Repository\Values\Content\Content;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
@@ -24,7 +24,7 @@ class TemplateDataTest extends TestCase
     protected $event;
 
     /**
-     * @var \eZ\Publish\Core\Repository\Values\Content\Content
+     * @var \Ibexa\Core\Repository\Values\Content\Content
      */
     protected $content;
 

@@ -2,9 +2,9 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\FieldHandler;
 
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use eZ\Publish\Core\Repository\ContentTypeService;
-use eZ\Publish\Core\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
+use Ibexa\Core\Repository\ContentTypeService;
+use Ibexa\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\FieldHandler;
 
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\FieldType\Value;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\FieldType\Value;
 
 interface CustomFieldHandlerInterface
 {
     /**
      * Checks if given Value can be handled.
      *
-     * @param \eZ\Publish\Core\FieldType\Value $value
+     * @param \Ibexa\Core\FieldType\Value $value
      *
      * @return bool
      */
@@ -21,8 +21,8 @@ interface CustomFieldHandlerInterface
     /**
      * Transforms field value object to string.
      *
-     * @param \eZ\Publish\Core\FieldType\Value $value
-     * @param \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinition
+     * @param \Ibexa\Core\FieldType\Value $value
+     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition $fieldDefinition
      *
      * @return string
      */

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Persistence\FieldHandler;
 
-use eZ\Publish\Core\FieldType\Value;
+use Ibexa\Core\FieldType\Value;
 use Netgen\InformationCollection\API\FieldHandler\CustomFieldHandlerInterface;
 
 final class FieldHandlerRegistry

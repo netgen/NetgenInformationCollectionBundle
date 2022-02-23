@@ -2,11 +2,11 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\FieldHandler\Custom;
 
-use eZ\Publish\Core\FieldType\Float\Value as FloatValue;
-use eZ\Publish\Core\FieldType\Checkbox\Value as CheckboxValue;
-use eZ\Publish\Core\FieldType\Time\Value as TimeValue;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
+use Ibexa\Core\FieldType\Float\Value as FloatValue;
+use Ibexa\Core\FieldType\Checkbox\Value as CheckboxValue;
+use Ibexa\Core\FieldType\Time\Value as TimeValue;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\TimeFieldHandler;
 use PHPUnit\Framework\TestCase;
@@ -25,7 +25,7 @@ class TimeFieldHandlerTest extends TestCase
     protected $dt;
 
     /**
-     * @var \eZ\Publish\Core\FieldType\Time\Value
+     * @var \Ibexa\Core\FieldType\Time\Value
      */
     protected $value;
 

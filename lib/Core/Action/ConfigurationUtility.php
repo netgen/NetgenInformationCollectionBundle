@@ -2,8 +2,8 @@
 
 namespace Netgen\InformationCollection\Core\Action;
 
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\InformationCollection\API\Action\ActionInterface;
 use OutOfBoundsException;
 use function sprintf;
@@ -61,7 +61,7 @@ final class ConfigurationUtility
      * Returns configuration for given content type identifier if exists
      * or default one.
      *
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
+     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType $contentType
      *
      * @return array
      */

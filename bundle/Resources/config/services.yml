@@ -20,8 +20,8 @@ services:
         class: Netgen\Bundle\InformationCollectionBundle\DataCollector\InformationCollectionCollector
         public: false
         arguments:
-            - '@ezpublish.api.repository'
-            - '@ezpublish.translation_helper'
+            - '@ibexa.api.repository'
+            - '@Ibexa\Core\Helper\TranslationHelper'
         tags:
             - { name: data_collector, template: '@NetgenInformationCollection/data_collector/template.html.twig', id: 'netgen_information_collection_collector' }
 

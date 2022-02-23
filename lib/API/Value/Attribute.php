@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value;
 
-use eZ\Publish\API\Repository\Values\Content\Field;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
 
 final class Attribute extends ValueObject
 {
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Field
+     * @var \Ibexa\Contracts\Core\Repository\Values\Content\Field
      */
     protected $field;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition
+     * @var \Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition
      */
     protected $fieldDefinition;
 

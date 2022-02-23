@@ -2,8 +2,8 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Controller;
 
-use eZ\Publish\Core\MVC\Symfony\View\ContentView;
-use eZ\Publish\Core\Repository\Values\Content\Location;
+use Ibexa\Core\MVC\Symfony\View\ContentView;
+use Ibexa\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController;
@@ -211,7 +211,7 @@ class InformationCollectionControllerTest extends TestCase
 
     /**
      * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage eZ view needs to implement LocationValueView interface
+     * @expectedExceptionMessage Ibexa view needs to implement LocationValueView interface
      */
     public function testIfLocationValueViewIsNotProvidedThrowBadMethodCallException()
     {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Factory;
 
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\FieldType\Value;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\FieldType\Value;
 use Netgen\InformationCollection\API\FieldHandler\CustomFieldHandlerInterface;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
@@ -31,8 +31,8 @@ class FieldDataFactory
     /**
      * Returns value object that represents legacy value.
      *
-     * @param \eZ\Publish\Core\FieldType\Value $value
-     * @param \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinition
+     * @param \Ibexa\Core\FieldType\Value $value
+     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition $fieldDefinition
      *
      * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */

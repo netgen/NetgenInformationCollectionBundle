@@ -9,7 +9,7 @@ class NetgenInformationCollectionExtensionTest extends AbstractExtensionTestCase
 {
     public function testItSetsValidContainerParameters()
     {
-        $this->container->setParameter('ezpublish.siteaccess.list', array());
+        $this->container->setParameter('ibexa.site_access.list', array());
         $this->load();
     }
 

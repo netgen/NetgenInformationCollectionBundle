@@ -4,5 +4,5 @@
 * :doc:`/reference/events`
 * :doc:`/reference/configuration`
 * :doc:`/reference/commands`
-* :doc:`/reference/ez_policies`
+* :doc:`/reference/ibexa_policies`
 * :doc:`/reference/info_collector_actions`

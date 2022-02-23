@@ -9,20 +9,20 @@ services:
 
     netgen_information_collection.controller.admin:
         class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\AdminController
-        parent: ezpublish.controller.base
+        parent: ibexa.controller.base
         public: true
         arguments:
             - "@netgen_information_collection.api.service"
             - "@netgen_information_collection.anonymizer.service"
-            - "@ezpublish.api.service.content"
-            - "@ezpublish.config.resolver"
+            - "@ibexa.api.service.content"
+            - "@ibexa.config.resolver"
             - "@translator"
 
     netgen_information_collection.controller.export.export:
         class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\Export\Export
         public: true
         arguments:
-            - "@ezpublish.api.service.content"
+            - "@ibexa.api.service.content"
             - "@netgen_information_collection.service.exporter"
             - "@netgen_information_collection.core.export.registry"
         tags:
@@ -32,7 +32,7 @@ services:
 
     netgen_information_collection.controller.tree:
         class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\TreeController
-        parent: ezpublish.controller.base
+        parent: ibexa.controller.base
         public: true
         arguments:
             - "@netgen_information_collection.api.service"

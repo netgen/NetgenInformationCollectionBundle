@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value\DataTransfer;
 
-use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
+use Ibexa\Core\FieldType\BinaryFile\Value as BinaryFile;
 use Netgen\InformationCollection\API\Value\ValueObject;
 
 class EmailContent extends ValueObject

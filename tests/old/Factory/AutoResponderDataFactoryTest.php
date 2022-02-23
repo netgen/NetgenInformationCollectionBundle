@@ -3,17 +3,17 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Factory;
 
 use Netgen\Bundle\InformationCollectionBundle\Factory\AutoResponderDataFactory;
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use eZ\Publish\API\Repository\Values\Content\Field;
-use eZ\Publish\Core\FieldType\EmailAddress\Value as EmailValue;
-use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
-use eZ\Publish\Core\Helper\FieldHelper;
-use eZ\Publish\Core\Helper\TranslationHelper;
-use eZ\Publish\Core\Repository\ContentService;
-use eZ\Publish\Core\Repository\Values\Content\Content;
-use eZ\Publish\Core\Repository\Values\Content\Location;
-use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
-use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
+use Ibexa\Core\FieldType\EmailAddress\Value as EmailValue;
+use Ibexa\Core\FieldType\TextLine\Value as TextLineValue;
+use Ibexa\Core\Helper\FieldHelper;
+use Ibexa\Core\Helper\TranslationHelper;
+use Ibexa\Core\Repository\ContentService;
+use Ibexa\Core\Repository\Values\Content\Content;
+use Ibexa\Core\Repository\Values\Content\Location;
+use Ibexa\Core\Repository\Values\Content\VersionInfo;
+use Ibexa\Core\Repository\Values\ContentType\ContentType;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
@@ -52,7 +52,7 @@ class AutoResponderDataFactoryTest extends TestCase
     protected $contentService;
 
     /**
-     * @var \eZ\Publish\Core\Repository\Values\ContentType\ContentType
+     * @var \Ibexa\Core\Repository\Values\ContentType\ContentType
      */
     protected $contentType;
 
@@ -67,12 +67,12 @@ class AutoResponderDataFactoryTest extends TestCase
     protected $templateWrapper;
 
     /**
-     * @var \eZ\Publish\Core\Repository\Values\ContentType\ContentType
+     * @var \Ibexa\Core\Repository\Values\ContentType\ContentType
      */
     protected $contentType2;
 
     /**
-     * @var \eZ\Publish\Core\Repository\Values\Content\VersionInfo
+     * @var \Ibexa\Core\Repository\Values\Content\VersionInfo
      */
     protected $versionInfo;
 

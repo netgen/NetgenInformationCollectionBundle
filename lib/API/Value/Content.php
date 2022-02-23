@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value;
 
-use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content as APIContent;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
 
 final class Content extends ValueObject
 {

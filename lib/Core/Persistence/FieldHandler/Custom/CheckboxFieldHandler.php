@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom;
 
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\FieldType\Checkbox\Value as CheckboxValue;
-use eZ\Publish\Core\FieldType\Value;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\FieldType\Checkbox\Value as CheckboxValue;
+use Ibexa\Core\FieldType\Value;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 
@@ -29,7 +29,7 @@ class CheckboxFieldHandler implements CustomLegacyFieldHandlerInterface
     }
 
     /**
-     * @param \eZ\Publish\Core\FieldType\Checkbox\Value $value
+     * @param \Ibexa\Core\FieldType\Checkbox\Value $value
      *
      * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */

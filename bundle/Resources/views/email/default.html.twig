@@ -1,5 +1,5 @@
 {# event \Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected #}
-{# content \eZ\Publish\API\Repository\Values\Content\Content #}
+{# content \Ibexa\Contracts\Core\Repository\Values\Content\Content #}
 
 {% block email %}
 
@@ -9,7 +9,7 @@
     {% if content.fields[field_name] is defined and content.fields[field_name] is not empty %}
         <div class="data-group attr-{{ field_name }}">
             <div class="label">
-                {{ ez_field_name(content, field_name) }}:
+                {{ ibexa_field_name(content, field_name) }}:
             </div>
             <div class="value">
                 {% if content_type.fieldDefinitionsByIdentifier[field_name].fieldTypeIdentifier == 'ezselection' %}

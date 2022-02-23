@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\InformationCollectionBundle\DataCollector;
 
-use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\Core\Helper\TranslationHelper;
+use Ibexa\Contracts\Core\Repository\Repository;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Core\Helper\TranslationHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
-use Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\InformationCollectionType;
+use Netgen\Bundle\InformationCollectionBundle\Ibexa\RepositoryForms\InformationCollectionType;
 
 class InformationCollectionCollector extends DataCollector
 {
     /**
-     * @var \eZ\Publish\API\Repository\Repository
+     * @var \Ibexa\Contracts\Core\Repository\Repository
      */
     private $repository;
 
     /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper
+     * @var \Ibexa\Core\Helper\TranslationHelper
      */
     private $translationHelper;
 

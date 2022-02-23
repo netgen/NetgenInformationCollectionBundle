@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\EzPlatform\PolicyProvider;
+namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\PolicyProvider;
 
 use Netgen\InformationCollection\API\Permissions;
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ConfigBuilderInterface;
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Security\PolicyProvider\PolicyProviderInterface;
+use Ibexa\Bundle\Core\DependencyInjection\Configuration\ConfigBuilderInterface;
+use Ibexa\Bundle\Core\DependencyInjection\Security\PolicyProvider\PolicyProviderInterface;
 
 class InformationCollectionPolicyProvider implements PolicyProviderInterface
 {
     /**
-     * @param \eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ConfigBuilderInterface $configBuilder
+     * @param \Ibexa\Bundle\Core\DependencyInjection\Configuration\ConfigBuilderInterface $configBuilder
      *
      * @return array
      */

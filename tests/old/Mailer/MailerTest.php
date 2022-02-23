@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Mailer;
 
-use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFileValue;
+use Ibexa\Core\FieldType\BinaryFile\Value as BinaryFileValue;
 use Netgen\Bundle\InformationCollectionBundle\Mailer\Mailer;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 use PHPUnit\Framework\TestCase;

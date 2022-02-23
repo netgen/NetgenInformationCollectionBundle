@@ -42,7 +42,7 @@ Some simple email template would look like this:
     {% for field_name, field_value in collected_fields %}
         {% if content.fields[field_name] is defined and content.fields[field_name] is not empty %}
             <div class="label">
-                {{ ez_field_name(content, field_name) }}:
+                {{ ibexa_field_name(content, field_name) }}:
             </div>
             <div class="value">
                 {{ field_value }}

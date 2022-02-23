@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Service;
 
-use eZ\Publish\API\Repository\ContentTypeService;
-use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\Repository\ContentTypeService;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\InformationCollection\API\Service\CaptchaService as CaptchaServiceInterface;
 use Netgen\InformationCollection\API\Service\CaptchaValue;
 use Netgen\InformationCollection\API\Value\Captcha\ReCaptcha;
@@ -21,7 +21,7 @@ class CaptchaService implements CaptchaServiceInterface
     protected $config;
 
     /**
-     * @var \eZ\Publish\API\Repository\ContentTypeService
+     * @var \Ibexa\Contracts\Core\Repository\ContentTypeService
      */
     protected $contentTypeService;
     /**
@@ -32,7 +32,7 @@ class CaptchaService implements CaptchaServiceInterface
     /**
      * CaptchaService constructor.
      *
-     * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
+     * @param \Ibexa\Contracts\Core\Repository\ContentTypeService $contentTypeService
      * @param array $config
      */
     public function __construct(ContentTypeService $contentTypeService, ConfigResolverInterface $configResolver)
@@ -100,9 +100,9 @@ class CaptchaService implements CaptchaServiceInterface
     /**
      * Returns filtered config for current Location.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Location $location
      *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
      *
      * @return array
      */
@@ -118,7 +118,7 @@ class CaptchaService implements CaptchaServiceInterface
     /**
      * Returns filtered config for current ContentType.
      *
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
+     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType $contentType
      *
      * @return array
      */
@@ -134,7 +134,7 @@ class CaptchaService implements CaptchaServiceInterface
     /**
      * Checks if override exist for given ContentType.
      *
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
+     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType $contentType
      *
      * @return bool
      */
@@ -152,11 +152,11 @@ class CaptchaService implements CaptchaServiceInterface
     /**
      * Helper method for retrieving ContentType from Location.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Location $location
      *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
      *
-     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
+     * @return \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType
      */
     protected function getContentType(Location $location)
     {

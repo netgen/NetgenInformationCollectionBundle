@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests;
 
-use eZ\Publish\Core\MVC\Symfony\View\ContentValueView;
+use Ibexa\Core\MVC\Symfony\View\ContentValueView;
 
 class ContentViewStub implements ContentValueView
 {

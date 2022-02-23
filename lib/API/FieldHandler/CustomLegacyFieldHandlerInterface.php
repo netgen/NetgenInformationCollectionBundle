@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\FieldHandler;
 
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\FieldType\Value;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\FieldType\Value;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 
 interface CustomLegacyFieldHandlerInterface extends CustomFieldHandlerInterface
 {
     /**
-     * Transforms eZ field value to object persistable
+     * Transforms Ibexa field value to object persistable
      * in legacy information collection database structure.
      *
-     * @param \eZ\Publish\Core\FieldType\Value $value
-     * @param \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinition
+     * @param \Ibexa\Core\FieldType\Value $value
+     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition $fieldDefinition
      *
      * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */

@@ -2,14 +2,14 @@
 
 namespace Netgen\InformationCollection;
 
-use eZ\Publish\API\Repository\ContentTypeService;
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\ContentTypeService;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Netgen\InformationCollection\API\Events;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
-use Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\InformationCollectionMapper;
-use Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\InformationCollectionType;
+use Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InformationCollectionMapper;
+use Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InformationCollectionType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -22,7 +22,7 @@ final class Handler
     private $formFactory;
 
     /**
-     * @var \eZ\Publish\API\Repository\ContentTypeService
+     * @var \Ibexa\Contracts\Core\Repository\ContentTypeService
      */
     private $contentTypeService;
 

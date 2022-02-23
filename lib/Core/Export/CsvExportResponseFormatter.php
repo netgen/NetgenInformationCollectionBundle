@@ -2,9 +2,9 @@
 
 namespace Netgen\InformationCollection\Core\Export;
 
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\Core\Helper\TranslationHelper;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Core\Helper\TranslationHelper;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use League\Csv\Writer;
 use SplTempFileObject;
 use Netgen\InformationCollection\API\Export\ExportResponseFormatter;
@@ -14,20 +14,20 @@ use Symfony\Component\HttpFoundation\Response;
 final class CsvExportResponseFormatter implements ExportResponseFormatter
 {
     /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper
+     * @var \Ibexa\Core\Helper\TranslationHelper
      */
     private $translationHelper;
 
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     * @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
      */
     private $configResolver;
 
     /**
      * CsvExportResponseFormatter constructor.
      *
-     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
-     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
+     * @param \Ibexa\Core\Helper\TranslationHelper $translationHelper
+     * @param \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface $configResolver
      */
     public function __construct(TranslationHelper $translationHelper, ConfigResolverInterface $configResolver)
     {

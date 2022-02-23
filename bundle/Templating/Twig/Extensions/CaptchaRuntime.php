@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\InformationCollectionBundle\Templating\Twig\Extensions;
 
-use eZ\Publish\API\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Netgen\InformationCollection\API\Service\CaptchaService;
 
 class CaptchaRuntime
@@ -27,7 +27,7 @@ class CaptchaRuntime
     /**
      * Checks if captcha is enabled for given Location.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Location $location
      *
      * @return bool
      */
@@ -39,7 +39,7 @@ class CaptchaRuntime
     /**
      * Return configured site key for given Location.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Location $location
      *
      * @return string
      */

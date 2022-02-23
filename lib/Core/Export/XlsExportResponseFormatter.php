@@ -2,8 +2,8 @@
 
 namespace Netgen\InformationCollection\Core\Export;
 
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\Core\Helper\TranslationHelper;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Core\Helper\TranslationHelper;
 use Netgen\InformationCollection\API\Export\ExportResponseFormatter;
 use Netgen\InformationCollection\API\Value\Export\Export;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,14 +13,14 @@ use PhpOffice\PhpSpreadsheet\Writer\Xls;
 final class XlsExportResponseFormatter implements ExportResponseFormatter
 {
     /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper
+     * @var \Ibexa\Core\Helper\TranslationHelper
      */
     private $translationHelper;
 
     /**
      * XlsExportResponseFormatter constructor.
      *
-     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
+     * @param \Ibexa\Core\Helper\TranslationHelper $translationHelper
      */
     public function __construct(TranslationHelper $translationHelper)
     {

@@ -16,9 +16,9 @@ Field handler example:
     namespace Acme\Bundle\AcmeBundle\MyCustomFieldHandlers;
 
     use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
-    use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-    use eZ\Publish\Core\FieldType\Value;
-    use eZ\Publish\Core\FieldType\Integer\Value as IntegerValue;
+    use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+    use Ibexa\Core\FieldType\Value;
+    use Ibexa\Core\FieldType\Integer\Value as IntegerValue;
 
     class IntegerFieldHandler implements CustomFieldHandlerInterface
     {

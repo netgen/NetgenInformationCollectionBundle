@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\API\Value;
 
 use DateTimeInterface;
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\User\User;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\User\User;
 
 final class Collection extends ValueObject
 {
@@ -16,12 +16,12 @@ final class Collection extends ValueObject
     protected $id;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Content
+     * @var \Ibexa\Contracts\Core\Repository\Values\Content\Content
      */
     protected $content;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\User\User
+     * @var \Ibexa\Contracts\Core\Repository\Values\User\User
      */
     protected $creator;
 

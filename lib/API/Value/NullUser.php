@@ -2,16 +2,16 @@
 
 namespace Netgen\InformationCollection\API\Value;
 
-use eZ\Publish\Core\Repository\Values\Content\VersionInfo as CoreVersionInfo;
-use eZ\Publish\API\Repository\Values\Content\VersionInfo as APIVersionInfo;
-use eZ\Publish\Core\Repository\Values\User\User;
+use Ibexa\Core\Repository\Values\Content\VersionInfo as CoreVersionInfo;
+use Ibexa\Contracts\Core\Repository\Values\Content\VersionInfo as APIVersionInfo;
+use Ibexa\Core\Repository\Values\User\User;
 
 class NullUser extends User
 {
     /**
      * Returns the VersionInfo for this version.
      *
-     * @return \eZ\Publish\API\Repository\Values\Content\VersionInfo
+     * @return \Ibexa\Contracts\Core\Repository\Values\Content\VersionInfo
      */
     public function getVersionInfo(): APIVersionInfo
     {

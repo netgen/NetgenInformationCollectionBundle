@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value;
 
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use EzSystems\RepositoryForms\Data\Content\FieldData;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Contracts\ContentForms\Data\Content\FieldData;
 
 final class InformationCollectionStruct extends ValueObject
 {
@@ -19,22 +19,22 @@ final class InformationCollectionStruct extends ValueObject
     protected $languageCode;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Content
+     * @var \Ibexa\Contracts\Core\Repository\Values\Content\Content
      */
     protected $content;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\ContentType\ContentType
+     * @var \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType
      */
     protected $contentType;
 
     /**
-     * @var \EzSystems\RepositoryForms\Data\Content\FieldData[]
+     * @var \Ibexa\Contracts\ContentForms\Data\Content\FieldData[]
      */
     protected $fields;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Location
+     * @var \Ibexa\Contracts\Core\Repository\Values\Content\Location
      */
     private $location;
 
@@ -58,7 +58,7 @@ final class InformationCollectionStruct extends ValueObject
     }
 
     /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Content
+     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Content
      */
     public function getContent(): Content
     {
@@ -66,7 +66,7 @@ final class InformationCollectionStruct extends ValueObject
     }
 
     /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Location
+     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Location
      */
     public function getLocation(): Location
     {
@@ -74,7 +74,7 @@ final class InformationCollectionStruct extends ValueObject
     }
 
     /**
-     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
+     * @return \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType
      */
     public function getContentType(): ContentType
     {
@@ -82,7 +82,7 @@ final class InformationCollectionStruct extends ValueObject
     }
 
     /**
-     * @return \EzSystems\RepositoryForms\Data\Content\FieldData[]
+     * @return \Ibexa\Contracts\ContentForms\Data\Content\FieldData[]
      */
     public function getFieldsData(): array
     {
@@ -90,7 +90,7 @@ final class InformationCollectionStruct extends ValueObject
     }
 
     /**
-     * @return \EzSystems\RepositoryForms\Data\Content\FieldData[]
+     * @return \Ibexa\Contracts\ContentForms\Data\Content\FieldData[]
      */
     public function getCollectedFields(): array
     {

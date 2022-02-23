@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Persistence\Anonymizer;
 
-use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use Ibexa\Contracts\Core\Repository\Repository;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor;
 use Netgen\InformationCollection\API\Service\InformationCollection;
@@ -16,7 +16,7 @@ use Netgen\InformationCollection\API\Value\Attribute;
 class AnonymizerService implements Anonymizer
 {
     /**
-     * @var \eZ\Publish\API\Repository\Repository
+     * @var \Ibexa\Contracts\Core\Repository\Repository
      */
     protected $repository;
 
@@ -33,7 +33,7 @@ class AnonymizerService implements Anonymizer
     /**
      * Anonymizer constructor.
      *
-     * @param \eZ\Publish\API\Repository\Repository $repository
+     * @param \Ibexa\Contracts\Core\Repository\Repository $repository
      * @param \Netgen\InformationCollection\API\Service\InformationCollection $informationCollection
      * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor $fieldAnonymizerVisitor
      */
@@ -59,8 +59,8 @@ class AnonymizerService implements Anonymizer
      * @param \Netgen\InformationCollection\API\Value\Collection $collection
      * @param array $fields
      *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\UnauthorizedException
      */
     protected function destroyData(Collection $collection, array $fields = [])
     {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom;
 
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\FieldType\Time\Value as TimeValue;
-use eZ\Publish\Core\FieldType\Value;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\FieldType\Time\Value as TimeValue;
+use Ibexa\Core\FieldType\Value;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 
@@ -29,7 +29,7 @@ class TimeFieldHandler implements CustomLegacyFieldHandlerInterface
     }
 
     /**
-     * @param \eZ\Publish\Core\FieldType\Time\Value $value
+     * @param \Ibexa\Core\FieldType\Time\Value $value
      *
      * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */

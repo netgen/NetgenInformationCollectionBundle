@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Service;
 
-use eZ\Publish\API\Repository\Exceptions\NotFoundException;
-use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Values\User\UserReference;
+use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
+use Ibexa\Contracts\Core\Repository\Repository;
+use Ibexa\Contracts\Core\Repository\Values\User\UserReference;
 use Netgen\InformationCollection\API\Exception\PersistingFailedException;
 use Netgen\InformationCollection\API\Exception\StoringAttributeFailedException;
 use Netgen\InformationCollection\API\Exception\StoringCollectionFailedException;
@@ -47,7 +47,7 @@ class InformationCollectionService implements InformationCollection
     protected $ezInfoCollectionAttributeRepository;
 
     /**
-     * @var \eZ\Publish\API\Repository\Repository
+     * @var \Ibexa\Contracts\Core\Repository\Repository
      */
     protected $repository;
 
@@ -71,7 +71,7 @@ class InformationCollectionService implements InformationCollection
      *
      * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository $ezInfoCollectionRepository
      * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository
-     * @param \eZ\Publish\API\Repository\Repository $repository
+     * @param \Ibexa\Contracts\Core\Repository\Repository $repository
      * @param \Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase $gateway
      */
     public function __construct(
@@ -306,7 +306,7 @@ class InformationCollectionService implements InformationCollection
      * @param int $userId
      * @param mixed $userId
      *
-     * @return \eZ\Publish\API\Repository\Values\User\User
+     * @return \Ibexa\Contracts\Core\Repository\Values\User\User
      */
     protected function getUser($userId)
     {

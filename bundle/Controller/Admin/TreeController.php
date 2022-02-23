@@ -2,8 +2,8 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
-use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
-use eZ\Bundle\EzPublishCoreBundle\Controller;
+use Ibexa\Core\MVC\Symfony\Security\Authorization\Attribute;
+use Ibexa\Bundle\Core\Controller;
 use Netgen\InformationCollection\API\Service\InformationCollection;
 use Netgen\InformationCollection\API\Value\Content;
 use Netgen\InformationCollection\API\Value\Filter\ContentId;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms;
+namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\RepositoryForms;
 
-use EzSystems\EzPlatformAdminUi\Form\Type\FieldDefinition\FieldDefinitionType;
+use Ibexa\AdminUi\Form\Type\FieldDefinition\FieldDefinitionType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;

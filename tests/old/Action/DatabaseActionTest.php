@@ -3,17 +3,17 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Action;
 
 use Doctrine\DBAL\DBALException;
-use eZ\Publish\API\Repository\Values\Content\Field;
-use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
-use eZ\Publish\Core\Repository\ContentService;
-use eZ\Publish\Core\Repository\Repository;
-use eZ\Publish\Core\Repository\Values\Content\Content;
-use eZ\Publish\Core\Repository\Values\Content\Location;
-use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
-use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
-use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\Repository\Values\User\User;
-use eZ\Publish\SPI\Persistence\Content\ContentInfo;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
+use Ibexa\Core\FieldType\TextLine\Value as TextLineValue;
+use Ibexa\Core\Repository\ContentService;
+use Ibexa\Core\Repository\Repository;
+use Ibexa\Core\Repository\Values\Content\Content;
+use Ibexa\Core\Repository\Values\Content\Location;
+use Ibexa\Core\Repository\Values\Content\VersionInfo;
+use Ibexa\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\Repository\Values\User\User;
+use Ibexa\Contracts\Core\Persistence\Content\ContentInfo;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction;
@@ -51,7 +51,7 @@ class DatabaseActionTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $ezRepository;
+    protected $ibexaRepository;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -95,7 +95,7 @@ class DatabaseActionTest extends TestCase
             ->setMethods(array('getInstance', 'save'))
             ->getMock();
 
-        $this->ezRepository = $this->getMockBuilder(Repository::class)
+        $this->ibexaRepository = $this->getMockBuilder(Repository::class)
             ->disableOriginalConstructor()
             ->setMethods(array('getContentService', 'getCurrentUser'))
             ->getMock();
@@ -160,7 +160,7 @@ class DatabaseActionTest extends TestCase
 
         $this->legacyData = new LegacyData(123, 0, 0.0, 'some value');
 
-        $this->action = new DatabaseAction($this->factory, $this->repository, $this->secondRepository, $this->ezRepository);
+        $this->action = new DatabaseAction($this->factory, $this->repository, $this->secondRepository, $this->ibexaRepository);
         parent::setUp();
     }
 
@@ -198,7 +198,7 @@ class DatabaseActionTest extends TestCase
         $ezInfoCollection = new EzInfoCollection();
         $ezInfoCollectionAttribute = new EzInfoCollectionAttribute();
 
-        $this->ezRepository->expects($this->once())
+        $this->ibexaRepository->expects($this->once())
             ->method('getContentService')
             ->willReturn($this->contentService);
 
@@ -207,7 +207,7 @@ class DatabaseActionTest extends TestCase
             ->with(123)
             ->willReturn($content);
 
-        $this->ezRepository->expects($this->once())
+        $this->ibexaRepository->expects($this->once())
             ->method('getCurrentUser')
             ->willReturn($user);
 
@@ -270,7 +270,7 @@ class DatabaseActionTest extends TestCase
 
         $ezInfoCollection = new EzInfoCollection();
 
-        $this->ezRepository->expects($this->once())
+        $this->ibexaRepository->expects($this->once())
             ->method('getContentService')
             ->willReturn($this->contentService);
 
@@ -279,7 +279,7 @@ class DatabaseActionTest extends TestCase
             ->with(123)
             ->willReturn($content);
 
-        $this->ezRepository->expects($this->once())
+        $this->ibexaRepository->expects($this->once())
             ->method('getCurrentUser')
             ->willReturn($user);
 
@@ -341,7 +341,7 @@ class DatabaseActionTest extends TestCase
         $ezInfoCollection = new EzInfoCollection();
         $ezInfoCollectionAttribute = new EzInfoCollectionAttribute();
 
-        $this->ezRepository->expects($this->once())
+        $this->ibexaRepository->expects($this->once())
             ->method('getContentService')
             ->willReturn($this->contentService);
 
@@ -350,7 +350,7 @@ class DatabaseActionTest extends TestCase
             ->with(123)
             ->willReturn($content);
 
-        $this->ezRepository->expects($this->once())
+        $this->ibexaRepository->expects($this->once())
             ->method('getCurrentUser')
             ->willReturn($user);
 

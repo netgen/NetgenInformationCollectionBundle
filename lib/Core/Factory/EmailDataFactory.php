@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Factory;
 
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\InformationCollection\Core\Action\EmailAction;
 use function array_key_exists;
-use eZ\Publish\API\Repository\Values\Content\Field;
-use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
-use eZ\Publish\Core\Helper\FieldHelper;
-use eZ\Publish\Core\Helper\TranslationHelper;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
+use Ibexa\Core\FieldType\BinaryFile\Value as BinaryFile;
+use Ibexa\Core\Helper\FieldHelper;
+use Ibexa\Core\Helper\TranslationHelper;
 use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
 use Netgen\InformationCollection\API\Constants;
 use Netgen\InformationCollection\API\ConfigurationConstants;
@@ -29,12 +29,12 @@ class EmailDataFactory extends BaseEmailDataFactory
     protected $configResolver;
 
     /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper
+     * @var \Ibexa\Core\Helper\TranslationHelper
      */
     protected $translationHelper;
 
     /**
-     * @var \eZ\Publish\Core\Helper\FieldHelper
+     * @var \Ibexa\Core\Helper\FieldHelper
      */
     protected $fieldHelper;
 
@@ -47,8 +47,8 @@ class EmailDataFactory extends BaseEmailDataFactory
      * EmailDataFactory constructor.
      *
      * @param array $config
-     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
-     * @param \eZ\Publish\Core\Helper\FieldHelper $fieldHelper
+     * @param \Ibexa\Core\Helper\TranslationHelper $translationHelper
+     * @param \Ibexa\Core\Helper\FieldHelper $fieldHelper
      * @param \Twig\Environment $twig
      */
     public function __construct(

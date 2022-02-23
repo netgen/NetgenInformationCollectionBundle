@@ -5,7 +5,7 @@
     to be able to inject additional markup before and after its
     content block.
 #}
-{% embed ['@EzPlatformAdminUi/layout.html.twig', '@ezdesign/ui/layout.html.twig'] %}
+{% embed '@ibexadesign/ui/layout.html.twig' %}
     {% trans_default_domain 'netgen_information_collection_admin' %}
 
     {% block title %}{{ 'pagelayout.title'|trans }}{% endblock %}
@@ -16,7 +16,7 @@
         {{ parent() }}
 
         {% include '@NetgenInformationCollection/admin/stylesheets.html.twig' %}
-        {% include '@NetgenInformationCollection/ezadminui/stylesheets.html.twig' %}
+        {% include '@NetgenInformationCollection/ibexa/admin/stylesheets.html.twig' %}
     {% endblock %}
 
     {% block javascripts %}

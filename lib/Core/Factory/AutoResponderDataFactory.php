@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Core\Factory;
 
 use function array_key_exists;
-use eZ\Publish\API\Repository\Values\Content\Field;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
 use Netgen\InformationCollection\API\Constants;
 use Netgen\InformationCollection\API\ConfigurationConstants;
 use Netgen\InformationCollection\API\Exception\MissingValueException;

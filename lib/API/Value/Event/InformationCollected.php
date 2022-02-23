@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value\Event;
 
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -24,7 +24,7 @@ final class InformationCollected extends Event
     protected $options;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Location
+     * @var \Ibexa\Contracts\Core\Repository\Values\Content\Location
      */
     protected $location;
 
@@ -32,7 +32,7 @@ final class InformationCollected extends Event
      * InformationCollected constructor.
      *
      * @param \Netgen\InformationCollection\API\Value\InformationCollectionStruct $struct
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Location $location
      * @param array $options
      */
     public function __construct(
@@ -56,7 +56,7 @@ final class InformationCollected extends Event
     /**
      * Return ContentType.
      *
-     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
+     * @return \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType
      */
     public function getContentType(): ContentType
     {
@@ -67,7 +67,7 @@ final class InformationCollected extends Event
     /**
      * Return Location.
      *
-     * @return \eZ\Publish\API\Repository\Values\Content\Content
+     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Content
      */
     public function getContent(): Content
     {
@@ -76,7 +76,7 @@ final class InformationCollected extends Event
     }
 
     /**
-     * @return \eZ\Publish\API\Repository\Values\Content\ContentInfo
+     * @return \Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo
      */
     public function getContentInfo(): ContentInfo
     {
@@ -86,7 +86,7 @@ final class InformationCollected extends Event
     }
 
     /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Location
+     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Location
      */
     public function getLocation(): Location
     {

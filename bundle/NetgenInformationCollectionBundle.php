@@ -2,8 +2,8 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle;
 
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\EzPublishCoreExtension;
-use Netgen\Bundle\InformationCollectionBundle\EzPlatform\PolicyProvider\InformationCollectionPolicyProvider;
+use Ibexa\Bundle\Core\DependencyInjection\IbexaCoreExtension;
+use Netgen\Bundle\InformationCollectionBundle\Ibexa\PolicyProvider\InformationCollectionPolicyProvider;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -16,8 +16,8 @@ class NetgenInformationCollectionBundle extends Bundle
     {
         parent::build($container);
 
-        $eZExtension = $container->getExtension('ezpublish');
-        if ($eZExtension instanceof EzPublishCoreExtension) {
+        $eZExtension = $container->getExtension('ibexa');
+        if ($eZExtension instanceof IbexaCoreExtension) {
             $eZExtension->addPolicyProvider(new InformationCollectionPolicyProvider());
         }
     }
