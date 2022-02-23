@@ -9,7 +9,7 @@ services:
 
     netgen_information_collection.controller.admin:
         class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\AdminController
-        parent: ibexa.controller.base
+        parent: Ibexa\Core\MVC\Symfony\Controller\Controller
         public: true
         arguments:
             - "@netgen_information_collection.api.service"
@@ -32,7 +32,7 @@ services:
 
     netgen_information_collection.controller.tree:
         class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\TreeController
-        parent: ibexa.controller.base
+        parent: Ibexa\Core\MVC\Symfony\Controller\Controller
         public: true
         arguments:
             - "@netgen_information_collection.api.service"
