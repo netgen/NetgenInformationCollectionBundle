@@ -4,8 +4,8 @@ namespace Netgen\Bundle\InformationCollectionBundle\Tests\Controller;
 
 use Ibexa\Core\MVC\Symfony\View\ContentView;
 use Ibexa\Core\Repository\Values\Content\Location;
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
-use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use Netgen\Bundle\InformationCollectionBundle\Tests\ContentViewStub;

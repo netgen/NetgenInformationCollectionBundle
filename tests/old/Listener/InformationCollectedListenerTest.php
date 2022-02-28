@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Listener;
 
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Events;

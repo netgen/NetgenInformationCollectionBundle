@@ -10,7 +10,7 @@ How to override something on info collector form
     namespace Acme\Form;
 
     use Acme\Validator\Constraints\MyValidator;
-    use Netgen\Bundle\EzFormsBundle\Form\Type\InformationCollectionType;
+    use Netgen\Bundle\IbexaFormsBundle\Form\Type\InformationCollectionType;
     use Netgen\Bundle\EzPlatformSiteApiBundle\View\ContentValueView;
     use Symfony\Component\Form\AbstractTypeExtension;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -66,4 +66,4 @@ How to override something on info collector form
         arguments:
             - '@request_stack'
         tags:
-            - { name: form.type_extension, extended_type: Netgen\Bundle\EzFormsBundle\Form\Type\InformationCollectionType }
+            - { name: form.type_extension, extended_type: Netgen\Bundle\IbexaFormsBundle\Form\Type\InformationCollectionType }

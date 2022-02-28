@@ -2,8 +2,8 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Action;
 
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
-use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Action\EmailAction;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException;

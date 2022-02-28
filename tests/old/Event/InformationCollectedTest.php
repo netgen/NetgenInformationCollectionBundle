@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Event;
 
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use PHPUnit\Framework\TestCase;
 

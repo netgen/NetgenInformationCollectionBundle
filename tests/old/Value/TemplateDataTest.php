@@ -3,7 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Value;
 
 use Ibexa\Core\Repository\Values\Content\Content;
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
 use PHPUnit\Framework\TestCase;

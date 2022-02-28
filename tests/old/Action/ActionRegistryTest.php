@@ -3,7 +3,7 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Action;
 
 use Ibexa\Core\Repository\Values\ContentType\ContentType;
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Action\ActionInterface;
 use Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;

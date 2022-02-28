@@ -14,7 +14,7 @@ use Ibexa\Core\Repository\Values\ContentType\ContentType;
 use Ibexa\Core\Repository\Values\ContentType\FieldDefinition;
 use Ibexa\Core\Repository\Values\User\User;
 use Ibexa\Contracts\Core\Persistence\Content\ContentInfo;
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
