@@ -4,7 +4,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollectedInterface;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use Netgen\Bundle\InformationCollectionBundle\Priority;
 use Psr\Log\LoggerInterface;
@@ -62,7 +62,7 @@ class ActionRegistry
         );
     }
 
-    public function act(InformationCollected $event)
+    public function act(InformationCollectedInterface $event)
     {
         $this->prepareActions();
         $config = $this->prepareConfig($event->getContentType()->identifier);

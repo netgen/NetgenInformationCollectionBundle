@@ -3,8 +3,10 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollectedInterface;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use Netgen\Bundle\InformationCollectionBundle\Factory\AutoResponderDataFactory;
+use Netgen\Bundle\InformationCollectionBundle\Factory\FactoryInterface;
 use Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface;
 use Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException;
 
@@ -16,17 +18,17 @@ class AutoResponderAction implements ActionInterface
     protected $mailer;
 
     /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Factory\AutoResponderDataFactory
+     * @var \Netgen\Bundle\InformationCollectionBundle\Factory\FactoryInterface
      */
     protected $factory;
 
     /**
      * AutoResponderAction constructor.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\Factory\AutoResponderDataFactory $factory
+     * @param \Netgen\Bundle\InformationCollectionBundle\Factory\FactoryInterface $factory
      * @param \Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface $mailer
      */
-    public function __construct(AutoResponderDataFactory $factory, MailerInterface $mailer)
+    public function __construct(FactoryInterface $factory, MailerInterface $mailer)
     {
         $this->mailer = $mailer;
         $this->factory = $factory;
@@ -35,7 +37,7 @@ class AutoResponderAction implements ActionInterface
     /**
      * {@inheritdoc}
      */
-    public function act(InformationCollected $event)
+    public function act(InformationCollectedInterface $event)
     {
         $emailData = $this->factory->build($event);
 

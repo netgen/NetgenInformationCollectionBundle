@@ -9,7 +9,7 @@ use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Symfony\Component\EventDispatcher\Event;
 
-class InformationCollected extends Event
+class InformationCollected extends Event implements InformationCollectedInterface
 {
     /**
      * @var DataWrapper
@@ -67,7 +67,7 @@ class InformationCollected extends Event
      * Returns additional content
      * This can be ez content or site api content.
      *
-     * @return Content
+     * @return Content|null
      */
     public function getAdditionalContent()
     {

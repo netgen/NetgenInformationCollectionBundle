@@ -9,6 +9,7 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\Constants;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollectedInterface;
 use Netgen\Bundle\InformationCollectionBundle\Exception\MissingValueException;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
@@ -16,7 +17,7 @@ use Twig_Environment;
 use function array_key_exists;
 use function trim;
 
-class AutoResponderDataFactory extends EmailDataFactory
+class AutoResponderDataFactory extends EmailDataFactory implements FactoryInterface
 {
     /**
      * EmailDataFactory constructor.
@@ -45,11 +46,11 @@ class AutoResponderDataFactory extends EmailDataFactory
     /**
      * Factory method.
      *
-     * @param InformationCollected $value
+     * @param InformationCollectedInterface $value
      *
      * @return EmailData
      */
-    public function build(InformationCollected $value)
+    public function build(InformationCollectedInterface $value)
     {
         $location = $value->getLocation();
         $contentType = $value->getContentType();

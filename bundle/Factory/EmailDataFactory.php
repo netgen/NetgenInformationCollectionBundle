@@ -9,7 +9,7 @@ use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\Constants;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
+use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollectedInterface;
 use Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailBlockException;
 use Netgen\Bundle\InformationCollectionBundle\Exception\MissingValueException;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
@@ -18,7 +18,7 @@ use Twig_Environment;
 use function array_key_exists;
 use function trim;
 
-class EmailDataFactory
+class EmailDataFactory implements FactoryInterface
 {
     /**
      * @var array
@@ -77,11 +77,11 @@ class EmailDataFactory
     /**
      * Factory method.
      *
-     * @param InformationCollected $value
+     * @param InformationCollectedInterface $value
      *
      * @return EmailData
      */
-    public function build(InformationCollected $value)
+    public function build(InformationCollectedInterface $value)
     {
         $location = $value->getLocation();
         $contentType = $value->getContentType();
