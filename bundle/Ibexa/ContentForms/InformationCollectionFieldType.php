@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\RepositoryForms;
+namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms;
 
 use Ibexa\Contracts\ContentForms\Data\Content\FieldData;
 use Ibexa\ContentForms\FieldType\FieldTypeFormMapperDispatcherInterface;

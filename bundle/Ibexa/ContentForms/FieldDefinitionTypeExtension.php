@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\RepositoryForms;
+namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms;
 
 use Ibexa\AdminUi\Form\Type\FieldDefinition\FieldDefinitionType;
 use Symfony\Component\Form\AbstractTypeExtension;
