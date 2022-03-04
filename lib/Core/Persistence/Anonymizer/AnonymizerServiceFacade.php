@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Persistence\Anonymizer;
 
-use DateTime;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\InformationCollection\Core\Persistence\ContentTypeUtils;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
 use OutOfBoundsException;
+use function count;
 
 final class AnonymizerServiceFacade
 {
@@ -27,13 +27,6 @@ final class AnonymizerServiceFacade
      */
     private $ezInfoCollectionRepository;
 
-    /**
-     * AnonymizerServiceFacade constructor.
-     *
-     * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer $anonymizer
-     * @param \Netgen\InformationCollection\Core\Persistence\ContentTypeUtils $contentTypeUtils
-     * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository $ezInfoCollectionRepository
-     */
     public function __construct(
         Anonymizer $anonymizer,
         ContentTypeUtils $contentTypeUtils,
@@ -73,9 +66,6 @@ final class AnonymizerServiceFacade
     /**
      * Map field id's to list of field identifiers.
      *
-     * @param int $contentId
-     * @param array $fieldIdentifiers
-     *
      * @return array
      */
     private function getFieldIds(int $contentId, array $fieldIdentifiers)
@@ -92,7 +82,7 @@ final class AnonymizerServiceFacade
         return $ids;
     }
 
-    private function getCollections($contentId, \DateTimeImmutable $date = null)
+    private function getCollections($contentId, ?\DateTimeImmutable $date = null)
     {
         if (null === $date) {
             $collections = $this->ezInfoCollectionRepository->findByContentId($contentId);

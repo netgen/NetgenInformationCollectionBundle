@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Core\Action;
 
 use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\InformationCollection\API\Action\ActionInterface;
 use OutOfBoundsException;
-use function sprintf;
 use function in_array;
+use function sprintf;
 
 final class ConfigurationUtility
 {
@@ -60,10 +62,6 @@ final class ConfigurationUtility
     /**
      * Returns configuration for given content type identifier if exists
      * or default one.
-     *
-     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType $contentType
-     *
-     * @return array
      */
     public function getConfigPerContentType(ContentType $contentType): array
     {

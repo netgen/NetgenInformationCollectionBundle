@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value;
 
+use Ibexa\Contracts\ContentForms\Data\Content\FieldData;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
-use Ibexa\Contracts\ContentForms\Data\Content\FieldData;
 
 final class InformationCollectionStruct extends ValueObject
 {
@@ -49,33 +49,21 @@ final class InformationCollectionStruct extends ValueObject
         $this->location = $location;
     }
 
-    /**
-     * @return string
-     */
     public function getLanguageCode(): string
     {
         return $this->content->contentInfo->mainLanguageCode;
     }
 
-    /**
-     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Content
-     */
     public function getContent(): Content
     {
         return $this->content;
     }
 
-    /**
-     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Location
-     */
     public function getLocation(): Location
     {
         return $this->location;
     }
 
-    /**
-     * @return \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType
-     */
     public function getContentType(): ContentType
     {
         return $this->contentType;
@@ -94,7 +82,7 @@ final class InformationCollectionStruct extends ValueObject
      */
     public function getCollectedFields(): array
     {
-       return $this->fields;
+        return $this->fields;
     }
 
     protected function addFieldData(FieldData $fieldData)

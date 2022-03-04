@@ -28,25 +28,16 @@ final class CollectionFields
         $this->fields = $fields;
     }
 
-    /**
-     * @return int
-     */
     public function getContentId(): int
     {
         return $this->contentId;
     }
 
-    /**
-     * @return int
-     */
     public function getCollectionId(): int
     {
         return $this->collectionId;
     }
 
-    /**
-     * @return array
-     */
     public function getFields(): array
     {
         return $this->fields;

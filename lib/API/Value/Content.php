@@ -55,49 +55,31 @@ final class Content extends ValueObject
         $this->childCount = $childCount;
     }
 
-    /**
-     * @return APIContent
-     */
     public function getContent(): APIContent
     {
         return $this->content;
     }
 
-    /**
-     * @return ContentType
-     */
     public function getContentType(): ContentType
     {
         return $this->contentType;
     }
 
-    /**
-     * @return Collection
-     */
     public function getFirstCollection(): Collection
     {
         return $this->firstCollection;
     }
 
-    /**
-     * @return Collection
-     */
     public function getLastCollection(): Collection
     {
         return $this->lastCollection;
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->childCount;
     }
 
-    /**
-     * @return bool
-     */
     public function hasLocation(): bool
     {
         return $this->hasLocation;

@@ -6,7 +6,6 @@ namespace Netgen\InformationCollection\Core\Persistence\Anonymizer\Visitor\Field
 
 use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor;
-use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
 use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\AttributeValue;
 

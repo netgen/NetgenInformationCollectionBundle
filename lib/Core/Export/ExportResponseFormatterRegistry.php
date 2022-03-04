@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Core\Export;
 
 use Netgen\InformationCollection\API\Export\ExportResponseFormatter;
 use RuntimeException;
+use function sprintf;
 
 final class ExportResponseFormatterRegistry
 {
     /**
      * @var \Netgen\InformationCollection\API\Export\ExportResponseFormatter[]
      */
-    protected $exportResponseFormatters;
+    private $exportResponseFormatters;
 
     /**
-     * ExportResponseFormatterRegistry constructor.
-     *
      * @param \Netgen\InformationCollection\API\Export\ExportResponseFormatter[] $exportResponseFormatters
      */
     public function __construct(iterable $exportResponseFormatters)
@@ -24,8 +25,6 @@ final class ExportResponseFormatterRegistry
 
     /**
      * @param string $identifier
-     *
-     * @return \Netgen\InformationCollection\API\Export\ExportResponseFormatter
      */
     public function getExportResponseFormatter($identifier): ExportResponseFormatter
     {

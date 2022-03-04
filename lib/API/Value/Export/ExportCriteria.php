@@ -21,9 +21,6 @@ final class ExportCriteria extends FilterCriteria
         $this->exportIdentifier = $exportIdentifier;
     }
 
-    /**
-     * @return string
-     */
     public function getExportIdentifier(): string
     {
         return $this->exportIdentifier;

@@ -19,11 +19,6 @@ abstract class BaseAdapter implements AdapterInterface
      */
     protected $informationCollectionService;
 
-    /**
-     * InformationCollectionCollectionListAdapter constructor.
-     *
-     * @param \Netgen\InformationCollection\API\Service\InformationCollection $informationCollectionService
-     */
     public function __construct(InformationCollection $informationCollectionService)
     {
         $this->informationCollectionService = $informationCollectionService;

@@ -38,33 +38,21 @@ class FieldValue extends ValueObject
         $this->dataText = $dataText;
     }
 
-    /**
-     * @return int
-     */
     public function getFieldDefinitionId(): int
     {
         return $this->fieldDefinitionId;
     }
 
-    /**
-     * @return float
-     */
     public function getDataFloat(): float
     {
         return $this->dataFloat;
     }
 
-    /**
-     * @return int
-     */
     public function getDataInt(): int
     {
         return $this->dataInt;
     }
 
-    /**
-     * @return string
-     */
     public function getDataText(): string
     {
         return $this->dataText;

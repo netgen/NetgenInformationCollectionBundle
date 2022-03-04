@@ -28,17 +28,11 @@ class SearchQuery extends Query
         return new self($contentId, $searchText, 0, 0);
     }
 
-    /**
-     * @return int
-     */
     public function getContentId(): int
     {
         return $this->contentId;
     }
 
-    /**
-     * @return string
-     */
     public function getSearchText(): string
     {
         return $this->searchText;

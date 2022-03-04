@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\EmailDataProvider;
 
@@ -14,8 +15,6 @@ class AutoResponderProvider implements EmailDataProviderInterface
         $email = new Email();
 
         $headers = $email->getHeaders();
-
-        $header = new Header
         $headers->add('Content-Type', '');
 
         return $email;

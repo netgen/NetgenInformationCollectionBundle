@@ -18,11 +18,6 @@ class FieldDataFactory
      */
     protected $registry;
 
-    /**
-     * FieldDataFactory constructor.
-     *
-     * @param \Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegistry $registry
-     */
     public function __construct(FieldHandlerRegistry $registry)
     {
         $this->registry = $registry;
@@ -30,11 +25,6 @@ class FieldDataFactory
 
     /**
      * Returns value object that represents legacy value.
-     *
-     * @param \Ibexa\Core\FieldType\Value $value
-     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition $fieldDefinition
-     *
-     * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {

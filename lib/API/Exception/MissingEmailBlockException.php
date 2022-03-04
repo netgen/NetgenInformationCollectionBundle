@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\API\Exception;
 
 use RuntimeException;
+use function count;
+use function implode;
 
 class MissingEmailBlockException extends RuntimeException
 {
-    /**
-     * MissingEmailBlockException constructor.
-     *
-     * @param string $template
-     * @param array $blocks
-     */
     public function __construct(string $template, array $blocks)
     {
         $blocksCount = count($blocks);

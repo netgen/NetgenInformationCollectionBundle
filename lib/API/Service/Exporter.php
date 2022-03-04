@@ -11,10 +11,6 @@ interface Exporter
 {
     /**
      * Generate Export for given ExportCriteria.
-     *
-     * @param \Netgen\InformationCollection\API\Value\Export\ExportCriteria $criteria
-     *
-     * @return \Netgen\InformationCollection\API\Value\Export\Export
      */
     public function export(ExportCriteria $criteria): Export;
 }

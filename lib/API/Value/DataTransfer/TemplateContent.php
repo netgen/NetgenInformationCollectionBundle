@@ -21,37 +21,22 @@ class TemplateContent extends ValueObject
      */
     protected $templateWrapper;
 
-    /**
-     * TemplateData constructor.
-     *
-     * @param \Netgen\InformationCollection\API\Value\Event\InformationCollected $event
-     * @param \Twig\TemplateWrapper $templateWrapper
-     */
     public function __construct(InformationCollected $event, TemplateWrapper $templateWrapper)
     {
         $this->event = $event;
         $this->templateWrapper = $templateWrapper;
     }
 
-    /**
-     * @return \Netgen\InformationCollection\API\Value\Event\InformationCollected
-     */
     public function getEvent(): InformationCollected
     {
         return $this->event;
     }
 
-    /**
-     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Content
-     */
     public function getContent(): Content
     {
         return $this->event->getContent();
     }
 
-    /**
-     * @return \Twig\TemplateWrapper
-     */
     public function getTemplateWrapper(): TemplateWrapper
     {
         return $this->templateWrapper;

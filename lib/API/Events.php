@@ -42,6 +42,4 @@ final class Events
      * The BEFORE_AUTO_RESPONDER_ACTION event occurs when the auto responder action has started executing, Email data was prepared but email itself is still not sent.
      */
     public const BEFORE_AUTO_RESPONDER_ACTION = 'netgen_information_collection.events.before_auto_responder_action';
-
 }
-

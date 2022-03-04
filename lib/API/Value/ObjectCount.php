@@ -13,9 +13,6 @@ class ObjectCount extends ValueObject
         $this->count = $count;
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->count;

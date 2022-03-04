@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\API\Value\Event;
 
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
-use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -28,13 +28,6 @@ final class InformationCollected extends Event
      */
     protected $location;
 
-    /**
-     * InformationCollected constructor.
-     *
-     * @param \Netgen\InformationCollection\API\Value\InformationCollectionStruct $struct
-     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Location $location
-     * @param array $options
-     */
     public function __construct(
         InformationCollectionStruct $struct,
         array $options
@@ -45,8 +38,6 @@ final class InformationCollected extends Event
 
     /**
      * Return collected data.
-     *
-     * @return \Netgen\InformationCollection\API\Value\InformationCollectionStruct
      */
     public function getInformationCollectionStruct(): InformationCollectionStruct
     {
@@ -55,8 +46,6 @@ final class InformationCollected extends Event
 
     /**
      * Return ContentType.
-     *
-     * @return \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType
      */
     public function getContentType(): ContentType
     {
@@ -66,8 +55,6 @@ final class InformationCollected extends Event
 
     /**
      * Return Location.
-     *
-     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Content
      */
     public function getContent(): Content
     {
@@ -75,9 +62,6 @@ final class InformationCollected extends Event
             ->getContent();
     }
 
-    /**
-     * @return \Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo
-     */
     public function getContentInfo(): ContentInfo
     {
         return $this->struct
@@ -85,9 +69,6 @@ final class InformationCollected extends Event
             ->contentInfo;
     }
 
-    /**
-     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Location
-     */
     public function getLocation(): Location
     {
         return $this->struct
@@ -95,9 +76,7 @@ final class InformationCollected extends Event
     }
 
     /**
-     * Returns options
-     *
-     * @return array
+     * Returns options.
      */
     public function getOptions(): array
     {

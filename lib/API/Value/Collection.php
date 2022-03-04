@@ -50,41 +50,26 @@ final class Collection extends ValueObject
         $this->attributes = $attributes;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return Content
-     */
     public function getContent(): Content
     {
         return $this->content;
     }
 
-    /**
-     * @return User
-     */
     public function getCreator(): User
     {
         return $this->creator;
     }
 
-    /**
-     * @return \DateTimeInterface
-     */
     public function getCreated(): DateTimeInterface
     {
         return $this->created;
     }
 
-    /**
-     * @return \DateTimeInterface
-     */
     public function getModified(): DateTimeInterface
     {
         return $this->modified;

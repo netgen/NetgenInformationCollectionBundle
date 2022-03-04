@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection;
 
 use Ibexa\Contracts\Core\Repository\ContentTypeService;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InformationCollectionMapper;
+use Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InformationCollectionType;
 use Netgen\InformationCollection\API\Events;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
-use Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InformationCollectionMapper;
-use Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InformationCollectionType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;

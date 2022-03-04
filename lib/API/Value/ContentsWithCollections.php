@@ -30,9 +30,6 @@ class ContentsWithCollections extends ValueObject
         return $this->contents;
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->count;

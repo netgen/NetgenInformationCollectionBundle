@@ -29,8 +29,6 @@ class ExportType extends AbstractType implements DataMapperInterface
     protected $exportResponseFormatterRegistry;
 
     /**
-     * ExportType constructor.
-     *
      * @param \Netgen\InformationCollection\Core\Export\ExportResponseFormatterRegistry $exportResponseFormatterRegistry
      */
     public function __construct(ExportResponseFormatterRegistry $exportResponseFormatterRegistry)

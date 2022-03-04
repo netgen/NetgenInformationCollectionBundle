@@ -18,8 +18,6 @@ class Aggregate extends FieldAnonymizerVisitor
     protected $visitors;
 
     /**
-     * Aggregate constructor.
-     *
      * @param array $visitors
      */
     public function __construct(iterable $visitors)
@@ -27,9 +25,6 @@ class Aggregate extends FieldAnonymizerVisitor
         $this->visitors = $visitors;
     }
 
-    /**
-     * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor $visitor
-     */
     public function addVisitor(FieldAnonymizerVisitor $visitor)
     {
         $this->visitors[] = $visitor;

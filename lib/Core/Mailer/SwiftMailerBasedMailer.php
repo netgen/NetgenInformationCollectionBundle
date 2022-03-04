@@ -15,11 +15,6 @@ class SwiftMailerBasedMailer implements MailerInterface
      */
     protected $internalMailer;
 
-    /**
-     * Mailer constructor.
-     *
-     * @param \Swift_Mailer $internalMailer
-     */
     public function __construct(\Swift_Mailer $internalMailer)
     {
         $this->internalMailer = $internalMailer;

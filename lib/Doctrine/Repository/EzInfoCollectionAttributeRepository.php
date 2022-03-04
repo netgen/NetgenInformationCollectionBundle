@@ -19,6 +19,8 @@ use Netgen\InformationCollection\API\Value\Filter\CollectionId;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
+use function array_column;
+use function mb_strtolower;
 
 class EzInfoCollectionAttributeRepository extends EntityRepository
 {
@@ -55,8 +57,6 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
     /**
      * Save object.
      *
-     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute $infoCollectionAttribute
-     *
      * @throws StoringAttributeFailedException
      */
     public function save(EzInfoCollectionAttribute $infoCollectionAttribute)
@@ -64,7 +64,7 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
         try {
             $this->_em->persist($infoCollectionAttribute);
             $this->_em->flush($infoCollectionAttribute);
-        } catch (ORMException | ORMInvalidArgumentException $exception) {
+        } catch (ORMException|ORMInvalidArgumentException $exception) {
             throw new StoringAttributeFailedException('', '');
         }
     }
@@ -82,8 +82,8 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
             }
 
             $this->_em->flush();
-        } catch (ORMException | ORMInvalidArgumentException $exception) {
-            throw  new RemoveAttributeFailedException('', '');
+        } catch (ORMException|ORMInvalidArgumentException $exception) {
+            throw new RemoveAttributeFailedException('', '');
         }
     }
 
@@ -139,7 +139,7 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
                 ->select('COUNT(eica) as children_count')
                 ->getQuery()
                 ->getSingleScalarResult();
-        } catch (NonUniqueResultException | NoResultException $exception) {
+        } catch (NonUniqueResultException|NoResultException $exception) {
             throw new RetrieveCountException('', '');
         }
     }

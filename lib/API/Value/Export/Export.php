@@ -24,17 +24,11 @@ class Export extends ValueObject
         $this->contents = $contents;
     }
 
-    /**
-     * @return array
-     */
     public function getContents(): array
     {
         return $this->contents;
     }
 
-    /**
-     * @return array
-     */
     public function getHeader(): array
     {
         return $this->header;

@@ -27,9 +27,6 @@ final class Collections
         return $this->collections;
     }
 
-    /**
-     * @return int
-     */
     public function getContentId(): int
     {
         return $this->contentId;

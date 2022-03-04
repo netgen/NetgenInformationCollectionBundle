@@ -17,8 +17,6 @@ class InformationCollectedListener implements EventSubscriberInterface
     protected $actionAggregate;
 
     /**
-     * InformationCollectedListener constructor.
-     *
      * @param ActionRegistry $actionAggregate
      */
     public function __construct(ActionRegistry $actionAggregate)

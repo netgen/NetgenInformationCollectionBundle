@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Core\Export;
 
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
-use Ibexa\Core\Helper\TranslationHelper;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Core\Helper\TranslationHelper;
 use League\Csv\Writer;
-use SplTempFileObject;
 use Netgen\InformationCollection\API\Export\ExportResponseFormatter;
 use Netgen\InformationCollection\API\Value\Export\Export;
+use SplTempFileObject;
 use Symfony\Component\HttpFoundation\Response;
 
 final class CsvExportResponseFormatter implements ExportResponseFormatter
@@ -23,12 +25,6 @@ final class CsvExportResponseFormatter implements ExportResponseFormatter
      */
     private $configResolver;
 
-    /**
-     * CsvExportResponseFormatter constructor.
-     *
-     * @param \Ibexa\Core\Helper\TranslationHelper $translationHelper
-     * @param \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface $configResolver
-     */
     public function __construct(TranslationHelper $translationHelper, ConfigResolverInterface $configResolver)
     {
         $this->translationHelper = $translationHelper;
@@ -56,6 +52,7 @@ final class CsvExportResponseFormatter implements ExportResponseFormatter
         $writer->insertAll($export->getContents());
 
         $writer->output($contentName . '.csv');
+
         return new Response('');
     }
 }

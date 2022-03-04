@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Factory;
 
-use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
-use Netgen\InformationCollection\Core\Action\EmailAction;
-use function array_key_exists;
 use Ibexa\Contracts\Core\Repository\Values\Content\Field;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Ibexa\Core\FieldType\BinaryFile\Value as BinaryFile;
 use Ibexa\Core\Helper\FieldHelper;
 use Ibexa\Core\Helper\TranslationHelper;
-use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
-use Netgen\InformationCollection\API\Constants;
 use Netgen\InformationCollection\API\ConfigurationConstants;
+use Netgen\InformationCollection\API\Constants;
 use Netgen\InformationCollection\API\Exception\MissingEmailBlockException;
 use Netgen\InformationCollection\API\Exception\MissingValueException;
+use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
 use Netgen\InformationCollection\API\Value\DataTransfer\TemplateContent;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
-use function trim;
+use Netgen\InformationCollection\Core\Action\EmailAction;
 use Twig\Environment;
+use function array_filter;
+use function array_key_exists;
+use function explode;
+use function filter_var;
+use function trim;
+use const FILTER_VALIDATE_EMAIL;
 
 class EmailDataFactory extends BaseEmailDataFactory
 {
@@ -43,14 +47,6 @@ class EmailDataFactory extends BaseEmailDataFactory
      */
     protected $twig;
 
-    /**
-     * EmailDataFactory constructor.
-     *
-     * @param array $config
-     * @param \Ibexa\Core\Helper\TranslationHelper $translationHelper
-     * @param \Ibexa\Core\Helper\FieldHelper $fieldHelper
-     * @param \Twig\Environment $twig
-     */
     public function __construct(
         ConfigResolverInterface $configResolver,
         TranslationHelper $translationHelper,
@@ -66,10 +62,6 @@ class EmailDataFactory extends BaseEmailDataFactory
 
     /**
      * Factory method.
-     *
-     * @param InformationCollected $value
-     *
-     * @return EmailContent
      */
     public function build(InformationCollected $value): EmailContent
     {
@@ -94,7 +86,6 @@ class EmailDataFactory extends BaseEmailDataFactory
     /**
      * Returns resolved parameter.
      *
-     * @param TemplateContent $data
      * @param string $field
      * @param string $property
      *
@@ -121,8 +112,8 @@ class EmailDataFactory extends BaseEmailDataFactory
         }
 
         $content = $data->getContent();
-        if (array_key_exists($field, $content->fields) &&
-            !$this->fieldHelper->isFieldEmpty($content, $field)
+        if (array_key_exists($field, $content->fields)
+            && !$this->fieldHelper->isFieldEmpty($content, $field)
         ) {
             $fieldValue = $this->translationHelper->getTranslatedField($content, $field);
 
@@ -141,7 +132,6 @@ class EmailDataFactory extends BaseEmailDataFactory
     /**
      * Returns resolved email parameter.
      *
-     * @param TemplateContent $data
      * @param string $field
      *
      * @return array
@@ -163,10 +153,9 @@ class EmailDataFactory extends BaseEmailDataFactory
         }
 
         if (!empty($rendered)) {
-
             $emails = explode(',', $rendered);
 
-            $emails = array_filter($emails, function($var) {
+            $emails = array_filter($emails, static function ($var) {
                 return filter_var($var, FILTER_VALIDATE_EMAIL);
             });
 
@@ -176,15 +165,14 @@ class EmailDataFactory extends BaseEmailDataFactory
         }
 
         $content = $data->getContent();
-        if (array_key_exists($field, $content->fields) &&
-            !$this->fieldHelper->isFieldEmpty($content, $field)
+        if (array_key_exists($field, $content->fields)
+            && !$this->fieldHelper->isFieldEmpty($content, $field)
         ) {
             $fieldValue = $this->translationHelper->getTranslatedField($content, $field);
 
             if ($fieldValue instanceof Field) {
                 return [$fieldValue->value->email];
             }
-
         }
 
         if (!empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES][$field])) {
@@ -213,8 +201,6 @@ class EmailDataFactory extends BaseEmailDataFactory
     /**
      * Renders email template.
      *
-     * @param TemplateContent $data
-     *
      * @throws MissingEmailBlockException
      *
      * @return string
@@ -242,9 +228,6 @@ class EmailDataFactory extends BaseEmailDataFactory
     }
 
     /**
-     * @param string $contentTypeIdentifier
-     * @param array $collectedFields
-     *
      * @return BinaryFile[]
      */
     protected function resolveAttachments(string $contentTypeIdentifier, array $collectedFields)
@@ -267,8 +250,6 @@ class EmailDataFactory extends BaseEmailDataFactory
     }
 
     /**
-     * @param array $collectedFields
-     *
      * @return BinaryFile[]
      */
     protected function getBinaryFileFields(array $collectedFields)

@@ -7,6 +7,9 @@ namespace Netgen\InformationCollection\Core\Pagination\Pagerfanta\View;
 use Pagerfanta\PagerfantaInterface;
 use Pagerfanta\View\ViewInterface;
 use Twig\Environment;
+use function max;
+use function min;
+use function trim;
 
 class InformationCollectionAdminView implements ViewInterface
 {
@@ -45,11 +48,6 @@ class InformationCollectionAdminView implements ViewInterface
      */
     protected $endPage;
 
-    /**
-     * Constructor.
-     *
-     * @param \Twig\Environment $twig
-     */
     public function __construct(Environment $twig)
     {
         $this->twig = $twig;

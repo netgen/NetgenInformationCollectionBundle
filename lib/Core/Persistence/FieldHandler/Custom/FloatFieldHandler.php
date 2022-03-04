@@ -30,8 +30,6 @@ class FloatFieldHandler implements CustomLegacyFieldHandlerInterface
 
     /**
      * @param \Ibexa\Core\FieldType\Float\Value $value
-     *
-     * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {

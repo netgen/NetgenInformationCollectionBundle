@@ -8,6 +8,7 @@ use Ibexa\Contracts\Core\Repository\ContentService;
 use Ibexa\Contracts\Core\Repository\ContentTypeService;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 use OutOfBoundsException;
+use function sprintf;
 
 final class ContentTypeUtils
 {
@@ -21,12 +22,6 @@ final class ContentTypeUtils
      */
     private $contentService;
 
-    /**
-     * FieldIdResolver constructor.
-     *
-     * @param \Ibexa\Contracts\Core\Repository\ContentTypeService $contentTypeService
-     * @param \Ibexa\Contracts\Core\Repository\ContentService $contentService
-     */
     public function __construct(ContentTypeService $contentTypeService, ContentService $contentService)
     {
         $this->contentTypeService = $contentTypeService;
@@ -42,8 +37,6 @@ final class ContentTypeUtils
      * @throws \OutOfBoundsException
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\UnauthorizedException
-     *
-     * @return mixed
      */
     public function getFieldId($contentId, $fieldDefIdentifier)
     {

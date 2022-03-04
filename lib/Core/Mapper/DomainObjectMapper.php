@@ -70,6 +70,7 @@ final class DomainObjectMapper
     public function mapCollection(EzInfoCollection $collection, array $attributes): Collection
     {
         $content = $this->contentService->loadContent($collection->getContentObjectId());
+
         /** @var CoreContentType $contentType */
         $contentType = $this->contentTypeService
             ->loadContentType(
@@ -80,7 +81,6 @@ final class DomainObjectMapper
         $attributeValues = [];
 
         foreach ($attributes as $attr) {
-
             $fieldDefinition = $this->getFieldDefinition($fieldDefinitions, $attr);
 
             if (!$fieldDefinition instanceof FieldDefinition) {
@@ -114,6 +114,7 @@ final class DomainObjectMapper
         }
 
         $value = new AttributeValue($attribute->getDataInt(), $attribute->getDataFloat(), $attribute->getDataText());
+
         return new Attribute(
             $attribute->getId(),
             $classField,
@@ -129,7 +130,6 @@ final class DomainObjectMapper
                 ->getUserService()
                 ->loadUser($userId);
         } catch (NotFoundException $exception) {
-
         }
 
         return new NullUser();
@@ -143,7 +143,7 @@ final class DomainObjectMapper
     private function getFieldDefinition(FieldDefinitionCollection $fieldDefinitionCollection, EzInfoCollectionAttribute $attribute): ?FieldDefinition
     {
         /** @var FieldDefinitionCollection $collection */
-        $collection = $fieldDefinitionCollection->filter(function(FieldDefinition $definition) use ($attribute) {
+        $collection = $fieldDefinitionCollection->filter(static function (FieldDefinition $definition) use ($attribute) {
             return $definition->id === $attribute->getContentClassAttributeId();
         });
 

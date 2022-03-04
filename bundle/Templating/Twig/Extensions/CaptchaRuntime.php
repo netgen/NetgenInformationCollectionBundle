@@ -15,8 +15,6 @@ class CaptchaRuntime
     protected $captcha;
 
     /**
-     * CaptchaRuntime constructor.
-     *
      * @param \Netgen\InformationCollection\API\Service\CaptchaService $captcha
      */
     public function __construct(CaptchaService $captcha)

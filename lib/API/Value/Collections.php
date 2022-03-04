@@ -30,9 +30,6 @@ class Collections extends ValueObject
         return $this->collections;
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->count;

@@ -7,6 +7,7 @@ namespace Netgen\InformationCollection\API\Value\Captcha;
 use Netgen\InformationCollection\API\Service\CaptchaValue;
 use ReCaptcha\ReCaptcha as BaseReCaptcha;
 use Symfony\Component\HttpFoundation\Request;
+use function dump;
 
 class ReCaptcha implements CaptchaValue
 {
@@ -15,11 +16,6 @@ class ReCaptcha implements CaptchaValue
      */
     protected $reCaptcha;
 
-    /**
-     * ReCaptcha constructor.
-     *
-     * @param \ReCaptcha\ReCaptcha $reCaptcha
-     */
     public function __construct(BaseReCaptcha $reCaptcha)
     {
         $this->reCaptcha = $reCaptcha;
@@ -44,8 +40,6 @@ class ReCaptcha implements CaptchaValue
 
     /**
      * Returns aggregated captcha implementation.
-     *
-     * @return \ReCaptcha\ReCaptcha
      */
     public function getInnerCaptcha(): BaseReCaptcha
     {

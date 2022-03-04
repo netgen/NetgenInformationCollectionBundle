@@ -8,12 +8,6 @@ use RuntimeException;
 
 class EmailNotSentException extends RuntimeException
 {
-    /**
-     * EmailNotSentException constructor.
-     *
-     * @param string $what
-     * @param string $why
-     */
     public function __construct(string $what, string $why)
     {
         $message = "Error occurred while trying to send email: {$what} failed with error {$why}";

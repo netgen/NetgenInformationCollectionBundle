@@ -16,9 +16,6 @@ trait InformationCollectionTrait
     /**
      * Builds Form, checks if Form is valid and dispatches InformationCollected event.
      *
-     * @param \Ibexa\Core\MVC\Symfony\View\ContentValueView $view
-     * @param array $options
-     *
      * @return array
      */
     protected function collectInformation(ContentValueView $view, array $options): ContentValueView
@@ -31,6 +28,7 @@ trait InformationCollectionTrait
 
         /** @var Handler $handler */
         $handler = $this->container->get('netgen_information_collection.handler');
+
         /** @var RequestStack $requestStack */
         $requestStack = $this->container->get('request_stack');
 

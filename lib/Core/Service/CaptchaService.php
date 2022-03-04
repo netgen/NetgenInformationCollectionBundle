@@ -10,8 +10,12 @@ use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\InformationCollection\API\Service\CaptchaService as CaptchaServiceInterface;
 use Netgen\InformationCollection\API\Service\CaptchaValue;
-use Netgen\InformationCollection\API\Value\Captcha\ReCaptcha;
 use Netgen\InformationCollection\API\Value\Captcha\NullObject;
+use Netgen\InformationCollection\API\Value\Captcha\ReCaptcha;
+use function array_keys;
+use function array_replace;
+use function dump;
+use function in_array;
 
 class CaptchaService implements CaptchaServiceInterface
 {
@@ -24,17 +28,12 @@ class CaptchaService implements CaptchaServiceInterface
      * @var \Ibexa\Contracts\Core\Repository\ContentTypeService
      */
     protected $contentTypeService;
+
     /**
      * @var ConfigResolverInterface
      */
     private $configResolver;
 
-    /**
-     * CaptchaService constructor.
-     *
-     * @param \Ibexa\Contracts\Core\Repository\ContentTypeService $contentTypeService
-     * @param array $config
-     */
     public function __construct(ContentTypeService $contentTypeService, ConfigResolverInterface $configResolver)
     {
         $this->config = $configResolver->getParameter('captcha', 'netgen_information_collection');
@@ -74,7 +73,7 @@ class CaptchaService implements CaptchaServiceInterface
 
             if (!empty($config['options'])) {
 //                if (!empty($config['options']['hostname'])) {
-                    $reCaptcha->setExpectedHostname('localhost');
+                $reCaptcha->setExpectedHostname('localhost');
 //                }
 //                if (!empty($config['options']['apk_package_name'])) {
 //                    $reCaptcha->setExpectedApkPackageName($config['options']['apk_package_name']);
@@ -91,6 +90,7 @@ class CaptchaService implements CaptchaServiceInterface
             }
 
             dump($reCaptcha);
+
             return new ReCaptcha($reCaptcha);
         }
 
@@ -100,11 +100,7 @@ class CaptchaService implements CaptchaServiceInterface
     /**
      * Returns filtered config for current Location.
      *
-     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Location $location
-     *
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
-     *
-     * @return array
      */
     public function getConfig(Location $location): array
     {
@@ -112,13 +108,11 @@ class CaptchaService implements CaptchaServiceInterface
             $this->getContentType($location)
         );
 
-        return (array)array_replace($this->config, $contentTypeConfig);
+        return (array) array_replace($this->config, $contentTypeConfig);
     }
 
     /**
      * Returns filtered config for current ContentType.
-     *
-     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType $contentType
      *
      * @return array
      */
@@ -133,8 +127,6 @@ class CaptchaService implements CaptchaServiceInterface
 
     /**
      * Checks if override exist for given ContentType.
-     *
-     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType $contentType
      *
      * @return bool
      */
@@ -151,8 +143,6 @@ class CaptchaService implements CaptchaServiceInterface
 
     /**
      * Helper method for retrieving ContentType from Location.
-     *
-     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Location $location
      *
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
      *

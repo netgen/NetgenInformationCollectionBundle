@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Action;
 
-use Netgen\InformationCollection\API\Events;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use function in_array;
 use Netgen\InformationCollection\API\Action\ActionInterface;
 use Netgen\InformationCollection\API\Action\CrucialActionInterface;
+use Netgen\InformationCollection\API\Events;
 use Netgen\InformationCollection\API\Exception\ActionFailedException;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use Psr\Log\LoggerInterface;
-use function get_class;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ActionRegistry implements ActionInterface
 {
@@ -42,11 +40,8 @@ final class ActionRegistry implements ActionInterface
     private $eventDispatcher;
 
     /**
-     * ActionAggregate constructor.
-     *
      * @param array $actions
      * @param \Netgen\InformationCollection\Core\Action\ConfigurationUtility $utility
-     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(iterable $actions, ConfigurationUtility $utility, LoggerInterface $logger, EventDispatcherInterface $eventDispatcher)
     {
@@ -62,16 +57,13 @@ final class ActionRegistry implements ActionInterface
 
         foreach ($this->actions as $action) {
             if ($this->utility->isActionAllowedToRun($action, $config)) {
-
                 $event = $this->eventDispatcher->dispatch($event, Events::BEFORE_ACTION_EXECUTION);
 
                 try {
                     $action->act($event);
 
                     $event = $this->eventDispatcher->dispatch($event, Events::AFTER_ACTION_EXECUTION);
-
                 } catch (ActionFailedException $e) {
-
                     $event = $this->eventDispatcher->dispatch($event, Events::ACTION_EXECUTION_FAIL);
 
                     $this->logger
@@ -83,6 +75,7 @@ final class ActionRegistry implements ActionInterface
 
                     if ($action instanceof CrucialActionInterface) {
                         $event = $this->eventDispatcher->dispatch($event, Events::CRUCIAL_ACTION_EXECUTION_FAIL);
+
                         break;
                     }
                 }

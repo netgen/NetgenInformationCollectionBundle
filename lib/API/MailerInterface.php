@@ -11,8 +11,6 @@ interface MailerInterface
     /**
      * Sends email message.
      *
-     * @param \Symfony\Component\Mime\Email $content
-     *
      * @throws \Netgen\InformationCollection\API\Exception\EmailNotSentException
      */
     public function sendEmail(Email $content): void;

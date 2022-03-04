@@ -16,9 +16,6 @@ class Contents
         $this->contents = $contents;
     }
 
-    /**
-     * @return array
-     */
     public function getContentIds(): array
     {
         return $this->contents;

@@ -14,19 +14,11 @@ class AdditionalContent extends ValueObject
      */
     protected $content;
 
-    /**
-     * AdditionalContent constructor.
-     *
-     * @param Content|null $content
-     */
     public function __construct(?Content $content = null)
     {
         $this->content = $content;
     }
 
-    /**
-     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Content|null
-     */
     public function getContent(): ?Content
     {
         return $this->content;

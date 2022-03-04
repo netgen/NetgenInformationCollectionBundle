@@ -13,11 +13,6 @@ interface CustomLegacyFieldHandlerInterface extends CustomFieldHandlerInterface
     /**
      * Transforms Ibexa field value to object persistable
      * in legacy information collection database structure.
-     *
-     * @param \Ibexa\Core\FieldType\Value $value
-     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition $fieldDefinition
-     *
-     * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue;
 }

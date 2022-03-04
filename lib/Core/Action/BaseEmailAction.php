@@ -22,12 +22,6 @@ abstract class BaseEmailAction implements ActionInterface
      */
     protected $factory;
 
-    /**
-     * EmailAction constructor.
-     *
-     * @param \Netgen\InformationCollection\API\MailerInterface $mailer
-     * @param \Netgen\InformationCollection\Core\Factory\BaseEmailDataFactory $factory
-     */
     public function __construct(MailerInterface $mailer, BaseEmailDataFactory $factory)
     {
         $this->mailer = $mailer;

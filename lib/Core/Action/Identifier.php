@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Core\Action;
 
 use Netgen\InformationCollection\API\Action\ActionInterface;
 use ReflectionClass;
 use ReflectionProperty;
+use function get_class;
 
 final class Identifier
 {

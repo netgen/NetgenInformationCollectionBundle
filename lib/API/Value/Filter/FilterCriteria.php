@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\API\Value\Filter;
 
 use DateTimeInterface;
@@ -29,25 +31,16 @@ class FilterCriteria extends ValueObject
         $this->to = $to;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getFrom(): DateTimeInterface
     {
         return $this->from;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getTo(): DateTimeInterface
     {
         return $this->to;
     }
 
-    /**
-     * @return ContentId
-     */
     public function getContentId(): ContentId
     {
         return $this->contentId;

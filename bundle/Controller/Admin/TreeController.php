@@ -30,8 +30,6 @@ class TreeController extends Controller
     protected $service;
 
     /**
-     * TreeController constructor.
-     *
      * @param \Netgen\InformationCollection\API\Service\InformationCollection $service
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
      * @param \Symfony\Component\Routing\RouterInterface $router

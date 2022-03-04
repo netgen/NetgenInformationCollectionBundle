@@ -28,13 +28,10 @@ class DateAndTimeFieldHandler implements CustomLegacyFieldHandlerInterface
         if ($value instanceof DateAndTimeValue) {
             return (string) $value;
         }
-
     }
 
     /**
      * @param \Ibexa\Core\FieldType\DateAndTime\Value $value
-     *
-     * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {

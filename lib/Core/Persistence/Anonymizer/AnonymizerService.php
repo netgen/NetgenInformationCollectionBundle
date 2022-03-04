@@ -9,9 +9,10 @@ use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor;
 use Netgen\InformationCollection\API\Service\InformationCollection;
+use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\Collection;
 use Netgen\InformationCollection\API\Value\Filter\CollectionId;
-use Netgen\InformationCollection\API\Value\Attribute;
+use function in_array;
 
 class AnonymizerService implements Anonymizer
 {
@@ -30,13 +31,6 @@ class AnonymizerService implements Anonymizer
      */
     protected $informationCollection;
 
-    /**
-     * Anonymizer constructor.
-     *
-     * @param \Ibexa\Contracts\Core\Repository\Repository $repository
-     * @param \Netgen\InformationCollection\API\Service\InformationCollection $informationCollection
-     * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor $fieldAnonymizerVisitor
-     */
     public function __construct(
         Repository $repository,
         InformationCollection $informationCollection,
@@ -56,9 +50,6 @@ class AnonymizerService implements Anonymizer
     }
 
     /**
-     * @param \Netgen\InformationCollection\API\Value\Collection $collection
-     * @param array $fields
-     *
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\UnauthorizedException
      */
@@ -71,7 +62,7 @@ class AnonymizerService implements Anonymizer
         $attributes = $this->filterAttributes($collection, $fields);
 
         if (empty($attributes)) {
-            throw new \OutOfRangeException("The is no valid fields selected for anonymization");
+            throw new \OutOfRangeException('The is no valid fields selected for anonymization');
         }
 
         $collectionId = new CollectionId($collection->getId());
@@ -93,12 +84,7 @@ class AnonymizerService implements Anonymizer
     }
 
     /**
-     * Filter attributes based on the user selection of fields to anonymize
-     *
-     * @param Collection $collection
-     * @param array $fields
-     *
-     * @return array
+     * Filter attributes based on the user selection of fields to anonymize.
      */
     protected function filterAttributes(Collection $collection, array $fields): array
     {
@@ -110,8 +96,7 @@ class AnonymizerService implements Anonymizer
 
         $filtered = [];
         foreach ($attributes as $attribute) {
-
-            if (in_array($attribute->getFieldDefinition()->id, $fields)) {
+            if (in_array($attribute->getFieldDefinition()->id, $fields, true)) {
                 $filtered[] = $attribute;
             }
         }

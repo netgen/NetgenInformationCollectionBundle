@@ -35,12 +35,6 @@ class EmailContent extends ValueObject
     protected $attachments = [];
 
     /**
-     * EmailData constructor.
-     *
-     * @param array $recipients
-     * @param array $sender
-     * @param string $subject
-     * @param string $body
      * @param BinaryFile[] $attachments
      */
     public function __construct(array $recipients, array $sender, string $subject, string $body, array $attachments = [])
@@ -52,41 +46,26 @@ class EmailContent extends ValueObject
         $this->attachments = $attachments;
     }
 
-    /**
-     * @return array
-     */
     public function getRecipients(): array
     {
         return $this->recipients;
     }
 
-    /**
-     * @return string
-     */
     public function getSubject(): string
     {
         return $this->subject;
     }
 
-    /**
-     * @return array
-     */
     public function getSender(): array
     {
         return $this->sender;
     }
 
-    /**
-     * @return string
-     */
     public function getBody(): string
     {
         return $this->body;
     }
 
-    /**
-     * @return bool
-     */
     public function hasAttachments(): bool
     {
         return !empty($this->attachments);

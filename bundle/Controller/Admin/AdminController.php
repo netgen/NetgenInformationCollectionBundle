@@ -52,8 +52,6 @@ class AdminController extends Controller
     private $translator;
 
     /**
-     * AdminController constructor.
-     *
      * @param \Netgen\InformationCollection\API\Service\InformationCollection $service
      * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer $anonymizer
      * @param \Ibexa\Contracts\Core\Repository\ContentService $contentService

@@ -87,8 +87,6 @@ class EzInfoCollectionRepository extends EntityRepository
     /**
      * Save object.
      *
-     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection $informationCollection
-     *
      * @throws StoringCollectionFailedException
      */
     public function save(EzInfoCollection $informationCollection)
@@ -96,14 +94,12 @@ class EzInfoCollectionRepository extends EntityRepository
         try {
             $this->_em->persist($informationCollection);
             $this->_em->flush($informationCollection);
-        } catch (ORMException | ORMInvalidArgumentException $e) {
+        } catch (ORMException|ORMInvalidArgumentException $e) {
             throw new StoringCollectionFailedException('', '');
         }
     }
 
     /**
-     * @param array $collections
-     *
      * @throws RemoveCollectionFailedException
      */
     public function remove(array $collections)
@@ -114,7 +110,7 @@ class EzInfoCollectionRepository extends EntityRepository
             }
 
             $this->_em->flush();
-        } catch (ORMException | ORMInvalidArgumentException $e) {
+        } catch (ORMException|ORMInvalidArgumentException $e) {
             throw new RemoveCollectionFailedException('', '');
         }
     }
@@ -151,7 +147,7 @@ class EzInfoCollectionRepository extends EntityRepository
                 ->select('COUNT(ezc) as children_count')
                 ->getQuery()
                 ->getSingleScalarResult();
-        } catch (NonUniqueResultException | NoResultException $e) {
+        } catch (NonUniqueResultException|NoResultException $e) {
             throw new RetrieveCountException('', '');
         }
     }

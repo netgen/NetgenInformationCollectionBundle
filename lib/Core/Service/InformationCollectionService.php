@@ -6,7 +6,6 @@ namespace Netgen\InformationCollection\Core\Service;
 
 use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
 use Ibexa\Contracts\Core\Repository\Repository;
-use Ibexa\Contracts\Core\Repository\Values\User\UserReference;
 use Netgen\InformationCollection\API\Exception\PersistingFailedException;
 use Netgen\InformationCollection\API\Exception\StoringAttributeFailedException;
 use Netgen\InformationCollection\API\Exception\StoringCollectionFailedException;
@@ -33,6 +32,7 @@ use Netgen\InformationCollection\Core\Mapper\DomainObjectMapper;
 use Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
+use function count;
 
 class InformationCollectionService implements InformationCollection
 {
@@ -66,14 +66,6 @@ class InformationCollectionService implements InformationCollection
      */
     protected $objectMapper;
 
-    /**
-     * InformationCollectionService constructor.
-     *
-     * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository $ezInfoCollectionRepository
-     * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository
-     * @param \Ibexa\Contracts\Core\Repository\Repository $repository
-     * @param \Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase $gateway
-     */
     public function __construct(
         EzInfoCollectionRepository $ezInfoCollectionRepository,
         EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository,
@@ -304,7 +296,6 @@ class InformationCollectionService implements InformationCollection
 
     /**
      * @param int $userId
-     * @param mixed $userId
      *
      * @return \Ibexa\Contracts\Core\Repository\Values\User\User
      */

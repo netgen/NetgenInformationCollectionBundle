@@ -30,8 +30,6 @@ class IntegerFieldHandler implements CustomLegacyFieldHandlerInterface
 
     /**
      * @param \Ibexa\Core\FieldType\Integer\Value $value
-     *
-     * @return \Netgen\InformationCollection\API\Value\Legacy\FieldValue
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {
