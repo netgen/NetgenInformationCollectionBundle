@@ -16,17 +16,11 @@ class InformationCollectedListener implements EventSubscriberInterface
      */
     protected $actionAggregate;
 
-    /**
-     * @param ActionRegistry $actionAggregate
-     */
     public function __construct(ActionRegistry $actionAggregate)
     {
         $this->actionAggregate = $actionAggregate;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -36,8 +30,6 @@ class InformationCollectedListener implements EventSubscriberInterface
 
     /**
      * Run all actions.
-     *
-     * @param InformationCollected $event
      */
     public function onInformationCollected(InformationCollected $event): void
     {

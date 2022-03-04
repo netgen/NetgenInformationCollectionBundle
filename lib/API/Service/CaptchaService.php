@@ -10,8 +10,6 @@ interface CaptchaService
 {
     /**
      * Returns Captcha implementation.
-     *
-     * @return \Netgen\InformationCollection\API\Service\CaptchaValue
      */
     public function getCaptcha(Location $location): CaptchaValue;
 
@@ -27,8 +25,6 @@ interface CaptchaService
 
     /**
      * Returns the captcha configuration for given Location.
-     *
-     * @return string
      */
     public function getConfig(Location $location): array;
 }

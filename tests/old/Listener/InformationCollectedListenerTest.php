@@ -21,7 +21,7 @@ class InformationCollectedListenerTest extends TestCase
      */
     protected $registry;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->registry = $this->getMockBuilder(ActionRegistry::class)
             ->disableOriginalConstructor()
@@ -33,7 +33,7 @@ class InformationCollectedListenerTest extends TestCase
         parent::setUp();
     }
 
-    public function testListenerConfiguration()
+    public function testListenerConfiguration(): void
     {
         $this->assertEquals(
             array(Events::INFORMATION_COLLECTED => 'onInformationCollected'),
@@ -41,7 +41,7 @@ class InformationCollectedListenerTest extends TestCase
         );
     }
 
-    public function testItRunsActions()
+    public function testItRunsActions(): void
     {
         $event = new InformationCollected(new DataWrapper('payload'));
 

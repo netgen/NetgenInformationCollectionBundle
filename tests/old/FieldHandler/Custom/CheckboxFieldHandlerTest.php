@@ -18,31 +18,31 @@ class CheckboxFieldHandlerTest extends TestCase
      */
     protected $handler;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->handler = new CheckboxFieldHandler();
     }
 
-    public function testInstanceOfCustomLegacyFieldHandler()
+    public function testInstanceOfCustomLegacyFieldHandler(): void
     {
         $this->assertInstanceOf(CustomLegacyFieldHandlerInterface::class, $this->handler);
     }
 
-    public function testSupportsHasValidBehaviour()
+    public function testSupportsHasValidBehaviour(): void
     {
         $this->assertTrue($this->handler->supports(new CheckboxValue(true)));
         $this->assertFalse($this->handler->supports(new IntegerValue(1)));
         $this->assertFalse($this->handler->supports(new FloatValue(2.0)));
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $fieldDefinition = $this->createMock(FieldDefinition::class);
         $this->assertEquals('1', $this->handler->toString(new CheckboxValue(true), $fieldDefinition));
         $this->assertEquals('0', $this->handler->toString(new CheckboxValue(false), $fieldDefinition));
     }
 
-    public function testGetLegacyValue()
+    public function testGetLegacyValue(): void
     {
         $fieldDefinition = new CoreFieldDefinition([
             'id' => 123,

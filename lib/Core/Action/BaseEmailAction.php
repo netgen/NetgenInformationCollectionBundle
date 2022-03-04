@@ -28,9 +28,6 @@ abstract class BaseEmailAction implements ActionInterface
         $this->factory = $factory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function act(InformationCollected $event): void
     {
         $emailData = $this->factory->build($event);

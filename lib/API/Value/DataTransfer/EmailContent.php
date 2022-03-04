@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value\DataTransfer;
 
-use Ibexa\Core\FieldType\BinaryFile\Value as BinaryFile;
 use Netgen\InformationCollection\API\Value\ValueObject;
 
 class EmailContent extends ValueObject
@@ -30,12 +29,12 @@ class EmailContent extends ValueObject
     protected $body;
 
     /**
-     * @var BinaryFile[]
+     * @var \Ibexa\Core\FieldType\BinaryFile\Value[]
      */
     protected $attachments = [];
 
     /**
-     * @param BinaryFile[] $attachments
+     * @param \Ibexa\Core\FieldType\BinaryFile\Value[] $attachments
      */
     public function __construct(array $recipients, array $sender, string $subject, string $body, array $attachments = [])
     {
@@ -72,7 +71,7 @@ class EmailContent extends ValueObject
     }
 
     /**
-     * @return BinaryFile[]
+     * @return \Ibexa\Core\FieldType\BinaryFile\Value[]
      */
     public function getAttachments(): array
     {

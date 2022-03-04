@@ -41,9 +41,6 @@ class CaptchaService implements CaptchaServiceInterface
         $this->configResolver = $configResolver;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEnabled(Location $location): bool
     {
         $config = $this->getConfig($location);
@@ -51,9 +48,6 @@ class CaptchaService implements CaptchaServiceInterface
         return $config['enabled'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSiteKey(Location $location): string
     {
         $config = $this->getConfig($location);
@@ -61,9 +55,6 @@ class CaptchaService implements CaptchaServiceInterface
         return $config['site_key'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCaptcha(Location $location): CaptchaValue
     {
         $config = $this->getConfig($location);
@@ -108,15 +99,13 @@ class CaptchaService implements CaptchaServiceInterface
             $this->getContentType($location)
         );
 
-        return (array) array_replace($this->config, $contentTypeConfig);
+        return array_replace($this->config, $contentTypeConfig);
     }
 
     /**
      * Returns filtered config for current ContentType.
-     *
-     * @return array
      */
-    protected function getConfigForContentType(ContentType $contentType)
+    protected function getConfigForContentType(ContentType $contentType): array
     {
         if ($this->hasConfigForContentType($contentType)) {
             return $this->config['override_by_type'][$contentType->identifier];
@@ -127,10 +116,8 @@ class CaptchaService implements CaptchaServiceInterface
 
     /**
      * Checks if override exist for given ContentType.
-     *
-     * @return bool
      */
-    protected function hasConfigForContentType(ContentType $contentType)
+    protected function hasConfigForContentType(ContentType $contentType): bool
     {
         if (!empty($this->config['override_by_type'])) {
             if (in_array($contentType->identifier, array_keys($this->config['override_by_type']), true)) {
@@ -145,10 +132,8 @@ class CaptchaService implements CaptchaServiceInterface
      * Helper method for retrieving ContentType from Location.
      *
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
-     *
-     * @return \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType
      */
-    protected function getContentType(Location $location)
+    protected function getContentType(Location $location): ContentType
     {
         return $this->contentTypeService
             ->loadContentType($location->contentInfo->contentTypeId);

@@ -16,10 +16,7 @@ use Netgen\InformationCollection\API\ConfigurationConstants;
  */
 class Configuration extends SiteAccessConfiguration
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder(ConfigurationConstants::SETTINGS_ROOT);
         $rootNode = $treeBuilder->getRootNode();
@@ -37,7 +34,7 @@ class Configuration extends SiteAccessConfiguration
         return $treeBuilder;
     }
 
-    private function addCaptchaSection(NodeBuilder $nodeBuilder)
+    private function addCaptchaSection(NodeBuilder $nodeBuilder): void
     {
         $nodeBuilder
             ->arrayNode('captcha')
@@ -107,7 +104,7 @@ class Configuration extends SiteAccessConfiguration
             ->end();
     }
 
-    private function addActionsSection(NodeBuilder $nodeBuilder)
+    private function addActionsSection(NodeBuilder $nodeBuilder): void
     {
         $nodeBuilder
             ->arrayNode(ConfigurationConstants::ACTIONS)
@@ -133,7 +130,7 @@ class Configuration extends SiteAccessConfiguration
         ->end();
     }
 
-    private function addActionConfigSection(NodeBuilder $nodeBuilder)
+    private function addActionConfigSection(NodeBuilder $nodeBuilder): void
     {
         $nodeBuilder
             ->arrayNode(ConfigurationConstants::ACTION_CONFIG)
@@ -226,7 +223,7 @@ class Configuration extends SiteAccessConfiguration
             ->end();
     }
 
-    private function addExportSection(NodeBuilder $nodeBuilder)
+    private function addExportSection(NodeBuilder $nodeBuilder): void
     {
         $nodeBuilder
             ->arrayNode('export')

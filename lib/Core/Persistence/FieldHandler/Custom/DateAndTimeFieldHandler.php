@@ -12,17 +12,11 @@ use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 
 class DateAndTimeFieldHandler implements CustomLegacyFieldHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function supports(Value $value): bool
     {
         return $value instanceof DateAndTimeValue;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toString(Value $value, FieldDefinition $fieldDefinition): string
     {
         if ($value instanceof DateAndTimeValue) {

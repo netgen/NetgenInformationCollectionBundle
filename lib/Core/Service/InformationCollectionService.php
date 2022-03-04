@@ -6,6 +6,7 @@ namespace Netgen\InformationCollection\Core\Service;
 
 use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
 use Ibexa\Contracts\Core\Repository\Repository;
+use Ibexa\Contracts\Core\Repository\Values\User\User;
 use Netgen\InformationCollection\API\Exception\PersistingFailedException;
 use Netgen\InformationCollection\API\Exception\StoringAttributeFailedException;
 use Netgen\InformationCollection\API\Exception\StoringCollectionFailedException;
@@ -128,9 +129,6 @@ class InformationCollectionService implements InformationCollection
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getObjectsWithCollections(Query $query): ContentsWithCollections
     {
         $objects = $this->gateway->getObjectsWithCollections($query->getLimit(), $query->getOffset());
@@ -182,6 +180,7 @@ class InformationCollectionService implements InformationCollection
     public function filterCollections(FilterCriteria $criteria): Collections
     {
         // TODO: Implement filterCollections() method.
+        return new Collections([], 0);
     }
 
     public function searchCount(SearchCountQuery $query): SearchCount
@@ -199,9 +198,6 @@ class InformationCollectionService implements InformationCollection
         return new SearchCount(count($collections));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function search(SearchQuery $query): Collections
     {
         $collections = $this->ezInfoCollectionAttributeRepository
@@ -224,17 +220,11 @@ class InformationCollectionService implements InformationCollection
         return new Collections($objects, count($objects));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCollection(CollectionId $collectionId): Collection
     {
         return $this->loadCollection($collectionId->getCollectionId());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteCollectionFields(CollectionFields $collectionFields): void
     {
         $attributes = $this->ezInfoCollectionAttributeRepository
@@ -249,9 +239,6 @@ class InformationCollectionService implements InformationCollection
         $this->ezInfoCollectionAttributeRepository->remove($attributes);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteCollections(FilterCollections $collections): void
     {
         $collections = $this->ezInfoCollectionRepository
@@ -268,9 +255,6 @@ class InformationCollectionService implements InformationCollection
         $this->ezInfoCollectionRepository->remove($collections);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteCollectionByContent(Contents $contents): void
     {
         $collections = $this->ezInfoCollectionRepository
@@ -286,20 +270,12 @@ class InformationCollectionService implements InformationCollection
         $this->ezInfoCollectionRepository->remove($collections);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateCollectionAttribute(CollectionId $collectionId, Attribute $attribute): void
     {
         $this->ezInfoCollectionAttributeRepository->updateByCollectionId($collectionId, $attribute);
     }
 
-    /**
-     * @param int $userId
-     *
-     * @return \Ibexa\Contracts\Core\Repository\Values\User\User
-     */
-    protected function getUser($userId)
+    protected function getUser(int $userId): User
     {
         try {
             return $this->repository
@@ -309,12 +285,7 @@ class InformationCollectionService implements InformationCollection
         }
     }
 
-    /**
-     * @param int $collectionId
-     *
-     * @return \Netgen\InformationCollection\API\Value\Collection
-     */
-    protected function loadCollection($collectionId)
+    protected function loadCollection(int $collectionId): Collection
     {
         $collection = $this->ezInfoCollectionRepository->loadCollection($collectionId);
         $attributes = $this->ezInfoCollectionAttributeRepository->findBy(

@@ -123,7 +123,7 @@ final class DomainObjectMapper
         );
     }
 
-    private function getUser($userId): User
+    private function getUser(int $userId): User
     {
         try {
             return $this->repository
@@ -143,9 +143,9 @@ final class DomainObjectMapper
     private function getFieldDefinition(FieldDefinitionCollection $fieldDefinitionCollection, EzInfoCollectionAttribute $attribute): ?FieldDefinition
     {
         /** @var FieldDefinitionCollection $collection */
-        $collection = $fieldDefinitionCollection->filter(static function (FieldDefinition $definition) use ($attribute) {
-            return $definition->id === $attribute->getContentClassAttributeId();
-        });
+        $collection = $fieldDefinitionCollection->filter(
+            static fn (FieldDefinition $definition): bool => $definition->id === $attribute->getContentClassAttributeId()
+        );
 
         if ($collection->isEmpty()) {
             return null;

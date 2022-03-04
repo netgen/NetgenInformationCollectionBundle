@@ -29,33 +29,33 @@ class TimeFieldHandlerTest extends TestCase
      */
     protected $value;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->handler = new TimeFieldHandler();
         $this->dt = new DateTime();
         $this->value = TimeValue::fromDateTime($this->dt);
     }
 
-    public function testInstanceOfCustomLegacyFieldHandler()
+    public function testInstanceOfCustomLegacyFieldHandler(): void
     {
         $this->assertInstanceOf(CustomLegacyFieldHandlerInterface::class, $this->handler);
     }
 
-    public function testSupportsHasValidBehaviour()
+    public function testSupportsHasValidBehaviour(): void
     {
         $this->assertFalse($this->handler->supports(new CheckboxValue(true)));
         $this->assertTrue($this->handler->supports($this->value));
         $this->assertFalse($this->handler->supports(new FloatValue(2.0)));
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $fieldDefinition = $this->createMock(FieldDefinition::class);
 
         $this->assertEquals($this->dt->format('H:i:s'), $this->handler->toString($this->value, $fieldDefinition));
     }
 
-    public function testGetLegacyValue()
+    public function testGetLegacyValue(): void
     {
         $fieldDefinition = new CoreFieldDefinition([
             'id' => 123,

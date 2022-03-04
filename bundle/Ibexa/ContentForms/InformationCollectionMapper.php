@@ -18,13 +18,8 @@ final class InformationCollectionMapper
 {
     /**
      * Maps a ValueObject from Ibexa content repository to a data usable as underlying form data (e.g. create/update struct).
-     *
-     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Content $contentDraft
-     * @param array $params
-     *
-     * @return InformationCollectionStruct
      */
-    public function mapToFormData(Content $content, Location $location, ContentType $contentType)
+    public function mapToFormData(Content $content, Location $location, ContentType $contentType): InformationCollectionStruct
     {
         $fields = $content->getFieldsByLanguage($content->contentInfo->mainLanguageCode);
 

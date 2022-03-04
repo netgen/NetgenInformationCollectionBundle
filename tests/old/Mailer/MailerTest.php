@@ -19,7 +19,7 @@ class MailerTest extends TestCase
      */
     protected $swiftMailer;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->swiftMailer = $this->getMockBuilder(\Swift_Mailer::class)
             ->disableOriginalConstructor()
@@ -33,7 +33,7 @@ class MailerTest extends TestCase
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException
      * @expectedExceptionMessage Error occurred while trying to send email: recipient failed with error Address in mailbox given [[][][]][]] does not comply with RFC 2822, 3.6.2.
      */
-    public function testCreateAndSendMessageWithWrongRecipient()
+    public function testCreateAndSendMessageWithWrongRecipient(): void
     {
         $data = new EmailData('[][][]][]', 'sender@example.com', 'Test', 'Body');
 
@@ -47,7 +47,7 @@ class MailerTest extends TestCase
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException
      * @expectedExceptionMessage Error occurred while trying to send email: sender failed with error Address in mailbox given [[][][]][]] does not comply with RFC 2822, 3.6.2.
      */
-    public function testCreateAndSendMessageWithWrongSender()
+    public function testCreateAndSendMessageWithWrongSender(): void
     {
         $data = new EmailData('recipient@example.com', '[][][]][]', 'Test', 'Body');
 
@@ -61,7 +61,7 @@ class MailerTest extends TestCase
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException
      * @expectedExceptionMessage Error occurred while trying to send email: send failed with error invalid mailer configuration?
      */
-    public function testCreateAndSendMessageWithErrorFromInternalMailer()
+    public function testCreateAndSendMessageWithErrorFromInternalMailer(): void
     {
         $data = new EmailData('recipient@example.com', 'sender@example.com', 'Test', 'Body');
 
@@ -72,7 +72,7 @@ class MailerTest extends TestCase
         $this->mailer->createAndSendMessage($data);
     }
 
-    public function testCreateAndSendMessage()
+    public function testCreateAndSendMessage(): void
     {
         $data = new EmailData('recipient@example.com', 'sender@example.com', 'Test', 'Body');
 
@@ -83,7 +83,7 @@ class MailerTest extends TestCase
         $this->mailer->createAndSendMessage($data);
     }
 
-    public function testCreateAndSendMessageWithAttachments()
+    public function testCreateAndSendMessageWithAttachments(): void
     {
         $attachments = [
             new BinaryFileValue(

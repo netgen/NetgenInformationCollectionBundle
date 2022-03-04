@@ -22,18 +22,12 @@ Field handler example:
 
     class IntegerFieldHandler implements CustomFieldHandlerInterface
     {
-        /**
-         * @inheritdoc
-         */
-        public function supports(Value $value)
+        public function supports(Value $value): bool
         {
             return $value instanceof IntegerValue;
         }
 
-        /**
-         * @inheritdoc
-         */
-        public function toString(Value $value, FieldDefinition $fieldDefinition)
+        public function toString(Value $value, FieldDefinition $fieldDefinition): string
         {
             // do some magic ..
         }

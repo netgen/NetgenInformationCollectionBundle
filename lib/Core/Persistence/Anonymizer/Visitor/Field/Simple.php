@@ -11,17 +11,11 @@ use Netgen\InformationCollection\API\Value\AttributeValue;
 
 class Simple extends FieldAnonymizerVisitor
 {
-    /**
-     * {@inheritdoc}
-     */
     public function accept(Attribute $attribute, ContentType $contentType): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function visit(Attribute $attribute, ContentType $contentType): AttributeValue
     {
         return new AttributeValue(0, 0, 'XXXXXXXXXX');

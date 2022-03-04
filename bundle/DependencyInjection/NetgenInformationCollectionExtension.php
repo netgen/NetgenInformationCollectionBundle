@@ -25,10 +25,7 @@ use function array_merge;
  */
 class NetgenInformationCollectionExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -73,7 +70,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
         $this->registerServiceDefinitions($container);
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $this->addTwigConfig($container);
         $this->addDoctrineConfig($container);
@@ -96,7 +93,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
         );
     }
 
-    protected function addDoctrineConfig(ContainerBuilder $container)
+    protected function addDoctrineConfig(ContainerBuilder $container): void
     {
         $configDir = __DIR__ . '/../../lib/Doctrine/mappings';
 

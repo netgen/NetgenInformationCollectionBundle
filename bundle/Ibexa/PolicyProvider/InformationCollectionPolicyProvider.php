@@ -10,12 +10,7 @@ use Ibexa\Bundle\Core\DependencyInjection\Security\PolicyProvider\PolicyProvider
 
 class InformationCollectionPolicyProvider implements PolicyProviderInterface
 {
-    /**
-     * @param \Ibexa\Bundle\Core\DependencyInjection\Configuration\ConfigBuilderInterface $configBuilder
-     *
-     * @return array
-     */
-    public function addPolicies(ConfigBuilderInterface $configBuilder)
+    public function addPolicies(ConfigBuilderInterface $configBuilder): array
     {
         $configBuilder->addConfig([
             Permissions::NAME => [

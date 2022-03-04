@@ -28,12 +28,12 @@ class Query extends ValueObject
         $this->limit = $limit;
     }
 
-    public static function withLimit(int $limit)
+    public static function withLimit(int $limit): self
     {
         return new self(0, $limit);
     }
 
-    public static function countQuery()
+    public static function countQuery(): self
     {
         return new self(0, 0);
     }

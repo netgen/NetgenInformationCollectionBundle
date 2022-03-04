@@ -21,9 +21,6 @@ class ReCaptcha implements CaptchaValue
         $this->reCaptcha = $reCaptcha;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isValid(Request $request): bool
     {
         $clientIp = $request->getClientIp() === '::1' ? 'localhost' : $request->getClientIp();

@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class AdminGlobalVariableTest extends TestCase
 {
-    public function testGetterSetter()
+    public function testGetterSetter(): void
     {
         $admin = new AdminGlobalVariable();
 

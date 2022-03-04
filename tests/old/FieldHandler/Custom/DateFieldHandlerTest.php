@@ -24,26 +24,26 @@ class DateFieldHandlerTest extends TestCase
      */
     protected $dt;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->handler = new DateFieldHandler();
         $this->dt = new DateTime();
         $this->dt->setTime(0, 0, 0);
     }
 
-    public function testInstanceOfCustomLegacyFieldHandler()
+    public function testInstanceOfCustomLegacyFieldHandler(): void
     {
         $this->assertInstanceOf(CustomLegacyFieldHandlerInterface::class, $this->handler);
     }
 
-    public function testSupportsHasValidBehaviour()
+    public function testSupportsHasValidBehaviour(): void
     {
         $this->assertFalse($this->handler->supports(new CheckboxValue(true)));
         $this->assertTrue($this->handler->supports(new DateValue($this->dt)));
         $this->assertFalse($this->handler->supports(new FloatValue(2.0)));
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $fieldDefinition = $this->createMock(FieldDefinition::class);
 
@@ -52,7 +52,7 @@ class DateFieldHandlerTest extends TestCase
         $this->assertEquals($this->dt->format('l d F Y'), $this->handler->toString($value, $fieldDefinition));
     }
 
-    public function testGetLegacyValue()
+    public function testGetLegacyValue(): void
     {
         $fieldDefinition = new CoreFieldDefinition([
             'id' => 123,

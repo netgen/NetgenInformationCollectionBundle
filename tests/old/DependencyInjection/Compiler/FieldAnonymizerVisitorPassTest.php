@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class FieldAnonymizerVisitorPassTest extends AbstractCompilerPassTestCase
 {
-    public function testCompilerPassCollectsValidServices()
+    public function testCompilerPassCollectsValidServices(): void
     {
         $aggregate = new Definition();
         $this->setDefinition('netgen_information_collection.anonymizer.visitor.field.aggregate', $aggregate);
@@ -31,7 +31,7 @@ class FieldAnonymizerVisitorPassTest extends AbstractCompilerPassTestCase
         );
     }
 
-    public function testCompilerPassCollectsAndSortsServices()
+    public function testCompilerPassCollectsAndSortsServices(): void
     {
         $aggregate = new Definition();
         $this->setDefinition('netgen_information_collection.anonymizer.visitor.field.aggregate', $aggregate);
@@ -65,7 +65,7 @@ class FieldAnonymizerVisitorPassTest extends AbstractCompilerPassTestCase
 //     * @expectedException \Symfony\Component\DependencyInjection\Exception\LogicException
 //     * @expectedExceptionMessage 'netgen_information_collection.action' service tag needs an 'alias' attribute to identify the action. None given.
 //     */
-//    public function testCompilerPassMustThrowExceptionIfActionServiceHasntGotAlias()
+//    public function testCompilerPassMustThrowExceptionIfActionServiceHasntGotAlias(): void
 //    {
 //        $actionsRegistry = new Definition();
 //        $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
@@ -89,7 +89,7 @@ class FieldAnonymizerVisitorPassTest extends AbstractCompilerPassTestCase
 //     * @expectedException \Symfony\Component\DependencyInjection\Exception\LogicException
 //     * @expectedExceptionMessage Service my_action uses priority less than allowed. Priority must be greater than or equal to -255.
 //     */
-//    public function testCompilerWithServicePriorityLessThanAllowed()
+//    public function testCompilerWithServicePriorityLessThanAllowed(): void
 //    {
 //        $actionsRegistry = new Definition();
 //        $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
@@ -116,7 +116,7 @@ class FieldAnonymizerVisitorPassTest extends AbstractCompilerPassTestCase
 //     * @expectedException \Symfony\Component\DependencyInjection\Exception\LogicException
 //     * @expectedExceptionMessage Service my_action uses priority greater than allowed. Priority must be lower than or equal to 255.
 //     */
-//    public function testCompilerWithServicePriorityGreaterThanAllowed()
+//    public function testCompilerWithServicePriorityGreaterThanAllowed(): void
 //    {
 //        $actionsRegistry = new Definition();
 //        $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
@@ -139,7 +139,7 @@ class FieldAnonymizerVisitorPassTest extends AbstractCompilerPassTestCase
 //        );
 //    }
 //
-//    public function testCompilerWithServiceThatIsMissingPriority()
+//    public function testCompilerWithServiceThatIsMissingPriority(): void
 //    {
 //        $actionsRegistry = new Definition();
 //        $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
@@ -161,7 +161,7 @@ class FieldAnonymizerVisitorPassTest extends AbstractCompilerPassTestCase
 //        );
 //    }
 //
-//    public function testCompilerWithDatabasePriority()
+//    public function testCompilerWithDatabasePriority(): void
 //    {
 //        $actionsRegistry = new Definition();
 //        $this->setDefinition('netgen_information_collection.action.registry', $actionsRegistry);
@@ -183,7 +183,7 @@ class FieldAnonymizerVisitorPassTest extends AbstractCompilerPassTestCase
 //        );
 //    }
 
-    protected function registerCompilerPass(ContainerBuilder $container)
+    protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new FieldAnonymizerVisitorPass());
     }

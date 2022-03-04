@@ -14,9 +14,6 @@ class CaptchaRuntime
      */
     protected $captcha;
 
-    /**
-     * @param \Netgen\InformationCollection\API\Service\CaptchaService $captcha
-     */
     public function __construct(CaptchaService $captcha)
     {
         $this->captcha = $captcha;
@@ -24,10 +21,6 @@ class CaptchaRuntime
 
     /**
      * Checks if captcha is enabled for given Location.
-     *
-     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Location $location
-     *
-     * @return bool
      */
     public function isEnabled(Location $location): bool
     {
@@ -36,10 +29,6 @@ class CaptchaRuntime
 
     /**
      * Return configured site key for given Location.
-     *
-     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Location $location
-     *
-     * @return string
      */
     public function getSiteKey(Location $location): string
     {

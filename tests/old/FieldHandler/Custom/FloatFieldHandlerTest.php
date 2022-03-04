@@ -18,24 +18,24 @@ class FloatFieldHandlerTest extends TestCase
      */
     protected $handler;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->handler = new FloatFieldHandler();
     }
 
-    public function testInstanceOfCustomLegacyFieldHandler()
+    public function testInstanceOfCustomLegacyFieldHandler(): void
     {
         $this->assertInstanceOf(CustomLegacyFieldHandlerInterface::class, $this->handler);
     }
 
-    public function testSupportsHasValidBehaviour()
+    public function testSupportsHasValidBehaviour(): void
     {
         $this->assertFalse($this->handler->supports(new CheckboxValue(true)));
         $this->assertFalse($this->handler->supports(new IntegerValue(1)));
         $this->assertTrue($this->handler->supports(new FloatValue(2.0)));
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $fieldDefinition = $this->createMock(FieldDefinition::class);
 
@@ -43,7 +43,7 @@ class FloatFieldHandlerTest extends TestCase
         $this->assertEquals('55.7', $this->handler->toString(new FloatValue(55.7), $fieldDefinition));
     }
 
-    public function testGetLegacyValue()
+    public function testGetLegacyValue(): void
     {
         $fieldDefinition = new CoreFieldDefinition([
             'id' => 123,

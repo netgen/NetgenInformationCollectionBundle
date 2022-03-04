@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class FieldDefinitionTypeExtension extends AbstractTypeExtension
 {
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return FieldDefinitionType::class;
     }
@@ -21,7 +21,7 @@ class FieldDefinitionTypeExtension extends AbstractTypeExtension
         return [FieldDefinitionType::class];
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $isTranslation = $options['languageCode'] !== $options['mainLanguageCode'];
 

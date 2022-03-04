@@ -39,10 +39,6 @@ final class ActionRegistry implements ActionInterface
      */
     private $eventDispatcher;
 
-    /**
-     * @param array $actions
-     * @param \Netgen\InformationCollection\Core\Action\ConfigurationUtility $utility
-     */
     public function __construct(iterable $actions, ConfigurationUtility $utility, LoggerInterface $logger, EventDispatcherInterface $eventDispatcher)
     {
         $this->actions = $actions;
@@ -85,10 +81,8 @@ final class ActionRegistry implements ActionInterface
 
     /**
      * Sets debug variable based on kernel.debug param.
-     *
-     * @param bool $debug
      */
-    public function setDebug($debug)
+    public function setDebug(bool $debug): void
     {
         $this->debug = $debug;
     }

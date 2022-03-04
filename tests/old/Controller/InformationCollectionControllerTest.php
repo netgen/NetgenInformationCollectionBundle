@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
 use Symfony\Component\HttpFoundation\Request;
 
 class InformationCollectionControllerTest extends TestCase
@@ -58,7 +59,7 @@ class InformationCollectionControllerTest extends TestCase
      */
     protected $container;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists(ContentView::class)) {
             $this->markTestSkipped();
@@ -89,7 +90,7 @@ class InformationCollectionControllerTest extends TestCase
             ->setMethods(array())
             ->getMock();
 
-        $this->formBuilder = $this->getMockBuilder(\Symfony\Component\Form\FormBuilder::class)
+        $this->formBuilder = $this->getMockBuilder(SymfonyFormBuilder::class)
             ->disableOriginalConstructor()
             ->setMethods(array('getForm'))
             ->getMock();
@@ -105,12 +106,12 @@ class InformationCollectionControllerTest extends TestCase
         parent::setUp();
     }
 
-    public function testInstanceOfContainerAwareInterface()
+    public function testInstanceOfContainerAwareInterface(): void
     {
         $this->assertInstanceOf(ContainerAwareInterface::class, $this->controller);
     }
 
-    public function testDisplayAndHandleWithValidFormSubmission()
+    public function testDisplayAndHandleWithValidFormSubmission(): void
     {
         $location = new Location();
 
@@ -163,7 +164,7 @@ class InformationCollectionControllerTest extends TestCase
         $this->controller->displayAndHandle($this->contentView, $this->request);
     }
 
-    public function testDisplayAndHandleWithInvalidFormSubmission()
+    public function testDisplayAndHandleWithInvalidFormSubmission(): void
     {
         $location = new Location();
 
@@ -213,7 +214,7 @@ class InformationCollectionControllerTest extends TestCase
      * @expectedException \BadMethodCallException
      * @expectedExceptionMessage Ibexa view needs to implement LocationValueView interface
      */
-    public function testIfLocationValueViewIsNotProvidedThrowBadMethodCallException()
+    public function testIfLocationValueViewIsNotProvidedThrowBadMethodCallException(): void
     {
         $this->container->expects($this->never())
             ->method('get')
@@ -223,7 +224,7 @@ class InformationCollectionControllerTest extends TestCase
         $this->controller->displayAndHandle(new ContentViewStub(), $this->request);
     }
 
-    public function getService($id)
+    public function getService(string $id): object
     {
         switch ($id) {
             case 'netgen_information_collection.form.builder':

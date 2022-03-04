@@ -34,7 +34,7 @@ class EmailActionTest extends TestCase
      */
     protected $emailData;
 
-    public function setUp()
+    public function setUp(): void()
     {
         $this->factory = $this->getMockBuilder(EmailDataFactory::class)
             ->disableOriginalConstructor()

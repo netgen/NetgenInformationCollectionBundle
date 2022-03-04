@@ -29,11 +29,6 @@ class TreeController extends Controller
      */
     protected $service;
 
-    /**
-     * @param \Netgen\InformationCollection\API\Service\InformationCollection $service
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     */
     public function __construct(
         InformationCollection $service,
         TranslatorInterface $translator,
@@ -48,17 +43,16 @@ class TreeController extends Controller
      * Get contents with collections
      *
      * @param bool $isRoot
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getChildrenAction($isRoot = false)
+    public function getChildrenAction($isRoot = false): JsonResponse
     {
+        $isRoot = (bool) $isRoot;
         $attribute = new Attribute('infocollector', 'read');
         $this->denyAccessUnlessGranted($attribute);
 
         $result = array();
 
-        if ((bool) $isRoot) {
+        if ($isRoot) {
             $result[] = $this->getRootTreeData();
         } else {
 
@@ -75,10 +69,8 @@ class TreeController extends Controller
 
     /**
      * Generates data for root of the tree.
-     *
-     * @return array
      */
-    protected function getRootTreeData()
+    protected function getRootTreeData(): array
     {
         $count = $this->service->getObjectsWithCollectionsCount();
 
@@ -102,13 +94,11 @@ class TreeController extends Controller
     /**
      * Creates tree structure for Content
      *
-     * @param \Netgen\InformationCollection\API\Value\Content $content
      * @param bool $isRoot
-     *
-     * @return array
      */
-    protected function getCollections(Content $content, $isRoot = false)
+    protected function getCollections(Content $content, $isRoot = false): array
     {
+        $isRoot = (bool) $isRoot;
         $languages = $this->getConfigResolver()->getParameter('languages');
 
         $query = ContentId::countWithContentId($content->getContent()->id);

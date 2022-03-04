@@ -83,15 +83,7 @@ class EmailDataFactory extends BaseEmailDataFactory
         );
     }
 
-    /**
-     * Returns resolved parameter.
-     *
-     * @param string $field
-     * @param string $property
-     *
-     * @return string
-     */
-    protected function resolve(TemplateContent $data, $field, $property = Constants::FIELD_TYPE_TEXT)
+    protected function resolve(TemplateContent $data, string $field, string $property = Constants::FIELD_TYPE_TEXT): string
     {
         $rendered = '';
         if ($data->getTemplateWrapper()->hasBlock($field)) {
@@ -131,12 +123,8 @@ class EmailDataFactory extends BaseEmailDataFactory
 
     /**
      * Returns resolved email parameter.
-     *
-     * @param string $field
-     *
-     * @return array
      */
-    protected function resolveEmail(TemplateContent $data, $field)
+    protected function resolveEmail(TemplateContent $data, string $field): array
     {
         $rendered = '';
         if ($data->getTemplateWrapper()->hasBlock($field)) {
@@ -155,9 +143,7 @@ class EmailDataFactory extends BaseEmailDataFactory
         if (!empty($rendered)) {
             $emails = explode(',', $rendered);
 
-            $emails = array_filter($emails, static function ($var) {
-                return filter_var($var, FILTER_VALIDATE_EMAIL);
-            });
+            $emails = array_filter($emails, static fn ($var) => filter_var($var, FILTER_VALIDATE_EMAIL));
 
             if (!empty($emails)) {
                 return $emails;
@@ -184,12 +170,8 @@ class EmailDataFactory extends BaseEmailDataFactory
 
     /**
      * Returns resolved template name.
-     *
-     * @param string $contentTypeIdentifier
-     *
-     * @return string
      */
-    protected function resolveTemplate($contentTypeIdentifier)
+    protected function resolveTemplate(string $contentTypeIdentifier): string
     {
         if (array_key_exists($contentTypeIdentifier, $this->config[ConfigurationConstants::TEMPLATES][ConfigurationConstants::CONTENT_TYPES])) {
             return $this->config[ConfigurationConstants::TEMPLATES][ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier];
@@ -201,11 +183,9 @@ class EmailDataFactory extends BaseEmailDataFactory
     /**
      * Renders email template.
      *
-     * @throws MissingEmailBlockException
-     *
-     * @return string
+     * @throws \Netgen\InformationCollection\API\Exception\MissingEmailBlockException
      */
-    protected function resolveBody(TemplateContent $data)
+    protected function resolveBody(TemplateContent $data): string
     {
         if ($data->getTemplateWrapper()->hasBlock(Constants::BLOCK_EMAIL)) {
             return $data->getTemplateWrapper()
@@ -228,9 +208,9 @@ class EmailDataFactory extends BaseEmailDataFactory
     }
 
     /**
-     * @return BinaryFile[]
+     * @return \Ibexa\Core\FieldType\BinaryFile\Value[]
      */
-    protected function resolveAttachments(string $contentTypeIdentifier, array $collectedFields)
+    protected function resolveAttachments(string $contentTypeIdentifier, array $collectedFields): array
     {
         if (empty($this->config[ConfigurationConstants::ATTACHMENTS])) {
             return [];
@@ -250,9 +230,9 @@ class EmailDataFactory extends BaseEmailDataFactory
     }
 
     /**
-     * @return BinaryFile[]
+     * @return \Ibexa\Core\FieldType\BinaryFile\Value[]
      */
-    protected function getBinaryFileFields(array $collectedFields)
+    protected function getBinaryFileFields(array $collectedFields): array
     {
         $filtered = [];
         foreach ($collectedFields as $identifier => $value) {

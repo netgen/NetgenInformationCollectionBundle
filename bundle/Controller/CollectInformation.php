@@ -14,12 +14,8 @@ class CollectInformation implements ContainerAwareInterface
 
     /**
      * Displays and handles information collection.
-     *
-     * @param ContentValueView $view
-     *
-     * @return ContentValueView
      */
-    public function __invoke(ContentValueView $view)
+    public function __invoke(ContentValueView $view): ContentValueView
     {
         return $this->collectInformation($view, []);
     }

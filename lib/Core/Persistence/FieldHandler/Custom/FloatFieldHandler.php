@@ -12,17 +12,11 @@ use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 
 class FloatFieldHandler implements CustomLegacyFieldHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function supports(Value $value): bool
     {
         return $value instanceof FloatValue;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toString(Value $value, FieldDefinition $fieldDefinition): string
     {
         return (string) $value;

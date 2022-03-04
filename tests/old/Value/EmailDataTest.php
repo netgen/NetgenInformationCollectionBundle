@@ -15,7 +15,7 @@ class EmailDataTest extends TestCase
      * @param mixed $subject
      * @param mixed $body
      */
-    public function testGetters($recipient, $sender, $subject, $body)
+    public function testGetters($recipient, $sender, $subject, $body): void
     {
         $emailData = new EmailData($recipient, $sender, $subject, $body);
 
@@ -26,7 +26,7 @@ class EmailDataTest extends TestCase
         $this->assertNull($emailData->getAttachments());
     }
 
-    public function emailDataProvider()
+    public function emailDataProvider(): void
     {
         return array(
             array('recipient@example.com', 'sender@example.com', 'Test subject', 'Email body'),

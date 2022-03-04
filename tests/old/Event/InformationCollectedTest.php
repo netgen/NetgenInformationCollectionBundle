@@ -13,7 +13,7 @@ class InformationCollectedTest extends TestCase
      */
     protected $event;
 
-    public function setUp()
+    public function setUp(): void
     {
         $data = new DataWrapper('payload', 'definition', 'target');
         $this->event = new InformationCollected($data, 'additional content');
@@ -21,7 +21,7 @@ class InformationCollectedTest extends TestCase
         parent::setUp();
     }
 
-    public function testGetters()
+    public function testGetters(): void
     {
         $this->assertEquals('payload', $this->event->getInformationCollectionStruct());
         $this->assertEquals('definition', $this->event->getContentType());

@@ -28,7 +28,7 @@ class AttributeValue extends ValueObject
         $this->dataText = $dataText;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         if (!empty($this->dataText)) {
             return $this->dataText;

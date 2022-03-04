@@ -24,12 +24,8 @@ final class CollectionParamConverter implements ParamConverterInterface
 
     /**
      * Stores the object in the request.
-     *
-     * @param ParamConverter $configuration Contains the name, class and options of the object
-     *
-     * @return bool True if the object has been successfully set, else false
      */
-    public function apply(Request $request, ParamConverter $configuration)
+    public function apply(Request $request, ParamConverter $configuration): bool
     {
         if (!$request->attributes->has('collectionId')) {
             return false;
@@ -49,10 +45,8 @@ final class CollectionParamConverter implements ParamConverterInterface
 
     /**
      * Checks if the object is supported.
-     *
-     * @return bool True if the object is supported, else false
      */
-    public function supports(ParamConverter $configuration)
+    public function supports(ParamConverter $configuration): bool
     {
         return is_a($configuration->getClass(), Collection::class, true);
     }

@@ -18,31 +18,31 @@ class IntegerFieldHandlerTest extends TestCase
      */
     protected $handler;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->handler = new IntegerFieldHandler();
     }
 
-    public function testInstanceOfCustomLegacyFieldHandler()
+    public function testInstanceOfCustomLegacyFieldHandler(): void
     {
         $this->assertInstanceOf(CustomLegacyFieldHandlerInterface::class, $this->handler);
     }
 
-    public function testSupportsHasValidBehaviour()
+    public function testSupportsHasValidBehaviour(): void
     {
         $this->assertFalse($this->handler->supports(new CheckboxValue(true)));
         $this->assertTrue($this->handler->supports(new IntegerValue(1)));
         $this->assertFalse($this->handler->supports(new FloatValue(2.0)));
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $fieldDefinition = $this->createMock(FieldDefinition::class);
         $this->assertEquals('55', $this->handler->toString(new IntegerValue(55), $fieldDefinition));
         $this->assertEquals('32', $this->handler->toString(new IntegerValue(32), $fieldDefinition));
     }
 
-    public function testGetLegacyValue()
+    public function testGetLegacyValue(): void
     {
         $fieldDefinition = new CoreFieldDefinition([
             'id' => 123,

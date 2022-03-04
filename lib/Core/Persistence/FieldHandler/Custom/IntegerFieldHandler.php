@@ -12,17 +12,11 @@ use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 
 class IntegerFieldHandler implements CustomLegacyFieldHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function supports(Value $value): bool
     {
         return $value instanceof IntegerValue;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toString(Value $value, FieldDefinition $fieldDefinition): string
     {
         return (string) $value;

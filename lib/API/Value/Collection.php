@@ -76,7 +76,7 @@ final class Collection extends ValueObject
     }
 
     /**
-     * @return Attribute[]
+     * @return \Netgen\InformationCollection\API\Value\Attribute[]
      */
     public function getAttributes(): array
     {

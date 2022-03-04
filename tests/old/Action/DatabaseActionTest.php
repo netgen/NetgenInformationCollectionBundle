@@ -78,7 +78,7 @@ class DatabaseActionTest extends TestCase
      */
     protected $legacyData;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->factory = $this->getMockBuilder(FieldDataFactory::class)
             ->disableOriginalConstructor()
@@ -164,7 +164,7 @@ class DatabaseActionTest extends TestCase
         parent::setUp();
     }
 
-    public function testAct()
+    public function testAct(): void
     {
         $location = new Location(array(
             'contentInfo' => new ContentInfo(array(
@@ -237,7 +237,7 @@ class DatabaseActionTest extends TestCase
     /**
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
      */
-    public function testActWithExceptionOnInformationCollectionRepository()
+    public function testActWithExceptionOnInformationCollectionRepository(): void
     {
         $location = new Location(array(
             'contentInfo' => new ContentInfo(array(
@@ -307,7 +307,7 @@ class DatabaseActionTest extends TestCase
     /**
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
      */
-    public function testActWithExceptionOnInformationCollectionAttributeRepository()
+    public function testActWithExceptionOnInformationCollectionAttributeRepository(): void
     {
         $location = new Location(array(
             'contentInfo' => new ContentInfo(array(

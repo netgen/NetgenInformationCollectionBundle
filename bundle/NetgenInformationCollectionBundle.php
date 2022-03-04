@@ -9,16 +9,13 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class NetgenInformationCollectionBundle extends Bundle
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
-        $eZExtension = $container->getExtension('ibexa');
-        if ($eZExtension instanceof IbexaCoreExtension) {
-            $eZExtension->addPolicyProvider(new InformationCollectionPolicyProvider());
+        $ibexaExtension = $container->getExtension('ibexa');
+        if ($ibexaExtension instanceof IbexaCoreExtension) {
+            $ibexaExtension->addPolicyProvider(new InformationCollectionPolicyProvider());
         }
     }
 }

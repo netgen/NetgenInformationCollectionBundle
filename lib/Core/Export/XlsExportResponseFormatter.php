@@ -40,7 +40,7 @@ final class XlsExportResponseFormatter implements ExportResponseFormatter
 
         try {
             $activeSheet->setTitle(mb_substr($contentName, 0, 30));
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $activeSheet->setTitle('Information collection export');
         }
 

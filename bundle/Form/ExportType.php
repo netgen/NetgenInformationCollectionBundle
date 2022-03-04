@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form;
 
+use DateTimeInterface;
 use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
 use Netgen\InformationCollection\API\Value\Filter\ContentId;
 use Symfony\Component\Form\AbstractType;
@@ -28,9 +29,6 @@ class ExportType extends AbstractType implements DataMapperInterface
      */
     protected $exportResponseFormatterRegistry;
 
-    /**
-     * @param \Netgen\InformationCollection\Core\Export\ExportResponseFormatterRegistry $exportResponseFormatterRegistry
-     */
     public function __construct(ExportResponseFormatterRegistry $exportResponseFormatterRegistry)
     {
         $this->exportResponseFormatterRegistry = $exportResponseFormatterRegistry;
@@ -46,7 +44,7 @@ class ExportType extends AbstractType implements DataMapperInterface
             'translation_domain' => 'netgen_information_collection_admin',
             'constraints' => [
                 new Assert\NotBlank(),
-                new Assert\Type(\DateTimeInterface::class),
+                new Assert\Type(DateTimeInterface::class),
             ],
         ]);
 
@@ -58,7 +56,7 @@ class ExportType extends AbstractType implements DataMapperInterface
             'translation_domain' => 'netgen_information_collection_admin',
             'constraints' => [
                 new Assert\NotBlank(),
-                new Assert\Type(\DateTimeInterface::class),
+                new Assert\Type(DateTimeInterface::class),
             ],
         ]);
 
@@ -119,7 +117,7 @@ class ExportType extends AbstractType implements DataMapperInterface
 
         $builder->setDataMapper($this);
 
-        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($availableFormatters) {
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($availableFormatters): void {
             if (empty($availableFormatters)) {
                 $formError = new FormError('netgen_information_collection_admin_export_no_formatters');
                 $event->getForm()->addError($formError);
@@ -127,7 +125,7 @@ class ExportType extends AbstractType implements DataMapperInterface
         });
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ExportCriteria::class,
@@ -138,12 +136,12 @@ class ExportType extends AbstractType implements DataMapperInterface
         $resolver->setAllowedTypes('contentId', 'int');
     }
 
-    public function mapDataToForms($viewData, iterable $forms)
+    public function mapDataToForms($viewData, iterable $forms): void
     {
 
     }
 
-    public function mapFormsToData(iterable $forms, &$viewData)
+    public function mapFormsToData(iterable $forms, &$viewData): void
     {
         $forms = iterator_to_array($forms);
 

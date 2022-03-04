@@ -14,9 +14,6 @@ final class FieldHandlerRegistry
      */
     private $handlers;
 
-    /**
-     * @param array $handlers
-     */
     public function __construct(iterable $handlers)
     {
         $this->handlers = $handlers;

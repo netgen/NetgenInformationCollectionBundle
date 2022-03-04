@@ -31,17 +31,17 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
         $this->captchaService = $captchaService;
     }
 
-    public function getName()
+    public function getName(): string
     {
         $this->getBlockPrefix();
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return self::FORM_BLOCK_PREFIX;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var InformationCollectionStruct $struct */
         $struct = $options['data'];
@@ -73,20 +73,20 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
         $builder->setDataMapper($this);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['languageCode'] = $options['languageCode'];
         $view->vars['mainLanguageCode'] = $options['mainLanguageCode'];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults(['translation_domain' => 'ezplatform_content_forms_content'])
             ->setRequired(['languageCode', 'mainLanguageCode']);
     }
 
-    public function mapDataToForms($viewData, iterable $forms)
+    public function mapDataToForms($viewData, iterable $forms): void
     {
         if (null === $viewData) {
             return;
@@ -104,7 +104,7 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
         }
     }
 
-    public function mapFormsToData(iterable $forms, &$viewData)
+    public function mapFormsToData(iterable $forms, &$viewData): void
     {
 
     }

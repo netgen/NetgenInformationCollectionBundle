@@ -10,7 +10,7 @@ class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
-    public function testConfigurationValuesAreOkAndValid()
+    public function testConfigurationValuesAreOkAndValid(): void
     {
         $this->assertConfigurationIsValid(
             array(
@@ -56,7 +56,7 @@ class ConfigurationTest extends TestCase
         );
     }
 
-    public function testConfigurationIsInvalidForDefaultTemplateValue()
+    public function testConfigurationIsInvalidForDefaultTemplateValue(): void
     {
         $this->assertConfigurationIsInvalid(
             array(
@@ -103,7 +103,7 @@ class ConfigurationTest extends TestCase
         );
     }
 
-    public function testConfigurationIsInvalidForDefaultActionsValue()
+    public function testConfigurationIsInvalidForDefaultActionsValue(): void
     {
         $this->assertConfigurationIsInvalid(
             array(
@@ -149,7 +149,7 @@ class ConfigurationTest extends TestCase
         );
     }
 
-    protected function getConfiguration()
+    protected function getConfiguration(): Configuration
     {
         return new Configuration();
     }

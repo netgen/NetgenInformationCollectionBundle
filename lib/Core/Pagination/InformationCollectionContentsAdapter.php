@@ -20,7 +20,7 @@ class InformationCollectionContentsAdapter extends BaseAdapter
         parent::__construct($informationCollectionService);
     }
 
-    public function getNbResults()
+    public function getNbResults(): int
     {
         if (!isset($this->nbResults)) {
             $this->nbResults = $this->informationCollectionService
@@ -31,7 +31,7 @@ class InformationCollectionContentsAdapter extends BaseAdapter
         return $this->nbResults;
     }
 
-    public function getSlice($offset, $length)
+    public function getSlice($offset, $length): iterable
     {
         $query = new Query($offset, $length);
 

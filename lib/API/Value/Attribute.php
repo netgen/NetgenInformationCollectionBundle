@@ -41,7 +41,7 @@ final class Attribute extends ValueObject
         $this->value = $value;
     }
 
-    public static function createFromAttributeAndValue(self $attribute, AttributeValue $attributeValue)
+    public static function createFromAttributeAndValue(self $attribute, AttributeValue $attributeValue): self
     {
         return new self($attribute->getId(), $attribute->getField(), $attribute->getFieldDefinition(), $attributeValue);
     }

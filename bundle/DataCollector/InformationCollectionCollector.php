@@ -37,7 +37,7 @@ class InformationCollectionCollector extends DataCollector
         $this->translationHelper = $translationHelper;
     }
 
-    public function collect(Request $request, Response $response, \Throwable $exception = null)
+    public function collect(Request $request, Response $response, \Throwable $exception = null): void
     {
         if ($request->get(InformationCollectionType::FORM_BLOCK_PREFIX) !== null) {
             $this->mapCollectedData($request);

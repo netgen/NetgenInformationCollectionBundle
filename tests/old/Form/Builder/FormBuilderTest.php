@@ -38,7 +38,7 @@ class FormBuilderTest extends TestCase
      */
     protected $innerFormBuilder;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->formFactory = $this->getMockBuilder(FormFactory::class)
             ->disableOriginalConstructor()
@@ -64,7 +64,7 @@ class FormBuilderTest extends TestCase
         parent::setUp();
     }
 
-    public function testFormBuildUp()
+    public function testFormBuildUp(): void
     {
         $location = new Location(array(
             'contentInfo' => new ContentInfo(array(
@@ -88,7 +88,7 @@ class FormBuilderTest extends TestCase
         $this->assertSame($this->innerFormBuilder, $builder);
     }
 
-    public function testFormBuildUpWithCustomURL()
+    public function testFormBuildUpWithCustomURL(): void
     {
         $location = new Location(array(
             'contentInfo' => new ContentInfo(array(

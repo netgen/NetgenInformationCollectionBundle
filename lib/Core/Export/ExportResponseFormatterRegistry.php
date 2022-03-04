@@ -23,10 +23,7 @@ final class ExportResponseFormatterRegistry
         $this->exportResponseFormatters = $exportResponseFormatters;
     }
 
-    /**
-     * @param string $identifier
-     */
-    public function getExportResponseFormatter($identifier): ExportResponseFormatter
+    public function getExportResponseFormatter(string $identifier): ExportResponseFormatter
     {
         foreach ($this->exportResponseFormatters as $formatter) {
             if ($formatter->getIdentifier() === $identifier) {

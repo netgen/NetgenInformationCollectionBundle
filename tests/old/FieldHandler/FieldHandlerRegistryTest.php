@@ -24,7 +24,7 @@ class FieldHandlerRegistryTest extends TestCase
      */
     protected $customHandler2;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->registry = new FieldHandlerRegistry();
         $this->customHandler1 = $this->getMockBuilder(CustomFieldHandlerInterface::class)
@@ -40,13 +40,13 @@ class FieldHandlerRegistryTest extends TestCase
         parent::setUp();
     }
 
-    public function testAddingHandlers()
+    public function testAddingHandlers(): void
     {
         $this->registry->addHandler($this->customHandler1);
         $this->registry->addHandler($this->customHandler2);
     }
 
-    public function testItReturnsProperHandler()
+    public function testItReturnsProperHandler(): void
     {
         $value = new TestValue(2);
 
@@ -66,7 +66,7 @@ class FieldHandlerRegistryTest extends TestCase
         $this->assertSame($this->customHandler2, $handler);
     }
 
-    public function testItReturnsNullWhenSupportedHandlerNotFound()
+    public function testItReturnsNullWhenSupportedHandlerNotFound(): void
     {
         $value = new TestValue(2);
 

@@ -11,7 +11,7 @@ class ActionFailedExceptionTest extends TestCase
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
      * @expectedExceptionMessage InformationCollection action test failed with reason some reason
      */
-    public function testException()
+    public function testException(): void
     {
         throw new ActionFailedException('test', 'some reason');
     }

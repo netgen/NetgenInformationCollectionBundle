@@ -45,10 +45,8 @@ class AutoResponderDataFactory extends EmailDataFactory
 
     /**
      * Returns resolved parameter.
-     *
-     * @return array
      */
-    protected function resolveRecipient(TemplateContent $data)
+    protected function resolveRecipient(TemplateContent $data): array
     {
         $fields = $data->getEvent()->getInformationCollectionStruct()->getCollectedFields();
         if ($data->getTemplateWrapper()->hasBlock(Constants::FIELD_RECIPIENT)) {
@@ -67,9 +65,7 @@ class AutoResponderDataFactory extends EmailDataFactory
         if (!empty($rendered)) {
             $emails = explode(',', $rendered);
 
-            $emails = array_filter($emails, static function ($var) {
-                return filter_var($var, FILTER_VALIDATE_EMAIL);
-            });
+            $emails = array_filter($emails, static fn ($var) => filter_var($var, FILTER_VALIDATE_EMAIL));
 
             if (!empty($emails)) {
                 return $emails;
@@ -90,10 +86,8 @@ class AutoResponderDataFactory extends EmailDataFactory
 
     /**
      * Returns resolved parameter.
-     *
-     * @return string
      */
-    protected function resolveSubject(TemplateContent $data)
+    protected function resolveSubject(TemplateContent $data): string
     {
         $fields = $data->getEvent()->getInformationCollectionStruct()->getCollectedFields();
         if ($data->getTemplateWrapper()->hasBlock(Constants::FIELD_AUTO_RESPONDER_SUBJECT)) {

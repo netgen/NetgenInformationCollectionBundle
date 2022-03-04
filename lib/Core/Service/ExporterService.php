@@ -44,9 +44,6 @@ class ExporterService implements Exporter
         $this->informationCollection = $informationCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function export(ExportCriteria $criteria): Export
     {
         $fields = $this->contentTypeUtils
@@ -83,10 +80,8 @@ class ExporterService implements Exporter
 
     /**
      * Get attribute value string.
-     *
-     * @return string
      */
-    protected function getAttributeValue(int $fieldId, array $attributes)
+    protected function getAttributeValue(int $fieldId, array $attributes): string
     {
         /** @var Attribute $attribute */
         foreach ($attributes as $attribute) {

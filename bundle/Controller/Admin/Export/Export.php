@@ -10,6 +10,7 @@ use Netgen\InformationCollection\Core\Export\ExportResponseFormatterRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Netgen\InformationCollection\Form\Type\ExportType;
 use Ibexa\Contracts\Core\Repository\ContentService;
+use Symfony\Component\HttpFoundation\Response;
 
 final class Export extends AbstractController
 {
@@ -39,12 +40,15 @@ final class Export extends AbstractController
         $this->formatterRegistry = $formatterRegistry;
     }
 
-    public function __invoke($contentId, Request $request)
+    /**
+     * @param int $contentId
+     */
+    public function __invoke($contentId, Request $request): Response
     {
         $attribute = new Attribute('infocollector', 'export');
         $this->denyAccessUnlessGranted($attribute);
 
-        $content = $this->contentService->loadContent($contentId);
+        $content = $this->contentService->loadContent((int) $contentId);
 
         $form = $this->createForm(ExportType::class, null, [
             'contentId' => $content->id,

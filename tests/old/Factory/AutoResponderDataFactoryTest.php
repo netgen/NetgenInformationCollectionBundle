@@ -20,9 +20,9 @@ use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 use PHPUnit\Framework\TestCase;
-use Twig_Environment;
-use Twig_Loader_Array;
-use Twig_TemplateWrapper;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
+use Twig\TemplateWrapper;
 
 class AutoResponderDataFactoryTest extends TestCase
 {
@@ -76,7 +76,7 @@ class AutoResponderDataFactoryTest extends TestCase
      */
     protected $versionInfo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->config = array(
             'templates' => array(
@@ -107,7 +107,7 @@ class AutoResponderDataFactoryTest extends TestCase
             ->setMethods(array('loadContent'))
             ->getMock();
 
-        $this->twig = $this->getMockBuilder(\Twig_Environment::class)
+        $this->twig = $this->getMockBuilder(Environment::class)
             ->disableOriginalConstructor()
             ->setMethods(array('load'))
             ->getMock();
@@ -138,17 +138,17 @@ class AutoResponderDataFactoryTest extends TestCase
         parent::setUp();
     }
 
-    public function testBuildingWithSenderAndSubjectFromContent()
+    public function testBuildingWithSenderAndSubjectFromContent(): void
     {
-        $twig = new Twig_Environment(
-            new Twig_Loader_Array(
+        $twig = new Environment(
+            new ArrayLoader(
                 array(
                     'index' => '{% block email %}{{ "email body" }}{% endblock %}',
                 )
             )
         );
 
-        $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
+        $templateWrapper = new TemplateWrapper($twig, $twig->loadTemplate('index'));
 
         $this->factory = new AutoResponderDataFactory(
             $this->config,
@@ -227,17 +227,17 @@ class AutoResponderDataFactoryTest extends TestCase
         $this->assertEquals('email body', $value->getBody());
     }
 
-    public function testBuildingWithSenderFromContentAndSubjectFromTemplate()
+    public function testBuildingWithSenderFromContentAndSubjectFromTemplate(): void
     {
-        $twig = new Twig_Environment(
-            new Twig_Loader_Array(
+        $twig = new Environment(
+            new ArrayLoader(
                 array(
                     'index' => '{% block email %}{{ "email body" }}{% endblock %}{% block auto_responder_subject %}{{ "subject from template" }}{% endblock %}',
                 )
             )
         );
 
-        $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
+        $templateWrapper = new TemplateWrapper($twig, $twig->loadTemplate('index'));
 
         $this->factory = new AutoResponderDataFactory(
             $this->config,

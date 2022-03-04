@@ -12,17 +12,11 @@ use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 
 class TimeFieldHandler implements CustomLegacyFieldHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function supports(Value $value): bool
     {
         return $value instanceof TimeValue;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toString(Value $value, FieldDefinition $fieldDefinition): string
     {
         return (string) $value;

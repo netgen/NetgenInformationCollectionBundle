@@ -23,7 +23,7 @@ class FieldDataFactoryTest extends TestCase
      */
     protected $registry;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->registry = $this->getMockBuilder(FieldHandlerRegistry::class)
             ->disableOriginalConstructor()
@@ -35,7 +35,7 @@ class FieldDataFactoryTest extends TestCase
         parent::setUp();
     }
 
-    public function testGetLegacyValueWithoutCustomHandler()
+    public function testGetLegacyValueWithoutCustomHandler(): void
     {
         $value = new TextValue('some value');
         $definition = new FieldDefinition(array(
@@ -56,7 +56,7 @@ class FieldDataFactoryTest extends TestCase
         $this->assertEquals((string) $value, $data->getDataText());
     }
 
-    public function testGetLegacyValueWithCustomHandler()
+    public function testGetLegacyValueWithCustomHandler(): void
     {
         $value = new TextValue('some value');
         $definition = new FieldDefinition(array(
@@ -87,7 +87,7 @@ class FieldDataFactoryTest extends TestCase
         $this->assertEquals((string) $value, $data->getDataText());
     }
 
-    public function testGetLegacyValueWithCustomLegacyHandler()
+    public function testGetLegacyValueWithCustomLegacyHandler(): void
     {
         $value = new TextValue('some value');
         $definition = new FieldDefinition(array(

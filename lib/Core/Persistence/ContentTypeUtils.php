@@ -29,16 +29,13 @@ final class ContentTypeUtils
     }
 
     /**
-     * Return field id for fiven field definition identifier.
-     *
-     * @param int $contentId
-     * @param string $fieldDefIdentifier
+     * Return field id for given field definition identifier.
      *
      * @throws \OutOfBoundsException
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\UnauthorizedException
      */
-    public function getFieldId($contentId, $fieldDefIdentifier)
+    public function getFieldId(int $contentId, string $fieldDefIdentifier): int
     {
         $content = $this->contentService->loadContent($contentId);
 
@@ -57,14 +54,10 @@ final class ContentTypeUtils
     /**
      * Returns fields that are marked as info collectors.
      *
-     * @param int $contentId
-     *
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\UnauthorizedException
-     *
-     * @return array
      */
-    public function getInfoCollectorFields($contentId)
+    public function getInfoCollectorFields(int $contentId): array
     {
         $fields = [];
 

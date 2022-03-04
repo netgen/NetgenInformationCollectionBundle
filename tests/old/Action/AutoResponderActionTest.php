@@ -34,7 +34,7 @@ class AutoResponderActionTest extends TestCase
      */
     protected $emailData;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->factory = $this->getMockBuilder(AutoResponderDataFactory::class)
             ->disableOriginalConstructor()
@@ -55,7 +55,7 @@ class AutoResponderActionTest extends TestCase
         parent::setUp();
     }
 
-    public function testAct()
+    public function testAct(): void
     {
         $informationCollectionStruct = new InformationCollectionStruct();
         $dataWrapper = new DataWrapper($informationCollectionStruct, null, null);
@@ -77,7 +77,7 @@ class AutoResponderActionTest extends TestCase
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
      * @expectedExceptionMessage Error occurred while trying to send email: test@example.com failed with error invalid email address
      */
-    public function testActWithException()
+    public function testActWithException(): void
     {
         $informationCollectionStruct = new InformationCollectionStruct();
         $dataWrapper = new DataWrapper($informationCollectionStruct, null, null);

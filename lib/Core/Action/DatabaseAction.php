@@ -25,9 +25,6 @@ final class DatabaseAction implements ActionInterface, CrucialActionInterface
         $this->informationCollection = $informationCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function act(InformationCollected $event): void
     {
         $struct = $event->getInformationCollectionStruct();

@@ -53,7 +53,7 @@ class AnonymizerService implements Anonymizer
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\UnauthorizedException
      */
-    protected function destroyData(Collection $collection, array $fields = [])
+    protected function destroyData(Collection $collection, array $fields = []): void
     {
         $contentType = $this->repository
             ->getContentTypeService()
@@ -72,7 +72,7 @@ class AnonymizerService implements Anonymizer
     /**
      * @param \Netgen\InformationCollection\API\Value\Attribute[] $attributes
      */
-    protected function anonymize(CollectionId $collectionId, array $attributes, ContentType $contentType)
+    protected function anonymize(CollectionId $collectionId, array $attributes, ContentType $contentType): void
     {
         foreach ($attributes as $attribute) {
             $value = $this->fieldAnonymizerVisitor->visit($attribute, $contentType);

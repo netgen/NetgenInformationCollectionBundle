@@ -24,25 +24,25 @@ class DateAndTimeFieldHandlerTest extends TestCase
      */
     protected $dt;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->handler = new DateAndTimeFieldHandler();
         $this->dt = new DateTime();
     }
 
-    public function testInstanceOfCustomLegacyFieldHandler()
+    public function testInstanceOfCustomLegacyFieldHandler(): void
     {
         $this->assertInstanceOf(CustomLegacyFieldHandlerInterface::class, $this->handler);
     }
 
-    public function testSupportsHasValidBehaviour()
+    public function testSupportsHasValidBehaviour(): void
     {
         $this->assertFalse($this->handler->supports(new CheckboxValue(true)));
         $this->assertTrue($this->handler->supports(new DateAndTimeValue($this->dt)));
         $this->assertFalse($this->handler->supports(new FloatValue(2.0)));
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $fieldDefinition = $this->createMock(FieldDefinition::class);
 
@@ -51,7 +51,7 @@ class DateAndTimeFieldHandlerTest extends TestCase
         $this->assertEquals($this->dt->format('U'), $this->handler->toString($value, $fieldDefinition));
     }
 
-    public function testGetLegacyValue()
+    public function testGetLegacyValue(): void
     {
         $fieldDefinition = new CoreFieldDefinition([
             'id' => 123,

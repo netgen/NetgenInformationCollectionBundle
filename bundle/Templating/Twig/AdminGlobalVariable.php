@@ -30,8 +30,6 @@ class AdminGlobalVariable
 
     /**
      * Returns the pagelayout template.
-     *
-     * @return string|null
      */
     public function getPageLayoutTemplate(): ?string
     {

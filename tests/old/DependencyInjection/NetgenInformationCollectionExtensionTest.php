@@ -7,20 +7,20 @@ use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\NetgenInformat
 
 class NetgenInformationCollectionExtensionTest extends AbstractExtensionTestCase
 {
-    public function testItSetsValidContainerParameters()
+    public function testItSetsValidContainerParameters(): void
     {
         $this->container->setParameter('ibexa.site_access.list', array());
         $this->load();
     }
 
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return array(
             new NetgenInformationCollectionExtension(),
         );
     }
 
-    protected function getMinimalConfiguration()
+    protected function getMinimalConfiguration(): array
     {
         return array(
             'system' => array(

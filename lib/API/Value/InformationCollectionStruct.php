@@ -85,7 +85,7 @@ final class InformationCollectionStruct extends ValueObject
         return $this->fields;
     }
 
-    protected function addFieldData(FieldData $fieldData)
+    protected function addFieldData(FieldData $fieldData): void
     {
         $this->fields[$fieldData->fieldDefinition->identifier] = $fieldData;
     }

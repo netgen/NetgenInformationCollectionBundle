@@ -36,98 +36,62 @@ class EzInfoCollection
      */
     private $userIdentifier;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getContentObjectId()
+    public function getContentObjectId(): int
     {
         return $this->contentObjectId;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @param int $contentObjectId
-     */
-    public function setContentObjectId($contentObjectId)
+    public function setContentObjectId(int $contentObjectId): void
     {
         $this->contentObjectId = $contentObjectId;
     }
 
-    /**
-     * @param int $created
-     */
-    public function setCreated($created)
+    public function setCreated(int $created): void
     {
         $this->created = $created;
     }
 
-    /**
-     * @param int $creatorId
-     */
-    public function setCreatorId($creatorId)
+    public function setCreatorId(int $creatorId): void
     {
         $this->creatorId = $creatorId;
     }
 
-    /**
-     * @param int $modified
-     */
-    public function setModified($modified)
+    public function setModified(int $modified): void
     {
         $this->modified = $modified;
     }
 
-    /**
-     * @param string $userIdentifier
-     */
-    public function setUserIdentifier($userIdentifier)
+    public function setUserIdentifier(string $userIdentifier): void
     {
         $this->userIdentifier = $userIdentifier;
     }
 
-    /**
-     * @return int
-     */
-    public function getCreated()
+    public function getCreated(): int
     {
         return $this->created;
     }
 
-    /**
-     * @return int
-     */
-    public function getCreatorId()
+    public function getCreatorId(): int
     {
         return $this->creatorId;
     }
 
-    /**
-     * @return int
-     */
-    public function getModified()
+    public function getModified(): int
     {
         return $this->modified;
     }
 
-    /**
-     * @return string
-     */
-    public function getUserIdentifier()
+    public function getUserIdentifier(): string
     {
         return $this->userIdentifier;
     }

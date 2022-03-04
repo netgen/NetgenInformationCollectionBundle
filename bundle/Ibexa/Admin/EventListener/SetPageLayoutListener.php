@@ -37,14 +37,14 @@ class SetPageLayoutListener implements EventSubscriberInterface
         $this->groupsBySiteAccess = $groupsBySiteAccess;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::REQUEST => 'onKernelRequest',
         ];
     }
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

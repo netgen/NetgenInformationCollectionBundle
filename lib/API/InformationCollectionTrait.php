@@ -15,8 +15,6 @@ trait InformationCollectionTrait
 {
     /**
      * Builds Form, checks if Form is valid and dispatches InformationCollected event.
-     *
-     * @return array
      */
     protected function collectInformation(ContentValueView $view, array $options): ContentValueView
     {

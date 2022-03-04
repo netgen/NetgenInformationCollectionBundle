@@ -12,13 +12,13 @@ class EzInfoCollectionAttributeTest extends TestCase
      */
     protected $entity;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->entity = new EzInfoCollectionAttribute();
         parent::setUp();
     }
 
-    public function testSetters()
+    public function testSetters(): void
     {
         $this->entity->setId(2342);
         $this->entity->setContentObjectId(24343);

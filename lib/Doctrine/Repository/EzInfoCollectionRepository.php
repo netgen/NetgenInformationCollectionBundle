@@ -21,26 +21,20 @@ class EzInfoCollectionRepository extends EntityRepository
 {
     /**
      * Get new \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection instance.
-     *
-     * @return \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection
      */
-    public function getInstance()
+    public function getInstance(): EzInfoCollection
     {
         return new EzInfoCollection();
     }
 
-    public function loadCollection(int $collectionId)
+    public function loadCollection(int $collectionId): ?EzInfoCollection
     {
-        $collection = $this->findOneBy(['id' => $collectionId]);
-
-        if ($collection instanceof EzInfoCollection) {
-            return $collection;
-        }
+        return $this->findOneBy(['id' => $collectionId]);
     }
 
-    public function getFirstCollection(int $contentId): EzInfoCollection
+    public function getFirstCollection(int $contentId): ?EzInfoCollection
     {
-        $collection = $this->findOneBy(
+        return $this->findOneBy(
             [
                 'contentObjectId' => $contentId,
             ],
@@ -48,15 +42,11 @@ class EzInfoCollectionRepository extends EntityRepository
                 'created' => 'ASC',
             ]
         );
-
-        if ($collection instanceof EzInfoCollection) {
-            return $collection;
-        }
     }
 
-    public function getLastCollection(int $contentId): EzInfoCollection
+    public function getLastCollection(int $contentId): ?EzInfoCollection
     {
-        $collection = $this->findOneBy(
+        return $this->findOneBy(
             [
                 'contentObjectId' => $contentId,
             ],
@@ -64,10 +54,6 @@ class EzInfoCollectionRepository extends EntityRepository
                 'created' => 'DESC',
             ]
         );
-
-        if ($collection instanceof EzInfoCollection) {
-            return $collection;
-        }
     }
 
     public function createNewFromValues(Content $content, User $user): EzInfoCollection
@@ -87,9 +73,9 @@ class EzInfoCollectionRepository extends EntityRepository
     /**
      * Save object.
      *
-     * @throws StoringCollectionFailedException
+     * @throws \Netgen\InformationCollection\API\Exception\StoringCollectionFailedException
      */
-    public function save(EzInfoCollection $informationCollection)
+    public function save(EzInfoCollection $informationCollection): void
     {
         try {
             $this->_em->persist($informationCollection);
@@ -100,9 +86,9 @@ class EzInfoCollectionRepository extends EntityRepository
     }
 
     /**
-     * @throws RemoveCollectionFailedException
+     * @throws \Netgen\InformationCollection\API\Exception\RemoveCollectionFailedException
      */
-    public function remove(array $collections)
+    public function remove(array $collections): void
     {
         try {
             foreach ($collections as $collection) {
@@ -115,7 +101,7 @@ class EzInfoCollectionRepository extends EntityRepository
         }
     }
 
-    public function findByContentId($contentId)
+    public function findByContentId(int $contentId): array
     {
         $qb = $this->createQueryBuilder('ezc');
 
@@ -126,7 +112,7 @@ class EzInfoCollectionRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findByContentIdOlderThan($contentId, DateTimeImmutable $date)
+    public function findByContentIdOlderThan(int $contentId, DateTimeImmutable $date): array
     {
         $qb = $this->createQueryBuilder('ezc');
 
@@ -138,7 +124,7 @@ class EzInfoCollectionRepository extends EntityRepository
             ->getResult();
     }
 
-    public function getChildrenCount($contentId)
+    public function getChildrenCount(int $contentId): int
     {
         try {
             return (int) $this->createQueryBuilder('ezc')

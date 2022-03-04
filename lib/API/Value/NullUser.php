@@ -21,10 +21,7 @@ class NullUser extends User
 
 class VersionInfo extends CoreVersionInfo
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getName($languageCode = null)
+    public function getName($languageCode = null): string
     {
         return 'user removed';
     }

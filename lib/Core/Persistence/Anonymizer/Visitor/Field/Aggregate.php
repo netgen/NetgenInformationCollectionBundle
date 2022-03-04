@@ -17,30 +17,21 @@ class Aggregate extends FieldAnonymizerVisitor
      */
     protected $visitors;
 
-    /**
-     * @param array $visitors
-     */
     public function __construct(iterable $visitors)
     {
         $this->visitors = $visitors;
     }
 
-    public function addVisitor(FieldAnonymizerVisitor $visitor)
+    public function addVisitor(FieldAnonymizerVisitor $visitor): void
     {
         $this->visitors[] = $visitor;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function accept(Attribute $attribute, ContentType $contentType): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function visit(Attribute $attribute, ContentType $contentType): AttributeValue
     {
         foreach ($this->visitors as $visitor) {

@@ -16,17 +16,11 @@ class Email extends FieldAnonymizerVisitor
 {
     protected $allowedCharacters = ['.', '@', '-', '+'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function accept(Attribute $attribute, ContentType $contentType): bool
     {
         return 'ezemail' === $attribute->getFieldDefinition()->fieldTypeIdentifier;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function visit(Attribute $attribute, ContentType $contentType): AttributeValue
     {
         $email = $attribute->getValue()->getDataText();

@@ -55,20 +55,16 @@ class InformationCollectionAdminView implements ViewInterface
 
     /**
      * Sets the default template.
-     *
-     * @param string $template
      */
-    public function setDefaultTemplate($template)
+    public function setDefaultTemplate(string $template): void
     {
         $this->template = $template;
     }
 
     /**
      * Returns the canonical name.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'netgen_information_collection_admin';
     }
@@ -80,13 +76,9 @@ class InformationCollectionAdminView implements ViewInterface
      * the routes receiving the page number as first and
      * unique argument.
      *
-     * @param \Pagerfanta\PagerfantaInterface $pagerfanta A pagerfanta
      * @param \Closure $routeGenerator A callable to generate the routes
-     * @param array $options An array of options (optional)
-     *
-     * @return string
      */
-    public function render(PagerfantaInterface $pagerfanta, $routeGenerator, array $options = [])
+    public function render(PagerfantaInterface $pagerfanta, $routeGenerator, array $options = []): string
     {
         $this->pagerfanta = $pagerfanta;
         $this->routeGenerator = $routeGenerator;
@@ -105,10 +97,8 @@ class InformationCollectionAdminView implements ViewInterface
 
     /**
      * Initializes the proximity.
-     *
-     * @param array $options
      */
-    protected function initializeProximity($options)
+    protected function initializeProximity(array $options): void
     {
         $this->proximity = isset($options['proximity']) ?
             (int) $options['proximity'] :
@@ -118,7 +108,7 @@ class InformationCollectionAdminView implements ViewInterface
     /**
      * Calculates start and end page that will be shown in the middle of pager.
      */
-    protected function calculateStartAndEndPage()
+    protected function calculateStartAndEndPage(): void
     {
         $currentPage = $this->pagerfanta->getCurrentPage();
         $nbPages = $this->pagerfanta->getNbPages();
@@ -142,38 +132,24 @@ class InformationCollectionAdminView implements ViewInterface
 
     /**
      * Calculates the end page when start page is underflowed.
-     *
-     * @param int $startPage
-     * @param int $endPage
-     * @param int $nbPages
-     *
-     * @return int
      */
-    protected function calculateEndPageForStartPageUnderflow($startPage, $endPage, $nbPages)
+    protected function calculateEndPageForStartPageUnderflow(int $startPage, int $endPage, int $nbPages): int
     {
         return min($endPage + (1 - $startPage), $nbPages);
     }
 
     /**
      * Calculates the start page when end page is overflowed.
-     *
-     * @param int $startPage
-     * @param int $endPage
-     * @param int $nbPages
-     *
-     * @return int
      */
-    protected function calculateStartPageForEndPageOverflow($startPage, $endPage, $nbPages)
+    protected function calculateStartPageForEndPageOverflow(int $startPage, int $endPage, int $nbPages): int
     {
         return max($startPage - ($endPage - $nbPages), 1);
     }
 
     /**
      * Returns the list of all pages that need to be displayed.
-     *
-     * @return array
      */
-    protected function getPages()
+    protected function getPages(): array
     {
         $pages = [];
 
@@ -218,12 +194,8 @@ class InformationCollectionAdminView implements ViewInterface
 
     /**
      * Generates the URL based on provided page.
-     *
-     * @param int $page
-     *
-     * @return string
      */
-    protected function generateUrl($page)
+    protected function generateUrl(int $page): string
     {
         $routeGenerator = $this->routeGenerator;
 

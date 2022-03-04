@@ -20,9 +20,6 @@ class SwiftMailerBasedMailer implements MailerInterface
         $this->internalMailer = $internalMailer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function sendEmail(Email $content): void
     {
         $message = new \Swift_Message();

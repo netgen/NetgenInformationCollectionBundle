@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Export;
 
+use Exception;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Core\Helper\TranslationHelper;
 use Netgen\InformationCollection\API\Export\ExportResponseFormatter;
@@ -40,7 +41,7 @@ final class XlsxExportResponseFormatter implements ExportResponseFormatter
 
         try {
             $activeSheet->setTitle(mb_substr($contentName, 0, 30));
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $activeSheet->setTitle('Information collection export');
         }
 
