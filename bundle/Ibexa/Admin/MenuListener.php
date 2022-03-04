@@ -28,9 +28,10 @@ class MenuListener implements EventSubscriberInterface
         $menu[MainMenuBuilder::ITEM_ADMIN]->addChild(
             'information_collection',
             [
-                'label' => 'Information collection',
+                'label' => 'netgen_information_collection_menu_label',
                 'route' => 'netgen_information_collection.route.admin.overview',
                 'extras' => [
+                    'translation_domain' => 'netgen_information_collection_admin',
                     'routes' => [
                         'collection_list' => 'netgen_information_collection.route.admin.collection_list',
                         'collection_list_search' => 'netgen_information_collection.route.admin.collection_list_search',
