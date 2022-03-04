@@ -40,7 +40,7 @@
         "phpunit/phpunit": "^8.2",
         "matthiasnoback/symfony-config-test": "~4.0",
         "matthiasnoback/symfony-dependency-injection-test": "~4.0",
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "friendsofphp/php-cs-fixer": "^3.3"
     },
     "autoload": {
         "psr-4": {
