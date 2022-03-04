@@ -8,19 +8,9 @@ use Netgen\InformationCollection\API\Value\ValueObject;
 
 class Query extends ValueObject
 {
-    /**
-     * Search limit.
-     *
-     * @var int
-     */
-    protected $limit = 10;
+    protected int $limit;
 
-    /**
-     * Search offset.
-     *
-     * @var int
-     */
-    protected $offset = 0;
+    protected int $offset;
 
     public function __construct(int $offset, int $limit)
     {

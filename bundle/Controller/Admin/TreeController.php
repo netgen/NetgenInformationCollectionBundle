@@ -14,20 +14,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TreeController extends Controller
 {
-    /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
-     */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    protected $router;
+    protected RouterInterface $router;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Service\InformationCollection
-     */
-    protected $service;
+    protected InformationCollection $service;
 
     public function __construct(
         InformationCollection $service,

@@ -21,10 +21,7 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
 {
     public const FORM_BLOCK_PREFIX = 'information_collection';
 
-    /**
-     * @var \Netgen\InformationCollection\API\Service\CaptchaService
-     */
-    private $captchaService;
+    private CaptchaService $captchaService;
 
     public function __construct(CaptchaService $captchaService)
     {

@@ -7,10 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class EzInfoCollectionTest extends TestCase
 {
-    /**
-     * @var EzInfoCollection
-     */
-    protected $entity;
+    protected EzInfoCollection $entity;
 
     public function setUp(): void
     {

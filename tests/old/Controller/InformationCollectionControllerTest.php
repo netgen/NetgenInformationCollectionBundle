@@ -9,6 +9,7 @@ use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use Netgen\Bundle\InformationCollectionBundle\Tests\ContentViewStub;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -19,45 +20,21 @@ use Symfony\Component\HttpFoundation\Request;
 
 class InformationCollectionControllerTest extends TestCase
 {
-    /**
-     * @var InformationCollectionController
-     */
-    protected $controller;
+    protected InformationCollectionController $controller;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $dispatcher;
+    protected MockObject $dispatcher;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $builder;
+    protected MockObject $builder;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $contentView;
+    protected MockObject $contentView;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $request;
+    protected MockObject $request;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $formBuilder;
+    protected MockObject $formBuilder;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $form;
+    protected MockObject $form;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $container;
+    protected MockObject $container;
 
     public function setUp(): void
     {

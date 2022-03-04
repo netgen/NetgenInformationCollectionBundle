@@ -13,20 +13,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class InformationCollected extends Event
 {
-    /**
-     * @var \Netgen\InformationCollection\API\Value\InformationCollectionStruct
-     */
-    protected $struct;
+    protected InformationCollectionStruct $struct;
 
-    /**
-     * @var array
-     */
-    protected $options;
-
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Values\Content\Location
-     */
-    protected $location;
+    protected array $options;
 
     public function __construct(
         InformationCollectionStruct $struct,

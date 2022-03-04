@@ -15,10 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InformationCollectionFieldType extends AbstractType
 {
-    /**
-     * @var \Ibexa\ContentForms\FieldType\FieldTypeFormMapperDispatcherInterface
-     */
-    private $fieldTypeFormMapper;
+    private FieldTypeFormMapperDispatcherInterface $fieldTypeFormMapper;
 
     public function __construct(FieldTypeFormMapperDispatcherInterface $fieldTypeFormMapper)
     {

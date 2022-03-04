@@ -8,30 +8,18 @@ use Netgen\InformationCollection\API\Value\ValueObject;
 
 class EmailContent extends ValueObject
 {
-    /**
-     * @var array
-     */
-    protected $recipients;
+    protected array $recipients;
 
-    /**
-     * @var string
-     */
-    protected $subject;
+    protected string $subject;
 
-    /**
-     * @var array
-     */
-    protected $sender;
+    protected array $sender;
 
-    /**
-     * @var string
-     */
-    protected $body;
+    protected string $body;
 
     /**
      * @var \Ibexa\Core\FieldType\BinaryFile\Value[]
      */
-    protected $attachments = [];
+    protected array $attachments = [];
 
     /**
      * @param \Ibexa\Core\FieldType\BinaryFile\Value[] $attachments

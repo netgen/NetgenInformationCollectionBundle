@@ -17,10 +17,7 @@ use function mb_substr;
 
 final class XlsxExportResponseFormatter implements ExportResponseFormatter
 {
-    /**
-     * @var \Ibexa\Core\Helper\TranslationHelper
-     */
-    private $translationHelper;
+    private TranslationHelper $translationHelper;
 
     public function __construct(TranslationHelper $translationHelper)
     {

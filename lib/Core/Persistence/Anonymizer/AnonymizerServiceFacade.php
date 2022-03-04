@@ -13,20 +13,11 @@ use function count;
 
 final class AnonymizerServiceFacade
 {
-    /**
-     * @var \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer
-     */
-    private $anonymizer;
+    private Anonymizer $anonymizer;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Persistence\ContentTypeUtils
-     */
-    private $contentTypeUtils;
+    private ContentTypeUtils $contentTypeUtils;
 
-    /**
-     * @var \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository
-     */
-    private $ezInfoCollectionRepository;
+    private EzInfoCollectionRepository $ezInfoCollectionRepository;
 
     public function __construct(
         Anonymizer $anonymizer,

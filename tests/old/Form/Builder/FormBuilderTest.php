@@ -6,6 +6,7 @@ use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
 use Ibexa\Core\Repository\ContentTypeService;
 use Ibexa\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
 use Symfony\Component\Form\FormFactory;
@@ -13,30 +14,15 @@ use Symfony\Component\Routing\Router;
 
 class FormBuilderTest extends TestCase
 {
-    /**
-     * @var FormBuilder
-     */
-    protected $formBuilder;
+    protected FormBuilder $formBuilder;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $formFactory;
+    protected MockObject $formFactory;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $contentTypeService;
+    protected MockObject $contentTypeService;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $router;
+    protected MockObject $router;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $innerFormBuilder;
+    protected MockObject $innerFormBuilder;
 
     public function setUp(): void
     {

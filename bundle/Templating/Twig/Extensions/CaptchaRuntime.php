@@ -9,10 +9,7 @@ use Netgen\InformationCollection\API\Service\CaptchaService;
 
 class CaptchaRuntime
 {
-    /**
-     * @var \Netgen\InformationCollection\API\Service\CaptchaService
-     */
-    protected $captcha;
+    protected CaptchaService $captcha;
 
     public function __construct(CaptchaService $captcha)
     {

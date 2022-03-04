@@ -9,12 +9,9 @@ class Collections extends ValueObject
     /**
      * @var \Netgen\InformationCollection\API\Value\Collection[]
      */
-    protected $collections;
+    protected array $collections;
 
-    /**
-     * @var int
-     */
-    protected $count;
+    protected int $count;
 
     public function __construct(array $collections, int $count)
     {

@@ -15,7 +15,7 @@ class Aggregate extends FieldAnonymizerVisitor
     /**
      * @var \Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor[]
      */
-    protected $visitors;
+    protected iterable $visitors;
 
     public function __construct(iterable $visitors)
     {

@@ -13,25 +13,13 @@ use Twig\TemplateWrapper;
 
 class TemplateDataTest extends TestCase
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Value\TemplateData
-     */
-    protected $templateData;
+    protected TemplateData $templateData;
 
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected
-     */
-    protected $event;
+    protected InformationCollected $event;
 
-    /**
-     * @var \Ibexa\Core\Repository\Values\Content\Content
-     */
-    protected $content;
+    protected Content $content;
 
-    /**
-     * @var \Twig\TemplateWrapper
-     */
-    protected $templateWrapper;
+    protected TemplateWrapper $templateWrapper;
 
     public function setUp(): void
     {

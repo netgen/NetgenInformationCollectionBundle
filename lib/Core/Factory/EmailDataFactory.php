@@ -27,25 +27,13 @@ use const FILTER_VALIDATE_EMAIL;
 
 class EmailDataFactory extends BaseEmailDataFactory
 {
-    /**
-     * @var array
-     */
-    protected $configResolver;
+    protected ConfigResolverInterface $configResolver;
 
-    /**
-     * @var \Ibexa\Core\Helper\TranslationHelper
-     */
-    protected $translationHelper;
+    protected TranslationHelper $translationHelper;
 
-    /**
-     * @var \Ibexa\Core\Helper\FieldHelper
-     */
-    protected $fieldHelper;
+    protected FieldHelper $fieldHelper;
 
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
     public function __construct(
         ConfigResolverInterface $configResolver,

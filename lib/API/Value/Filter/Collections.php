@@ -6,15 +6,9 @@ namespace Netgen\InformationCollection\API\Value\Filter;
 
 final class Collections
 {
-    /**
-     * @var array
-     */
-    private $collections;
+    private array $collections;
 
-    /**
-     * @var int
-     */
-    private $contentId;
+    private int $contentId;
 
     public function __construct(int $contentId, array $collections)
     {

@@ -6,33 +6,34 @@ namespace Netgen\InformationCollection\Core\Mailer;
 
 use Netgen\InformationCollection\API\Exception\EmailNotSentException;
 use Netgen\InformationCollection\API\MailerInterface;
+use Swift_Attachment;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_RfcComplianceException;
 use Symfony\Component\Mime\Email;
 
 class SwiftMailerBasedMailer implements MailerInterface
 {
-    /**
-     * @var \Swift_Mailer
-     */
-    protected $internalMailer;
+    protected Swift_Mailer $internalMailer;
 
-    public function __construct(\Swift_Mailer $internalMailer)
+    public function __construct(Swift_Mailer $internalMailer)
     {
         $this->internalMailer = $internalMailer;
     }
 
     public function sendEmail(Email $content): void
     {
-        $message = new \Swift_Message();
+        $message = new Swift_Message();
 
         try {
             $message->setTo($content->getFrom());
-        } catch (\Swift_RfcComplianceException $e) {
+        } catch (Swift_RfcComplianceException $e) {
             throw new EmailNotSentException('recipients', $e->getMessage());
         }
 
         try {
             $message->setFrom($data->getSender());
-        } catch (\Swift_RfcComplianceException $e) {
+        } catch (Swift_RfcComplianceException $e) {
             throw new EmailNotSentException('sender', $e->getMessage());
         }
 
@@ -41,7 +42,7 @@ class SwiftMailerBasedMailer implements MailerInterface
         if ($data->hasAttachments()) {
             foreach ($data->getAttachments() as $attachment) {
                 $message->attach(
-                    \Swift_Attachment::fromPath($attachment->inputUri, $attachment->mimeType)
+                    Swift_Attachment::fromPath($attachment->inputUri, $attachment->mimeType)
                         ->setFilename($attachment->fileName)
                 );
             }

@@ -14,15 +14,9 @@ use DateTime;
 
 class DateAndTimeFieldHandlerTest extends TestCase
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFieldHandlerInterface
-     */
-    protected $handler;
+    protected CustomLegacyFieldHandlerInterface $handler;
 
-    /**
-     * @var \DateTime
-     */
-    protected $dt;
+    protected DateTime $dt;
 
     public function setUp(): void
     {

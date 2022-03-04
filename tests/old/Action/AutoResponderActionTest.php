@@ -10,29 +10,18 @@ use Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException;
 use Netgen\Bundle\InformationCollectionBundle\Factory\AutoResponderDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class AutoResponderActionTest extends TestCase
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Action\AutoResponderAction
-     */
-    protected $action;
+    protected AutoResponderAction $action;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $factory;
+    protected MockObject $factory;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $mailer;
+    protected MockObject $mailer;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $emailData;
+    protected MockObject $emailData;
 
     public function setUp(): void
     {

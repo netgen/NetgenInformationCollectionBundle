@@ -19,20 +19,11 @@ use function in_array;
 
 class CaptchaService implements CaptchaServiceInterface
 {
-    /**
-     * @var array
-     */
-    protected $config;
+    protected array $config;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\ContentTypeService
-     */
-    protected $contentTypeService;
+    protected ContentTypeService $contentTypeService;
 
-    /**
-     * @var ConfigResolverInterface
-     */
-    private $configResolver;
+    private ConfigResolverInterface $configResolver;
 
     public function __construct(ContentTypeService $contentTypeService, ConfigResolverInterface $configResolver)
     {

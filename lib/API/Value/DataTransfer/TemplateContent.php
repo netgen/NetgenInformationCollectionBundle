@@ -11,15 +11,9 @@ use Twig\TemplateWrapper;
 
 class TemplateContent extends ValueObject
 {
-    /**
-     * @var \Netgen\InformationCollection\API\Value\Event\InformationCollected
-     */
-    protected $event;
+    protected InformationCollected $event;
 
-    /**
-     * @var \Twig\TemplateWrapper
-     */
-    protected $templateWrapper;
+    protected TemplateWrapper $templateWrapper;
 
     public function __construct(InformationCollected $event, TemplateWrapper $templateWrapper)
     {

@@ -13,10 +13,7 @@ use Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegis
 
 class FieldDataFactory
 {
-    /**
-     * @var \Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegistry
-     */
-    protected $registry;
+    protected FieldHandlerRegistry $registry;
 
     public function __construct(FieldHandlerRegistry $registry)
     {

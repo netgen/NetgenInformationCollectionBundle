@@ -12,25 +12,16 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class SetPageLayoutListener implements EventSubscriberInterface
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Templating\Twig\AdminGlobalVariable
-     */
-    protected $globalVariable;
+    protected AdminGlobalVariable $globalVariable;
 
-    /**
-     * @var string
-     */
-    protected $pageLayoutTemplate;
+    protected string $pageLayoutTemplate;
 
-    /**
-     * @var array
-     */
-    protected $groupsBySiteAccess;
+    protected array $groupsBySiteAccess;
 
     public function __construct(
         AdminGlobalVariable $adminGlobalVariable,
         array $groupsBySiteAccess,
-        $pageLayoutTemplate
+        string $pageLayoutTemplate
     ) {
         $this->globalVariable = $adminGlobalVariable;
         $this->pageLayoutTemplate = $pageLayoutTemplate;

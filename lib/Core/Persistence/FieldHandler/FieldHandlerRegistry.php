@@ -9,10 +9,7 @@ use Netgen\InformationCollection\API\FieldHandler\CustomFieldHandlerInterface;
 
 final class FieldHandlerRegistry
 {
-    /**
-     * @var array
-     */
-    private $handlers;
+    private iterable $handlers;
 
     public function __construct(iterable $handlers)
     {

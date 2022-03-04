@@ -13,15 +13,9 @@ use function sprintf;
 
 final class ConfigurationUtility
 {
-    /**
-     * @var array
-     */
-    private $actionsdConfiguration;
+    private array $actionsdConfiguration;
 
-    /**
-     * @var array
-     */
-    private $singleActionConfiguration;
+    private array $singleActionConfiguration;
 
     public function __construct(ConfigResolverInterface $configResolver)
     {

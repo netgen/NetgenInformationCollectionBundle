@@ -9,20 +9,11 @@ use Netgen\InformationCollection\API\Value\ValueObject;
 
 class FilterCriteria extends ValueObject
 {
-    /**
-     * @var \DateTimeInterface
-     */
-    protected $from;
+    protected DateTimeInterface $from;
 
-    /**
-     * @var \DateTimeInterface
-     */
-    protected $to;
+    protected DateTimeInterface $to;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Value\Filter\ContentId
-     */
-    protected $contentId;
+    protected ContentId $contentId;
 
     public function __construct(ContentId $contentId, DateTimeInterface $from, DateTimeInterface $to)
     {

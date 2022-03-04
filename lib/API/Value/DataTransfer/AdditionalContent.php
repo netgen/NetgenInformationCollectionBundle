@@ -9,10 +9,7 @@ use Netgen\InformationCollection\API\Value\ValueObject;
 
 class AdditionalContent extends ValueObject
 {
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Values\Content\Content|null
-     */
-    protected $content;
+    protected ?Content $content;
 
     public function __construct(?Content $content = null)
     {

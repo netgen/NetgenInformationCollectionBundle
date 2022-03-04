@@ -7,19 +7,14 @@ use Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Events;
 use Netgen\Bundle\InformationCollectionBundle\Listener\InformationCollectedListener;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class InformationCollectedListenerTest extends TestCase
 {
-    /**
-     * @var InformationCollectedListener
-     */
-    protected $listener;
+    protected InformationCollectedListener $listener;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $registry;
+    protected MockObject $registry;
 
     public function setUp(): void
     {

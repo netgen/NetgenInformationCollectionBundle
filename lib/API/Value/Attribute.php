@@ -9,25 +9,13 @@ use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 
 final class Attribute extends ValueObject
 {
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Values\Content\Field
-     */
-    protected $field;
+    protected Field $field;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition
-     */
-    protected $fieldDefinition;
+    protected FieldDefinition $fieldDefinition;
 
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Value\AttributeValue
-     */
-    protected $value;
+    protected AttributeValue $value;
 
     public function __construct(
         int $id,

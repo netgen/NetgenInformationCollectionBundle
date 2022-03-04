@@ -14,15 +14,9 @@ class FieldRenderingRuntime
 {
     public const FIELD_VIEW_SUFFIX = '_field';
 
-    /**
-     * @var \Twig\Environment
-     */
-    protected $environment;
+    protected Environment $environment;
 
-    /**
-     * @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
-     */
-    protected $configResolver;
+    protected ConfigResolverInterface $configResolver;
 
     public function __construct(Environment $environment, ConfigResolverInterface $configResolver)
     {

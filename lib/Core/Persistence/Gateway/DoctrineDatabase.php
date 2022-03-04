@@ -9,10 +9,7 @@ use PDO;
 
 final class DoctrineDatabase
 {
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    private $connection;
+    private Connection $connection;
 
     public function __construct(Connection $connection)
     {

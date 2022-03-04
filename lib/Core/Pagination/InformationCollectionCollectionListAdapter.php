@@ -9,10 +9,7 @@ use Netgen\InformationCollection\API\Value\Filter\ContentId;
 
 class InformationCollectionCollectionListAdapter extends BaseAdapter
 {
-    /**
-     * @var \Netgen\InformationCollection\API\Value\Filter\ContentId
-     */
-    protected $query;
+    protected ContentId $query;
 
     public function __construct(InformationCollection $informationCollectionService, ContentId $query)
     {

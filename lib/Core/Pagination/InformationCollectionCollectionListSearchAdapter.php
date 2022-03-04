@@ -10,10 +10,7 @@ use Netgen\InformationCollection\API\Value\Filter\SearchQuery;
 
 class InformationCollectionCollectionListSearchAdapter extends BaseAdapter
 {
-    /**
-     * @var \Netgen\InformationCollection\API\Value\Filter\SearchQuery
-     */
-    protected $query;
+    protected SearchQuery $query;
 
     public function __construct(InformationCollection $informationCollectionService, SearchQuery $query)
     {

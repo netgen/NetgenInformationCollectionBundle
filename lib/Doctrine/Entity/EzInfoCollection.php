@@ -6,35 +6,17 @@ namespace Netgen\InformationCollection\Doctrine\Entity;
 
 class EzInfoCollection
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private int $id;
 
-    /**
-     * @var int
-     */
-    private $contentObjectId;
+    private int $contentObjectId;
 
-    /**
-     * @var int
-     */
-    private $created;
+    private int $created;
 
-    /**
-     * @var int
-     */
-    private $creatorId;
+    private int $creatorId;
 
-    /**
-     * @var int
-     */
-    private $modified;
+    private int $modified;
 
-    /**
-     * @var string
-     */
-    private $userIdentifier;
+    private string $userIdentifier;
 
     public function getId(): int
     {

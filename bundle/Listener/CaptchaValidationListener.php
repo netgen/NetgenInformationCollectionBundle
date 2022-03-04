@@ -15,20 +15,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CaptchaValidationListener implements EventSubscriberInterface
 {
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    private $requestStack;
+    private RequestStack $requestStack;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Service\CaptchaService
-     */
-    private $captchaService;
+    private CaptchaService $captchaService;
 
-    /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
-     */
-    private $translator;
+    private TranslatorInterface $translator;
 
     public function __construct(RequestStack $requestStack, CaptchaService $captchaService, TranslatorInterface $translator)
     {

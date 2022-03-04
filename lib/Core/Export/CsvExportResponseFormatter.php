@@ -15,15 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class CsvExportResponseFormatter implements ExportResponseFormatter
 {
-    /**
-     * @var \Ibexa\Core\Helper\TranslationHelper
-     */
-    private $translationHelper;
+    private TranslationHelper $translationHelper;
 
-    /**
-     * @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
-     */
-    private $configResolver;
+    private ConfigResolverInterface $configResolver;
 
     public function __construct(TranslationHelper $translationHelper, ConfigResolverInterface $configResolver)
     {

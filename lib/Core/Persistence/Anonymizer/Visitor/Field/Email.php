@@ -14,7 +14,7 @@ use function mb_str_split;
 
 class Email extends FieldAnonymizerVisitor
 {
-    protected $allowedCharacters = ['.', '@', '-', '+'];
+    protected array $allowedCharacters = ['.', '@', '-', '+'];
 
     public function accept(Attribute $attribute, ContentType $contentType): bool
     {

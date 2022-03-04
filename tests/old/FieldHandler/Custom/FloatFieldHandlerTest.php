@@ -13,10 +13,7 @@ use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFi
 
 class FloatFieldHandlerTest extends TestCase
 {
-    /**
-     * @var CustomLegacyFieldHandlerInterface
-     */
-    protected $handler;
+    protected CustomLegacyFieldHandlerInterface $handler;
 
     public function setUp(): void
     {

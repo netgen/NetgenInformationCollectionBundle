@@ -14,15 +14,9 @@ use Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InformationColl
 
 class InformationCollectionCollector extends DataCollector
 {
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Repository
-     */
-    private $repository;
+    private Repository $repository;
 
-    /**
-     * @var \Ibexa\Core\Helper\TranslationHelper
-     */
-    private $translationHelper;
+    private TranslationHelper $translationHelper;
 
     public function __construct(Repository $repository, TranslationHelper $translationHelper)
     {

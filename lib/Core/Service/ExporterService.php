@@ -19,20 +19,11 @@ use function strip_tags;
 
 class ExporterService implements Exporter
 {
-    /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
-     */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Persistence\ContentTypeUtils
-     */
-    protected $contentTypeUtils;
+    protected ContentTypeUtils $contentTypeUtils;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Service\InformationCollection
-     */
-    protected $informationCollection;
+    protected InformationCollection $informationCollection;
 
     public function __construct(
         InformationCollection $informationCollection,

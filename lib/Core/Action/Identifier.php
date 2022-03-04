@@ -11,10 +11,7 @@ use function get_class;
 
 final class Identifier
 {
-    /**
-     * @var string
-     */
-    private $classConstant;
+    private string $classConstant;
 
     public function __construct(ActionInterface $action)
     {

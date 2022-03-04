@@ -14,20 +14,11 @@ use DateTime;
 
 class TimeFieldHandlerTest extends TestCase
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFieldHandlerInterface
-     */
-    protected $handler;
+    protected CustomLegacyFieldHandlerInterface $handler;
 
-    /**
-     * @var \DateTime
-     */
-    protected $dt;
+    protected DateTime $dt;
 
-    /**
-     * @var \Ibexa\Core\FieldType\Time\Value
-     */
-    protected $value;
+    protected TimeValue $value;
 
     public function setUp(): void
     {

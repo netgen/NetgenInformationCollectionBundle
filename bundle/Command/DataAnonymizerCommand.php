@@ -19,15 +19,9 @@ class DataAnonymizerCommand extends Command
 {
     protected static $defaultName = 'nginfocollector:anonymize';
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Persistence\Anonymizer\AnonymizerServiceFacade
-     */
-    protected $anonymizer;
+    protected AnonymizerServiceFacade $anonymizer;
 
-    /**
-     * @var \DateInterval
-     */
-    protected $period;
+    protected DateInterval $period;
 
     public function __construct(AnonymizerServiceFacade $anonymizerServiceFacade)
     {
@@ -122,7 +116,7 @@ class DataAnonymizerCommand extends Command
         $help = new HelpCommand();
         $help->setCommand($this);
 
-        return $help->run($input, $output);
+        $help->run($input, $output);
     }
 
     protected function getFields(InputInterface $input): array

@@ -6,8 +6,11 @@ namespace Netgen\InformationCollection\Core\Mapper;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use Ibexa\Contracts\Core\Repository\ContentService;
+use Ibexa\Contracts\Core\Repository\ContentTypeService;
 use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
 use Ibexa\Contracts\Core\Repository\Repository;
+use Ibexa\Contracts\Core\Repository\UserService;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content as APIContent;
 use Ibexa\Contracts\Core\Repository\Values\Content\Field;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
@@ -24,25 +27,13 @@ use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
 
 final class DomainObjectMapper
 {
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Repository
-     */
-    private $repository;
+    private Repository $repository;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\ContentService
-     */
-    private $contentService;
+    private ContentService $contentService;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\ContentTypeService
-     */
-    private $contentTypeService;
+    private ContentTypeService $contentTypeService;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\UserService
-     */
-    private $userService;
+    private UserService $userService;
 
     public function __construct(Repository $repository)
     {

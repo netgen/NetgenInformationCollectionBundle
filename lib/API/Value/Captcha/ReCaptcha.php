@@ -11,10 +11,7 @@ use function dump;
 
 class ReCaptcha implements CaptchaValue
 {
-    /**
-     * @var \ReCaptcha\ReCaptcha
-     */
-    protected $reCaptcha;
+    protected BaseReCaptcha $reCaptcha;
 
     public function __construct(BaseReCaptcha $reCaptcha)
     {

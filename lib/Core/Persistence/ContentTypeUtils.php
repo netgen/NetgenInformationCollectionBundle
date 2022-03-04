@@ -12,15 +12,9 @@ use function sprintf;
 
 final class ContentTypeUtils
 {
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\ContentTypeService
-     */
-    private $contentTypeService;
+    private ContentTypeService $contentTypeService;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\ContentService
-     */
-    private $contentService;
+    private ContentService $contentService;
 
     public function __construct(ContentTypeService $contentTypeService, ContentService $contentService)
     {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Pagination\Pagerfanta\View;
 
+use Closure;
 use Pagerfanta\PagerfantaInterface;
 use Pagerfanta\View\ViewInterface;
 use Twig\Environment;
@@ -13,40 +14,19 @@ use function trim;
 
 class InformationCollectionAdminView implements ViewInterface
 {
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
-    /**
-     * @var string
-     */
-    protected $template;
+    protected string $template;
 
-    /**
-     * @var \Pagerfanta\Pagerfanta
-     */
-    protected $pagerfanta;
+    protected PagerfantaInterface $pagerfanta;
 
-    /**
-     * @var \Closure
-     */
-    protected $routeGenerator;
+    protected Closure $routeGenerator;
 
-    /**
-     * @var int
-     */
-    protected $proximity;
+    protected int $proximity;
 
-    /**
-     * @var int
-     */
-    protected $startPage;
+    protected int $startPage;
 
-    /**
-     * @var int
-     */
-    protected $endPage;
+    protected int $endPage;
 
     public function __construct(Environment $twig)
     {

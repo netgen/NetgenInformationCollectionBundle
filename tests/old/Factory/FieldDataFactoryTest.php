@@ -9,19 +9,14 @@ use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHan
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class FieldDataFactoryTest extends TestCase
 {
-    /**
-     * @var FieldDataFactory
-     */
-    protected $factory;
+    protected FieldDataFactory $factory;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $registry;
+    protected MockObject $registry;
 
     public function setUp(): void
     {

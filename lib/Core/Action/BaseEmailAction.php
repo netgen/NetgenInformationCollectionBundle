@@ -12,15 +12,9 @@ use Netgen\InformationCollection\Core\Factory\BaseEmailDataFactory;
 
 abstract class BaseEmailAction implements ActionInterface
 {
-    /**
-     * @var \Netgen\InformationCollection\API\MailerInterface
-     */
-    protected $mailer;
+    protected MailerInterface $mailer;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Factory\BaseEmailDataFactory
-     */
-    protected $factory;
+    protected BaseEmailDataFactory $factory;
 
     public function __construct(MailerInterface $mailer, BaseEmailDataFactory $factory)
     {

@@ -10,35 +10,20 @@ use Ibexa\Contracts\Core\Repository\Values\User\User;
 
 final class Collection extends ValueObject
 {
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Values\Content\Content
-     */
-    protected $content;
+    protected Content $content;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Values\User\User
-     */
-    protected $creator;
+    protected User $creator;
 
-    /**
-     * @var \DateTimeInterface
-     */
-    protected $created;
+    protected DateTimeInterface $created;
 
-    /**
-     * @var \DateTimeInterface
-     */
-    protected $modified;
+    protected DateTimeInterface $modified;
 
     /**
      * @var \Netgen\InformationCollection\API\Value\Attribute[]
      */
-    protected $attributes;
+    protected array $attributes;
 
     public function __construct(int $id, Content $content, User $creator, DateTimeInterface $created, DateTimeInterface $modified, array $attributes)
     {

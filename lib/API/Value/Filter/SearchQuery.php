@@ -6,15 +6,9 @@ namespace Netgen\InformationCollection\API\Value\Filter;
 
 class SearchQuery extends Query
 {
-    /**
-     * @var int
-     */
-    protected $contentId;
+    protected int $contentId;
 
-    /**
-     * @var string
-     */
-    protected $searchText;
+    protected string $searchText;
 
     public function __construct(int $contentId, string $searchText, int $offset, int $limit)
     {

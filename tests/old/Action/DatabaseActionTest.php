@@ -24,59 +24,30 @@ use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class DatabaseActionTest extends TestCase
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction
-     */
-    protected $action;
+    protected DatabaseAction $action;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $factory;
+    protected MockObject $factory;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $repository;
+    protected MockObject $repository;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $secondRepository;
+    protected MockObject $secondRepository;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $ibexaRepository;
+    protected MockObject $ibexaRepository;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $contentType;
+    protected MockObject $contentType;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $contentService;
+    protected MockObject $contentService;
 
-    /**
-     * @var array
-     */
-    protected $fields;
+    protected array $fields;
 
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct
-     */
-    protected $struct;
+    protected InformationCollectionStruct $struct;
 
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Value\LegacyData
-     */
-    protected $legacyData;
+    protected LegacyData $legacyData;
 
     public function setUp(): void
     {

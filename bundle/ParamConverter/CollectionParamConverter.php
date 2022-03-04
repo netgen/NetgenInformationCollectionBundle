@@ -12,10 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class CollectionParamConverter implements ParamConverterInterface
 {
-    /**
-     * @var InformationCollection
-     */
-    protected $informationCollection;
+    protected InformationCollection $informationCollection;
 
     public function __construct(InformationCollection $informationCollection)
     {

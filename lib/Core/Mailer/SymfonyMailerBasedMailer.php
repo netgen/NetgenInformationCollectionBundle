@@ -11,10 +11,7 @@ use Throwable;
 
 class SymfonyMailerBasedMailer implements MailerInterface
 {
-    /**
-     * @var \Symfony\Component\Mailer\MailerInterface
-     */
-    private $mailer;
+    private SfMailerInterface $mailer;
 
     public function __construct(SfMailerInterface $mailer)
     {

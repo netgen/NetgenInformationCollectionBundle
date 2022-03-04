@@ -14,20 +14,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class Export extends AbstractController
 {
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\ContentService
-     */
-    protected $contentService;
+    protected ContentService $contentService;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Service\Exporter
-     */
-    protected $exporter;
+    protected Exporter $exporter;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Export\ExportResponseFormatterRegistry
-     */
-    protected $formatterRegistry;
+    protected ExportResponseFormatterRegistry $formatterRegistry;
 
     public function __construct(
         ContentService $contentService,

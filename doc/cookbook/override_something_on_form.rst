@@ -20,10 +20,7 @@ How to override something on info collector form
 
     final class InvoiceNumberFormExtension extends AbstractTypeExtension
     {
-        /**
-         * @var \Symfony\Component\HttpFoundation\RequestStack
-         */
-        private $requestStack;
+        private RequestStack $requestStack;
 
         public function __construct(RequestStack $requestStack)
         {

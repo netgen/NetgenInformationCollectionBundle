@@ -13,7 +13,7 @@ final class ExportResponseFormatterRegistry
     /**
      * @var \Netgen\InformationCollection\API\Export\ExportResponseFormatter[]
      */
-    private $exportResponseFormatters;
+    private array $exportResponseFormatters;
 
     /**
      * @param \Netgen\InformationCollection\API\Export\ExportResponseFormatter[] $exportResponseFormatters

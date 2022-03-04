@@ -14,30 +14,15 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ActionRegistry implements ActionInterface
 {
-    /**
-     * @var array
-     */
-    private $actions;
+    private iterable $actions;
 
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
-    /**
-     * @var bool
-     */
-    private $debug = false;
+    private bool $debug = false;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Action\ConfigurationUtility
-     */
-    private $utility;
+    private ConfigurationUtility $utility;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(iterable $actions, ConfigurationUtility $utility, LoggerInterface $logger, EventDispatcherInterface $eventDispatcher)
     {

@@ -15,10 +15,7 @@ final class DatabaseAction implements ActionInterface, CrucialActionInterface
 {
     public static $defaultName = 'database';
 
-    /**
-     * @var InformationCollection
-     */
-    private $informationCollection;
+    private InformationCollection $informationCollection;
 
     public function __construct(InformationCollection $informationCollection)
     {

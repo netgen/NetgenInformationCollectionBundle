@@ -5,23 +5,19 @@ namespace Netgen\Bundle\InformationCollectionBundle\Tests\Mailer;
 use Ibexa\Core\FieldType\BinaryFile\Value as BinaryFileValue;
 use Netgen\Bundle\InformationCollectionBundle\Mailer\Mailer;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Swift_Mailer;
 
 class MailerTest extends TestCase
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface
-     */
-    protected $mailer;
+    protected Mailer $mailer;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $swiftMailer;
+    protected MockObject $swiftMailer;
 
     public function setUp(): void
     {
-        $this->swiftMailer = $this->getMockBuilder(\Swift_Mailer::class)
+        $this->swiftMailer = $this->getMockBuilder(Swift_Mailer::class)
             ->disableOriginalConstructor()
             ->setMethods(array('createMessage', 'send'))
             ->getMock();

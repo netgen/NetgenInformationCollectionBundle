@@ -37,35 +37,17 @@ use function count;
 
 class InformationCollectionService implements InformationCollection
 {
-    /**
-     * @var \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository
-     */
-    protected $ezInfoCollectionRepository;
+    protected EzInfoCollectionRepository $ezInfoCollectionRepository;
 
-    /**
-     * @var \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository
-     */
-    protected $ezInfoCollectionAttributeRepository;
+    protected EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Repository
-     */
-    protected $repository;
+    protected Repository $repository;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase
-     */
-    protected $gateway;
+    protected DoctrineDatabase $gateway;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Factory\FieldDataFactory
-     */
-    protected $fieldsFactory;
+    protected FieldDataFactory $fieldsFactory;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Mapper\DomainObjectMapper
-     */
-    protected $objectMapper;
+    protected DomainObjectMapper $objectMapper;
 
     public function __construct(
         EzInfoCollectionRepository $ezInfoCollectionRepository,

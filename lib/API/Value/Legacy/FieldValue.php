@@ -8,27 +8,13 @@ use Netgen\InformationCollection\API\Value\ValueObject;
 
 class FieldValue extends ValueObject
 {
-    /**
-     * @var int
-     *
-     * previous $contentClassAttributeId
-     */
-    protected $fieldDefinitionId;
+    protected int $fieldDefinitionId;
 
-    /**
-     * @var float
-     */
-    protected $dataFloat = 0.0;
+    protected float $dataFloat;
 
-    /**
-     * @var int
-     */
-    protected $dataInt = 0;
+    protected int $dataInt;
 
-    /**
-     * @var string
-     */
-    protected $dataText = '';
+    protected string $dataText;
 
     public function __construct(int $fieldDefinitionId, string $dataText, int $dataInt = 0, float $dataFloat = 0.0)
     {

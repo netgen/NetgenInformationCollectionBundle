@@ -8,86 +8,42 @@ use Netgen\Bundle\InformationCollectionBundle\Action\ActionInterface;
 use Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use ReflectionObject;
 
 class ActionRegistryTest extends TestCase
 {
-    /**
-     * @var ActionRegistry
-     */
-    protected $registry;
+    protected ActionRegistry $registry;
 
-    /**
-     * @var ActionRegistry
-     */
-    protected $registryForPriority;
+    protected ActionRegistry $registryForPriority;
 
-    /**
-     * @var ActionRegistry
-     */
-    protected $registryWithEmptyConf;
+    protected ActionRegistry $registryWithEmptyConf;
 
-    /**
-     * @var ActionRegistry
-     */
-    protected $registryWithOnlyDefaultConf;
+    protected ActionRegistry $registryWithOnlyDefaultConf;
 
-    /**
-     * @var array
-     */
-    protected $config;
+    protected array $config;
 
-    /**
-     * @var array
-     */
-    protected $config2;
+    protected array $config2;
 
-    /**
-     * @var array
-     */
-    protected $onlyDefaultConfig;
+    protected array $onlyDefaultConfig;
 
-    /**
-     * @var array
-     */
-    protected $emptyConfig;
+    protected array $emptyConfig;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $action1;
+    protected MockObject $action1;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $action2;
+    protected MockObject $action2;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $action3;
+    protected MockObject $action3;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $action4;
+    protected MockObject $action4;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $logger;
+    protected MockObject $logger;
 
-    /**
-     * @var InformationCollected
-     */
-    protected $event;
+    protected InformationCollected $event;
 
-    /**
-     * @var InformationCollected
-     */
-    protected $event2;
+    protected InformationCollected $event2;
 
     public function setUp(): void
     {

@@ -13,30 +13,19 @@ final class InformationCollectionStruct extends ValueObject
 {
     /**
      * The language code of the version.
-     *
-     * @var string
      */
-    protected $languageCode;
+    protected string $languageCode;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Values\Content\Content
-     */
-    protected $content;
+    protected Content $content;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType
-     */
-    protected $contentType;
+    protected ContentType $contentType;
 
     /**
      * @var \Ibexa\Contracts\ContentForms\Data\Content\FieldData[]
      */
-    protected $fields;
+    protected array $fields;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Values\Content\Location
-     */
-    private $location;
+    private Location $location;
 
     public function __construct(Content $content, Location $location, ContentType $contentType, array $fields)
     {

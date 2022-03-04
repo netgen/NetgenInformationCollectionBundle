@@ -9,35 +9,17 @@ use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
 
 final class Content extends ValueObject
 {
-    /**
-     * @var bool
-     */
-    protected $hasLocation;
+    protected bool $hasLocation;
 
-    /**
-     * @var APIContent
-     */
-    protected $content;
+    protected APIContent $content;
 
-    /**
-     * @var ContentType
-     */
-    protected $contentType;
+    protected ContentType $contentType;
 
-    /**
-     * @var Collection
-     */
-    protected $firstCollection;
+    protected Collection $firstCollection;
 
-    /**
-     * @var Collection
-     */
-    protected $lastCollection;
+    protected Collection $lastCollection;
 
-    /**
-     * @var int
-     */
-    protected $childCount;
+    protected int $childCount;
 
     public function __construct(
         APIContent $content,

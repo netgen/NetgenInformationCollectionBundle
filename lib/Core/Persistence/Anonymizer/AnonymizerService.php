@@ -16,20 +16,11 @@ use function in_array;
 
 class AnonymizerService implements Anonymizer
 {
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\Repository
-     */
-    protected $repository;
+    protected Repository $repository;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Persistence\Anonymizer\Visitor\FieldAnonymizerVisitor
-     */
-    protected $fieldAnonymizerVisitor;
+    protected FieldAnonymizerVisitor $fieldAnonymizerVisitor;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Service\InformationCollection
-     */
-    protected $informationCollection;
+    protected InformationCollection $informationCollection;
 
     public function __construct(
         Repository $repository,

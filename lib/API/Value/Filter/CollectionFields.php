@@ -6,20 +6,11 @@ namespace Netgen\InformationCollection\API\Value\Filter;
 
 final class CollectionFields
 {
-    /**
-     * @var int
-     */
-    private $contentId;
+    private int $contentId;
 
-    /**
-     * @var int
-     */
-    private $collectionId;
+    private int $collectionId;
 
-    /**
-     * @var array
-     */
-    private $fields;
+    private array $fields;
 
     public function __construct(int $contentId, int $collectionId, array $fields)
     {

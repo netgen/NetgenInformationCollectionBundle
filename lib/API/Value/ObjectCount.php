@@ -6,7 +6,7 @@ namespace Netgen\InformationCollection\API\Value;
 
 class ObjectCount extends ValueObject
 {
-    protected $count;
+    protected int $count;
 
     public function __construct(int $count)
     {

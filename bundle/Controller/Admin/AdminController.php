@@ -28,30 +28,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AdminController extends Controller
 {
-    /**
-     * @var \Netgen\InformationCollection\API\Service\InformationCollection
-     */
-    protected $service;
+    protected InformationCollection $service;
 
-    /**
-     * @var \Ibexa\Contracts\Core\Repository\ContentService
-     */
-    protected $contentService;
+    protected ContentService $contentService;
 
-    /**
-     * @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
-     */
-    protected $configResolver;
+    protected ConfigResolverInterface $configResolver;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer
-     */
-    protected $anonymizer;
+    protected Anonymizer $anonymizer;
 
-    /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
-     */
-    private $translator;
+    private TranslatorInterface $translator;
 
     public function __construct(
         InformationCollection $service,

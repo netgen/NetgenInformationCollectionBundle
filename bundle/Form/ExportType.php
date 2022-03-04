@@ -24,10 +24,7 @@ use Netgen\InformationCollection\Core\Export\ExportResponseFormatterRegistry;
 
 class ExportType extends AbstractType implements DataMapperInterface
 {
-    /**
-     * @var \Netgen\InformationCollection\Core\Export\ExportResponseFormatterRegistry
-     */
-    protected $exportResponseFormatterRegistry;
+    protected ExportResponseFormatterRegistry $exportResponseFormatterRegistry;
 
     public function __construct(ExportResponseFormatterRegistry $exportResponseFormatterRegistry)
     {

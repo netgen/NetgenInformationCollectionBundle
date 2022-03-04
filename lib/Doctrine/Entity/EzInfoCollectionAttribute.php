@@ -6,45 +6,21 @@ namespace Netgen\InformationCollection\Doctrine\Entity;
 
 class EzInfoCollectionAttribute
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private int $id;
 
-    /**
-     * @var int
-     */
-    private $contentClassAttributeId;
+    private int $contentClassAttributeId;
 
-    /**
-     * @var int
-     */
-    private $contentObjectAttributeId;
+    private int $contentObjectAttributeId;
 
-    /**
-     * @var int
-     */
-    private $contentObjectId;
+    private int $contentObjectId;
 
-    /**
-     * @var float
-     */
-    private $dataFloat;
+    private float $dataFloat;
 
-    /**
-     * @var int
-     */
-    private $dataInt;
+    private int $dataInt;
 
-    /**
-     * @var string
-     */
-    private $dataText;
+    private string $dataText;
 
-    /**
-     * @var int
-     */
-    private $informationCollectionId;
+    private int $informationCollectionId;
 
     public function setId(int $id): void
     {

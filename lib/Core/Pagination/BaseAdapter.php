@@ -9,15 +9,9 @@ use Pagerfanta\Adapter\AdapterInterface;
 
 abstract class BaseAdapter implements AdapterInterface
 {
-    /**
-     * @var int
-     */
-    protected $nbResults;
+    protected int $nbResults;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Service\InformationCollection
-     */
-    protected $informationCollectionService;
+    protected InformationCollection $informationCollectionService;
 
     public function __construct(InformationCollection $informationCollectionService)
     {

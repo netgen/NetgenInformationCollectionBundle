@@ -11,10 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CaptchaType extends AbstractType
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Listener\CaptchaValidationListener
-     */
-    private $validationListener;
+    private CaptchaValidationListener $validationListener;
 
     public function __construct(CaptchaValidationListener $validationListener)
     {

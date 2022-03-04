@@ -5,24 +5,16 @@ namespace Netgen\Bundle\InformationCollectionBundle\Tests\FieldHandler;
 use Ibexa\Core\FieldType\Integer\Value as TestValue;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class FieldHandlerRegistryTest extends TestCase
 {
-    /**
-     * @var FieldHandlerRegistry
-     */
-    protected $registry;
+    protected FieldHandlerRegistry $registry;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $customHandler1;
+    protected MockObject $customHandler1;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $customHandler2;
+    protected MockObject $customHandler2;
 
     public function setUp(): void
     {

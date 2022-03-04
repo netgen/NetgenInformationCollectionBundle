@@ -18,6 +18,7 @@ use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
@@ -25,55 +26,25 @@ use Twig\TemplateWrapper;
 
 class EmailDataFactoryTest extends TestCase
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory
-     */
-    protected $factory;
+    protected EmailDataFactory $factory;
 
-    /**
-     * @var array
-     */
-    protected $config;
+    protected array $config;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $translationHelper;
+    protected TranslationHelper $translationHelper;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $fieldHelper;
+    protected MockObject $fieldHelper;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $contentService;
+    protected MockObject $contentService;
 
-    /**
-     * @var \Ibexa\Core\Repository\Values\ContentType\ContentType
-     */
-    protected $contentType;
+    protected ContentType $contentType;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $twig;
+    protected MockObject $twig;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $templateWrapper;
+    protected MockObject $templateWrapper;
 
-    /**
-     * @var \Ibexa\Core\Repository\Values\ContentType\ContentType
-     */
-    protected $contentType2;
+    protected ContentType $contentType2;
 
-    /**
-     * @var \Ibexa\Core\Repository\Values\Content\VersionInfo
-     */
-    protected $versionInfo;
+    protected VersionInfo $versionInfo;
 
     public function setUp(): void
     {

@@ -11,10 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class InformationCollectedListener implements EventSubscriberInterface
 {
-    /**
-     * @var ActionRegistry
-     */
-    protected $actionAggregate;
+    protected ActionRegistry $actionAggregate;
 
     public function __construct(ActionRegistry $actionAggregate)
     {

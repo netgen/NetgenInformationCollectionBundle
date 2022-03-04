@@ -6,20 +6,11 @@ namespace Netgen\InformationCollection\API\Value;
 
 class AttributeValue extends ValueObject
 {
-    /**
-     * @var int
-     */
-    protected $dataInt;
+    protected int $dataInt;
 
-    /**
-     * @var float
-     */
-    protected $dataFloat;
+    protected float $dataFloat;
 
-    /**
-     * @var string
-     */
-    protected $dataText;
+    protected string $dataText;
 
     public function __construct(int $dataInt, float $dataFloat, string $dataText)
     {

@@ -8,10 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class InformationCollectedTest extends TestCase
 {
-    /**
-     * @var InformationCollected
-     */
-    protected $event;
+    protected InformationCollected $event;
 
     public function setUp(): void
     {
