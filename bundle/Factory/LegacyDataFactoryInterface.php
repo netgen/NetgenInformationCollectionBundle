@@ -16,5 +16,5 @@ interface LegacyDataFactoryInterface
      *
      * @return LegacyData
      */
-    public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): LegacyData;
+    public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition);
 }

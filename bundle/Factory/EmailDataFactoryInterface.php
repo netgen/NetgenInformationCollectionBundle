@@ -14,5 +14,5 @@ interface EmailDataFactoryInterface
      *
      * @return EmailData
      */
-    public function build(InformationCollected $value): EmailData;
+    public function build(InformationCollected $value);
 }
