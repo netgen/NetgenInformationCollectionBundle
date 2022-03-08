@@ -3,7 +3,6 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Action;
 
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollectedInterface;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactoryInterface;
@@ -36,7 +35,7 @@ class EmailAction implements ActionInterface
     /**
      * {@inheritdoc}
      */
-    public function act(InformationCollectedInterface $event)
+    public function act(InformationCollected $event)
     {
         $emailData = $this->factory->build($event);
 

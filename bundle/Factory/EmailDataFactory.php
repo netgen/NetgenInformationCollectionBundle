@@ -9,7 +9,7 @@ use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\Constants;
 use Netgen\Bundle\InformationCollectionBundle\DependencyInjection\ConfigurationConstants;
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollectedInterface;
+use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailBlockException;
 use Netgen\Bundle\InformationCollectionBundle\Exception\MissingValueException;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
@@ -77,11 +77,11 @@ class EmailDataFactory implements EmailDataFactoryInterface
     /**
      * Factory method.
      *
-     * @param InformationCollectedInterface $value
+     * @param InformationCollected $value
      *
      * @return EmailData
      */
-    public function build(InformationCollectedInterface $value)
+    public function build(InformationCollected $value)
     {
         $location = $value->getLocation();
         $contentType = $value->getContentType();

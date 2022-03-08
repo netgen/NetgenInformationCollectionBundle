@@ -6,7 +6,7 @@ use Doctrine\DBAL\DBALException;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollectedInterface;
+use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
 use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Factory\LegacyDataFactoryInterface;
@@ -60,7 +60,7 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
     /**
      * {@inheritdoc}
      */
-    public function act(InformationCollectedInterface $event)
+    public function act(InformationCollected $event)
     {
         $struct = $event->getInformationCollectionStruct();
         $contentType = $event->getContentType();

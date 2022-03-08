@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Factory;
 
-use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollectedInterface;
+use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
 
 interface EmailDataFactoryInterface
@@ -10,9 +10,9 @@ interface EmailDataFactoryInterface
     /**
      * Factory method.
      *
-     * @param InformationCollectedInterface $value
+     * @param InformationCollected $value
      *
      * @return EmailData
      */
-    public function build(InformationCollectedInterface $value): EmailData;
+    public function build(InformationCollected $value): EmailData;
 }
