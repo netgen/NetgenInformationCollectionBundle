@@ -9,7 +9,7 @@ use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Symfony\Component\EventDispatcher\Event;
 
-class InformationCollected extends Event implements InformationCollectedInterface
+class InformationCollected extends Event
 {
     /**
      * @var DataWrapper

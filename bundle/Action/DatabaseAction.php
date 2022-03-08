@@ -8,7 +8,8 @@ use eZ\Publish\Core\Repository\Values\Content\Content;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollectedInterface;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
-use Netgen\Bundle\InformationCollectionBundle\Factory\FactoryInterface;
+use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
+use Netgen\Bundle\InformationCollectionBundle\Factory\LegacyDataFactoryInterface;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
@@ -17,7 +18,7 @@ use DateTime;
 class DatabaseAction implements ActionInterface, CrucialActionInterface
 {
     /**
-     * @var FactoryInterface
+     * @var LegacyDataFactoryInterface
      */
     protected $factory;
 
@@ -39,13 +40,13 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
     /**
      * PersistToDatabaseAction constructor.
      *
-     * @param FactoryInterface $factory
+     * @param FieldDataFactory $factory
      * @param EzInfoCollectionRepository $infoCollectionRepository
      * @param EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository
      * @param Repository $repository
      */
     public function __construct(
-        FactoryInterface $factory,
+        FieldDataFactory $factory,
         EzInfoCollectionRepository $infoCollectionRepository,
         EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository,
         Repository $repository

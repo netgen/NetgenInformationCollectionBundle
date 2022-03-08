@@ -9,7 +9,7 @@ use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFi
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
 
-class FieldDataFactory implements FactoryInterface
+class FieldDataFactory implements LegacyDataFactoryInterface
 {
     /**
      * @var FieldHandlerRegistry
