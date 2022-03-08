@@ -7,6 +7,7 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\Bundle\InformationCollectionBundle\Exception\MissingAdditionalParameterException;
 use Symfony\Component\EventDispatcher\Event;
 
 class InformationCollected extends Event
@@ -22,15 +23,22 @@ class InformationCollected extends Event
     protected $additionalContent;
 
     /**
+     * @var array
+     */
+    protected $additionalParameters;
+
+    /**
      * InformationCollected constructor.
      *
      * @param DataWrapper $data
-     * @param Content $additionalContent
+     * @param Content|null $additionalContent
+     * @param array $additionalParameters
      */
-    public function __construct(DataWrapper $data, $additionalContent = null)
+    public function __construct(DataWrapper $data, Content $additionalContent = null, array $additionalParameters = [])
     {
         $this->data = $data;
         $this->additionalContent = $additionalContent;
+        $this->additionalParameters = $additionalParameters;
     }
 
     /**
@@ -72,5 +80,47 @@ class InformationCollected extends Event
     public function getAdditionalContent()
     {
         return $this->additionalContent;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAdditionalParameters()
+    {
+        return $this->additionalParameters;
+    }
+
+    /**
+     * @param array $additionalParameters
+     */
+    public function setAdditionalParameters(array $additionalParameters)
+    {
+        $this->additionalParameters = $additionalParameters;
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @return self
+     */
+    public function setAdditionalParameter(string $key, $value)
+    {
+        $this->additionalParameters[$key] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     * @throws MissingAdditionalParameterException
+     */
+    public function getAdditionalParameterValue(string $key)
+    {
+        if (!isset($this->additionalParameters[$key])) {
+            throw new MissingAdditionalParameterException($key);
+        }
+
+        return $this->additionalParameters[$key];
     }
 }
