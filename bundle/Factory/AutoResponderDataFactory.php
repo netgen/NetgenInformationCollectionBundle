@@ -16,7 +16,7 @@ use Twig_Environment;
 use function array_key_exists;
 use function trim;
 
-class AutoResponderDataFactory extends EmailDataFactory implements EmailDataFactoryInterface
+class AutoResponderDataFactory extends EmailDataFactory
 {
     /**
      * EmailDataFactory constructor.
