@@ -13,7 +13,7 @@ use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 
 final class DatabaseAction implements ActionInterface, CrucialActionInterface
 {
-    public static $defaultName = 'database';
+    public static string $defaultName = 'database';
 
     private InformationCollection $informationCollection;
 

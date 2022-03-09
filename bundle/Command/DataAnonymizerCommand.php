@@ -17,7 +17,7 @@ use Exception;
 
 class DataAnonymizerCommand extends Command
 {
-    protected static $defaultName = 'nginfocollector:anonymize';
+    protected static string $defaultName = 'nginfocollector:anonymize';
 
     protected AnonymizerServiceFacade $anonymizer;
 
