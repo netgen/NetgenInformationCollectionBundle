@@ -35,7 +35,7 @@ class InformationCollected extends Event
      * @param Content|null $additionalContent
      * @param array $additionalParameters
      */
-    public function __construct(DataWrapper $data, Content $additionalContent = null, array $additionalParameters = [])
+    public function __construct(DataWrapper $data, $additionalContent = null, array $additionalParameters = [])
     {
         $this->data = $data;
         $this->additionalContent = $additionalContent;
@@ -104,7 +104,7 @@ class InformationCollected extends Event
      * @param mixed $value
      * @return self
      */
-    public function setAdditionalParameter(string $key, $value)
+    public function setAdditionalParameter($key, $value)
     {
         $this->additionalParameters[$key] = $value;
 
@@ -116,7 +116,7 @@ class InformationCollected extends Event
      * @return mixed
      * @throws MissingAdditionalParameterException
      */
-    public function getAdditionalParameter(string $key)
+    public function getAdditionalParameter($key)
     {
         if (!array_key_exists($key , $this->additionalParameters)) {
             throw new MissingAdditionalParameterException($key);
