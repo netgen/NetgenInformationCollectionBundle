@@ -8,7 +8,7 @@ use eZ\Publish\Core\Repository\Values\Content\Content;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
-use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
+use Netgen\Bundle\InformationCollectionBundle\Factory\LegacyDataFactoryInterface;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
@@ -17,7 +17,7 @@ use DateTime;
 class DatabaseAction implements ActionInterface, CrucialActionInterface
 {
     /**
-     * @var FieldDataFactory
+     * @var LegacyDataFactoryInterface
      */
     protected $factory;
 
@@ -39,13 +39,13 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
     /**
      * PersistToDatabaseAction constructor.
      *
-     * @param FieldDataFactory $factory
+     * @param LegacyDataFactoryInterface $factory
      * @param EzInfoCollectionRepository $infoCollectionRepository
      * @param EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository
      * @param Repository $repository
      */
     public function __construct(
-        FieldDataFactory $factory,
+        LegacyDataFactoryInterface $factory,
         EzInfoCollectionRepository $infoCollectionRepository,
         EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository,
         Repository $repository
@@ -91,7 +91,7 @@ class DatabaseAction implements ActionInterface, CrucialActionInterface
          * @var \eZ\Publish\Core\FieldType\Value $value
          */
         foreach ($struct->getCollectedFields() as $fieldDefIdentifier => $value) {
-            
+
             if ($value === null) {
                 continue;
             }

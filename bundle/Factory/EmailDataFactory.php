@@ -18,7 +18,7 @@ use Twig_Environment;
 use function array_key_exists;
 use function trim;
 
-class EmailDataFactory
+class EmailDataFactory implements EmailDataFactoryInterface
 {
     /**
      * @var array
