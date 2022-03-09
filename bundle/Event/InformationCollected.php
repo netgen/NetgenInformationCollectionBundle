@@ -9,6 +9,7 @@ use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Exception\MissingAdditionalParameterException;
 use Symfony\Component\EventDispatcher\Event;
+use function array_key_exists;
 
 class InformationCollected extends Event
 {
@@ -115,9 +116,9 @@ class InformationCollected extends Event
      * @return mixed
      * @throws MissingAdditionalParameterException
      */
-    public function getAdditionalParameterValue(string $key)
+    public function getAdditionalParameter(string $key)
     {
-        if (!isset($this->additionalParameters[$key])) {
+        if (!array_key_exists($key , $this->additionalParameters)) {
             throw new MissingAdditionalParameterException($key);
         }
 
