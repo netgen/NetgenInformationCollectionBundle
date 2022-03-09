@@ -35,7 +35,7 @@ class InformationCollected extends Event
      * @param Content|null $additionalContent
      * @param array $additionalParameters
      */
-    public function __construct(DataWrapper $data, $additionalContent = null, array $additionalParameters = [])
+    public function __construct(DataWrapper $data, Content $additionalContent = null, array $additionalParameters = [])
     {
         $this->data = $data;
         $this->additionalContent = $additionalContent;
