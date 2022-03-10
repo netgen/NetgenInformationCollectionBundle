@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Core\Factory;
 
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Netgen\InformationCollection\API\Factory\EmailContentFactoryInterface;
 use Netgen\InformationCollection\Core\Action\EmailAction;
 use function array_key_exists;
 use eZ\Publish\API\Repository\Values\Content\Field;
@@ -21,7 +22,7 @@ use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use function trim;
 use Twig\Environment;
 
-class EmailDataFactory extends BaseEmailDataFactory
+class EmailDataFactory implements EmailContentFactoryInterface
 {
     /**
      * @var array

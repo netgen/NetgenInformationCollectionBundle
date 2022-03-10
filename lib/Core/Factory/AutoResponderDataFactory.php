@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Factory;
 
+use Netgen\InformationCollection\API\Factory\EmailContentFactoryInterface;
 use function array_key_exists;
 use eZ\Publish\API\Repository\Values\Content\Field;
 use Netgen\InformationCollection\API\Constants;
@@ -14,7 +15,7 @@ use Netgen\InformationCollection\API\Value\DataTransfer\TemplateContent;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use function trim;
 
-class AutoResponderDataFactory extends EmailDataFactory
+class AutoResponderDataFactory implements EmailContentFactoryInterface
 {
     /**
      * Factory method.
