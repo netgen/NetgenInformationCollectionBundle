@@ -39,7 +39,6 @@ final class InformationCollected extends Event
      * InformationCollected constructor.
      *
      * @param \Netgen\InformationCollection\API\Value\InformationCollectionStruct $struct
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      * @param array $options
      * @param array $additionalParameters
      */
