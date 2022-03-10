@@ -41,7 +41,7 @@ final class CsvExportResponseFormatter implements ExportResponseFormatter
         $writer->setDelimiter($config['delimiter']);
         $writer->setEnclosure($config['enclosure']);
         $writer->setNewline($config['newline']);
-        $writer->setOutputBOM(Writer::BOM_UTF8); //adding the BOM sequence on output
+        $writer->setOutputBOM(Writer::BOM_UTF8); // adding the BOM sequence on output
         $writer->insertOne($export->getHeader());
         $writer->insertAll($export->getContents());
 
