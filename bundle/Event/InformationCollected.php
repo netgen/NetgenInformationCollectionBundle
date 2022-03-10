@@ -93,10 +93,13 @@ class InformationCollected extends Event
 
     /**
      * @param array $additionalParameters
+     * @return self
      */
     public function setAdditionalParameters(array $additionalParameters)
     {
         $this->additionalParameters = $additionalParameters;
+        
+        return $this;
     }
 
     /**
