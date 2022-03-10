@@ -28,7 +28,7 @@ use Netgen\InformationCollection\API\Value\Filter\SearchQuery;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Netgen\InformationCollection\API\Value\ObjectCount;
 use Netgen\InformationCollection\API\Value\SearchCount;
-use Netgen\InformationCollection\Core\Factory\FieldDataFactory;
+use Netgen\InformationCollection\API\Factory\FieldValueFactoryInterface;
 use Netgen\InformationCollection\Core\Mapper\DomainObjectMapper;
 use Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
@@ -57,7 +57,7 @@ class InformationCollectionService implements InformationCollection
     protected $gateway;
 
     /**
-     * @var \Netgen\InformationCollection\Core\Factory\FieldDataFactory
+     * @var \Netgen\InformationCollection\API\Factory\FieldValueFactoryInterface
      */
     protected $fieldsFactory;
 
@@ -73,13 +73,15 @@ class InformationCollectionService implements InformationCollection
      * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository
      * @param \eZ\Publish\API\Repository\Repository $repository
      * @param \Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase $gateway
+     * @param \Netgen\InformationCollection\API\Factory\FieldValueFactoryInterface $factory
+     * @param \Netgen\InformationCollection\Core\Mapper\DomainObjectMapper $objectMapper
      */
     public function __construct(
         EzInfoCollectionRepository $ezInfoCollectionRepository,
         EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository,
         Repository $repository,
         DoctrineDatabase $gateway,
-        FieldDataFactory $factory,
+        FieldValueFactoryInterface $factory,
         DomainObjectMapper $objectMapper
     ) {
         $this->ezInfoCollectionRepository = $ezInfoCollectionRepository;

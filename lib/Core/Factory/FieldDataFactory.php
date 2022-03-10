@@ -6,12 +6,13 @@ namespace Netgen\InformationCollection\Core\Factory;
 
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\FieldType\Value;
+use Netgen\InformationCollection\API\Factory\FieldValueFactoryInterface;
 use Netgen\InformationCollection\API\FieldHandler\CustomFieldHandlerInterface;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 use Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegistry;
 
-class FieldDataFactory
+class FieldDataFactory implements FieldValueFactoryInterface
 {
     /**
      * @var \Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegistry
