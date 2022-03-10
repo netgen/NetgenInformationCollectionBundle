@@ -6,9 +6,9 @@ namespace Netgen\InformationCollection\Core\Action;
 
 use Netgen\InformationCollection\API\Action\ActionInterface;
 use Netgen\InformationCollection\API\Exception\EmailNotSentException;
+use Netgen\InformationCollection\API\Factory\EmailContentFactoryInterface;
 use Netgen\InformationCollection\API\MailerInterface;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
-use Netgen\InformationCollection\Core\Factory\BaseEmailDataFactory;
 
 abstract class BaseEmailAction implements ActionInterface
 {
@@ -18,7 +18,7 @@ abstract class BaseEmailAction implements ActionInterface
     protected $mailer;
 
     /**
-     * @var \Netgen\InformationCollection\Core\Factory\BaseEmailDataFactory
+     * @var \Netgen\InformationCollection\API\Factory\EmailContentFactoryInterface
      */
     protected $factory;
 
@@ -26,9 +26,9 @@ abstract class BaseEmailAction implements ActionInterface
      * EmailAction constructor.
      *
      * @param \Netgen\InformationCollection\API\MailerInterface $mailer
-     * @param \Netgen\InformationCollection\Core\Factory\BaseEmailDataFactory $factory
+     * @param \Netgen\InformationCollection\API\Factory\EmailContentFactoryInterface $factory
      */
-    public function __construct(MailerInterface $mailer, BaseEmailDataFactory $factory)
+    public function __construct(MailerInterface $mailer, EmailContentFactoryInterface $factory)
     {
         $this->mailer = $mailer;
         $this->factory = $factory;
