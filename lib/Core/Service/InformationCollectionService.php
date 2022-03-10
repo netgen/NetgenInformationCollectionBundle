@@ -10,6 +10,7 @@ use Ibexa\Contracts\Core\Repository\Values\User\User;
 use Netgen\InformationCollection\API\Exception\PersistingFailedException;
 use Netgen\InformationCollection\API\Exception\StoringAttributeFailedException;
 use Netgen\InformationCollection\API\Exception\StoringCollectionFailedException;
+use Netgen\InformationCollection\API\Factory\FieldValueFactoryInterface;
 use Netgen\InformationCollection\API\Service\InformationCollection;
 use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\Collection;
@@ -28,7 +29,6 @@ use Netgen\InformationCollection\API\Value\Filter\SearchQuery;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Netgen\InformationCollection\API\Value\ObjectCount;
 use Netgen\InformationCollection\API\Value\SearchCount;
-use Netgen\InformationCollection\Core\Factory\FieldDataFactory;
 use Netgen\InformationCollection\Core\Mapper\DomainObjectMapper;
 use Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
@@ -45,7 +45,7 @@ class InformationCollectionService implements InformationCollection
 
     protected DoctrineDatabase $gateway;
 
-    protected FieldDataFactory $fieldsFactory;
+    protected FieldValueFactoryInterface $fieldsFactory;
 
     protected DomainObjectMapper $objectMapper;
 
@@ -54,7 +54,7 @@ class InformationCollectionService implements InformationCollection
         EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository,
         Repository $repository,
         DoctrineDatabase $gateway,
-        FieldDataFactory $factory,
+        FieldValueFactoryInterface $factory,
         DomainObjectMapper $objectMapper
     ) {
         $this->ezInfoCollectionRepository = $ezInfoCollectionRepository;
