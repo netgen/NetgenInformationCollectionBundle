@@ -32,6 +32,16 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Ibexa\AdminUi\Form\Type\FieldDefinition\FieldDefinitionType }
 
+    netgen_information_collection.form.extension.content_field:
+        class: Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\ContentFieldTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Ibexa\ContentForms\Form\Type\Content\ContentFieldType }
+
+    netgen_information_collection.validator.info_collector:
+        class: Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InfoCollectorContentValidator
+        tags:
+            - { name: ibexa.repository.content.validator, priority: 255 }
+
     netgen_information_collection.domain_object_mapper:
         class: Netgen\InformationCollection\Core\Mapper\DomainObjectMapper
         arguments:
