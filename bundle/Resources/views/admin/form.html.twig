@@ -11,3 +11,11 @@
         {%- endif -%}
     </div>
 {%- endblock form_row -%}
+
+{%- block birthday_row -%}
+    <div class="birthday {% if errors|length > 0 %} error-input{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock birthday_row -%}

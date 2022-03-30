@@ -6,6 +6,10 @@
 
 {% block content %}
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {% for child in form.children %}
+            {{ form_row(child) }}
+        {% endfor %}
+
         {{ form_rest(form) }}
 
         <input type="submit" value="{{ 'netgen_information_collection_admin_collection_save'|trans }}" class="ng-ui-btn">
