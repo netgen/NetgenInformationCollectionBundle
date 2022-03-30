@@ -122,7 +122,9 @@ class FormBuilder
                 $attribute->field
             );
 
-            $struct->setCollectedFieldValue($attribute->field->identifier, $fieldValue);
+            if ($fieldValue !== null) {
+                $struct->setCollectedFieldValue($attribute->field->identifier, $fieldValue);
+            }
         }
 
         $data = new DataWrapper($struct, $contentType, $location);

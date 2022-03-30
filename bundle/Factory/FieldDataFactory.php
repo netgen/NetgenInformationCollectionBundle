@@ -4,7 +4,6 @@ namespace Netgen\Bundle\InformationCollectionBundle\Factory;
 
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\FieldType\Value;
-use Netgen\Bundle\InformationCollectionBundle\Exception\MissingHandlerException;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry;
@@ -76,7 +75,7 @@ class FieldDataFactory implements LegacyDataFactoryInterface
         $handler = $this->registry->handle($fieldDefinition->defaultValue);
 
         if (!$handler instanceof CustomLegacyFieldHandlerInterface) {
-            throw new MissingHandlerException($fieldDefinition->fieldTypeIdentifier);
+            return null;
         }
 
         return $handler->fromLegacyValue($legacyData, $fieldDefinition);
