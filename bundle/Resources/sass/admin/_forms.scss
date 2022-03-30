@@ -162,4 +162,15 @@
             }
         }
     }
+
+    .error-input {
+        ul {
+            margin-left: 0;
+
+            li {
+                list-style-type: none;
+                color: red;
+            }
+        }
+    }
 }
