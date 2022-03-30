@@ -1,6 +1,8 @@
+{% extends netgen_information_collection_admin.pageLayoutTemplate %}
+
 {% trans_default_domain 'netgen_information_collection_admin' %}
 
-{% extends netgen_information_collection_admin.pageLayoutTemplate %}
+{% form_theme form '@NetgenInformationCollection/admin/form.html.twig' %}
 
 {% block content %}
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
