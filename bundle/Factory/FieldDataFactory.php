@@ -4,6 +4,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Factory;
 
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\FieldType\Value;
+use Netgen\Bundle\InformationCollectionBundle\Exception\MissingHandlerException;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry;
@@ -59,5 +60,25 @@ class FieldDataFactory implements LegacyDataFactoryInterface
             0,
             (string) $handler->toString($value, $fieldDefinition)
         );
+    }
+
+    /**
+     * Returns the field value constructed from value object that represents legacy value.
+     *
+     * @param LegacyData $legacyData
+     * @param FieldDefinition $fieldDefinition
+     *
+     * @return Value
+     */
+    public function fromLegacyValue(LegacyData $legacyData, FieldDefinition $fieldDefinition)
+    {
+        /** @var CustomFieldHandlerInterface $handler */
+        $handler = $this->registry->handle($fieldDefinition->defaultValue);
+
+        if (!$handler instanceof CustomLegacyFieldHandlerInterface) {
+            throw new MissingHandlerException($fieldDefinition->fieldTypeIdentifier);
+        }
+
+        return $handler->fromLegacyValue($legacyData, $fieldDefinition);
     }
 }

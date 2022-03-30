@@ -5,16 +5,16 @@ namespace Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\FieldType\Value;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
-use eZ\Publish\Core\FieldType\Integer\Value as IntegerValue;
+use Netgen\Bundle\EnhancedSelectionBundle\Core\FieldType\EnhancedSelection\Value as EnhancedSelectionValue;
 
-class IntegerFieldHandler implements CustomLegacyFieldHandlerInterface
+class EnhancedSelectionFieldHandler implements CustomLegacyFieldHandlerInterface
 {
     /**
      * @inheritDoc
      */
     public function supports(Value $value)
     {
-        return $value instanceof IntegerValue;
+        return $value instanceof EnhancedSelectionValue;
     }
 
     /**
@@ -30,7 +30,12 @@ class IntegerFieldHandler implements CustomLegacyFieldHandlerInterface
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition)
     {
-        return new LegacyData($fieldDefinition->id, 0, $value->value, '');
+        $identifier = '';
+        if (isset($value->identifiers[0])) {
+            $identifier = $value->identifiers[0];
+        }
+
+        return new LegacyData($fieldDefinition->id, 0, 0, $identifier);
     }
 
     /**
@@ -38,6 +43,6 @@ class IntegerFieldHandler implements CustomLegacyFieldHandlerInterface
      */
     public function fromLegacyValue(LegacyData $legacyData, FieldDefinition $fieldDefinition)
     {
-        return new IntegerValue($legacyData->getDataInt());
+        return new EnhancedSelectionValue([$legacyData->getDataText()]);
     }
 }

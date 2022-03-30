@@ -17,6 +17,7 @@ class InformationCollectionPolicyProvider implements PolicyProviderInterface
         $configBuilder->addConfig([
             'infocollector' => [
                 'read' => [],
+                'edit' => [],
                 'delete' => [],
                 'anonymize' => [],
                 'export' => [],

@@ -32,4 +32,8 @@ class TimeFieldHandler implements CustomLegacyFieldHandlerInterface
     {
         return new LegacyData($fieldDefinition->id, 0, $value->time, '');
     }
+
+    public function fromLegacyValue(LegacyData $legacyData, FieldDefinition $fieldDefinition)
+    {
+    }
 }

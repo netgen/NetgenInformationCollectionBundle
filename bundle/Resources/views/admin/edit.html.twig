@@ -1,0 +1,11 @@
+{% trans_default_domain 'netgen_information_collection_admin' %}
+
+{% extends netgen_information_collection_admin.pageLayoutTemplate %}
+
+{% block content %}
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {{ form_rest(form) }}
+
+        <input type="submit" value="{{ 'netgen_information_collection_admin_collection_save'|trans }}" class="ng-ui-btn">
+    {{ form_end(form) }}
+{% endblock %}

@@ -33,4 +33,12 @@ class CheckboxFieldHandler implements CustomLegacyFieldHandlerInterface
     {
         return new LegacyData($fieldDefinition->id, 0, intval($value->bool), '');
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function fromLegacyValue(LegacyData $legacyData, FieldDefinition $fieldDefinition)
+    {
+        return new CheckboxValue($legacyData->getDataInt() === 1);
+    }
 }

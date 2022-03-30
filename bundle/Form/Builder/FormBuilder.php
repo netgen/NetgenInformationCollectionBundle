@@ -8,6 +8,10 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\EzFormsBundle\Form\Type\InformationCollectionType;
+use Netgen\Bundle\InformationCollectionBundle\Factory\LegacyDataFactoryInterface;
+use Netgen\Bundle\InformationCollectionBundle\Form\Type\InformationCollectionUpdateType;
+use Netgen\Bundle\InformationCollectionBundle\API\Value\InformationCollection\Collection;
+use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -42,17 +46,20 @@ class FormBuilder
      * @param ContentTypeService $contentTypeService
      * @param RouterInterface $router
      * @param ConfigResolverInterface $configResolver
+     * @param LegacyDataFactoryInterface $legacyFactory
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         ContentTypeService $contentTypeService,
         RouterInterface $router,
-        ConfigResolverInterface $configResolver
+        ConfigResolverInterface $configResolver,
+        LegacyDataFactoryInterface $legacyFactory
     ) {
         $this->formFactory = $formFactory;
         $this->configResolver = $configResolver;
         $this->contentTypeService = $contentTypeService;
         $this->router = $router;
+        $this->legacyFactory = $legacyFactory;
     }
 
     /**
@@ -66,7 +73,6 @@ class FormBuilder
     public function createFormForLocation(Location $location, $useAjax = false)
     {
         $contentInfo = $location->contentInfo;
-
         $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
 
         $data = new DataWrapper(new InformationCollectionStruct(), $contentType, $location);
@@ -89,5 +95,50 @@ class FormBuilder
         }
 
         return $formBuilder;
+    }
+
+    /**
+     * Creates Information collection Form object for given Location object.
+     *
+     * @param Location $location
+     * @param Collection $collection
+     *
+     * @return FormBuilderInterface
+     */
+    public function createUpdateFormForLocation(Location $location, Collection $collection)
+    {
+        $contentInfo = $location->contentInfo;
+        $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
+        $struct = new InformationCollectionStruct();
+
+        foreach ($collection->attributes as $attribute) {
+            $fieldValue = $this->legacyFactory->fromLegacyValue(
+                new LegacyData(
+                    $attribute->field->id,
+                    $attribute->entity->getDataFloat(),
+                    $attribute->entity->getDataInt(),
+                    $attribute->entity->getDataText()
+                ),
+                $attribute->field
+            );
+
+            $struct->setCollectedFieldValue($attribute->field->identifier, $fieldValue);
+        }
+
+        $data = new DataWrapper($struct, $contentType, $location);
+        $useCsrf = $this->configResolver->getParameter('information_collection.form.use_csrf', 'netgen');
+
+        return $this->formFactory
+            ->createNamedBuilder(
+                $contentType->identifier . '_' . $location->id,
+                Kernel::VERSION_ID < 20800 ?
+                    'ezforms_information_collection_update' :
+                    InformationCollectionUpdateType::class,
+                $data,
+                array(
+                    'collection' => $collection,
+                    'csrf_protection' => $useCsrf,
+                )
+            );
     }
 }

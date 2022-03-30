@@ -158,6 +158,102 @@ class AdminController extends Controller
     }
 
     /**
+     * Edits the collection with provided ID
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $collectionId
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Request $request, int $collectionId)
+    {
+        $this->denyAccessUnlessGranted('ez:infocollector:edit');
+
+        $collection = $this->service->getCollection(new Query(['collectionId' => $collectionId]));
+
+        /** @var \eZ\Publish\API\Repository\LocationService $locationService */
+        $locationService = $this->container
+            ->get('ezpublish.api.service.location');
+
+        /** @var \Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder $formBuilder */
+        $formBuilder = $this->container
+            ->get('netgen_information_collection.form.builder');
+
+        /** @var \Netgen\Bundle\InformationCollectionBundle\Factory\LegacyDataFactoryInterface $factory */
+        $factory = $this->container
+            ->get('netgen_information_collection.factory.field_data');
+
+        /** @var \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository $infoCollectionRepository */
+        $infoCollectionRepository = $this->container
+            ->get('netgen_information_collection.repository.ez_info_collection');
+
+        /** @var \Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository $infoCollectionRepository */
+        $infoCollectionAttributeRepository = $this->container
+            ->get('netgen_information_collection.repository.ez_info_collection_attribute');
+
+        $location = $locationService->loadLocation($collection->content->contentInfo->mainLocationId);
+        $form = $formBuilder->createUpdateFormForLocation($location, $collection)->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var \Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct $struct */
+            $struct = $form->getData()->payload;
+
+            /** @var \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType */
+            $contentType = $form->getData()->definition;
+
+            $ezInfo = $infoCollectionRepository->find($collectionId);
+            $ezInfo->setModified(time());
+
+            $infoCollectionRepository->save($ezInfo);
+
+            /**
+             * @var \eZ\Publish\Core\FieldType\Value $value
+             */
+            foreach ($struct->getCollectedFields() as $fieldDefIdentifier => $value) {
+                if ($value === null) {
+                    continue;
+                }
+
+                $fieldDefinition = $contentType->getFieldDefinition($fieldDefIdentifier);
+
+                /* @var \Netgen\Bundle\InformationCollectionBundle\Value\LegacyData $legacyValue */
+                $legacyValue = $factory->getLegacyValue($value, $fieldDefinition);
+
+                $ezInfoAttributes = $infoCollectionAttributeRepository->findByCollectionIdAndFieldDefinitionIds(
+                    $collectionId,
+                    [$fieldDefinition->id]
+                );
+
+                if (count($ezInfoAttributes) >= 0) {
+                    $ezInfoAttribute = $ezInfoAttributes[0];
+
+                    $ezInfoAttribute->setDataInt($legacyValue->getDataInt());
+                    $ezInfoAttribute->setDataFloat($legacyValue->getDataFloat());
+                    $ezInfoAttribute->setDataText($legacyValue->getDataText());
+
+                    $infoCollectionAttributeRepository->save($ezInfoAttribute);
+                }
+            }
+
+            return $this->redirectToRoute(
+                'netgen_information_collection.route.admin.view',
+                [
+                    'contentId' => $location->contentInfo->id,
+                    'collectionId' => $collection->entity->getId(),
+                ]
+            );
+        }
+
+        return $this->render("NetgenInformationCollectionBundle:admin:edit.html.twig", [
+            'collection' => $collection,
+            'content' => $location->getContent(),
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * Handles actions performed on overview page
      *
      * @param \Symfony\Component\HttpFoundation\Request $request

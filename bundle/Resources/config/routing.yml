@@ -18,6 +18,11 @@ netgen_information_collection.route.admin.view:
     defaults: { _controller: netgen_information_collection.controller.admin:viewAction }
     methods: [GET]
 
+netgen_information_collection.route.admin.edit:
+    path: /netgen/informationcollection/edit/{collectionId}
+    defaults: { _controller: netgen_information_collection.controller.admin:editAction }
+    methods: [GET, POST]
+
 netgen_information_collection.route.admin.handle_contents:
     path: /netgen/informationcollection/handle/contents
     defaults: { _controller: netgen_information_collection.controller.admin:handleContentsAction }

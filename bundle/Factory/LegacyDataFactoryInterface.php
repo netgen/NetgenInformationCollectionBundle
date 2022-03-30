@@ -17,4 +17,14 @@ interface LegacyDataFactoryInterface
      * @return LegacyData
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition);
+
+    /**
+     * Returns the field value constructed from value object that represents legacy value.
+     *
+     * @param LegacyData $legacyData
+     * @param FieldDefinition $fieldDefinition
+     *
+     * @return Value
+     */
+    public function fromLegacyValue(LegacyData $legacyData, FieldDefinition $fieldDefinition);
 }

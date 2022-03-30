@@ -15,4 +15,12 @@ interface CustomLegacyFieldHandlerInterface extends CustomFieldHandlerInterface
      * @return LegacyData
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition);
+
+    /**
+     * @param LegacyData $legacyData
+     * @param FieldDefinition $fieldDefinition
+     *
+     * @return Value
+     */
+    public function fromLegacyValue(LegacyData $legacyData, FieldDefinition $fieldDefinition);
 }

@@ -32,4 +32,12 @@ class FloatFieldHandler implements CustomLegacyFieldHandlerInterface
     {
         return new LegacyData($fieldDefinition->id, $value->value, 0, '');
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function fromLegacyValue(LegacyData $legacyData, FieldDefinition $fieldDefinition)
+    {
+        return new FloatValue($legacyData->getDataFloat());
+    }
 }

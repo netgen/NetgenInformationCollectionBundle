@@ -30,6 +30,7 @@ services:
             - '@ezpublish.api.service.content_type'
             - '@router'
             - '@ezpublish.config.resolver'
+            - '@netgen_information_collection.factory.field_data'
 
     netgen_information_collection.listener:
         class: Netgen\Bundle\InformationCollectionBundle\Listener\InformationCollectedListener

@@ -4,17 +4,17 @@ namespace Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom;
 
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\FieldType\Value;
+use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
-use eZ\Publish\Core\FieldType\Integer\Value as IntegerValue;
 
-class IntegerFieldHandler implements CustomLegacyFieldHandlerInterface
+class StringFieldHandler implements CustomLegacyFieldHandlerInterface
 {
     /**
      * @inheritDoc
      */
     public function supports(Value $value)
     {
-        return $value instanceof IntegerValue;
+        return $value instanceof TextLineValue;
     }
 
     /**
@@ -30,14 +30,11 @@ class IntegerFieldHandler implements CustomLegacyFieldHandlerInterface
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition)
     {
-        return new LegacyData($fieldDefinition->id, 0, $value->value, '');
+        return new LegacyData($fieldDefinition->id, 0, 0, $value->text);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function fromLegacyValue(LegacyData $legacyData, FieldDefinition $fieldDefinition)
     {
-        return new IntegerValue($legacyData->getDataInt());
+        return new TextLineValue($legacyData->getDataText());
     }
 }
