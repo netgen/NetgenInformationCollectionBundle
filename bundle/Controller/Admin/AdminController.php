@@ -226,15 +226,21 @@ class AdminController extends Controller
                     [$fieldDefinition->id]
                 );
 
-                if (count($ezInfoAttributes) >= 0) {
+                if (count($ezInfoAttributes) > 0) {
                     $ezInfoAttribute = $ezInfoAttributes[0];
-
-                    $ezInfoAttribute->setDataInt($legacyValue->getDataInt());
-                    $ezInfoAttribute->setDataFloat($legacyValue->getDataFloat());
-                    $ezInfoAttribute->setDataText($legacyValue->getDataText());
-
-                    $infoCollectionAttributeRepository->save($ezInfoAttribute);
+                } else {
+                    $ezInfoAttribute = $infoCollectionAttributeRepository->getInstance();
+                    $ezInfoAttribute->setContentObjectId($collection->content->id);
+                    $ezInfoAttribute->setContentObjectAttributeId($collection->content->getField($fieldDefinition->identifier)->id);
+                    $ezInfoAttribute->setContentClassAttributeId($fieldDefinition->id);
+                    $ezInfoAttribute->setInformationCollectionId($collection->entity->getId());
                 }
+
+                $ezInfoAttribute->setDataInt($legacyValue->getDataInt());
+                $ezInfoAttribute->setDataFloat($legacyValue->getDataFloat());
+                $ezInfoAttribute->setDataText($legacyValue->getDataText());
+
+                $infoCollectionAttributeRepository->save($ezInfoAttribute);
             }
 
             return $this->redirectToRoute(
