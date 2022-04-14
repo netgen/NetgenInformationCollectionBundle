@@ -85,16 +85,18 @@ services:
             - "@ezpublish.api.service.content_type"
             - "@event_dispatcher"
 
-    netgen_information_collection.captcha.service:
-        class: Netgen\InformationCollection\Core\Service\CaptchaService
-        arguments:
-            - '@ezpublish.api.service.content_type'
-            - '@ezpublish.config.resolver'
+    Netgen\InformationCollection\Core\Service\CaptchaService:
+        autowire: true
 
-    netgen_information_collection.export.json:
-        class: Netgen\InformationCollection\Core\Export\JsonExportResponseFormatter
+    netgen_information_collection.captcha.service:
+        alias: Netgen\InformationCollection\Core\Service\CaptchaService
+
+    Netgen\InformationCollection\Core\Export\JsonExportResponseFormatter:
         tags:
             - { name: netgen_information_collection.export.formatter }
+
+    netgen_information_collection.export.json:
+        alias: Netgen\InformationCollection\Core\Export\JsonExportResponseFormatter
 
     netgen_information_collection.form.captcha_type:
         class: Netgen\Bundle\InformationCollectionBundle\Form\CaptchaType
