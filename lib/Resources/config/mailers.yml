@@ -6,4 +6,4 @@ services:
     Netgen\InformationCollection\Core\Mailer\:
         resource: '../../Core/Mailer/'
 
-    Netgen\InformationCollection\API\MailerInterface: '@Netgen\InformationCollection\Core\Mailer\SwiftMailerBasedMailer'
+    Netgen\InformationCollection\API\MailerInterface: '@Netgen\InformationCollection\Core\Mailer\SymfonyMailerBasedMailer'
