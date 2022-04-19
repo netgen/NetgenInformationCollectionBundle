@@ -182,7 +182,7 @@ class EmailDataFactory extends BaseEmailDataFactory
             $fieldValue = $this->translationHelper->getTranslatedField($content, $field);
 
             if ($fieldValue instanceof Field) {
-                return [$fieldValue->value->email];
+                return [(string)$fieldValue->value];
             }
 
         }
