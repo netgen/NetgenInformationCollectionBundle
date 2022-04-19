@@ -44,6 +44,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
         $libResourceLoader->load('default_settings.yml');
         $libResourceLoader->load('email_data_providers.yml');
         $libResourceLoader->load('mailers.yml');
+        $libResourceLoader->load('graphql.yml');
 
 
         $this->processSemanticConfig($container, $config);

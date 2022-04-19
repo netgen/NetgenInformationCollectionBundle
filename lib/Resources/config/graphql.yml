@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Netgen\InformationCollection\GraphQL\Mutation\CollectInformationMutation:
+        arguments:
+            $informationCollectionHandler: '@netgen_information_collection.handler'
+
+    Netgen\InformationCollection\GraphQL\Schema\Domain\InformationCollectionDomain:
+        tags:
+            - "ezplatform_graphql.schema_domain_iterator"
+            - "ezplatform_graphql.domain_schema_worker"
+        arguments:
+            $typesMap: '%ezplatform_graphql.schema.content.mapping.field_definition_type%'
