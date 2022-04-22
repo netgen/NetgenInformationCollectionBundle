@@ -51,7 +51,7 @@ class InformationCollectionDomain implements Domain\Iterator, Schema\Worker
             );
         }
 
-
+        $this->addInformationCollectionResultTypes($schema);
     }
 
     public function iterate(): Generator
@@ -84,8 +84,6 @@ class InformationCollectionDomain implements Domain\Iterator, Schema\Worker
                 )
             );
         });
-
-        $this->addInformationCollectionResultTypes($schema);
 
         $collectionMutationFieldName = str_replace("create", "collect", $this->nameHelper->domainMutationCreateContentField($contentType));
 
