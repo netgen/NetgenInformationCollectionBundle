@@ -23,9 +23,12 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
 
     private CaptchaService $captchaService;
 
-    public function __construct(CaptchaService $captchaService)
+    private ConfigResolverInterface $configResolver;
+
+    public function __construct(CaptchaService $captchaService, ConfigResolverInterface $configResolver)
     {
         $this->captchaService = $captchaService;
+        $this->configResolver = $configResolver;
     }
 
     public function getName(): string
@@ -79,8 +82,9 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setDefaults(['translation_domain' => 'ezplatform_content_forms_content'])
-            ->setRequired(['languageCode', 'mainLanguageCode']);
+            ->setRequired(['languageCode', 'mainLanguageCode'])
+            ->setDefault('translation_domain', 'ezplatform_content_forms_content')
+            ->setDefault('csrf_protection', $this->configResolver->getParameter('form.use_csrf', 'netgen_information_collection'));
     }
 
     public function mapDataToForms($viewData, iterable $forms): void

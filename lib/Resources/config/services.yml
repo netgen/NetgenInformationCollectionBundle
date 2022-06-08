@@ -67,6 +67,7 @@ services:
         class: Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InformationCollectionType
         arguments:
             - '@netgen_information_collection.captcha.service'
+            - '@ibexa.config.resolver'
         tags:
             - { name: form.type }
 
