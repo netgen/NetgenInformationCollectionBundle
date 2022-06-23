@@ -9,10 +9,7 @@ use Netgen\InformationCollection\API\Value\Filter\ContentId;
 
 class InformationCollectionCollectionListAdapter extends BaseAdapter
 {
-    /**
-     * @var \Netgen\InformationCollection\API\Value\Filter\ContentId
-     */
-    protected $query;
+    protected ContentId $query;
 
     public function __construct(InformationCollection $informationCollectionService, ContentId $query)
     {
@@ -20,7 +17,7 @@ class InformationCollectionCollectionListAdapter extends BaseAdapter
         parent::__construct($informationCollectionService);
     }
 
-    public function getNbResults()
+    public function getNbResults(): int
     {
         if (!isset($this->nbResults)) {
             $query = ContentId::countWithContentId($this->query->getContentId());
@@ -33,7 +30,7 @@ class InformationCollectionCollectionListAdapter extends BaseAdapter
         return $this->nbResults;
     }
 
-    public function getSlice($offset, $length)
+    public function getSlice($offset, $length): iterable
     {
         $query = new ContentId($this->query->getContentId(), $offset, $length);
 

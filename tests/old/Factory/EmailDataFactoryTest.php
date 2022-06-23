@@ -2,80 +2,51 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Factory;
 
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use eZ\Publish\API\Repository\Values\Content\Field;
-use eZ\Publish\Core\FieldType\EmailAddress\Value as EmailValue;
-use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
-use eZ\Publish\Core\Helper\FieldHelper;
-use eZ\Publish\Core\Helper\TranslationHelper;
-use eZ\Publish\Core\Repository\ContentService;
-use eZ\Publish\Core\Repository\Values\Content\Content;
-use eZ\Publish\Core\Repository\Values\Content\Location;
-use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
-use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
-use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
+use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
+use Ibexa\Core\FieldType\EmailAddress\Value as EmailValue;
+use Ibexa\Core\FieldType\TextLine\Value as TextLineValue;
+use Ibexa\Core\Helper\FieldHelper;
+use Ibexa\Core\Helper\TranslationHelper;
+use Ibexa\Core\Repository\ContentService;
+use Ibexa\Core\Repository\Values\Content\Content;
+use Ibexa\Core\Repository\Values\Content\Location;
+use Ibexa\Core\Repository\Values\Content\VersionInfo;
+use Ibexa\Core\Repository\Values\ContentType\ContentType;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Twig_Environment;
-use Twig_Loader_Array;
-use Twig_TemplateWrapper;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
+use Twig\TemplateWrapper;
 
 class EmailDataFactoryTest extends TestCase
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory
-     */
-    protected $factory;
+    protected EmailDataFactory $factory;
 
-    /**
-     * @var array
-     */
-    protected $config;
+    protected array $config;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $translationHelper;
+    protected TranslationHelper $translationHelper;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $fieldHelper;
+    protected MockObject $fieldHelper;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $contentService;
+    protected MockObject $contentService;
 
-    /**
-     * @var \eZ\Publish\Core\Repository\Values\ContentType\ContentType
-     */
-    protected $contentType;
+    protected ContentType $contentType;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $twig;
+    protected MockObject $twig;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $templateWrapper;
+    protected MockObject $templateWrapper;
 
-    /**
-     * @var \eZ\Publish\Core\Repository\Values\ContentType\ContentType
-     */
-    protected $contentType2;
+    protected ContentType $contentType2;
 
-    /**
-     * @var \eZ\Publish\Core\Repository\Values\Content\VersionInfo
-     */
-    protected $versionInfo;
+    protected VersionInfo $versionInfo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->config = array(
             'templates' => array(
@@ -106,7 +77,7 @@ class EmailDataFactoryTest extends TestCase
             ->setMethods(array('loadContent'))
             ->getMock();
 
-        $this->twig = $this->getMockBuilder(\Twig_Environment::class)
+        $this->twig = $this->getMockBuilder(Environment::class)
             ->disableOriginalConstructor()
             ->setMethods(array('load'))
             ->getMock();
@@ -137,17 +108,17 @@ class EmailDataFactoryTest extends TestCase
         parent::setUp();
     }
 
-    public function testBuildingWithSenderRecipientAndSubjectFromContent()
+    public function testBuildingWithSenderRecipientAndSubjectFromContent(): void
     {
-        $twig = new Twig_Environment(
-            new Twig_Loader_Array(
+        $twig = new Environment(
+            new ArrayLoader(
                 array(
                     'index' => '{% block email %}{{ "email body" }}{% endblock %}',
                 )
             )
         );
 
-        $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
+        $templateWrapper = new TemplateWrapper($twig, $twig->loadTemplate('index'));
 
         $this->factory = new EmailDataFactory(
             $this->config,
@@ -237,7 +208,7 @@ class EmailDataFactoryTest extends TestCase
         $this->assertEquals('email body', $value->getBody());
     }
 
-    public function testBuildingWithSenderRecipientAndSubjectFromTemplate()
+    public function testBuildingWithSenderRecipientAndSubjectFromTemplate(): void
     {
         $template = <<<TEMPLATE
             {% block email %}{{ 'My email body' }}{% endblock %}
@@ -246,15 +217,15 @@ class EmailDataFactoryTest extends TestCase
             {% block sender %}{{ 'sender@template.com' }}{% endblock %}
 TEMPLATE;
 
-        $twig = new Twig_Environment(
-            new Twig_Loader_Array(
+        $twig = new Environment(
+            new ArrayLoader(
                 array(
                     'index' => $template,
                 )
             )
         );
 
-        $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
+        $templateWrapper = new TemplateWrapper($twig, $twig->loadTemplate('index'));
 
         $this->factory = new EmailDataFactory(
             $this->config,
@@ -334,17 +305,17 @@ TEMPLATE;
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\MissingEmailBlockException
      * @expectedExceptionMessage Missing email block in index template, currently there is foo available.
      */
-    public function testBuildingWithNoEmailBlockInTemplate()
+    public function testBuildingWithNoEmailBlockInTemplate(): void
     {
-        $twig = new Twig_Environment(
-            new Twig_Loader_Array(
+        $twig = new Environment(
+            new ArrayLoader(
                 array(
                     'index' => '{% block foo %}{% endblock %}',
                 )
             )
         );
 
-        $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
+        $templateWrapper = new TemplateWrapper($twig, $twig->loadTemplate('index'));
 
         $recipientField = new Field(array(
             'value' => new EmailValue('recipient@test.com'),
@@ -412,17 +383,17 @@ TEMPLATE;
         $this->assertEquals('body test', $value->getBody());
     }
 
-    public function testBuildingWithSenderRecipientAndSubjectFromConfiguration()
+    public function testBuildingWithSenderRecipientAndSubjectFromConfiguration(): void
     {
-        $twig = new Twig_Environment(
-            new Twig_Loader_Array(
+        $twig = new Environment(
+            new ArrayLoader(
                 array(
                     'index' => '{% block email %}{% endblock %}',
                 )
             )
         );
 
-        $templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
+        $templateWrapper = new TemplateWrapper($twig, $twig->loadTemplate('index'));
 
         $recipientField = new Field(array(
             'value' => new EmailValue('recipient@test.com'),

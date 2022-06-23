@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\EzPlatform\EzPlatformAdmin\EventListener;
+namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\Admin\EventListener;
 
-use EzSystems\EzPlatformAdminUiBundle\EzPlatformAdminUiBundle;
+use Ibexa\Bundle\AdminUi\IbexaAdminUiBundle;
 use Netgen\Bundle\InformationCollectionBundle\Templating\Twig\AdminGlobalVariable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -12,39 +12,30 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class SetPageLayoutListener implements EventSubscriberInterface
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Templating\Twig\AdminGlobalVariable
-     */
-    protected $globalVariable;
+    protected AdminGlobalVariable $globalVariable;
 
-    /**
-     * @var string
-     */
-    protected $pageLayoutTemplate;
+    protected string $pageLayoutTemplate;
 
-    /**
-     * @var array
-     */
-    protected $groupsBySiteAccess;
+    protected array $groupsBySiteAccess;
 
     public function __construct(
         AdminGlobalVariable $adminGlobalVariable,
         array $groupsBySiteAccess,
-        $pageLayoutTemplate
+        string $pageLayoutTemplate
     ) {
         $this->globalVariable = $adminGlobalVariable;
         $this->pageLayoutTemplate = $pageLayoutTemplate;
         $this->groupsBySiteAccess = $groupsBySiteAccess;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::REQUEST => 'onKernelRequest',
         ];
     }
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;
@@ -55,7 +46,7 @@ class SetPageLayoutListener implements EventSubscriberInterface
             return;
         }
 
-        if (!in_array(EzPlatformAdminUiBundle::ADMIN_GROUP_NAME, $this->groupsBySiteAccess[$siteAccess], true)) {
+        if (!in_array(IbexaAdminUiBundle::ADMIN_GROUP_NAME, $this->groupsBySiteAccess[$siteAccess], true)) {
             return;
         }
 

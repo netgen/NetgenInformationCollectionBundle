@@ -7,18 +7,15 @@ use PHPUnit\Framework\TestCase;
 
 class EzInfoCollectionTest extends TestCase
 {
-    /**
-     * @var EzInfoCollection
-     */
-    protected $entity;
+    protected EzInfoCollection $entity;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->entity = new EzInfoCollection();
         parent::setUp();
     }
 
-    public function testGettersAndSetters()
+    public function testGettersAndSetters(): void
     {
         $id = 123;
         $this->entity->setId($id);

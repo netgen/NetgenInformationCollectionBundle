@@ -7,18 +7,15 @@ use PHPUnit\Framework\TestCase;
 
 class EzInfoCollectionAttributeTest extends TestCase
 {
-    /**
-     * @var EzInfoCollectionAttribute
-     */
-    protected $entity;
+    protected EzInfoCollectionAttribute $entity;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->entity = new EzInfoCollectionAttribute();
         parent::setUp();
     }
 
-    public function testSetters()
+    public function testSetters(): void
     {
         $this->entity->setId(2342);
         $this->entity->setContentObjectId(24343);

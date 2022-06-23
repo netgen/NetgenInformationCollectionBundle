@@ -1,10 +1,9 @@
 {
     "name": "netgen/information-collection-bundle",
-    "description": "Information collection alike feature for eZ Platform",
-    "type": "ezplatform-bundle",
+    "description": "Information collection alike feature for Ibexa Platform",
+    "type": "ibexa-bundle",
     "keywords": [
-        "ezpublish",
-        "ezplatform",
+        "ibexa",
         "information collection",
         "netgen",
         "information-collection-bundle"
@@ -24,12 +23,12 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.4 || ^8.0",
         "ext-pdo": "*",
         "doctrine/orm": "^2.5",
-        "ezsystems/ezplatform-admin-ui": "^2.0",
-        "ezsystems/ezplatform-content-forms": "^1.0",
-        "ezsystems/ezplatform-kernel": "^1.0",
+        "ibexa/admin-ui": "^4.0",
+        "ibexa/content-forms": "^4.0",
+        "ibexa/core": "^4.0",
         "symfony/swiftmailer-bundle": "^3.4",
         "twig/twig": "^3.0",
         "google/recaptcha": "^1.2",
@@ -41,7 +40,7 @@
         "phpunit/phpunit": "^8.2",
         "matthiasnoback/symfony-config-test": "~4.0",
         "matthiasnoback/symfony-dependency-injection-test": "~4.0",
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "friendsofphp/php-cs-fixer": "^3.3"
     },
     "autoload": {
         "psr-4": {
@@ -67,7 +66,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     }
 }

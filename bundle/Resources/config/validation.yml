@@ -1,4 +1,4 @@
-Netgen\InformationCollection\Integration\RepositoryForms\InformationCollectionData:
+Netgen\InformationCollection\Integration\ContentForms\InformationCollectionData:
     properties:
         fieldsData:
             - Valid: ~

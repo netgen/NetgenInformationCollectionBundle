@@ -4,29 +4,18 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Persistence;
 
-use eZ\Publish\API\Repository\ContentService;
-use eZ\Publish\API\Repository\ContentTypeService;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Contracts\Core\Repository\ContentService;
+use Ibexa\Contracts\Core\Repository\ContentTypeService;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 use OutOfBoundsException;
+use function sprintf;
 
 final class ContentTypeUtils
 {
-    /**
-     * @var \eZ\Publish\API\Repository\ContentTypeService
-     */
-    private $contentTypeService;
+    private ContentTypeService $contentTypeService;
 
-    /**
-     * @var \eZ\Publish\API\Repository\ContentService
-     */
-    private $contentService;
+    private ContentService $contentService;
 
-    /**
-     * FieldIdResolver constructor.
-     *
-     * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
-     * @param \eZ\Publish\API\Repository\ContentService $contentService
-     */
     public function __construct(ContentTypeService $contentTypeService, ContentService $contentService)
     {
         $this->contentTypeService = $contentTypeService;
@@ -34,18 +23,13 @@ final class ContentTypeUtils
     }
 
     /**
-     * Return field id for fiven field definition identifier.
-     *
-     * @param int $contentId
-     * @param string $fieldDefIdentifier
+     * Return field id for given field definition identifier.
      *
      * @throws \OutOfBoundsException
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return mixed
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\UnauthorizedException
      */
-    public function getFieldId($contentId, $fieldDefIdentifier)
+    public function getFieldId(int $contentId, string $fieldDefIdentifier): int
     {
         $content = $this->contentService->loadContent($contentId);
 
@@ -64,14 +48,10 @@ final class ContentTypeUtils
     /**
      * Returns fields that are marked as info collectors.
      *
-     * @param int $contentId
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     *
-     * @return array
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\UnauthorizedException
      */
-    public function getInfoCollectorFields($contentId)
+    public function getInfoCollectorFields(int $contentId): array
     {
         $fields = [];
 

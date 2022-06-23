@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class CustomFieldHandlersPassTest extends AbstractCompilerPassTestCase
 {
-    public function testCompilerPassCollectsValidServices()
+    public function testCompilerPassCollectsValidServices(): void
     {
         $registry = new Definition();
         $this->setDefinition(CustomFieldHandlersPass::FIELD_HANDLER_REGISTRY, $registry);
@@ -30,7 +30,7 @@ class CustomFieldHandlersPassTest extends AbstractCompilerPassTestCase
         );
     }
 
-    protected function registerCompilerPass(ContainerBuilder $container)
+    protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new CustomFieldHandlersPass());
     }

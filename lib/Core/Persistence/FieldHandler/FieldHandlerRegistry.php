@@ -4,21 +4,13 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Persistence\FieldHandler;
 
-use eZ\Publish\Core\FieldType\Value;
+use Ibexa\Core\FieldType\Value;
 use Netgen\InformationCollection\API\FieldHandler\CustomFieldHandlerInterface;
 
 final class FieldHandlerRegistry
 {
-    /**
-     * @var array
-     */
-    protected $handlers;
+    private iterable $handlers;
 
-    /**
-     * FieldHandlerRegistry constructor.
-     *
-     * @param array $handlers
-     */
     public function __construct(iterable $handlers)
     {
         $this->handlers = $handlers;
@@ -26,19 +18,12 @@ final class FieldHandlerRegistry
 
     /**
      * Adds new handler.
-     *
-     * @param CustomFieldHandlerInterface $handler
      */
     public function addHandler(CustomFieldHandlerInterface $handler): void
     {
         $this->handlers[] = $handler;
     }
 
-    /**
-     * @param Value $value
-     *
-     * @return CustomFieldHandlerInterface|null
-     */
     public function handle(Value $value): ?CustomFieldHandlerInterface
     {
         /** @var CustomFieldHandlerInterface $handler */

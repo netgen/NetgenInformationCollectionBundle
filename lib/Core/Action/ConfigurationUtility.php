@@ -1,25 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Core\Action;
 
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\InformationCollection\API\Action\ActionInterface;
 use OutOfBoundsException;
-use function sprintf;
 use function in_array;
+use function sprintf;
 
 final class ConfigurationUtility
 {
-    /**
-     * @var array
-     */
-    private $actionsdConfiguration;
+    private array $actionsdConfiguration;
 
-    /**
-     * @var array
-     */
-    private $singleActionConfiguration;
+    private array $singleActionConfiguration;
 
     public function __construct(ConfigResolverInterface $configResolver)
     {
@@ -60,10 +56,6 @@ final class ConfigurationUtility
     /**
      * Returns configuration for given content type identifier if exists
      * or default one.
-     *
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
-     *
-     * @return array
      */
     public function getConfigPerContentType(ContentType $contentType): array
     {

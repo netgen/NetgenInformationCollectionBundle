@@ -11,7 +11,7 @@ class MissingValueExceptionTest extends TestCase
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\MissingValueException
      * @expectedExceptionMessage There is no value for field my_field specified.
      */
-    public function testException()
+    public function testException(): void
     {
         throw new MissingValueException('my_field');
     }

@@ -2,11 +2,11 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\FieldHandler\Custom;
 
-use eZ\Publish\Core\FieldType\Float\Value as FloatValue;
-use eZ\Publish\Core\FieldType\Checkbox\Value as CheckboxValue;
-use eZ\Publish\Core\FieldType\Time\Value as TimeValue;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
+use Ibexa\Core\FieldType\Float\Value as FloatValue;
+use Ibexa\Core\FieldType\Checkbox\Value as CheckboxValue;
+use Ibexa\Core\FieldType\Time\Value as TimeValue;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\TimeFieldHandler;
 use PHPUnit\Framework\TestCase;
@@ -14,48 +14,39 @@ use DateTime;
 
 class TimeFieldHandlerTest extends TestCase
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFieldHandlerInterface
-     */
-    protected $handler;
+    protected CustomLegacyFieldHandlerInterface $handler;
 
-    /**
-     * @var \DateTime
-     */
-    protected $dt;
+    protected DateTime $dt;
 
-    /**
-     * @var \eZ\Publish\Core\FieldType\Time\Value
-     */
-    protected $value;
+    protected TimeValue $value;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->handler = new TimeFieldHandler();
         $this->dt = new DateTime();
         $this->value = TimeValue::fromDateTime($this->dt);
     }
 
-    public function testInstanceOfCustomLegacyFieldHandler()
+    public function testInstanceOfCustomLegacyFieldHandler(): void
     {
         $this->assertInstanceOf(CustomLegacyFieldHandlerInterface::class, $this->handler);
     }
 
-    public function testSupportsHasValidBehaviour()
+    public function testSupportsHasValidBehaviour(): void
     {
         $this->assertFalse($this->handler->supports(new CheckboxValue(true)));
         $this->assertTrue($this->handler->supports($this->value));
         $this->assertFalse($this->handler->supports(new FloatValue(2.0)));
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $fieldDefinition = $this->createMock(FieldDefinition::class);
 
         $this->assertEquals($this->dt->format('H:i:s'), $this->handler->toString($this->value, $fieldDefinition));
     }
 
-    public function testGetLegacyValue()
+    public function testGetLegacyValue(): void
     {
         $fieldDefinition = new CoreFieldDefinition([
             'id' => 123,

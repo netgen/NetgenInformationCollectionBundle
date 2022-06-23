@@ -2,8 +2,9 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\DependencyInjection;
 
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
+use Ibexa\Bundle\Core\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
+use Ibexa\Bundle\Core\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
+use Ibexa\Core\Helper\TranslationHelper;
 use Netgen\InformationCollection\API\Action\ActionInterface;
 use Netgen\InformationCollection\API\ConfigurationConstants;
 use Symfony\Component\Config\FileLocator;
@@ -24,10 +25,7 @@ use function array_merge;
  */
 class NetgenInformationCollectionExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -54,7 +52,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
 //            ConfigurationConstants::ACTION_CONFIG,
 //        );
 //
-//        $scopes = array_merge(array('default'), $container->getParameter('ezpublish.siteaccess.list'));
+//        $scopes = array_merge(array('default'), $container->getParameter('ibexa.site_access.list'));
 //
 //        foreach ($configArrays as $configArray) {
 //            $processor->mapConfigArray($configArray, $config);
@@ -75,7 +73,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
         $this->registerServiceDefinitions($container);
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $this->addTwigConfig($container);
         $this->addDoctrineConfig($container);
@@ -98,7 +96,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
         );
     }
 
-    protected function addDoctrineConfig(ContainerBuilder $container)
+    protected function addDoctrineConfig(ContainerBuilder $container): void
     {
         $configDir = __DIR__ . '/../../lib/Doctrine/mappings';
 
@@ -150,8 +148,8 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
                 \Netgen\InformationCollection\Core\Export\CsvExportResponseFormatter::class
             );
             $csvExportFormatter->addTag('netgen_information_collection.export.formatter');
-            $csvExportFormatter->addArgument(new Reference('ezpublish.translation_helper'));
-            $csvExportFormatter->addArgument(new Reference('ezpublish.config.resolver'));
+            $csvExportFormatter->addArgument(new Reference(TranslationHelper::class));
+            $csvExportFormatter->addArgument(new Reference('ibexa.config.resolver'));
             $csvExportFormatter->setPublic(false);
             $csvExportFormatter->setAutowired(false);
             $csvExportFormatter->setAutoconfigured(false);
@@ -164,7 +162,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
                 \Netgen\InformationCollection\Core\Export\XlsExportResponseFormatter::class
             );
             $xlsExportFormatter->addTag('netgen_information_collection.export.formatter');
-            $xlsExportFormatter->addArgument(new Reference('ezpublish.translation_helper'));
+            $xlsExportFormatter->addArgument(new Reference(TranslationHelper::class));
             $xlsExportFormatter->setPublic(false);
             $xlsExportFormatter->setAutowired(false);
             $xlsExportFormatter->setAutoconfigured(false);
@@ -173,7 +171,7 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
                 \Netgen\InformationCollection\Core\Export\XlsxExportResponseFormatter::class
             );
             $xlsxExportFormatter->addTag('netgen_information_collection.export.formatter');
-            $xlsxExportFormatter->addArgument(new Reference('ezpublish.translation_helper'));
+            $xlsxExportFormatter->addArgument(new Reference(TranslationHelper::class));
             $xlsxExportFormatter->setPublic(false);
             $xlsxExportFormatter->setAutowired(false);
             $xlsxExportFormatter->setAutoconfigured(false);

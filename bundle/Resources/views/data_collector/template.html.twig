@@ -50,7 +50,7 @@
 
         <div class="metric">
             <span class="value">
-                <a href="{{ path('_ez_content_view', {
+                <a href="{{ path('ibexa.content.view', {
                     'contentId': collector.contentId,
                     'siteaccess': collector.adminSiteaccess
                 }) }}">
@@ -62,7 +62,7 @@
 
         <div class="metric">
             <span class="value">
-                <a href="{{ path('ezplatform.content_type.view', {
+                <a href="{{ path('ibexa.content_type.view', {
                     'contentTypeGroupId': collector.contentTypeGroupId ,
                     'contentTypeId': collector.contentTypeId,
                     'siteaccess': collector.adminSiteaccess

@@ -4,53 +4,38 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Factory;
 
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use Netgen\InformationCollection\Core\Action\EmailAction;
-use function array_key_exists;
-use eZ\Publish\API\Repository\Values\Content\Field;
-use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
-use eZ\Publish\Core\Helper\FieldHelper;
-use eZ\Publish\Core\Helper\TranslationHelper;
-use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
-use Netgen\InformationCollection\API\Constants;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Core\FieldType\BinaryFile\Value as BinaryFile;
+use Ibexa\Core\Helper\FieldHelper;
+use Ibexa\Core\Helper\TranslationHelper;
 use Netgen\InformationCollection\API\ConfigurationConstants;
+use Netgen\InformationCollection\API\Constants;
 use Netgen\InformationCollection\API\Exception\MissingEmailBlockException;
 use Netgen\InformationCollection\API\Exception\MissingValueException;
+use Netgen\InformationCollection\API\Factory\EmailContentFactoryInterface;
+use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
 use Netgen\InformationCollection\API\Value\DataTransfer\TemplateContent;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
-use function trim;
+use Netgen\InformationCollection\Core\Action\EmailAction;
 use Twig\Environment;
+use function array_filter;
+use function array_key_exists;
+use function explode;
+use function filter_var;
+use function trim;
+use const FILTER_VALIDATE_EMAIL;
 
-class EmailDataFactory extends BaseEmailDataFactory
+class EmailDataFactory implements EmailContentFactoryInterface
 {
-    /**
-     * @var array
-     */
-    protected $configResolver;
+    protected ConfigResolverInterface $configResolver;
 
-    /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper
-     */
-    protected $translationHelper;
+    protected TranslationHelper $translationHelper;
 
-    /**
-     * @var \eZ\Publish\Core\Helper\FieldHelper
-     */
-    protected $fieldHelper;
+    protected FieldHelper $fieldHelper;
 
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
-    /**
-     * EmailDataFactory constructor.
-     *
-     * @param array $config
-     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
-     * @param \eZ\Publish\Core\Helper\FieldHelper $fieldHelper
-     * @param \Twig\Environment $twig
-     */
     public function __construct(
         ConfigResolverInterface $configResolver,
         TranslationHelper $translationHelper,
@@ -66,10 +51,6 @@ class EmailDataFactory extends BaseEmailDataFactory
 
     /**
      * Factory method.
-     *
-     * @param InformationCollected $value
-     *
-     * @return EmailContent
      */
     public function build(InformationCollected $value): EmailContent
     {
@@ -91,16 +72,7 @@ class EmailDataFactory extends BaseEmailDataFactory
         );
     }
 
-    /**
-     * Returns resolved parameter.
-     *
-     * @param TemplateContent $data
-     * @param string $field
-     * @param string $property
-     *
-     * @return string
-     */
-    protected function resolve(TemplateContent $data, $field, $property = Constants::FIELD_TYPE_TEXT)
+    protected function resolve(TemplateContent $data, string $field, string $property = Constants::FIELD_TYPE_TEXT): string
     {
         $rendered = '';
         if ($data->getTemplateWrapper()->hasBlock($field)) {
@@ -121,8 +93,8 @@ class EmailDataFactory extends BaseEmailDataFactory
         }
 
         $content = $data->getContent();
-        if (array_key_exists($field, $content->fields) &&
-            !$this->fieldHelper->isFieldEmpty($content, $field)
+        if (array_key_exists($field, $content->fields)
+            && !$this->fieldHelper->isFieldEmpty($content, $field)
         ) {
             $fieldValue = $this->translationHelper->getTranslatedField($content, $field);
 
@@ -140,13 +112,8 @@ class EmailDataFactory extends BaseEmailDataFactory
 
     /**
      * Returns resolved email parameter.
-     *
-     * @param TemplateContent $data
-     * @param string $field
-     *
-     * @return array
      */
-    protected function resolveEmail(TemplateContent $data, $field)
+    protected function resolveEmail(TemplateContent $data, string $field): array
     {
         $rendered = '';
         if ($data->getTemplateWrapper()->hasBlock($field)) {
@@ -163,12 +130,9 @@ class EmailDataFactory extends BaseEmailDataFactory
         }
 
         if (!empty($rendered)) {
-
             $emails = explode(',', $rendered);
 
-            $emails = array_filter($emails, function($var) {
-                return filter_var($var, FILTER_VALIDATE_EMAIL);
-            });
+            $emails = array_filter($emails, static fn ($var) => filter_var($var, FILTER_VALIDATE_EMAIL));
 
             if (!empty($emails)) {
                 return $emails;
@@ -176,15 +140,14 @@ class EmailDataFactory extends BaseEmailDataFactory
         }
 
         $content = $data->getContent();
-        if (array_key_exists($field, $content->fields) &&
-            !$this->fieldHelper->isFieldEmpty($content, $field)
+        if (array_key_exists($field, $content->fields)
+            && !$this->fieldHelper->isFieldEmpty($content, $field)
         ) {
             $fieldValue = $this->translationHelper->getTranslatedField($content, $field);
 
             if ($fieldValue instanceof Field) {
                 return [(string)$fieldValue->value];
             }
-
         }
 
         if (!empty($this->config[ConfigurationConstants::DEFAULT_VARIABLES][$field])) {
@@ -196,12 +159,8 @@ class EmailDataFactory extends BaseEmailDataFactory
 
     /**
      * Returns resolved template name.
-     *
-     * @param string $contentTypeIdentifier
-     *
-     * @return string
      */
-    protected function resolveTemplate($contentTypeIdentifier)
+    protected function resolveTemplate(string $contentTypeIdentifier): string
     {
         if (array_key_exists($contentTypeIdentifier, $this->config[ConfigurationConstants::TEMPLATES][ConfigurationConstants::CONTENT_TYPES])) {
             return $this->config[ConfigurationConstants::TEMPLATES][ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier];
@@ -213,13 +172,9 @@ class EmailDataFactory extends BaseEmailDataFactory
     /**
      * Renders email template.
      *
-     * @param TemplateContent $data
-     *
-     * @throws MissingEmailBlockException
-     *
-     * @return string
+     * @throws \Netgen\InformationCollection\API\Exception\MissingEmailBlockException
      */
-    protected function resolveBody(TemplateContent $data)
+    protected function resolveBody(TemplateContent $data): string
     {
         if ($data->getTemplateWrapper()->hasBlock(Constants::BLOCK_EMAIL)) {
             return $data->getTemplateWrapper()
@@ -242,12 +197,9 @@ class EmailDataFactory extends BaseEmailDataFactory
     }
 
     /**
-     * @param string $contentTypeIdentifier
-     * @param array $collectedFields
-     *
-     * @return BinaryFile[]
+     * @return \Ibexa\Core\FieldType\BinaryFile\Value[]
      */
-    protected function resolveAttachments(string $contentTypeIdentifier, array $collectedFields)
+    protected function resolveAttachments(string $contentTypeIdentifier, array $collectedFields): array
     {
         if (empty($this->config[ConfigurationConstants::ATTACHMENTS])) {
             return [];
@@ -267,11 +219,9 @@ class EmailDataFactory extends BaseEmailDataFactory
     }
 
     /**
-     * @param array $collectedFields
-     *
-     * @return BinaryFile[]
+     * @return \Ibexa\Core\FieldType\BinaryFile\Value[]
      */
-    protected function getBinaryFileFields(array $collectedFields)
+    protected function getBinaryFileFields(array $collectedFields): array
     {
         $filtered = [];
 

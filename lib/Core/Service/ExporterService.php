@@ -12,23 +12,18 @@ use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
 use Netgen\InformationCollection\API\Value\Filter\ContentId;
 use Netgen\InformationCollection\Core\Persistence\ContentTypeUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function array_values;
+use function preg_replace;
+use function str_replace;
+use function strip_tags;
 
 class ExporterService implements Exporter
 {
-    /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
-     */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Persistence\ContentTypeUtils
-     */
-    protected $contentTypeUtils;
+    protected ContentTypeUtils $contentTypeUtils;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Service\InformationCollection
-     */
-    protected $informationCollection;
+    protected InformationCollection $informationCollection;
 
     public function __construct(
         InformationCollection $informationCollection,
@@ -40,9 +35,6 @@ class ExporterService implements Exporter
         $this->informationCollection = $informationCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function export(ExportCriteria $criteria): Export
     {
         $fields = $this->contentTypeUtils
@@ -66,7 +58,7 @@ class ExporterService implements Exporter
                     continue;
                 }
 
-                $row[] = $this->getAttributeValue((int)$fieldId, $collection->getAttributes());
+                $row[] = $this->getAttributeValue((int) $fieldId, $collection->getAttributes());
             }
 
             $rows[] = $row;
@@ -79,20 +71,15 @@ class ExporterService implements Exporter
 
     /**
      * Get attribute value string.
-     *
-     * @param int $fieldId
-     * @param array $attributes
-     *
-     * @return string
      */
-    protected function getAttributeValue(int $fieldId, array $attributes)
+    protected function getAttributeValue(int $fieldId, array $attributes): string
     {
         /** @var Attribute $attribute */
         foreach ($attributes as $attribute) {
             if ($fieldId === $attribute->getFieldDefinition()->id) {
                 $value = $attribute->getValue();
-                $value = str_replace('"', '""', (string)$value);
-                $value = str_replace(';', ', ', (string)$value);
+                $value = str_replace('"', '""', (string) $value);
+                $value = str_replace(';', ', ', (string) $value);
                 $value = strip_tags($value);
 
                 $res = preg_replace(['/\r|\n/'], [' '], $value);

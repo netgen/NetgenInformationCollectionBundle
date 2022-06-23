@@ -9,9 +9,9 @@ use Netgen\InformationCollection\API\Exception\EmailNotSentException;
 
 final class AutoResponderAction extends BaseEmailAction
 {
-    public static $defaultName = 'auto_responder';
+    public static string $defaultName = 'auto_responder';
 
-    protected function throwException(EmailNotSentException $exception)
+    protected function throwException(EmailNotSentException $exception): void
     {
         throw new ActionFailedException(static::$defaultName, $exception->getMessage());
     }

@@ -9,9 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class NullObject implements CaptchaValue
 {
-    /**
-     * {@inheritdoc}
-     */
     public function isValid(Request $request): bool
     {
         return true;

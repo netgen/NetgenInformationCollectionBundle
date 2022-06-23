@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Netgen\InformationCollection\Core\Factory;
+namespace Netgen\InformationCollection\API\Factory;
 
 use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 
-abstract class BaseEmailDataFactory
+interface EmailContentFactoryInterface
 {
-    abstract public function build(InformationCollected $value): EmailContent;
+    public function build(InformationCollected $value): EmailContent;
 }

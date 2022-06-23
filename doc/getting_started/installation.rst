@@ -4,8 +4,8 @@ Installation instructions
 Requirements
 ------------
 
-* PHP 7.3+
-* eZ Platform 2.0+
+* PHP 7.4+
+* Ibexa Platform 4.0+
 
 Installation steps
 ------------------
@@ -20,29 +20,10 @@ Run the following from your website root folder to install NetgenInformationColl
 
     $ composer require netgen/information-collection-bundle
 
-
-Activate the bundle
-~~~~~~~~~~~~~~~~~~~
-
-Activate required bundles in `app/AppKernel.php` file by adding them to the `$bundles` array in `registerBundles` method:
-
-.. code-block:: php
-
-    public function registerBundles()
-    {
-        ...
-        $bundles[] = new Netgen\Bundle\EzFormsBundle\NetgenEzFormsBundle();
-        $bundles[] = new Netgen\Bundle\InformationCollectionBundle\NetgenInformationCollectionBundle();
-
-        return $bundles;
-    }
-
-
 Include routing configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-In your main routing configuration file probably `routing.yml` add:
+In your `config/routes` folder add:
 
 .. code-block:: yaml
 

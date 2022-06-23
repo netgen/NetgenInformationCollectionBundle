@@ -8,19 +8,9 @@ use Netgen\InformationCollection\API\Value\ValueObject;
 
 class Query extends ValueObject
 {
-    /**
-     * Search limit.
-     *
-     * @var int
-     */
-    protected $limit = 10;
+    protected int $limit;
 
-    /**
-     * Search offset.
-     *
-     * @var int
-     */
-    protected $offset = 0;
+    protected int $offset;
 
     public function __construct(int $offset, int $limit)
     {
@@ -28,27 +18,21 @@ class Query extends ValueObject
         $this->limit = $limit;
     }
 
-    public static function withLimit(int $limit)
+    public static function withLimit(int $limit): self
     {
         return new self(0, $limit);
     }
 
-    public static function countQuery()
+    public static function countQuery(): self
     {
         return new self(0, 0);
     }
 
-    /**
-     * @return int
-     */
     public function getLimit(): int
     {
         return $this->limit;
     }
 
-    /**
-     * @return int
-     */
     public function getOffset(): int
     {
         return $this->offset;

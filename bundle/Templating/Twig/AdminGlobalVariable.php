@@ -4,30 +4,33 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\InformationCollectionBundle\Templating\Twig;
 
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+
 class AdminGlobalVariable
 {
-    /**
-     * @var string|null
-     */
-    protected $pageLayoutTemplate;
+    protected ConfigResolverInterface $configResolver;
 
-    /**
-     * Sets the pagelayout template.
-     *
-     * @param string $pageLayoutTemplate
-     */
-    public function setPageLayoutTemplate(?string $pageLayoutTemplate = null): void
+    protected ?string $pageLayoutTemplate;
+
+    public function __construct(ConfigResolverInterface $configResolver)
+    {
+        $this->configResolver = $configResolver;
+    }
+
+    public function setPageLayoutTemplate(string $pageLayoutTemplate): void
     {
         $this->pageLayoutTemplate = $pageLayoutTemplate;
     }
 
     /**
      * Returns the pagelayout template.
-     *
-     * @return string
      */
     public function getPageLayoutTemplate(): ?string
     {
-        return $this->pageLayoutTemplate;
+        if ($this->pageLayoutTemplate !== null) {
+            return $this->pageLayoutTemplate;
+        }
+
+        return $this->configResolver->getParameter('admin.pagelayout', 'netgen_information_collection');
     }
 }

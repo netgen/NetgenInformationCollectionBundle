@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Factory;
 
-use function array_key_exists;
-use eZ\Publish\API\Repository\Values\Content\Field;
-use Netgen\InformationCollection\API\Constants;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
 use Netgen\InformationCollection\API\ConfigurationConstants;
+use Netgen\InformationCollection\API\Constants;
 use Netgen\InformationCollection\API\Exception\MissingValueException;
+use Netgen\InformationCollection\API\Factory\EmailContentFactoryInterface;
 use Netgen\InformationCollection\API\Value\DataTransfer\EmailContent;
 use Netgen\InformationCollection\API\Value\DataTransfer\TemplateContent;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
+use function array_filter;
+use function array_key_exists;
+use function explode;
+use function filter_var;
 use function trim;
+use const FILTER_VALIDATE_EMAIL;
 
-class AutoResponderDataFactory extends EmailDataFactory
+class AutoResponderDataFactory implements EmailContentFactoryInterface
 {
     /**
      * Factory method.
-     *
-     * @param InformationCollected $value
-     *
-     * @return EmailContent
      */
     public function build(InformationCollected $value): EmailContent
     {
@@ -45,12 +46,8 @@ class AutoResponderDataFactory extends EmailDataFactory
 
     /**
      * Returns resolved parameter.
-     *
-     * @param TemplateContent $data
-     *
-     * @return array
      */
-    protected function resolveRecipient(TemplateContent $data)
+    protected function resolveRecipient(TemplateContent $data): array
     {
         $fields = $data->getEvent()->getInformationCollectionStruct()->getCollectedFields();
         if ($data->getTemplateWrapper()->hasBlock(Constants::FIELD_RECIPIENT)) {
@@ -67,12 +64,9 @@ class AutoResponderDataFactory extends EmailDataFactory
         }
 
         if (!empty($rendered)) {
-
             $emails = explode(',', $rendered);
 
-            $emails = array_filter($emails, function($var) {
-                return filter_var($var, FILTER_VALIDATE_EMAIL);
-            });
+            $emails = array_filter($emails, static fn ($var) => filter_var($var, FILTER_VALIDATE_EMAIL));
 
             if (!empty($emails)) {
                 return $emails;
@@ -93,12 +87,8 @@ class AutoResponderDataFactory extends EmailDataFactory
 
     /**
      * Returns resolved parameter.
-     *
-     * @param TemplateContent $data
-     *
-     * @return string
      */
-    protected function resolveSubject(TemplateContent $data)
+    protected function resolveSubject(TemplateContent $data): string
     {
         $fields = $data->getEvent()->getInformationCollectionStruct()->getCollectedFields();
         if ($data->getTemplateWrapper()->hasBlock(Constants::FIELD_AUTO_RESPONDER_SUBJECT)) {
@@ -115,8 +105,8 @@ class AutoResponderDataFactory extends EmailDataFactory
         }
 
         $content = $data->getContent();
-        if (array_key_exists(Constants::FIELD_AUTO_RESPONDER_SUBJECT, $content->fields) &&
-            !$this->fieldHelper->isFieldEmpty($content, Constants::FIELD_AUTO_RESPONDER_SUBJECT)
+        if (array_key_exists(Constants::FIELD_AUTO_RESPONDER_SUBJECT, $content->fields)
+            && !$this->fieldHelper->isFieldEmpty($content, Constants::FIELD_AUTO_RESPONDER_SUBJECT)
         ) {
             $fieldValue = $this->translationHelper->getTranslatedField($content, Constants::FIELD_AUTO_RESPONDER_SUBJECT);
 

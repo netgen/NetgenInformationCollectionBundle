@@ -32,8 +32,8 @@
                             <td>
                                 <img src="{{ asset('bundles/netgeninformationcollection/admin/images/Document.png') }}" alt="section" title="section" width="16" height="16">
                                 &nbsp;
-                                {% if object.hasLocation %}<a href="{{ path("ez_urlalias", { "contentId": object.content.contentInfo.id }) }}">{% endif %}
-                                    {{ ez_content_name(object.content) }}
+                                {% if object.hasLocation %}<a href="{{ path("ibexa.url.alias", { "contentId": object.content.contentInfo.id }) }}">{% endif %}
+                                    {{ ibexa_content_name(object.content) }}
                                 {% if object.hasLocation %}</a>{% endif %}
                             </td>
                             <td>

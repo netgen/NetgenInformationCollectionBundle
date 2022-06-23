@@ -2,8 +2,8 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
-use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
-use eZ\Bundle\EzPublishCoreBundle\Controller;
+use Ibexa\Core\MVC\Symfony\Security\Authorization\Attribute;
+use Ibexa\Bundle\Core\Controller;
 use Netgen\InformationCollection\API\Service\InformationCollection;
 use Netgen\InformationCollection\API\Value\Content;
 use Netgen\InformationCollection\API\Value\Filter\ContentId;
@@ -14,28 +14,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TreeController extends Controller
 {
-    /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
-     */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    protected $router;
+    protected RouterInterface $router;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Service\InformationCollection
-     */
-    protected $service;
+    protected InformationCollection $service;
 
-    /**
-     * TreeController constructor.
-     *
-     * @param \Netgen\InformationCollection\API\Service\InformationCollection $service
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     */
     public function __construct(
         InformationCollection $service,
         TranslatorInterface $translator,
@@ -50,17 +34,16 @@ class TreeController extends Controller
      * Get contents with collections
      *
      * @param bool $isRoot
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getChildrenAction($isRoot = false)
+    public function getChildrenAction($isRoot = false): JsonResponse
     {
+        $isRoot = (bool) $isRoot;
         $attribute = new Attribute('infocollector', 'read');
         $this->denyAccessUnlessGranted($attribute);
 
         $result = array();
 
-        if ((bool) $isRoot) {
+        if ($isRoot) {
             $result[] = $this->getRootTreeData();
         } else {
 
@@ -77,10 +60,8 @@ class TreeController extends Controller
 
     /**
      * Generates data for root of the tree.
-     *
-     * @return array
      */
-    protected function getRootTreeData()
+    protected function getRootTreeData(): array
     {
         $count = $this->service->getObjectsWithCollectionsCount();
 
@@ -104,13 +85,11 @@ class TreeController extends Controller
     /**
      * Creates tree structure for Content
      *
-     * @param \Netgen\InformationCollection\API\Value\Content $content
      * @param bool $isRoot
-     *
-     * @return array
      */
-    protected function getCollections(Content $content, $isRoot = false)
+    protected function getCollections(Content $content, $isRoot = false): array
     {
+        $isRoot = (bool) $isRoot;
         $languages = $this->getConfigResolver()->getParameter('languages');
 
         $query = ContentId::countWithContentId($content->getContent()->id);

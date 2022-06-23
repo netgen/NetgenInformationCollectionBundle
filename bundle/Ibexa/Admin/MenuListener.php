@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\EzPlatform\EzPlatformAdmin;
+namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\Admin;
 
-use EzSystems\EzPlatformAdminUi\Menu\Event\ConfigureMenuEvent;
-use EzSystems\EzPlatformAdminUi\Menu\MainMenuBuilder;
+use Ibexa\AdminUi\Menu\Event\ConfigureMenuEvent;
+use Ibexa\AdminUi\Menu\MainMenuBuilder;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class MenuListener implements EventSubscriberInterface
 {
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             ConfigureMenuEvent::MAIN_MENU => ['onMenuConfigure', 0],
         ];
     }
 
-    public function onMenuConfigure(ConfigureMenuEvent $event)
+    public function onMenuConfigure(ConfigureMenuEvent $event): void
     {
         $menu = $event->getMenu();
 
@@ -28,9 +28,10 @@ class MenuListener implements EventSubscriberInterface
         $menu[MainMenuBuilder::ITEM_ADMIN]->addChild(
             'information_collection',
             [
-                'label' => 'Information collection',
+                'label' => 'netgen_information_collection_menu_label',
                 'route' => 'netgen_information_collection.route.admin.overview',
                 'extras' => [
+                    'translation_domain' => 'netgen_information_collection_admin',
                     'routes' => [
                         'collection_list' => 'netgen_information_collection.route.admin.collection_list',
                         'collection_list_search' => 'netgen_information_collection.route.admin.collection_list_search',

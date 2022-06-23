@@ -6,10 +6,7 @@ namespace Netgen\InformationCollection\API\Value\Filter;
 
 final class ContentId extends Query
 {
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
     public function __construct(int $id, int $offset, int $limit)
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\API\Action;
 
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;

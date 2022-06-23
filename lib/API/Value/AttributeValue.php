@@ -6,20 +6,11 @@ namespace Netgen\InformationCollection\API\Value;
 
 class AttributeValue extends ValueObject
 {
-    /**
-     * @var int
-     */
-    protected $dataInt;
+    protected int $dataInt;
 
-    /**
-     * @var float
-     */
-    protected $dataFloat;
+    protected float $dataFloat;
 
-    /**
-     * @var string
-     */
-    protected $dataText;
+    protected string $dataText;
 
     public function __construct(int $dataInt, float $dataFloat, string $dataText)
     {
@@ -28,42 +19,33 @@ class AttributeValue extends ValueObject
         $this->dataText = $dataText;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         if (!empty($this->dataText)) {
             return $this->dataText;
         }
 
         if (!empty($this->dataInt)) {
-            return (string)$this->dataInt;
+            return (string) $this->dataInt;
         }
 
         if (!empty($this->dataFloat)) {
-            return (string)$this->dataFloat;
+            return (string) $this->dataFloat;
         }
 
         return '';
     }
 
-    /**
-     * @return int
-     */
     public function getDataInt(): int
     {
         return $this->dataInt;
     }
 
-    /**
-     * @return float
-     */
     public function getDataFloat(): float
     {
         return $this->dataFloat;
     }
 
-    /**
-     * @return string
-     */
     public function getDataText(): string
     {
         return $this->dataText;

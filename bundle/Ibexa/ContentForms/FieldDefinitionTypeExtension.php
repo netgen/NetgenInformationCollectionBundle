@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms;
+namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms;
 
-use EzSystems\EzPlatformAdminUi\Form\Type\FieldDefinition\FieldDefinitionType;
+use Ibexa\AdminUi\Form\Type\FieldDefinition\FieldDefinitionType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class FieldDefinitionTypeExtension extends AbstractTypeExtension
 {
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return FieldDefinitionType::class;
     }
@@ -21,7 +21,7 @@ class FieldDefinitionTypeExtension extends AbstractTypeExtension
         return [FieldDefinitionType::class];
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $isTranslation = $options['languageCode'] !== $options['mainLanguageCode'];
 

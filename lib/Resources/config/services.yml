@@ -5,7 +5,7 @@ imports:
     - { resource: legacy_handlers.yml }
     - { resource: admin.yml }
     - { resource: anonymizers.yml }
-    - { resource: ezplatform_admin.yml }
+    - { resource: ibexa_admin.yml }
 
 parameters:
 
@@ -28,14 +28,24 @@ services:
             - 'Netgen\InformationCollection\API\MailerInterface'
 
     netgen_information_collection.form.extension.field_definition:
-        class: Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\FieldDefinitionTypeExtension
+        class: Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\FieldDefinitionTypeExtension
         tags:
-            - { name: form.type_extension, extended_type: EzSystems\EzPlatformAdminUi\Form\Type\FieldDefinition\FieldDefinitionType }
+            - { name: form.type_extension, extended_type: Ibexa\AdminUi\Form\Type\FieldDefinition\FieldDefinitionType }
+
+    netgen_information_collection.form.extension.content_field:
+        class: Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\ContentFieldTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Ibexa\ContentForms\Form\Type\Content\ContentFieldType }
+
+    netgen_information_collection.validator.info_collector:
+        class: Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InfoCollectorContentValidator
+        tags:
+            - { name: ibexa.repository.content.validator, priority: 255 }
 
     netgen_information_collection.domain_object_mapper:
         class: Netgen\InformationCollection\Core\Mapper\DomainObjectMapper
         arguments:
-            - '@ezpublish.api.repository'
+            - '@ibexa.api.repository'
 
 
     netgen_information_collection.twig.extension.rendering:
@@ -49,7 +59,7 @@ services:
         # public: false
         arguments:
             - '@twig'
-            - '@ezpublish.config.resolver'
+            - '@ibexa.config.resolver'
         tags:
             - { name: twig.runtime }
 
@@ -64,16 +74,17 @@ services:
             - { name: twig.runtime }
 
     netgen_information_collection.form.information_collection_type:
-        class: Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\InformationCollectionType
+        class: Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InformationCollectionType
         arguments:
             - '@netgen_information_collection.captcha.service'
+            - '@ibexa.config.resolver'
         tags:
             - { name: form.type }
 
     netgen_information_collection.form.information_collection_field_type:
-        class: Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\InformationCollectionFieldType
+        class: Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InformationCollectionFieldType
         arguments:
-            - "@ezplatform.content_forms.field_type_form_mapper.dispatcher"
+            - '@Ibexa\ContentForms\FieldType\FieldTypeFormMapperDispatcher'
         tags:
             - { name: form.type }
 
@@ -82,14 +93,17 @@ services:
         public: true
         arguments:
             - "@form.factory"
-            - "@ezpublish.api.service.content_type"
+            - "@ibexa.api.service.content_type"
             - "@event_dispatcher"
 
     Netgen\InformationCollection\Core\Service\CaptchaService:
         autowire: true
 
     netgen_information_collection.captcha.service:
-        alias: Netgen\InformationCollection\Core\Service\CaptchaService
+        class: Netgen\InformationCollection\Core\Service\CaptchaService
+        arguments:
+            - '@ibexa.api.service.content_type'
+            - '@ibexa.config.resolver'
 
     Netgen\InformationCollection\Core\Export\JsonExportResponseFormatter:
         tags:

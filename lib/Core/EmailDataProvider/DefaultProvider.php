@@ -2,7 +2,7 @@
 
 namespace Netgen\InformationCollection\Core\EmailDataProvider;
 
-use EzSystems\EzPlatformContentForms\Data\Content\FieldData;
+use Ibexa\Contracts\ContentForms\Data\Content\FieldData;
 use Netgen\InformationCollection\API\Action\EmailDataProviderInterface;
 use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 use Netgen\InformationCollection\Core\Factory\EmailDataFactory;

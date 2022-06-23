@@ -2,28 +2,23 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Factory;
 
-use eZ\Publish\Core\FieldType\TextLine\Value as TextValue;
-use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\FieldType\TextLine\Value as TextValue;
+use Ibexa\Core\Repository\Values\ContentType\FieldDefinition;
 use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class FieldDataFactoryTest extends TestCase
 {
-    /**
-     * @var FieldDataFactory
-     */
-    protected $factory;
+    protected FieldDataFactory $factory;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $registry;
+    protected MockObject $registry;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->registry = $this->getMockBuilder(FieldHandlerRegistry::class)
             ->disableOriginalConstructor()
@@ -35,7 +30,7 @@ class FieldDataFactoryTest extends TestCase
         parent::setUp();
     }
 
-    public function testGetLegacyValueWithoutCustomHandler()
+    public function testGetLegacyValueWithoutCustomHandler(): void
     {
         $value = new TextValue('some value');
         $definition = new FieldDefinition(array(
@@ -56,7 +51,7 @@ class FieldDataFactoryTest extends TestCase
         $this->assertEquals((string) $value, $data->getDataText());
     }
 
-    public function testGetLegacyValueWithCustomHandler()
+    public function testGetLegacyValueWithCustomHandler(): void
     {
         $value = new TextValue('some value');
         $definition = new FieldDefinition(array(
@@ -87,7 +82,7 @@ class FieldDataFactoryTest extends TestCase
         $this->assertEquals((string) $value, $data->getDataText());
     }
 
-    public function testGetLegacyValueWithCustomLegacyHandler()
+    public function testGetLegacyValueWithCustomLegacyHandler(): void
     {
         $value = new TextValue('some value');
         $definition = new FieldDefinition(array(

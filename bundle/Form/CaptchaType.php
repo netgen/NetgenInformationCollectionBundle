@@ -11,17 +11,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CaptchaType extends AbstractType
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Listener\CaptchaValidationListener
-     */
-    private $validationListener;
+    private CaptchaValidationListener $validationListener;
 
     public function __construct(CaptchaValidationListener $validationListener)
     {
         $this->validationListener = $validationListener;
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['type'] = $options['type'];
         $view->vars['theme'] = $options['theme'];
@@ -30,12 +27,12 @@ class CaptchaType extends AbstractType
         $view->vars['captcha_action'] = $options['captcha_action'];
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventSubscriber($this->validationListener);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [

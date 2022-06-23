@@ -2,29 +2,21 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\FieldHandler;
 
-use eZ\Publish\Core\FieldType\Integer\Value as TestValue;
+use Ibexa\Core\FieldType\Integer\Value as TestValue;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomFieldHandlerInterface;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\FieldHandlerRegistry;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class FieldHandlerRegistryTest extends TestCase
 {
-    /**
-     * @var FieldHandlerRegistry
-     */
-    protected $registry;
+    protected FieldHandlerRegistry $registry;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $customHandler1;
+    protected MockObject $customHandler1;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $customHandler2;
+    protected MockObject $customHandler2;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->registry = new FieldHandlerRegistry();
         $this->customHandler1 = $this->getMockBuilder(CustomFieldHandlerInterface::class)
@@ -40,13 +32,13 @@ class FieldHandlerRegistryTest extends TestCase
         parent::setUp();
     }
 
-    public function testAddingHandlers()
+    public function testAddingHandlers(): void
     {
         $this->registry->addHandler($this->customHandler1);
         $this->registry->addHandler($this->customHandler2);
     }
 
-    public function testItReturnsProperHandler()
+    public function testItReturnsProperHandler(): void
     {
         $value = new TestValue(2);
 
@@ -66,7 +58,7 @@ class FieldHandlerRegistryTest extends TestCase
         $this->assertSame($this->customHandler2, $handler);
     }
 
-    public function testItReturnsNullWhenSupportedHandlerNotFound()
+    public function testItReturnsNullWhenSupportedHandlerNotFound(): void
     {
         $value = new TestValue(2);
 

@@ -2,11 +2,11 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
-use eZ\Bundle\EzPublishCoreBundle\Controller;
-use eZ\Publish\API\Repository\ContentService;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Core\MVC\Symfony\Security\Authorization\Attribute;
+use Ibexa\Bundle\Core\Controller;
+use Ibexa\Contracts\Core\Repository\ContentService;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\InformationCollection\API\Service\InformationCollection;
 use Netgen\InformationCollection\API\Value\Collection;
@@ -21,45 +21,23 @@ use Netgen\InformationCollection\Core\Pagination\InformationCollectionCollection
 use Netgen\InformationCollection\Core\Pagination\InformationCollectionContentsAdapter;
 use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AdminController extends Controller
 {
-    /**
-     * @var \Netgen\InformationCollection\API\Service\InformationCollection
-     */
-    protected $service;
+    protected InformationCollection $service;
 
-    /**
-     * @var \eZ\Publish\API\Repository\ContentService
-     */
-    protected $contentService;
+    protected ContentService $contentService;
 
-    /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
-     */
-    protected $configResolver;
+    protected ConfigResolverInterface $configResolver;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer
-     */
-    protected $anonymizer;
+    protected Anonymizer $anonymizer;
 
-    /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
-     */
-    private $translator;
+    private TranslatorInterface $translator;
 
-    /**
-     * AdminController constructor.
-     *
-     * @param \Netgen\InformationCollection\API\Service\InformationCollection $service
-     * @param \Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer $anonymizer
-     * @param \eZ\Publish\API\Repository\ContentService $contentService
-     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     */
     public function __construct(
         InformationCollection $service,
         Anonymizer $anonymizer,
@@ -77,12 +55,8 @@ class AdminController extends Controller
 
     /**
      * Displays overview page
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function overviewAction(Request $request)
+    public function overviewAction(Request $request): Response
     {
         $this->checkReadPermissions();
 
@@ -94,13 +68,8 @@ class AdminController extends Controller
 
     /**
      * Displays list of collection for selected Content
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function collectionListAction(Request $request, Content $content)
+    public function collectionListAction(Request $request, Content $content): Response
     {
         $this->checkReadPermissions();
 
@@ -115,13 +84,8 @@ class AdminController extends Controller
 
     /**
      * Handles collection search
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function searchAction(Request $request, Content $content)
+    public function searchAction(Request $request, Content $content): Response
     {
         $this->checkReadPermissions();
 
@@ -140,12 +104,8 @@ class AdminController extends Controller
 
     /**
      * Displays individual collection details
-     *
-     * @param \Netgen\InformationCollection\API\Value\Collection $collection
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewAction(Collection $collection)
+    public function viewAction(Collection $collection): Response
     {
         $this->checkReadPermissions();
 
@@ -157,12 +117,8 @@ class AdminController extends Controller
 
     /**
      * Handles actions performed on overview page
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function handleContentsAction(Request $request)
+    public function handleContentsAction(Request $request): RedirectResponse
     {
         $this->checkReadPermissions();
 
@@ -195,12 +151,8 @@ class AdminController extends Controller
 
     /**
      * Handles actions performed on collection list page
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function handleCollectionListAction(Request $request)
+    public function handleCollectionListAction(Request $request): RedirectResponse
     {
         $this->checkReadPermissions();
 
@@ -247,12 +199,8 @@ class AdminController extends Controller
 
     /**
      * Handles action on collection details page
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function handleCollectionAction(Request $request)
+    public function handleCollectionAction(Request $request): RedirectResponse
     {
         $this->checkReadPermissions();
 
@@ -325,13 +273,8 @@ class AdminController extends Controller
 
     /**
      * Adds a flash message with specified parameters.
-     *
-     * @param string $messageType
-     * @param string $message
-     * @param int $count
-     * @param array $parameters
      */
-    protected function addFlashMessage(string $messageType, string $message, int $count = 1, array $parameters = array())
+    protected function addFlashMessage(string $messageType, string $message, int $count = 1, array $parameters = array()): void
     {
         $parameters = array_merge($parameters, ['count' => $count]);
 
@@ -347,15 +290,9 @@ class AdminController extends Controller
 
     /**
      * Returns configured instance of Pagerfanta
-     *
-     * @param \Pagerfanta\Adapter\AdapterInterface $adapter
-     * @param int $currentPage
-     *
-     * @return \Pagerfanta\Pagerfanta
      */
     protected function getPager(AdapterInterface $adapter, int $currentPage): Pagerfanta
     {
-        $currentPage = (int) $currentPage;
         $pager = new Pagerfanta($adapter);
         $pager->setNormalizeOutOfRangePages(true);
         $pager->setMaxPerPage(

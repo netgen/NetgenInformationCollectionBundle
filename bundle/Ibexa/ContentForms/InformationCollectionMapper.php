@@ -2,29 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms;
+namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms;
 
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\API\Repository\Values\ValueObject;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Contracts\Core\Repository\Values\ValueObject;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use EzSystems\EzPlatformContentForms\Data\Mapper\FormDataMapperInterface;
-use EzSystems\EzPlatformContentForms\Data\Content\FieldData;
+use Ibexa\ContentForms\Data\Mapper\FormDataMapperInterface;
+use Ibexa\Contracts\ContentForms\Data\Content\FieldData;
 
 final class InformationCollectionMapper
 {
     /**
-     * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $contentDraft
-     * @param array $params
-     *
-     * @return InformationCollectionStruct
+     * Maps a ValueObject from Ibexa content repository to a data usable as underlying form data (e.g. create/update struct).
      */
-    public function mapToFormData(Content $content, Location $location, ContentType $contentType)
+    public function mapToFormData(Content $content, Location $location, ContentType $contentType): InformationCollectionStruct
     {
         $fields = $content->getFieldsByLanguage($content->contentInfo->mainLanguageCode);
 

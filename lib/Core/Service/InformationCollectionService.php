@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Service;
 
-use eZ\Publish\API\Repository\Exceptions\NotFoundException;
-use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Values\User\UserReference;
+use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
+use Ibexa\Contracts\Core\Repository\Repository;
+use Ibexa\Contracts\Core\Repository\Values\User\User;
 use Netgen\InformationCollection\API\Exception\PersistingFailedException;
 use Netgen\InformationCollection\API\Exception\StoringAttributeFailedException;
 use Netgen\InformationCollection\API\Exception\StoringCollectionFailedException;
+use Netgen\InformationCollection\API\Factory\FieldValueFactoryInterface;
 use Netgen\InformationCollection\API\Service\InformationCollection;
 use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\Collection;
@@ -28,58 +29,32 @@ use Netgen\InformationCollection\API\Value\Filter\SearchQuery;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Netgen\InformationCollection\API\Value\ObjectCount;
 use Netgen\InformationCollection\API\Value\SearchCount;
-use Netgen\InformationCollection\Core\Factory\FieldDataFactory;
 use Netgen\InformationCollection\Core\Mapper\DomainObjectMapper;
 use Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
+use function count;
 
 class InformationCollectionService implements InformationCollection
 {
-    /**
-     * @var \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository
-     */
-    protected $ezInfoCollectionRepository;
+    protected EzInfoCollectionRepository $ezInfoCollectionRepository;
 
-    /**
-     * @var \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository
-     */
-    protected $ezInfoCollectionAttributeRepository;
+    protected EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository;
 
-    /**
-     * @var \eZ\Publish\API\Repository\Repository
-     */
-    protected $repository;
+    protected Repository $repository;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase
-     */
-    protected $gateway;
+    protected DoctrineDatabase $gateway;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Factory\FieldDataFactory
-     */
-    protected $fieldsFactory;
+    protected FieldValueFactoryInterface $fieldsFactory;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Mapper\DomainObjectMapper
-     */
-    protected $objectMapper;
+    protected DomainObjectMapper $objectMapper;
 
-    /**
-     * InformationCollectionService constructor.
-     *
-     * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository $ezInfoCollectionRepository
-     * @param \Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository
-     * @param \eZ\Publish\API\Repository\Repository $repository
-     * @param \Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase $gateway
-     */
     public function __construct(
         EzInfoCollectionRepository $ezInfoCollectionRepository,
         EzInfoCollectionAttributeRepository $ezInfoCollectionAttributeRepository,
         Repository $repository,
         DoctrineDatabase $gateway,
-        FieldDataFactory $factory,
+        FieldValueFactoryInterface $factory,
         DomainObjectMapper $objectMapper
     ) {
         $this->ezInfoCollectionRepository = $ezInfoCollectionRepository;
@@ -136,9 +111,6 @@ class InformationCollectionService implements InformationCollection
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getObjectsWithCollections(Query $query): ContentsWithCollections
     {
         $objects = $this->gateway->getObjectsWithCollections($query->getLimit(), $query->getOffset());
@@ -190,6 +162,7 @@ class InformationCollectionService implements InformationCollection
     public function filterCollections(FilterCriteria $criteria): Collections
     {
         // TODO: Implement filterCollections() method.
+        return new Collections([], 0);
     }
 
     public function searchCount(SearchCountQuery $query): SearchCount
@@ -207,9 +180,6 @@ class InformationCollectionService implements InformationCollection
         return new SearchCount(count($collections));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function search(SearchQuery $query): Collections
     {
         $collections = $this->ezInfoCollectionAttributeRepository
@@ -232,17 +202,11 @@ class InformationCollectionService implements InformationCollection
         return new Collections($objects, count($objects));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCollection(CollectionId $collectionId): Collection
     {
         return $this->loadCollection($collectionId->getCollectionId());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteCollectionFields(CollectionFields $collectionFields): void
     {
         $attributes = $this->ezInfoCollectionAttributeRepository
@@ -257,9 +221,6 @@ class InformationCollectionService implements InformationCollection
         $this->ezInfoCollectionAttributeRepository->remove($attributes);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteCollections(FilterCollections $collections): void
     {
         $collections = $this->ezInfoCollectionRepository
@@ -276,9 +237,6 @@ class InformationCollectionService implements InformationCollection
         $this->ezInfoCollectionRepository->remove($collections);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteCollectionByContent(Contents $contents): void
     {
         $collections = $this->ezInfoCollectionRepository
@@ -294,21 +252,12 @@ class InformationCollectionService implements InformationCollection
         $this->ezInfoCollectionRepository->remove($collections);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateCollectionAttribute(CollectionId $collectionId, Attribute $attribute): void
     {
         $this->ezInfoCollectionAttributeRepository->updateByCollectionId($collectionId, $attribute);
     }
 
-    /**
-     * @param int $userId
-     * @param mixed $userId
-     *
-     * @return \eZ\Publish\API\Repository\Values\User\User
-     */
-    protected function getUser($userId)
+    protected function getUser(int $userId): User
     {
         try {
             return $this->repository
@@ -318,12 +267,7 @@ class InformationCollectionService implements InformationCollection
         }
     }
 
-    /**
-     * @param int $collectionId
-     *
-     * @return \Netgen\InformationCollection\API\Value\Collection
-     */
-    protected function loadCollection($collectionId)
+    protected function loadCollection(int $collectionId): Collection
     {
         $collection = $this->ezInfoCollectionRepository->loadCollection($collectionId);
         $attributes = $this->ezInfoCollectionAttributeRepository->findBy(

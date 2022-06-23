@@ -2,47 +2,44 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\FieldHandler\Custom;
 
-use eZ\Publish\Core\FieldType\Float\Value as FloatValue;
-use eZ\Publish\Core\FieldType\Integer\Value as IntegerValue;
-use eZ\Publish\Core\FieldType\Checkbox\Value as CheckboxValue;
+use Ibexa\Core\FieldType\Float\Value as FloatValue;
+use Ibexa\Core\FieldType\Integer\Value as IntegerValue;
+use Ibexa\Core\FieldType\Checkbox\Value as CheckboxValue;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CheckboxFieldHandler;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
 use PHPUnit\Framework\TestCase;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFieldHandlerInterface;
 
 class CheckboxFieldHandlerTest extends TestCase
 {
-    /**
-     * @var CustomLegacyFieldHandlerInterface
-     */
-    protected $handler;
+    protected CustomLegacyFieldHandlerInterface $handler;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->handler = new CheckboxFieldHandler();
     }
 
-    public function testInstanceOfCustomLegacyFieldHandler()
+    public function testInstanceOfCustomLegacyFieldHandler(): void
     {
         $this->assertInstanceOf(CustomLegacyFieldHandlerInterface::class, $this->handler);
     }
 
-    public function testSupportsHasValidBehaviour()
+    public function testSupportsHasValidBehaviour(): void
     {
         $this->assertTrue($this->handler->supports(new CheckboxValue(true)));
         $this->assertFalse($this->handler->supports(new IntegerValue(1)));
         $this->assertFalse($this->handler->supports(new FloatValue(2.0)));
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $fieldDefinition = $this->createMock(FieldDefinition::class);
         $this->assertEquals('1', $this->handler->toString(new CheckboxValue(true), $fieldDefinition));
         $this->assertEquals('0', $this->handler->toString(new CheckboxValue(false), $fieldDefinition));
     }
 
-    public function testGetLegacyValue()
+    public function testGetLegacyValue(): void
     {
         $fieldDefinition = new CoreFieldDefinition([
             'id' => 123,

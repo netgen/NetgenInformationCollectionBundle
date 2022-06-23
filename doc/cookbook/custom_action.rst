@@ -18,11 +18,7 @@ Action example:
 
     class CustomAction implements ActionInterface
     {
-
-        /**
-         * @inheritDoc
-         */
-        public function act(InformationCollected $event)
+        public function act(InformationCollected $event): void
         {
             // do some magic ...
         }

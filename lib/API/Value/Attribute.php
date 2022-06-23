@@ -4,31 +4,18 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value;
 
-use eZ\Publish\API\Repository\Values\Content\Field;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 
 final class Attribute extends ValueObject
 {
-    /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Field
-     */
-    protected $field;
+    protected Field $field;
 
-    /**
-     * @var \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition
-     */
-    protected $fieldDefinition;
+    protected FieldDefinition $fieldDefinition;
 
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var \Netgen\InformationCollection\API\Value\AttributeValue
-     */
-    protected $value;
+    protected AttributeValue $value;
 
     public function __construct(
         int $id,
@@ -42,38 +29,26 @@ final class Attribute extends ValueObject
         $this->value = $value;
     }
 
-    public static function createFromAttributeAndValue(Attribute $attribute, AttributeValue $attributeValue)
+    public static function createFromAttributeAndValue(self $attribute, AttributeValue $attributeValue): self
     {
         return new self($attribute->getId(), $attribute->getField(), $attribute->getFieldDefinition(), $attributeValue);
     }
 
-    /**
-     * @return Field
-     */
     public function getField(): Field
     {
         return $this->field;
     }
 
-    /**
-     * @return FieldDefinition
-     */
     public function getFieldDefinition(): FieldDefinition
     {
         return $this->fieldDefinition;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return AttributeValue
-     */
     public function getValue(): AttributeValue
     {
         return $this->value;

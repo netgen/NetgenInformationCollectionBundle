@@ -2,18 +2,15 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Event;
 
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use PHPUnit\Framework\TestCase;
 
 class InformationCollectedTest extends TestCase
 {
-    /**
-     * @var InformationCollected
-     */
-    protected $event;
+    protected InformationCollected $event;
 
-    public function setUp()
+    public function setUp(): void
     {
         $data = new DataWrapper('payload', 'definition', 'target');
         $this->event = new InformationCollected($data, 'additional content');
@@ -21,7 +18,7 @@ class InformationCollectedTest extends TestCase
         parent::setUp();
     }
 
-    public function testGetters()
+    public function testGetters(): void
     {
         $this->assertEquals('payload', $this->event->getInformationCollectionStruct());
         $this->assertEquals('definition', $this->event->getContentType());

@@ -2,92 +2,48 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Action;
 
-use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Ibexa\Core\Repository\Values\ContentType\ContentType;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Action\ActionInterface;
 use Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use ReflectionObject;
 
 class ActionRegistryTest extends TestCase
 {
-    /**
-     * @var ActionRegistry
-     */
-    protected $registry;
+    protected ActionRegistry $registry;
 
-    /**
-     * @var ActionRegistry
-     */
-    protected $registryForPriority;
+    protected ActionRegistry $registryForPriority;
 
-    /**
-     * @var ActionRegistry
-     */
-    protected $registryWithEmptyConf;
+    protected ActionRegistry $registryWithEmptyConf;
 
-    /**
-     * @var ActionRegistry
-     */
-    protected $registryWithOnlyDefaultConf;
+    protected ActionRegistry $registryWithOnlyDefaultConf;
 
-    /**
-     * @var array
-     */
-    protected $config;
+    protected array $config;
 
-    /**
-     * @var array
-     */
-    protected $config2;
+    protected array $config2;
 
-    /**
-     * @var array
-     */
-    protected $onlyDefaultConfig;
+    protected array $onlyDefaultConfig;
 
-    /**
-     * @var array
-     */
-    protected $emptyConfig;
+    protected array $emptyConfig;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $action1;
+    protected MockObject $action1;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $action2;
+    protected MockObject $action2;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $action3;
+    protected MockObject $action3;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $action4;
+    protected MockObject $action4;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $logger;
+    protected MockObject $logger;
 
-    /**
-     * @var InformationCollected
-     */
-    protected $event;
+    protected InformationCollected $event;
 
-    /**
-     * @var InformationCollected
-     */
-    protected $event2;
+    protected InformationCollected $event2;
 
     public function setUp(): void
     {
@@ -173,13 +129,13 @@ class ActionRegistryTest extends TestCase
         parent::setUp();
     }
 
-    public function testAddingActions()
+    public function testAddingActions(): void
     {
         $this->registry->addAction('database', $this->action1, 1);
         $this->registry->addAction('email', $this->action2, 100);
     }
 
-    public function testAct()
+    public function testAct(): void
     {
         $this->registry->addAction('database', $this->action1, 1);
         $this->registry->addAction('email', $this->action2, 2);
@@ -194,7 +150,7 @@ class ActionRegistryTest extends TestCase
         $this->registry->act($this->event);
     }
 
-    public function testActWithContentTypeThatDoesNotHaveConfiguration()
+    public function testActWithContentTypeThatDoesNotHaveConfiguration(): void
     {
         $this->registry->addAction('database', $this->action1, 1);
         $this->registry->addAction('email', $this->action2, 2);
@@ -208,7 +164,7 @@ class ActionRegistryTest extends TestCase
         $this->registry->act($this->event2);
     }
 
-    public function testActWithDefaultConfigOnly()
+    public function testActWithDefaultConfigOnly(): void
     {
         $this->registryWithOnlyDefaultConf->addAction('database', $this->action1, 1);
         $this->registryWithOnlyDefaultConf->addAction('email', $this->action2, 2);
@@ -222,7 +178,7 @@ class ActionRegistryTest extends TestCase
         $this->registryWithOnlyDefaultConf->act($this->event2);
     }
 
-    public function testActWithEmptyConfig()
+    public function testActWithEmptyConfig(): void
     {
         $this->registryWithEmptyConf->addAction('database', $this->action1, 1);
         $this->registryWithEmptyConf->addAction('email', $this->action2, 2);
@@ -236,7 +192,7 @@ class ActionRegistryTest extends TestCase
         $this->registryWithEmptyConf->act($this->event2);
     }
 
-    public function testActWithActionFailedException()
+    public function testActWithActionFailedException(): void
     {
         $this->registry->addAction('database', $this->action1, 1);
         $this->registry->addAction('email', $this->action2, 2);
@@ -257,7 +213,7 @@ class ActionRegistryTest extends TestCase
         $this->registry->act($this->event);
     }
 
-    public function testActionsAreExecutedByPriority()
+    public function testActionsAreExecutedByPriority(): void
     {
         $prioritizedActions = array(
             array(
@@ -308,7 +264,7 @@ class ActionRegistryTest extends TestCase
         $this->assertEquals($prioritizedActions, $actions->getValue($this->registryForPriority));
     }
 
-    public function testActionsAreExecutedByPriorityWithSamePriorities()
+    public function testActionsAreExecutedByPriorityWithSamePriorities(): void
     {
         $prioritizedActions = array(
             array(
@@ -359,7 +315,7 @@ class ActionRegistryTest extends TestCase
         $this->assertEquals($prioritizedActions, $actions->getValue($this->registryForPriority));
     }
 
-    public function testSetDebugMethod()
+    public function testSetDebugMethod(): void
     {
         $this->registryForPriority->addAction('database', $this->action1, 44);
 
@@ -380,7 +336,7 @@ class ActionRegistryTest extends TestCase
      * @expectedExceptionMessage InformationCollection action database failed with reason cannot write to database
 
      */
-    public function testThrowExceptionWhenDebugIsTrue()
+    public function testThrowExceptionWhenDebugIsTrue(): void
     {
         $this->registry->addAction('database', $this->action1, 1);
         $this->registry->addAction('email', $this->action2, 2);

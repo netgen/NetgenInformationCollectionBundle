@@ -3,18 +3,18 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Action;
 
 use Doctrine\DBAL\DBALException;
-use eZ\Publish\API\Repository\Values\Content\Field;
-use eZ\Publish\Core\FieldType\TextLine\Value as TextLineValue;
-use eZ\Publish\Core\Repository\ContentService;
-use eZ\Publish\Core\Repository\Repository;
-use eZ\Publish\Core\Repository\Values\Content\Content;
-use eZ\Publish\Core\Repository\Values\Content\Location;
-use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
-use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
-use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\Repository\Values\User\User;
-use eZ\Publish\SPI\Persistence\Content\ContentInfo;
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
+use Ibexa\Core\FieldType\TextLine\Value as TextLineValue;
+use Ibexa\Core\Repository\ContentService;
+use Ibexa\Core\Repository\Repository;
+use Ibexa\Core\Repository\Values\Content\Content;
+use Ibexa\Core\Repository\Values\Content\Location;
+use Ibexa\Core\Repository\Values\Content\VersionInfo;
+use Ibexa\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\Repository\Values\User\User;
+use Ibexa\Contracts\Core\Persistence\Content\ContentInfo;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction;
 use Netgen\Bundle\InformationCollectionBundle\Entity\EzInfoCollection;
@@ -24,61 +24,32 @@ use Netgen\Bundle\InformationCollectionBundle\Factory\FieldDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\Bundle\InformationCollectionBundle\Repository\EzInfoCollectionRepository;
 use Netgen\Bundle\InformationCollectionBundle\Value\LegacyData;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class DatabaseActionTest extends TestCase
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Action\DatabaseAction
-     */
-    protected $action;
+    protected DatabaseAction $action;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $factory;
+    protected MockObject $factory;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $repository;
+    protected MockObject $repository;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $secondRepository;
+    protected MockObject $secondRepository;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $ezRepository;
+    protected MockObject $ibexaRepository;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $contentType;
+    protected MockObject $contentType;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $contentService;
+    protected MockObject $contentService;
 
-    /**
-     * @var array
-     */
-    protected $fields;
+    protected array $fields;
 
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct
-     */
-    protected $struct;
+    protected InformationCollectionStruct $struct;
 
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Value\LegacyData
-     */
-    protected $legacyData;
+    protected LegacyData $legacyData;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->factory = $this->getMockBuilder(FieldDataFactory::class)
             ->disableOriginalConstructor()
@@ -95,7 +66,7 @@ class DatabaseActionTest extends TestCase
             ->setMethods(array('getInstance', 'save'))
             ->getMock();
 
-        $this->ezRepository = $this->getMockBuilder(Repository::class)
+        $this->ibexaRepository = $this->getMockBuilder(Repository::class)
             ->disableOriginalConstructor()
             ->setMethods(array('getContentService', 'getCurrentUser'))
             ->getMock();
@@ -160,11 +131,11 @@ class DatabaseActionTest extends TestCase
 
         $this->legacyData = new LegacyData(123, 0, 0.0, 'some value');
 
-        $this->action = new DatabaseAction($this->factory, $this->repository, $this->secondRepository, $this->ezRepository);
+        $this->action = new DatabaseAction($this->factory, $this->repository, $this->secondRepository, $this->ibexaRepository);
         parent::setUp();
     }
 
-    public function testAct()
+    public function testAct(): void
     {
         $location = new Location(array(
             'contentInfo' => new ContentInfo(array(
@@ -198,7 +169,7 @@ class DatabaseActionTest extends TestCase
         $ezInfoCollection = new EzInfoCollection();
         $ezInfoCollectionAttribute = new EzInfoCollectionAttribute();
 
-        $this->ezRepository->expects($this->once())
+        $this->ibexaRepository->expects($this->once())
             ->method('getContentService')
             ->willReturn($this->contentService);
 
@@ -207,7 +178,7 @@ class DatabaseActionTest extends TestCase
             ->with(123)
             ->willReturn($content);
 
-        $this->ezRepository->expects($this->once())
+        $this->ibexaRepository->expects($this->once())
             ->method('getCurrentUser')
             ->willReturn($user);
 
@@ -237,7 +208,7 @@ class DatabaseActionTest extends TestCase
     /**
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
      */
-    public function testActWithExceptionOnInformationCollectionRepository()
+    public function testActWithExceptionOnInformationCollectionRepository(): void
     {
         $location = new Location(array(
             'contentInfo' => new ContentInfo(array(
@@ -270,7 +241,7 @@ class DatabaseActionTest extends TestCase
 
         $ezInfoCollection = new EzInfoCollection();
 
-        $this->ezRepository->expects($this->once())
+        $this->ibexaRepository->expects($this->once())
             ->method('getContentService')
             ->willReturn($this->contentService);
 
@@ -279,7 +250,7 @@ class DatabaseActionTest extends TestCase
             ->with(123)
             ->willReturn($content);
 
-        $this->ezRepository->expects($this->once())
+        $this->ibexaRepository->expects($this->once())
             ->method('getCurrentUser')
             ->willReturn($user);
 
@@ -307,7 +278,7 @@ class DatabaseActionTest extends TestCase
     /**
      * @expectedException \Netgen\Bundle\InformationCollectionBundle\Exception\ActionFailedException
      */
-    public function testActWithExceptionOnInformationCollectionAttributeRepository()
+    public function testActWithExceptionOnInformationCollectionAttributeRepository(): void
     {
         $location = new Location(array(
             'contentInfo' => new ContentInfo(array(
@@ -341,7 +312,7 @@ class DatabaseActionTest extends TestCase
         $ezInfoCollection = new EzInfoCollection();
         $ezInfoCollectionAttribute = new EzInfoCollectionAttribute();
 
-        $this->ezRepository->expects($this->once())
+        $this->ibexaRepository->expects($this->once())
             ->method('getContentService')
             ->willReturn($this->contentService);
 
@@ -350,7 +321,7 @@ class DatabaseActionTest extends TestCase
             ->with(123)
             ->willReturn($content);
 
-        $this->ezRepository->expects($this->once())
+        $this->ibexaRepository->expects($this->once())
             ->method('getCurrentUser')
             ->willReturn($user);
 

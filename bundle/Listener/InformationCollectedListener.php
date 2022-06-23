@@ -11,24 +11,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class InformationCollectedListener implements EventSubscriberInterface
 {
-    /**
-     * @var ActionRegistry
-     */
-    protected $actionAggregate;
+    protected ActionRegistry $actionAggregate;
 
-    /**
-     * InformationCollectedListener constructor.
-     *
-     * @param ActionRegistry $actionAggregate
-     */
     public function __construct(ActionRegistry $actionAggregate)
     {
         $this->actionAggregate = $actionAggregate;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -38,8 +27,6 @@ class InformationCollectedListener implements EventSubscriberInterface
 
     /**
      * Run all actions.
-     *
-     * @param InformationCollected $event
      */
     public function onInformationCollected(InformationCollected $event): void
     {

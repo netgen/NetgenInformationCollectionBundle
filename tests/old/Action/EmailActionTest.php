@@ -2,39 +2,28 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Action;
 
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
-use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Action\EmailAction;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Exception\EmailNotSentException;
 use Netgen\Bundle\InformationCollectionBundle\Factory\EmailDataFactory;
 use Netgen\Bundle\InformationCollectionBundle\Mailer\MailerInterface;
 use Netgen\Bundle\InformationCollectionBundle\Value\EmailData;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class EmailActionTest extends TestCase
 {
-    /**
-     * @var EmailAction
-     */
-    protected $action;
+    protected EmailAction $action;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $factory;
+    protected MockObject $factory;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $mailer;
+    protected MockObject $mailer;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $emailData;
+    protected MockObject $emailData;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->factory = $this->getMockBuilder(EmailDataFactory::class)
             ->disableOriginalConstructor()

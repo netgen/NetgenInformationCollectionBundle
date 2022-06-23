@@ -4,25 +4,19 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\InformationCollectionBundle\DataCollector;
 
-use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\Core\Helper\TranslationHelper;
+use Ibexa\Contracts\Core\Repository\Repository;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Core\Helper\TranslationHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
-use Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\InformationCollectionType;
+use Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InformationCollectionType;
 
 class InformationCollectionCollector extends DataCollector
 {
-    /**
-     * @var \eZ\Publish\API\Repository\Repository
-     */
-    private $repository;
+    private Repository $repository;
 
-    /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper
-     */
-    private $translationHelper;
+    private TranslationHelper $translationHelper;
 
     public function __construct(Repository $repository, TranslationHelper $translationHelper)
     {
@@ -37,7 +31,7 @@ class InformationCollectionCollector extends DataCollector
         $this->translationHelper = $translationHelper;
     }
 
-    public function collect(Request $request, Response $response, \Throwable $exception = null)
+    public function collect(Request $request, Response $response, \Throwable $exception = null): void
     {
         if ($request->get(InformationCollectionType::FORM_BLOCK_PREFIX) !== null) {
             $this->mapCollectedData($request);

@@ -9,12 +9,9 @@ class Collections extends ValueObject
     /**
      * @var \Netgen\InformationCollection\API\Value\Collection[]
      */
-    protected $collections;
+    protected array $collections;
 
-    /**
-     * @var int
-     */
-    protected $count;
+    protected int $count;
 
     public function __construct(array $collections, int $count)
     {
@@ -30,9 +27,6 @@ class Collections extends ValueObject
         return $this->collections;
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->count;
