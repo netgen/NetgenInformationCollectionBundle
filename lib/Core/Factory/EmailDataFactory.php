@@ -6,7 +6,7 @@ namespace Netgen\InformationCollection\Core\Factory;
 
 use Ibexa\Contracts\Core\Repository\Values\Content\Field;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
-use Ibexa\Core\FieldType\BinaryFile\Value as BinaryFile;
+use Ibexa\Core\FieldType\BinaryFile\Value as BinaryFileValue;
 use Ibexa\Core\Helper\FieldHelper;
 use Ibexa\Core\Helper\TranslationHelper;
 use Netgen\InformationCollection\API\ConfigurationConstants;
@@ -205,11 +205,7 @@ class EmailDataFactory implements EmailContentFactoryInterface
             return [];
         }
 
-        if (array_key_exists($contentTypeIdentifier, $this->config[ConfigurationConstants::ATTACHMENTS][ConfigurationConstants::CONTENT_TYPES])) {
-            $send = $this->config[ConfigurationConstants::ATTACHMENTS][ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier];
-        } else {
-            $send = $this->config[ConfigurationConstants::ATTACHMENTS][ConfigurationConstants::SETTINGS_DEFAULT];
-        }
+        $send = $this->config[ConfigurationConstants::ATTACHMENTS][ConfigurationConstants::CONTENT_TYPES][$contentTypeIdentifier] ?? true;
 
         if (!$send) {
             return [];
@@ -224,9 +220,11 @@ class EmailDataFactory implements EmailContentFactoryInterface
     protected function getBinaryFileFields(array $collectedFields): array
     {
         $filtered = [];
-        foreach ($collectedFields as $identifier => $value) {
-            if ($value instanceof BinaryFile) {
-                $filtered[] = $value;
+
+        foreach ($collectedFields as $fieldData) {
+            /** @var $fieldData \Ibexa\Contracts\ContentForms\Data\Content\FieldData */
+            if ($fieldData->value instanceof BinaryFileValue) {
+                $filtered[] = $fieldData->value;
             }
         }
 
