@@ -20,7 +20,7 @@ class InformationCollectionAdminView implements ViewInterface
 
     protected PagerfantaInterface $pagerfanta;
 
-    protected Closure $routeGenerator;
+    protected $routeGenerator;
 
     protected int $proximity;
 
