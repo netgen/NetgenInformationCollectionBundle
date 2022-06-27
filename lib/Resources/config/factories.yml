@@ -3,6 +3,7 @@ services:
         class: Netgen\InformationCollection\Core\Factory\EmailDataFactory
         arguments:
             - '@ibexa.config.resolver'
+            - '@ibexa.api.service.field_type'
             - '@Ibexa\Core\Helper\TranslationHelper'
             - '@Ibexa\Core\Helper\FieldHelper'
             - '@twig'

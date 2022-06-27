@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Factory;
 
+use Ibexa\Contracts\Core\Repository\FieldTypeService;
 use Ibexa\Contracts\Core\Repository\Values\Content\Field;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Ibexa\Core\FieldType\BinaryFile\Value as BinaryFileValue;
@@ -29,20 +30,21 @@ use const FILTER_VALIDATE_EMAIL;
 class EmailDataFactory implements EmailContentFactoryInterface
 {
     protected ConfigResolverInterface $configResolver;
-
+    protected FieldTypeService $fieldTypeService;
     protected TranslationHelper $translationHelper;
-
     protected FieldHelper $fieldHelper;
-
     protected Environment $twig;
+    protected $config;
 
     public function __construct(
         ConfigResolverInterface $configResolver,
+        FieldTypeService $fieldTypeService,
         TranslationHelper $translationHelper,
         FieldHelper $fieldHelper,
         Environment $twig
     ) {
         $this->configResolver = $configResolver;
+        $this->fieldTypeService = $fieldTypeService;
         $this->config = $this->configResolver->getParameter('action_config', 'netgen_information_collection')[EmailAction::$defaultName];
         $this->translationHelper = $translationHelper;
         $this->fieldHelper = $fieldHelper;
@@ -215,6 +217,8 @@ class EmailDataFactory implements EmailContentFactoryInterface
     }
 
     /**
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
+     *
      * @return \Ibexa\Core\FieldType\BinaryFile\Value[]
      */
     protected function getBinaryFileFields(array $collectedFields): array
@@ -222,9 +226,12 @@ class EmailDataFactory implements EmailContentFactoryInterface
         $filtered = [];
 
         foreach ($collectedFields as $fieldData) {
-            /** @var $fieldData \Ibexa\Contracts\ContentForms\Data\Content\FieldData */
-            if ($fieldData->value instanceof BinaryFileValue) {
-                $filtered[] = $fieldData->value;
+            /** @var \Ibexa\Contracts\ContentForms\Data\Content\FieldData $fieldData */
+            $value = $fieldData->value;
+            $fieldType = $this->fieldTypeService->getFieldType($fieldData->getFieldTypeIdentifier());
+
+            if ($value instanceof BinaryFileValue && !$fieldType->isEmptyValue($value)) {
+                $filtered[] = $value;
             }
         }
 
