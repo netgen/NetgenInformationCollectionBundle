@@ -20,7 +20,9 @@ final class ExportResponseFormatterRegistry
      */
     public function __construct(iterable $exportResponseFormatters)
     {
-        $this->exportResponseFormatters = $exportResponseFormatters;
+        foreach ($exportResponseFormatters as $exportResponseFormatter) {
+            $this->exportResponseFormatters[] = $exportResponseFormatter;
+        }
     }
 
     public function getExportResponseFormatter(string $identifier): ExportResponseFormatter
