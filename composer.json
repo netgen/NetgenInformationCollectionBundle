@@ -66,7 +66,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-feat-ibexa-4-compatibility": "3.0.x-dev"
         }
     }
 }

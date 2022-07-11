@@ -2,9 +2,9 @@
 
 namespace Netgen\InformationCollection\GraphQL\Mutation;
 
-use eZ\Publish\API\Repository\LocationService;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use EzSystems\EzPlatformGraphQL\Schema\Domain\Content\NameHelper;
+use Ibexa\Contracts\Core\Repository\LocationService;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\GraphQL\Schema\Domain\Content\NameHelper;
 use Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\InformationCollectionMapper;
 use Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms\InformationCollectionType;
 use Netgen\InformationCollection\Handler;

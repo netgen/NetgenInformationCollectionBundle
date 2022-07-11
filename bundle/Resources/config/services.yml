@@ -35,6 +35,3 @@ services:
 
     Netgen\InformationCollection\API\Service\CaptchaService:
         alias: Netgen\InformationCollection\Core\Service\CaptchaService
-
-    eZ\Publish\Core\Helper\TranslationHelper:
-        alias: ezpublish.translation_helper

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Pagination\Pagerfanta\View;
 
+use BabDev\PagerfantaBundle\RouteGenerator\RouterAwareRouteGenerator;
 use Closure;
 use Pagerfanta\PagerfantaInterface;
 use Pagerfanta\View\ViewInterface;
@@ -20,7 +21,7 @@ class InformationCollectionAdminView implements ViewInterface
 
     protected PagerfantaInterface $pagerfanta;
 
-    protected Closure $routeGenerator;
+    protected RouterAwareRouteGenerator $routeGenerator;
 
     protected int $proximity;
 
@@ -52,11 +53,8 @@ class InformationCollectionAdminView implements ViewInterface
     /**
      * Renders a Pagerfanta.
      *
-     * The route generator can be any callable to generate
-     * the routes receiving the page number as first and
-     * unique argument.
      *
-     * @param \Closure $routeGenerator A callable to generate the routes
+     * @param RouterAwareRouteGenerator $routeGenerator A callable to generate the routes
      */
     public function render(PagerfantaInterface $pagerfanta, $routeGenerator, array $options = []): string
     {

@@ -2,9 +2,9 @@
 
 namespace Netgen\InformationCollection\GraphQL\Schema\Domain;
 
-use eZ\Publish\API\Repository\ContentTypeService;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Contracts\Core\Repository\ContentTypeService;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\EzPlatformGraphQL\Schema;
 use EzSystems\EzPlatformGraphQL\Schema\Builder;
 use EzSystems\EzPlatformGraphQL\Schema\Domain;
