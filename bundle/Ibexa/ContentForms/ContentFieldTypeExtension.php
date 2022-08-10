@@ -27,6 +27,10 @@ class ContentFieldTypeExtension extends AbstractTypeExtension
         /** @var \Ibexa\ContentForms\Data\Content\ContentUpdateData $updateStruct */
         $updateStruct = $options['contentUpdateStruct'];
 
+        if (null === $updateStruct) {
+            return;
+        }
+
         $fieldDefinition = $updateStruct->fieldsData[$fieldIdentifier]->fieldDefinition;
         if ($fieldDefinition->isInfoCollector) {
             $builder->setRequired(false);
