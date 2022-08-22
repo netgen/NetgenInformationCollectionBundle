@@ -8,7 +8,7 @@ use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
 use Netgen\InformationCollection\API\Service\Exporter;
 use Netgen\InformationCollection\Core\Export\ExportResponseFormatterRegistry;
 use Symfony\Component\HttpFoundation\Request;
-use Netgen\InformationCollection\Form\Type\ExportType;
+use Netgen\Bundle\InformationCollectionBundle\Form\ExportType;
 use Ibexa\Contracts\Core\Repository\ContentService;
 use Symfony\Component\HttpFoundation\Response;
 

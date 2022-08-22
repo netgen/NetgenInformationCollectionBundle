@@ -42,8 +42,8 @@ class ExporterService implements Exporter
 
         $fields['created'] = $this->translator->trans('netgen_information_collection_admin_export_created', [], 'netgen_information_collection_admin');
 
-        $collections = $this->informationCollection->getCollections(
-            new ContentId($criteria->getContentId()->getContentId(), $criteria->getContentId()->getOffset(), $criteria->getContentId()->getLimit())
+        $collections = $this->informationCollection->filterCollections(
+            $criteria
         );
 
         $rows = [];

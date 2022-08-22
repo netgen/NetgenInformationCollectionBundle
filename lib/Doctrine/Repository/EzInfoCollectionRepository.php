@@ -15,6 +15,7 @@ use Ibexa\Contracts\Core\Repository\Values\User\User;
 use Netgen\InformationCollection\API\Exception\RemoveCollectionFailedException;
 use Netgen\InformationCollection\API\Exception\RetrieveCountException;
 use Netgen\InformationCollection\API\Exception\StoringCollectionFailedException;
+use Netgen\InformationCollection\API\Value\Filter\FilterCriteria;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
 
 class EzInfoCollectionRepository extends EntityRepository
@@ -136,5 +137,25 @@ class EzInfoCollectionRepository extends EntityRepository
         } catch (NonUniqueResultException|NoResultException $e) {
             throw new RetrieveCountException('', '');
         }
+    }
+
+    public function findByExportCriteria(FilterCriteria $criteria): array
+    {
+        $qb = $this->createQueryBuilder('ezc');
+
+        $query = $qb->select('ezc')
+            ->where('ezc.contentObjectId = :contentObjectId')
+            ->setParameter('contentObjectId', $criteria->getContentId()->getContentId())
+            ->setParameter('from', $criteria->getFrom()->getTimestamp())
+            ->setParameter('to', $criteria->getTo()->getTimestamp())
+            ->andWhere($qb->expr()->andX(
+                $qb->expr()->gte('ezc.created', ':from'),
+                $qb->expr()->lte('ezc.created', ':to')
+            ))
+            ->getQuery();
+
+        $sql = $query->getSQL();
+
+        return $query->getResult();
     }
 }
