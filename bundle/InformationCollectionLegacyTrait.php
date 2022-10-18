@@ -43,7 +43,7 @@ trait InformationCollectionLegacyTrait
 
         if ($formSubmitted && $form->isValid() && $validCaptcha) {
             $isValid = true;
-            $event = new InformationCollected($form->getData());
+            $event = new InformationCollected($form->getData(), null, ['form' => $form]);
 
             /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher */
             $dispatcher = $this->container
