@@ -10,7 +10,7 @@
             table="ezinfocollection"
     >
         <indexes>
-            <index name="ezinfocollection_co_id_created" columns="contentobject_id, created" />
+            <index name="ezinfocollection_co_id_created" columns="contentobject_id,created" />
         </indexes>
 
         <id name="id" type="integer" column="id">
