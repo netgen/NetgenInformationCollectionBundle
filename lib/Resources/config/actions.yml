@@ -24,10 +24,12 @@ services:
     netgen_information_collection.action.email:
         class: Netgen\InformationCollection\Core\Action\EmailAction
         arguments:
-            - '@netgen_information_collection.mailer'
+            - '@mailer.mailer'
             - '@netgen_information_collection.factory.email_data'
         tags:
             - { name: netgen_information_collection.action }
+
+    Netgen\InformationCollection\API\Factory\EmailContentFactoryInterface: '@netgen_information_collection.factory.email_data'
 
 #    netgen_information_collection.action.auto_responder:
 #        class: Netgen\InformationCollection\Core\Action\AutoResponderAction

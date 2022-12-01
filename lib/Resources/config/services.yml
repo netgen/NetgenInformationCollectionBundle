@@ -23,9 +23,9 @@ services:
             - !tagged_iterator netgen_information_collection.field_handler.custom
 
     netgen_information_collection.mailer:
-        class: Netgen\InformationCollection\Core\Mailer\Mailer
+        class: Netgen\InformationCollection\Core\Mailer\SymfonyMailerBasedMailer
         arguments:
-            - '@mailer'
+            - '@mailer.mailer'
 
     netgen_information_collection.form.extension.field_definition:
         class: Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\FieldDefinitionTypeExtension
@@ -103,3 +103,15 @@ services:
             - '@netgen_information_collection.listener.captcha_validation'
         tags:
             - { name: form.type }
+
+    netgen_information_collection.captcha.extension:
+        class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\Extensions\CaptchaExtension
+        tags:
+            - { name: twig.extension }
+
+    netgen_information_collection.captcha.runtime:
+        class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\Extensions\CaptchaRuntime
+        arguments:
+            - '@netgen_information_collection.captcha.service'
+        tags:
+            - { name: twig.runtime }
