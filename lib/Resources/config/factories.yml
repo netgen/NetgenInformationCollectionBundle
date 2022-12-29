@@ -1,7 +1,4 @@
 services:
-    netgen_information_collection.factory.email_data:
-        alias: Netgen\InformationCollection\Core\Factory\EmailDataFactory
-
     Netgen\InformationCollection\Core\Factory\EmailDataFactory:
         arguments:
             - '@ezpublish.config.resolver'
@@ -9,13 +6,9 @@ services:
             - '@ezpublish.field_helper'
             - '@twig'
 
-
-    netgen_information_collection.factory.auto_responder_data:
-        alias: Netgen\InformationCollection\Core\Factory\AutoResponderDataFactory
-
     Netgen\InformationCollection\Core\Factory\AutoResponderDataFactory:
         arguments:
-            - "$action_config.auto_responder;netgen_information_collection$"
+            - '@ezpublish.config.resolver'
             - '@ezpublish.translation_helper'
             - '@ezpublish.field_helper'
             - '@twig'
