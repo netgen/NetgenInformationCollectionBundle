@@ -23,7 +23,7 @@ final class InformationCollectionStruct extends ValueObject
     /**
      * @var \Ibexa\Contracts\ContentForms\Data\Content\FieldData[]
      */
-    protected array $fields;
+    protected array $fields = [];
 
     private Location $location;
 
