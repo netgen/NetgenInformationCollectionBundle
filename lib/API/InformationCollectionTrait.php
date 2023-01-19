@@ -37,7 +37,7 @@ trait InformationCollectionTrait
         if ($form->isSubmitted() && $form->isValid()) {
             $isValid = true;
 
-            $handler->handle($form->getData(), $options);
+            $handler->handle($form->getData(), $options, ['form' => $form]);
         }
 
         if ($view instanceof BaseView) {

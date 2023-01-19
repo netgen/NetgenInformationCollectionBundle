@@ -45,9 +45,9 @@ final class Handler
         ]);
     }
 
-    public function handle(InformationCollectionStruct $struct, array $options): void
+    public function handle(InformationCollectionStruct $struct, array $options, array $additionalParameters = []): void
     {
-        $event = new InformationCollected($struct, $options);
+        $event = new InformationCollected($struct, $options, $additionalParameters);
 
         $this->eventDispatcher->dispatch($event, Events::INFORMATION_COLLECTED);
     }
