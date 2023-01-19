@@ -118,6 +118,9 @@ class InformationCollectionCollector extends DataCollector
             if (is_array($datum) && array_key_exists('value', $datum)) {
 
                 $fieldDefinition = $contentType->getFieldDefinition($identifier);
+                if ($fieldDefinition === null) {
+                    continue;
+                }
 
                 $mapped['collections'][] = [
                     'identifier' => $identifier,
