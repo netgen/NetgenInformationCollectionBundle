@@ -10,9 +10,9 @@
 
     {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
-    <h1>{{ 'netgen_information_collection_admin_collection_list_title'|trans({'%content_name%': ibexa_content_name(content), '%count%': objects.count}) }}</h1>
-    {% if objects is not empty %}
+    <h1>{{ 'netgen_information_collection_admin_collection_list_title'|trans }} <a href="{{ path('ibexa.content.view', {contentId: content.id}) }}">{{ ibexa_content_name(content) }}</a> ({{ objects.count }})</h1>
 
+    {% if objects is not empty %}
         {% set search_text = app.request.query.get('searchText', '') %}
 
         <form name="ic_search" method="get" action="{{ path('netgen_information_collection.route.admin.export', {'contentId':content.id}) }}">
