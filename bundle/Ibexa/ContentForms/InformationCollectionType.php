@@ -31,11 +31,6 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
         $this->configResolver = $configResolver;
     }
 
-    public function getName(): string
-    {
-        $this->getBlockPrefix();
-    }
-
     public function getBlockPrefix(): string
     {
         return self::FORM_BLOCK_PREFIX;
@@ -55,6 +50,7 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
 
         $builder->add('content_id', HiddenType::class, ['data' => $struct->getContent()->id]);
         $builder->add('content_type_id', HiddenType::class, ['data' => $struct->getContentType()->id]);
+        $builder->add('discriminator', HiddenType::class, ['data' => $options['discriminator']]);
 
         if ($this->captchaService->isEnabled($struct->getLocation())) {
 
@@ -77,12 +73,13 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
     {
         $view->vars['languageCode'] = $options['languageCode'];
         $view->vars['mainLanguageCode'] = $options['mainLanguageCode'];
+        $view->vars['discriminator'] = $options['discriminator'];
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired(['languageCode', 'mainLanguageCode'])
+            ->setRequired(['languageCode', 'mainLanguageCode', 'discriminator'])
             ->setDefault('translation_domain', 'ezplatform_content_forms_content')
             ->setDefault('csrf_protection', $this->configResolver->getParameter('form.use_csrf', 'netgen_information_collection'));
     }
