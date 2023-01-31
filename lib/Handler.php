@@ -60,6 +60,9 @@ final class Handler
         $this->eventDispatcher->dispatch($event, Events::INFORMATION_COLLECTED);
     }
 
+    /**
+     * @throws \Exception
+     */
     private function resolveDiscriminator(Request $request): string
     {
         foreach ($request->request as $key => $value) {
@@ -72,6 +75,6 @@ final class Handler
             }
         }
 
-        return uniqid('', true);
+        return bin2hex(random_bytes(4));
     }
 }
