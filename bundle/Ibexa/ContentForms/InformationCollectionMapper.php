@@ -21,7 +21,7 @@ final class InformationCollectionMapper
      */
     public function mapToFormData(Content $content, Location $location, ContentType $contentType): InformationCollectionStruct
     {
-        $fields = $content->getFieldsByLanguage($content->contentInfo->mainLanguageCode);
+        $fields = $content->getFieldsByLanguage();
 
         $informationCollectionFields = [];
 

@@ -95,6 +95,7 @@ services:
             - "@form.factory"
             - "@ibexa.api.service.content_type"
             - "@event_dispatcher"
+            - "@ibexa.config.resolver"
 
     Netgen\InformationCollection\Core\Service\CaptchaService:
         autowire: true
