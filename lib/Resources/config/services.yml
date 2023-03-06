@@ -84,6 +84,7 @@ services:
             - "@form.factory"
             - "@ezpublish.api.service.content_type"
             - "@event_dispatcher"
+            - "@ezpublish.config.resolver"
 
     Netgen\InformationCollection\Core\Service\CaptchaService:
         autowire: true
