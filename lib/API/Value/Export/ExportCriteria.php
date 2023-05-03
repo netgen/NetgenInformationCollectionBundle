@@ -10,10 +10,7 @@ use Netgen\InformationCollection\API\Value\Filter\FilterCriteria;
 
 final class ExportCriteria extends FilterCriteria
 {
-    /**
-     * @var string
-     */
-    protected $exportIdentifier;
+    protected string $exportIdentifier;
 
     public function __construct(ContentId $contentId, DateTimeInterface $from, DateTimeInterface $to, string $exportIdentifier)
     {
@@ -21,9 +18,6 @@ final class ExportCriteria extends FilterCriteria
         $this->exportIdentifier = $exportIdentifier;
     }
 
-    /**
-     * @return string
-     */
     public function getExportIdentifier(): string
     {
         return $this->exportIdentifier;

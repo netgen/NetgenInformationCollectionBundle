@@ -10,7 +10,7 @@ Reference
     events
     configuration
     commands
-    ez_policies
+    ibexa_policies
     info_collector_actions
 
 

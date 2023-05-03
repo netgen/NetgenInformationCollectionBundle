@@ -2,63 +2,41 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Controller;
 
-use eZ\Publish\Core\MVC\Symfony\View\ContentView;
-use eZ\Publish\Core\Repository\Values\Content\Location;
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
-use Netgen\Bundle\EzFormsBundle\Form\Payload\InformationCollectionStruct;
+use Ibexa\Core\MVC\Symfony\View\ContentView;
+use Ibexa\Core\Repository\Values\Content\Location;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Controller\InformationCollectionController;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use Netgen\Bundle\InformationCollectionBundle\Tests\ContentViewStub;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormBuilder as SymfonyFormBuilder;
 use Symfony\Component\HttpFoundation\Request;
 
 class InformationCollectionControllerTest extends TestCase
 {
-    /**
-     * @var InformationCollectionController
-     */
-    protected $controller;
+    protected InformationCollectionController $controller;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $dispatcher;
+    protected MockObject $dispatcher;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $builder;
+    protected MockObject $builder;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $contentView;
+    protected MockObject $contentView;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $request;
+    protected MockObject $request;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $formBuilder;
+    protected MockObject $formBuilder;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $form;
+    protected MockObject $form;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $container;
+    protected MockObject $container;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists(ContentView::class)) {
             $this->markTestSkipped();
@@ -89,7 +67,7 @@ class InformationCollectionControllerTest extends TestCase
             ->setMethods(array())
             ->getMock();
 
-        $this->formBuilder = $this->getMockBuilder(\Symfony\Component\Form\FormBuilder::class)
+        $this->formBuilder = $this->getMockBuilder(SymfonyFormBuilder::class)
             ->disableOriginalConstructor()
             ->setMethods(array('getForm'))
             ->getMock();
@@ -105,12 +83,12 @@ class InformationCollectionControllerTest extends TestCase
         parent::setUp();
     }
 
-    public function testInstanceOfContainerAwareInterface()
+    public function testInstanceOfContainerAwareInterface(): void
     {
         $this->assertInstanceOf(ContainerAwareInterface::class, $this->controller);
     }
 
-    public function testDisplayAndHandleWithValidFormSubmission()
+    public function testDisplayAndHandleWithValidFormSubmission(): void
     {
         $location = new Location();
 
@@ -163,7 +141,7 @@ class InformationCollectionControllerTest extends TestCase
         $this->controller->displayAndHandle($this->contentView, $this->request);
     }
 
-    public function testDisplayAndHandleWithInvalidFormSubmission()
+    public function testDisplayAndHandleWithInvalidFormSubmission(): void
     {
         $location = new Location();
 
@@ -211,9 +189,9 @@ class InformationCollectionControllerTest extends TestCase
 
     /**
      * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage eZ view needs to implement LocationValueView interface
+     * @expectedExceptionMessage Ibexa view needs to implement LocationValueView interface
      */
-    public function testIfLocationValueViewIsNotProvidedThrowBadMethodCallException()
+    public function testIfLocationValueViewIsNotProvidedThrowBadMethodCallException(): void
     {
         $this->container->expects($this->never())
             ->method('get')
@@ -223,7 +201,7 @@ class InformationCollectionControllerTest extends TestCase
         $this->controller->displayAndHandle(new ContentViewStub(), $this->request);
     }
 
-    public function getService($id)
+    public function getService(string $id): object
     {
         switch ($id) {
             case 'netgen_information_collection.form.builder':

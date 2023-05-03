@@ -4,44 +4,23 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value\Event;
 
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
 use Netgen\InformationCollection\API\Exception\MissingAdditionalParameterException;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use function array_key_exists;
 
 final class InformationCollected extends Event
 {
-    /**
-     * @var \Netgen\InformationCollection\API\Value\InformationCollectionStruct
-     */
-    protected $struct;
+    protected InformationCollectionStruct $struct;
 
-    /**
-     * @var array
-     */
-    protected $options;
+    protected array $options;
 
-    /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Location
-     */
-    protected $location;
+    protected array $additionalParameters;
 
-    /**
-     * @var array
-     */
-    protected $additionalParameters;
-
-    /**
-     * InformationCollected constructor.
-     *
-     * @param \Netgen\InformationCollection\API\Value\InformationCollectionStruct $struct
-     * @param array $options
-     * @param array $additionalParameters
-     */
     public function __construct(
         InformationCollectionStruct $struct,
         array $options,
@@ -54,8 +33,6 @@ final class InformationCollected extends Event
 
     /**
      * Return collected data.
-     *
-     * @return \Netgen\InformationCollection\API\Value\InformationCollectionStruct
      */
     public function getInformationCollectionStruct(): InformationCollectionStruct
     {
@@ -64,8 +41,6 @@ final class InformationCollected extends Event
 
     /**
      * Return ContentType.
-     *
-     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
      */
     public function getContentType(): ContentType
     {
@@ -75,8 +50,6 @@ final class InformationCollected extends Event
 
     /**
      * Return Location.
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Content
      */
     public function getContent(): Content
     {
@@ -84,9 +57,6 @@ final class InformationCollected extends Event
             ->getContent();
     }
 
-    /**
-     * @return \eZ\Publish\API\Repository\Values\Content\ContentInfo
-     */
     public function getContentInfo(): ContentInfo
     {
         return $this->struct
@@ -94,9 +64,6 @@ final class InformationCollected extends Event
             ->contentInfo;
     }
 
-    /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Location
-     */
     public function getLocation(): Location
     {
         return $this->struct
@@ -104,9 +71,7 @@ final class InformationCollected extends Event
     }
 
     /**
-     * Returns options
-     *
-     * @return array
+     * Returns options.
      */
     public function getOptions(): array
     {
@@ -114,9 +79,7 @@ final class InformationCollected extends Event
     }
 
     /**
-     * Returns additional parameters
-     *
-     * @return array
+     * Returns additional parameters.
      */
     public function getAdditionalParameters(): array
     {
@@ -124,11 +87,7 @@ final class InformationCollected extends Event
     }
 
     /**
-     * Sets additional parameters
-     *
-     * @param array $additionalParameters
-     *
-     * @return self
+     * Sets additional parameters.
      */
     public function setAdditionalParameters(array $additionalParameters): self
     {
@@ -138,13 +97,9 @@ final class InformationCollected extends Event
     }
 
     /**
-     * Sets additional parameter value
-     *
-     * @param string $key
+     * Sets additional parameter value.
      *
      * @param mixed $value
-     *
-     * @return self
      */
     public function setAdditionalParameter(string $key, $value): self
     {
@@ -154,17 +109,15 @@ final class InformationCollected extends Event
     }
 
     /**
-     * Gets additional parameter value
-     *
-     * @param string $key
-     *
-     * @return mixed
+     * Gets additional parameter value.
      *
      * @throws \Netgen\InformationCollection\API\Exception\MissingAdditionalParameterException
+     *
+     * @return mixed
      */
     public function getAdditionalParameter(string $key)
     {
-        if (!array_key_exists($key , $this->additionalParameters)) {
+        if (!array_key_exists($key, $this->additionalParameters)) {
             throw new MissingAdditionalParameterException($key);
         }
 

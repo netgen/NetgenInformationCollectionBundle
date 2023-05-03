@@ -4,37 +4,27 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Service;
 
-use eZ\Publish\API\Repository\ContentTypeService;
-use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\Repository\ContentTypeService;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\InformationCollection\API\Service\CaptchaService as CaptchaServiceInterface;
 use Netgen\InformationCollection\API\Service\CaptchaValue;
-use Netgen\InformationCollection\API\Value\Captcha\ReCaptcha;
 use Netgen\InformationCollection\API\Value\Captcha\NullObject;
+use Netgen\InformationCollection\API\Value\Captcha\ReCaptcha;
+use function array_keys;
+use function array_replace;
+use function dump;
+use function in_array;
 
 class CaptchaService implements CaptchaServiceInterface
 {
-    /**
-     * @var array
-     */
-    protected $config;
+    protected array $config;
 
-    /**
-     * @var \eZ\Publish\API\Repository\ContentTypeService
-     */
-    protected $contentTypeService;
-    /**
-     * @var ConfigResolverInterface
-     */
-    private $configResolver;
+    protected ContentTypeService $contentTypeService;
 
-    /**
-     * CaptchaService constructor.
-     *
-     * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
-     * @param array $config
-     */
+    private ConfigResolverInterface $configResolver;
+
     public function __construct(ContentTypeService $contentTypeService, ConfigResolverInterface $configResolver)
     {
         $this->config = $configResolver->getParameter('captcha', 'netgen_information_collection');
@@ -42,9 +32,6 @@ class CaptchaService implements CaptchaServiceInterface
         $this->configResolver = $configResolver;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEnabled(Location $location): bool
     {
         $config = $this->getConfig($location);
@@ -52,9 +39,6 @@ class CaptchaService implements CaptchaServiceInterface
         return $config['enabled'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSiteKey(Location $location): string
     {
         $config = $this->getConfig($location);
@@ -62,9 +46,6 @@ class CaptchaService implements CaptchaServiceInterface
         return $config['site_key'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCaptcha(Location $location): CaptchaValue
     {
         $config = $this->getConfig($location);
@@ -74,7 +55,7 @@ class CaptchaService implements CaptchaServiceInterface
 
             if (!empty($config['options'])) {
 //                if (!empty($config['options']['hostname'])) {
-                    $reCaptcha->setExpectedHostname('localhost');
+                $reCaptcha->setExpectedHostname('localhost');
 //                }
 //                if (!empty($config['options']['apk_package_name'])) {
 //                    $reCaptcha->setExpectedApkPackageName($config['options']['apk_package_name']);
@@ -91,6 +72,7 @@ class CaptchaService implements CaptchaServiceInterface
             }
 
             dump($reCaptcha);
+
             return new ReCaptcha($reCaptcha);
         }
 
@@ -100,11 +82,7 @@ class CaptchaService implements CaptchaServiceInterface
     /**
      * Returns filtered config for current Location.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return array
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
      */
     public function getConfig(Location $location): array
     {
@@ -112,17 +90,13 @@ class CaptchaService implements CaptchaServiceInterface
             $this->getContentType($location)
         );
 
-        return (array)array_replace($this->config, $contentTypeConfig);
+        return array_replace($this->config, $contentTypeConfig);
     }
 
     /**
      * Returns filtered config for current ContentType.
-     *
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
-     *
-     * @return array
      */
-    protected function getConfigForContentType(ContentType $contentType)
+    protected function getConfigForContentType(ContentType $contentType): array
     {
         if ($this->hasConfigForContentType($contentType)) {
             return $this->config['override_by_type'][$contentType->identifier];
@@ -133,12 +107,8 @@ class CaptchaService implements CaptchaServiceInterface
 
     /**
      * Checks if override exist for given ContentType.
-     *
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
-     *
-     * @return bool
      */
-    protected function hasConfigForContentType(ContentType $contentType)
+    protected function hasConfigForContentType(ContentType $contentType): bool
     {
         if (!empty($this->config['override_by_type'])) {
             if (in_array($contentType->identifier, array_keys($this->config['override_by_type']), true)) {
@@ -152,13 +122,9 @@ class CaptchaService implements CaptchaServiceInterface
     /**
      * Helper method for retrieving ContentType from Location.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     *
-     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
      */
-    protected function getContentType(Location $location)
+    protected function getContentType(Location $location): ContentType
     {
         return $this->contentTypeService
             ->loadContentType($location->contentInfo->contentTypeId);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\InformationCollectionBundle\Templating\Twig\Extensions;
 
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\Collection;
 use Twig\Environment;
@@ -14,15 +14,9 @@ class FieldRenderingRuntime
 {
     public const FIELD_VIEW_SUFFIX = '_field';
 
-    /**
-     * @var \Twig\Environment
-     */
-    protected $environment;
+    protected Environment $environment;
 
-    /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
-     */
-    protected $configResolver;
+    protected ConfigResolverInterface $configResolver;
 
     public function __construct(Environment $environment, ConfigResolverInterface $configResolver)
     {

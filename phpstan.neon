@@ -12,16 +12,16 @@ parameters:
         - '#Cannot call method fetchColumn\(\) on Doctrine\\DBAL\\Driver\\Statement\|int#'
         - '#Parameter \#2 \$y of method Doctrine\\DBAL\\Query\\Expression\\ExpressionBuilder::in\(\) expects array\<string\>\|string, array\<int, int\> given#'
 
-        # eZ Platform related errors
+        # Ibexa Platform related errors
         -
-            message: '#Access to protected property eZ\\Publish\\API\\Repository\\Values\\Content\\Field::\$value#'
+            message: '#Access to protected property Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Field::\$value#'
             path: lib/Core/Factory/EmailDataFactory.php
         -
-            message: '#Access to protected property eZ\\Publish\\Core\\Repository\\Values\\ContentType\\ContentType::\$fieldDefinitionsById#'
+            message: '#Access to protected property Ibexa\\Core\\Repository\\Values\\ContentType\\ContentType::\$fieldDefinitionsById#'
             path: lib/Core/Mapper/DomainObjectMapper.php
 
-        - '#Access to protected property eZ\\Publish\\API\\Repository\\Values\\Content\\Field::\$value#'
-        - '#Access to an undefined property EzSystems\\RepositoryForms\\Data\\Content\\FieldData::\$email#'
+        - '#Access to protected property Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Field::\$value#'
+        - '#Access to an undefined property Ibexa\\Contracts\\ContentForms\\Data\\Content\\FieldData::\$email#'
 
         # Pagerfanta
         - '#Property Netgen\\InformationCollection\\Core\\Pagination\\Pagerfanta\\View\\InformationCollectionAdminView::\$pagerfanta \(Pagerfanta\\Pagerfanta\) does not accept Pagerfanta\\PagerfantaInterface#'

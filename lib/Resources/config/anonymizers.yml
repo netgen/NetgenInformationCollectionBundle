@@ -9,7 +9,7 @@ services:
     netgen_information_collection.anonymizer.service:
         class: Netgen\InformationCollection\Core\Persistence\Anonymizer\AnonymizerService
         arguments:
-            - "@ezpublish.api.repository"
+            - "@ibexa.api.repository"
             - "@netgen_information_collection.api.service"
             - "@netgen_information_collection.anonymizer.visitor.field.aggregate"
 

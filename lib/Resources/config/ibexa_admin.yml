@@ -1,0 +1,18 @@
+parameters:
+  netgen_information_collection.ibexa.admin.pagelayout: '@@NetgenInformationCollection/ibexa/admin/pagelayout.html.twig'
+
+services:
+    netgen_information_collection.ibexa_admin.menu:
+        class: Netgen\Bundle\InformationCollectionBundle\Ibexa\Admin\MenuListener
+        public: true
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_information_collection.ibexa.admin.event_listener.set_page_layout:
+        class: Netgen\Bundle\InformationCollectionBundle\Ibexa\Admin\EventListener\SetPageLayoutListener
+        arguments:
+            - "@netgen_information_collection.templating.admin_global_variable"
+            - "%ibexa.site_access.groups_by_site_access%"
+            - "%netgen_information_collection.ibexa.admin.pagelayout%"
+        tags:
+            - { name: kernel.event_subscriber }

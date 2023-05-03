@@ -9,8 +9,8 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\Field;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
 use Netgen\InformationCollection\API\Exception\RemoveAttributeFailedException;
 use Netgen\InformationCollection\API\Exception\RetrieveCountException;
 use Netgen\InformationCollection\API\Exception\StoringAttributeFailedException;
@@ -19,15 +19,15 @@ use Netgen\InformationCollection\API\Value\Filter\CollectionId;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
+use function array_column;
+use function mb_strtolower;
 
 class EzInfoCollectionAttributeRepository extends EntityRepository
 {
     /**
      * Get new \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute instance.
-     *
-     * @return \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute
      */
-    public function getInstance()
+    public function getInstance(): EzInfoCollectionAttribute
     {
         return new EzInfoCollectionAttribute();
     }
@@ -55,16 +55,14 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
     /**
      * Save object.
      *
-     * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute $infoCollectionAttribute
-     *
-     * @throws StoringAttributeFailedException
+     * @throws \Netgen\InformationCollection\API\Exception\StoringAttributeFailedException
      */
-    public function save(EzInfoCollectionAttribute $infoCollectionAttribute)
+    public function save(EzInfoCollectionAttribute $infoCollectionAttribute): void
     {
         try {
             $this->_em->persist($infoCollectionAttribute);
             $this->_em->flush($infoCollectionAttribute);
-        } catch (ORMException | ORMInvalidArgumentException $exception) {
+        } catch (ORMException|ORMInvalidArgumentException $exception) {
             throw new StoringAttributeFailedException('', '');
         }
     }
@@ -72,9 +70,9 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
     /**
      * @param \Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute[] $attributes
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function remove(array $attributes)
+    public function remove(array $attributes): void
     {
         try {
             foreach ($attributes as $attribute) {
@@ -82,12 +80,12 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
             }
 
             $this->_em->flush();
-        } catch (ORMException | ORMInvalidArgumentException $exception) {
-            throw  new RemoveAttributeFailedException('', '');
+        } catch (ORMException|ORMInvalidArgumentException $exception) {
+            throw new RemoveAttributeFailedException('', '');
         }
     }
 
-    public function findByCollectionIdAndFieldDefinitionIds($collectionId, $fieldDefinitionIds)
+    public function findByCollectionIdAndFieldDefinitionIds(int $collectionId, array $fieldDefinitionIds): array
     {
         $qb = $this->createQueryBuilder('eica');
 
@@ -100,7 +98,7 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
             ->getResult();
     }
 
-    public function updateByCollectionId(CollectionId $collectionId, Attribute $attribute)
+    public function updateByCollectionId(CollectionId $collectionId, Attribute $attribute): void
     {
         $entity = $this->findOneBy([
             'informationCollectionId' => $collectionId->getCollectionId(),
@@ -119,7 +117,7 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
         $this->_em->flush();
     }
 
-    public function findByCollectionId($collectionId)
+    public function findByCollectionId(int $collectionId): array
     {
         $qb = $this->createQueryBuilder('eica');
 
@@ -130,7 +128,7 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
             ->getResult();
     }
 
-    public function getCountByContentId($contentId)
+    public function getCountByContentId(int $contentId): int
     {
         try {
             return (int) $this->createQueryBuilder('eica')
@@ -139,12 +137,12 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
                 ->select('COUNT(eica) as children_count')
                 ->getQuery()
                 ->getSingleScalarResult();
-        } catch (NonUniqueResultException | NoResultException $exception) {
+        } catch (NonUniqueResultException|NoResultException $exception) {
             throw new RetrieveCountException('', '');
         }
     }
 
-    public function search($contentId, $searchText)
+    public function search(int $contentId, string $searchText): array
     {
         $searchText = mb_strtolower($searchText);
 

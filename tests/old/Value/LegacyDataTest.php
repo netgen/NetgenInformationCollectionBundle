@@ -15,7 +15,7 @@ class LegacyDataTest extends TestCase
      * @param mixed $dataInt
      * @param mixed $dataText
      */
-    public function testGetters($contentClassAttributeId, $dataFloat, $dataInt, $dataText)
+    public function testGetters($contentClassAttributeId, $dataFloat, $dataInt, $dataText): void
     {
         $legacyData = new LegacyData($contentClassAttributeId, $dataFloat, $dataInt, $dataText);
 
@@ -25,7 +25,7 @@ class LegacyDataTest extends TestCase
         $this->assertEquals($dataText, $legacyData->getDataText());
     }
 
-    public function legacyDataProvider()
+    public function legacyDataProvider(): void
     {
         return array(
             array(123456, 2.67, 34, 'text'),

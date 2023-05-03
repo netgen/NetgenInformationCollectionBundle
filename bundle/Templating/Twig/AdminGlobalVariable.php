@@ -4,19 +4,13 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\InformationCollectionBundle\Templating\Twig;
 
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 
 class AdminGlobalVariable
 {
-    /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
-     */
-    protected $configResolver;
+    protected ConfigResolverInterface $configResolver;
 
-    /**
-     * @var string|null
-     */
-    protected $pageLayoutTemplate;
+    protected ?string $pageLayoutTemplate;
 
     public function __construct(ConfigResolverInterface $configResolver)
     {
@@ -30,8 +24,6 @@ class AdminGlobalVariable
 
     /**
      * Returns the pagelayout template.
-     *
-     * @return string|null
      */
     public function getPageLayoutTemplate(): ?string
     {

@@ -9,16 +9,8 @@ use PDO;
 
 final class DoctrineDatabase
 {
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $connection;
+    private Connection $connection;
 
-    /**
-     * DoctrineDatabase constructor.
-     *
-     * @param \Doctrine\DBAL\Connection $connection
-     */
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
@@ -28,15 +20,13 @@ final class DoctrineDatabase
      * Returns number of content objects that have any collection.
      *
      * @throws \Doctrine\DBAL\DBALException
-     *
-     * @return int
      */
     public function getContentsWithCollectionsCount(): int
     {
         $query = $this->connection->createQueryBuilder();
         $query->select(
             'COUNT(DISTINCT eic.contentobject_id) AS count'
-            )
+        )
             ->from($this->connection->quoteIdentifier('ezinfocollection'), 'eic')
             ->innerJoin(
                 'eic',
@@ -65,12 +55,7 @@ final class DoctrineDatabase
     /**
      * Returns content objects with their collections.
      *
-     * @param int $limit
-     * @param int $offset
-     *
      * @throws \Doctrine\DBAL\DBALException
-     *
-     * @return array
      */
     public function getObjectsWithCollections(int $limit, int $offset): array
     {

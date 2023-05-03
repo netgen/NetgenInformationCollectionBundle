@@ -14,7 +14,7 @@ Then define content view for given content type (*content_view.yml*) specifiying
 
 .. code-block:: yaml
 
-    ezpublish:
+    ibexa:
         system:
             frontend_group:
                 content_view:
@@ -26,7 +26,7 @@ Then define content view for given content type (*content_view.yml*) specifiying
                                 Identifier\ContentType: my_content_type
 
 
-Controller will return standard eZ ContentView with additional two variables *form* and *is_valid*. *form* contains Symfony form and it is up
+Controller will return standard Ibexa ContentView with additional two variables *form* and *is_valid*. *form* contains Symfony form and it is up
 to you it will be rendered and *is_valid* signals when form is valid and submitted.
 
 Example template:
@@ -41,25 +41,25 @@ Example template:
 
             {% if is_valid is defined and is_valid %}
                 <div class="confirmation-message">
-                    {% if not ez_is_field_empty( content, "success_text" ) %}
+                    {% if not ibexa_field_is_empty( content, "success_text" ) %}
                         <div class="att-success-text">
-                            {{ ez_render_field( content, "success_text" ) }}
+                            {{ ibexa_render_field( content, "success_text" ) }}
                         </div>
                     {% endif %}
                 </div>
             {% else %}
 
-                <h1 class="page-header">{{ ez_render_field( content, "title" ) }}</h1>
+                <h1 class="page-header">{{ ibexa_render_field( content, "title" ) }}</h1>
 
-                {% if not ez_is_field_empty( content, "full_intro" ) %}
+                {% if not ibexa_field_is_empty( content, "full_intro" ) %}
                     <div class="intro">
-                        {{ ez_render_field( content, "full_intro" ) }}
+                        {{ ibexa_render_field( content, "full_intro" ) }}
                     </div>
                 {% endif %}
 
-                {% if not ez_is_field_empty( content, "body" ) %}
+                {% if not ibexa_field_is_empty( content, "body" ) %}
                     <div class="body">
-                        {{ ez_render_field( content, "body" ) }}
+                        {{ ibexa_render_field( content, "body" ) }}
                     </div>
                 {% endif %}
 

@@ -1,5 +1,6 @@
 {# event \Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected #}
-{# content \eZ\Publish\API\Repository\Values\Content\Content #}
+{# content \Ibexa\Contracts\Core\Repository\Values\Content\Content #}
+{# @var content_type \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType #}
 
 {% block email %}
 
@@ -12,19 +13,19 @@
                 {{ ez_field_name(content, field_name) }}:
             </div>
             <div class="value">
-                {% if content_type.fieldDefinitionsByIdentifier[field_name].fieldTypeIdentifier == 'ezselection' %}
-                    {% set selectionArray=field_value|split('-') %}
+                {% if content_type.fieldDefinitions.get(field_name).fieldTypeIdentifier == 'ezselection' %}
+                    {% set selectionArray=field_value.value|split('-') %}
                     {% if selectionArray|length > 1 %}<ul>{% endif %}
                     {% for selected_key, selected_value in selectionArray %}
                         {% if loop.length == 1 %}
-                            {{ content_type.fieldDefinitionsByIdentifier[field_name].fieldSettings.options[selected_value] }}<br>
+                            {{ content_type.fieldDefinitions.get(field_name).fieldSettings.options[selected_value] }}<br>
                         {% else %}
-                            <li>{{ content_type.fieldDefinitionsByIdentifier[field_name].fieldSettings.options[selected_value] }}</li><br>
+                            <li>{{ content_type.fieldDefinitions.get(field_name).fieldSettings.options[selected_value] }}</li><br>
                         {% endif %}
                     {% endfor %}
                     {% if selectionArray|length > 1 %}</ul>{% endif %}
                 {% else %}
-                    {{ field_value }}
+                    {{ field_value.value }}
                 {% endif %}
             </div><br>
         </div>

@@ -3,21 +3,14 @@
 
 namespace Netgen\InformationCollection\Core\EmailDataProvider;
 
-use Netgen\InformationCollection\API\Action\EmailDataProviderInterface;
-use Netgen\InformationCollection\API\Value\Event\InformationCollected;
-use Symfony\Component\Mime\Email;
+use Netgen\InformationCollection\Core\Factory\AutoResponderDataFactory;
 
-class AutoResponderProvider implements EmailDataProviderInterface
+class AutoResponderProvider extends DefaultProvider
 {
-    public function provide(InformationCollected $value): Email
-    {
-        $email = new Email();
-
-        $headers = $email->getHeaders();
-
-        $header = new Header
-        $headers->add('Content-Type', '');
-
-        return $email;
+    // could be replaced by pure service configuration
+    public function __construct(
+        AutoResponderDataFactory $emailDataFactory
+    ) {
+        parent::__construct($emailDataFactory);
     }
 }

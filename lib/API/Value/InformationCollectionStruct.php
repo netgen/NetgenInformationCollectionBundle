@@ -4,39 +4,28 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value;
 
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use EzSystems\RepositoryForms\Data\Content\FieldData;
+use Ibexa\Contracts\ContentForms\Data\Content\FieldData;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
 
 final class InformationCollectionStruct extends ValueObject
 {
     /**
      * The language code of the version.
-     *
-     * @var string
      */
-    protected $languageCode;
+    protected string $languageCode;
+
+    protected Content $content;
+
+    protected ContentType $contentType;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Content
+     * @var \Ibexa\Contracts\ContentForms\Data\Content\FieldData[]
      */
-    protected $content;
+    protected array $fields = [];
 
-    /**
-     * @var \eZ\Publish\API\Repository\Values\ContentType\ContentType
-     */
-    protected $contentType;
-
-    /**
-     * @var \EzSystems\RepositoryForms\Data\Content\FieldData[]
-     */
-    protected $fields;
-
-    /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Location
-     */
-    private $location;
+    private Location $location;
 
     public function __construct(Content $content, Location $location, ContentType $contentType, array $fields)
     {
@@ -49,40 +38,28 @@ final class InformationCollectionStruct extends ValueObject
         $this->location = $location;
     }
 
-    /**
-     * @return string
-     */
     public function getLanguageCode(): string
     {
         return $this->content->contentInfo->mainLanguageCode;
     }
 
-    /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Content
-     */
     public function getContent(): Content
     {
         return $this->content;
     }
 
-    /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Location
-     */
     public function getLocation(): Location
     {
         return $this->location;
     }
 
-    /**
-     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
-     */
     public function getContentType(): ContentType
     {
         return $this->contentType;
     }
 
     /**
-     * @return \EzSystems\RepositoryForms\Data\Content\FieldData[]
+     * @return \Ibexa\Contracts\ContentForms\Data\Content\FieldData[]
      */
     public function getFieldsData(): array
     {
@@ -90,14 +67,14 @@ final class InformationCollectionStruct extends ValueObject
     }
 
     /**
-     * @return \EzSystems\RepositoryForms\Data\Content\FieldData[]
+     * @return \Ibexa\Contracts\ContentForms\Data\Content\FieldData[]
      */
     public function getCollectedFields(): array
     {
-       return $this->fields;
+        return $this->fields;
     }
 
-    protected function addFieldData(FieldData $fieldData)
+    protected function addFieldData(FieldData $fieldData): void
     {
         $this->fields[$fieldData->fieldDefinition->identifier] = $fieldData;
     }

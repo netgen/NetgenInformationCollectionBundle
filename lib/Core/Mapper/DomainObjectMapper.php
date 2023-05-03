@@ -6,14 +6,17 @@ namespace Netgen\InformationCollection\Core\Mapper;
 
 use DateTimeImmutable;
 use DateTimeInterface;
-use eZ\Publish\API\Repository\Exceptions\NotFoundException;
-use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
-use eZ\Publish\API\Repository\Values\Content\Field;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCollection;
-use eZ\Publish\API\Repository\Values\User\User;
-use eZ\Publish\Core\Repository\Values\ContentType\ContentType as CoreContentType;
+use Ibexa\Contracts\Core\Repository\ContentService;
+use Ibexa\Contracts\Core\Repository\ContentTypeService;
+use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
+use Ibexa\Contracts\Core\Repository\Repository;
+use Ibexa\Contracts\Core\Repository\UserService;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content as APIContent;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinitionCollection;
+use Ibexa\Contracts\Core\Repository\Values\User\User;
+use Ibexa\Core\Repository\Values\ContentType\ContentType as CoreContentType;
 use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\AttributeValue;
 use Netgen\InformationCollection\API\Value\Collection;
@@ -24,25 +27,13 @@ use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
 
 final class DomainObjectMapper
 {
-    /**
-     * @var \eZ\Publish\API\Repository\Repository
-     */
-    private $repository;
+    private Repository $repository;
 
-    /**
-     * @var \eZ\Publish\API\Repository\ContentService
-     */
-    private $contentService;
+    private ContentService $contentService;
 
-    /**
-     * @var \eZ\Publish\API\Repository\ContentTypeService
-     */
-    private $contentTypeService;
+    private ContentTypeService $contentTypeService;
 
-    /**
-     * @var \eZ\Publish\API\Repository\UserService
-     */
-    private $userService;
+    private UserService $userService;
 
     public function __construct(Repository $repository)
     {
@@ -70,6 +61,7 @@ final class DomainObjectMapper
     public function mapCollection(EzInfoCollection $collection, array $attributes): Collection
     {
         $content = $this->contentService->loadContent($collection->getContentObjectId());
+
         /** @var CoreContentType $contentType */
         $contentType = $this->contentTypeService
             ->loadContentType(
@@ -80,7 +72,6 @@ final class DomainObjectMapper
         $attributeValues = [];
 
         foreach ($attributes as $attr) {
-
             $fieldDefinition = $this->getFieldDefinition($fieldDefinitions, $attr);
 
             if (!$fieldDefinition instanceof FieldDefinition) {
@@ -114,6 +105,7 @@ final class DomainObjectMapper
         }
 
         $value = new AttributeValue($attribute->getDataInt(), $attribute->getDataFloat(), $attribute->getDataText());
+
         return new Attribute(
             $attribute->getId(),
             $classField,
@@ -122,14 +114,13 @@ final class DomainObjectMapper
         );
     }
 
-    private function getUser($userId): User
+    private function getUser(int $userId): User
     {
         try {
             return $this->repository
                 ->getUserService()
                 ->loadUser($userId);
         } catch (NotFoundException $exception) {
-
         }
 
         return new NullUser();
@@ -143,9 +134,9 @@ final class DomainObjectMapper
     private function getFieldDefinition(FieldDefinitionCollection $fieldDefinitionCollection, EzInfoCollectionAttribute $attribute): ?FieldDefinition
     {
         /** @var FieldDefinitionCollection $collection */
-        $collection = $fieldDefinitionCollection->filter(function(FieldDefinition $definition) use ($attribute) {
-            return $definition->id === $attribute->getContentClassAttributeId();
-        });
+        $collection = $fieldDefinitionCollection->filter(
+            static fn (FieldDefinition $definition): bool => $definition->id === $attribute->getContentClassAttributeId()
+        );
 
         if ($collection->isEmpty()) {
             return null;

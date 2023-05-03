@@ -3,6 +3,7 @@
 namespace Netgen\InformationCollection\Core\Mailer;
 
 use Netgen\InformationCollection\API\MailerInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface as SfMailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -18,12 +19,11 @@ class SymfonyMailerBasedMailer implements MailerInterface
         $this->mailer = $mailer;
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     public function sendEmail(Email $content): void
     {
-        try {
-            $this->mailer->send($content);
-        } catch () {
-
-        }
+        $this->mailer->send($content);
     }
 }

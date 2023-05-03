@@ -1,4 +1,7 @@
 pagelayout.title: 'Collected information'
+
+netgen_information_collection_menu_label: 'Information collection'
+
 netgen_information_collection_admin_title: 'Collected information'
 netgen_information_collection_admin_you_are_here: 'You are here'
 netgen_information_collection_admin_path_collected_information: 'Collected information'

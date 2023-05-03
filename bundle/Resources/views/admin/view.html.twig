@@ -10,8 +10,8 @@
 
     {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
 
-    <h1>{{ 'netgen_information_collection_admin_view_title'|trans({'%collection_id%': collection.id, '%content_name%': ez_content_name(collection.content)}) }}</h1>
-    <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.modified|date("Y.m.d H:i"), '%user_name%': ez_content_name(collection.creator)}) }}</h6>
+    <h1>{{ 'netgen_information_collection_admin_view_title'|trans({'%collection_id%': collection.id, '%content_name%': ibexa_content_name(collection.content)}) }}</h1>
+    <h6>{{ 'netgen_information_collection_admin_view_subtitle'|trans({'%date%': collection.modified|date("Y.m.d H:i"), '%user_name%': ibexa_content_name(collection.creator)}) }}</h6>
 
     <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection') }}">
 
@@ -32,7 +32,7 @@
                     <input id="{{ attribute.fieldDefinition.id }}" name="FieldId[]" value="{{ attribute.fieldDefinition.id }}" title="Select collections for removal." type="checkbox" data-enable="Item">
                     <label for="{{ attribute.fieldDefinition.id }}">
                         <span class="attribute-name">
-                            {{ ez_field_name(content, attribute.field.fieldDefIdentifier) }}:
+                            {{ ibexa_field_name(content, attribute.field.fieldDefIdentifier) }}:
                         </span>
                         <span class="attribute-value">
                             {{ info_collection_render_field(collection, attribute) }}

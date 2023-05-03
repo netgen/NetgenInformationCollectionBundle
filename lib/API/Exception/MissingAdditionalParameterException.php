@@ -8,11 +8,6 @@ use RuntimeException;
 
 class MissingAdditionalParameterException extends RuntimeException
 {
-    /**
-     * MissingAdditionalParameterException constructor.
-     *
-     * @param string $key
-     */
     public function __construct(string $key)
     {
         $message = "There is no value for parameter {$key} specified.";

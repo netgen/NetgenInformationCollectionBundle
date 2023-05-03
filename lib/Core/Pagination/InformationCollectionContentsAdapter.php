@@ -9,10 +9,7 @@ use Netgen\InformationCollection\API\Value\Filter\Query;
 
 class InformationCollectionContentsAdapter extends BaseAdapter
 {
-    /**
-     * @var \Netgen\InformationCollection\API\Value\Filter\Query
-     */
-    protected $query;
+    protected Query $query;
 
     public function __construct(InformationCollection $informationCollectionService, Query $query)
     {
@@ -20,7 +17,7 @@ class InformationCollectionContentsAdapter extends BaseAdapter
         parent::__construct($informationCollectionService);
     }
 
-    public function getNbResults()
+    public function getNbResults(): int
     {
         if (!isset($this->nbResults)) {
             $this->nbResults = $this->informationCollectionService
@@ -31,7 +28,7 @@ class InformationCollectionContentsAdapter extends BaseAdapter
         return $this->nbResults;
     }
 
-    public function getSlice($offset, $length)
+    public function getSlice($offset, $length): iterable
     {
         $query = new Query($offset, $length);
 

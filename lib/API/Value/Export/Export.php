@@ -8,15 +8,9 @@ use Netgen\InformationCollection\API\Value\ValueObject;
 
 class Export extends ValueObject
 {
-    /**
-     * @var array
-     */
-    protected $header;
+    protected array $header;
 
-    /**
-     * @var array
-     */
-    protected $contents;
+    protected array $contents;
 
     public function __construct(array $header, array $contents)
     {
@@ -24,17 +18,11 @@ class Export extends ValueObject
         $this->contents = $contents;
     }
 
-    /**
-     * @return array
-     */
     public function getContents(): array
     {
         return $this->contents;
     }
 
-    /**
-     * @return array
-     */
     public function getHeader(): array
     {
         return $this->header;

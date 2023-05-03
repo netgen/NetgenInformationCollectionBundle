@@ -4,44 +4,25 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\Value\DataTransfer;
 
-use eZ\Publish\Core\FieldType\BinaryFile\Value as BinaryFile;
 use Netgen\InformationCollection\API\Value\ValueObject;
 
 class EmailContent extends ValueObject
 {
-    /**
-     * @var array
-     */
-    protected $recipients;
+    protected array $recipients;
+
+    protected string $subject;
+
+    protected array $sender;
+
+    protected string $body;
 
     /**
-     * @var string
+     * @var \Ibexa\Core\FieldType\BinaryFile\Value[]
      */
-    protected $subject;
+    protected array $attachments = [];
 
     /**
-     * @var array
-     */
-    protected $sender;
-
-    /**
-     * @var string
-     */
-    protected $body;
-
-    /**
-     * @var BinaryFile[]
-     */
-    protected $attachments = [];
-
-    /**
-     * EmailData constructor.
-     *
-     * @param array $recipients
-     * @param array $sender
-     * @param string $subject
-     * @param string $body
-     * @param BinaryFile[] $attachments
+     * @param \Ibexa\Core\FieldType\BinaryFile\Value[] $attachments
      */
     public function __construct(array $recipients, array $sender, string $subject, string $body, array $attachments = [])
     {
@@ -52,48 +33,33 @@ class EmailContent extends ValueObject
         $this->attachments = $attachments;
     }
 
-    /**
-     * @return array
-     */
     public function getRecipients(): array
     {
         return $this->recipients;
     }
 
-    /**
-     * @return string
-     */
     public function getSubject(): string
     {
         return $this->subject;
     }
 
-    /**
-     * @return array
-     */
     public function getSender(): array
     {
         return $this->sender;
     }
 
-    /**
-     * @return string
-     */
     public function getBody(): string
     {
         return $this->body;
     }
 
-    /**
-     * @return bool
-     */
     public function hasAttachments(): bool
     {
         return !empty($this->attachments);
     }
 
     /**
-     * @return BinaryFile[]
+     * @return \Ibexa\Core\FieldType\BinaryFile\Value[]
      */
     public function getAttachments(): array
     {

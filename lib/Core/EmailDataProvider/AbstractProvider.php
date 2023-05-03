@@ -1,44 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Core\EmailDataProvider;
 
-use eZ\Publish\Core\Helper\FieldHelper;
-use eZ\Publish\Core\Helper\TranslationHelper;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Core\Helper\FieldHelper;
+use Ibexa\Core\Helper\TranslationHelper;
 use Netgen\InformationCollection\API\Action\EmailDataProviderInterface;
 use Netgen\InformationCollection\Core\Action\EmailAction;
 use Twig\Environment;
 
 abstract class AbstractProvider implements EmailDataProviderInterface
 {
-    /**
-     * @var array
-     */
-    protected $configResolver;
+    protected ConfigResolverInterface $configResolver;
 
-    /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper
-     */
-    protected $translationHelper;
+    protected TranslationHelper $translationHelper;
 
-    /**
-     * @var \eZ\Publish\Core\Helper\FieldHelper
-     */
-    protected $fieldHelper;
+    protected FieldHelper $fieldHelper;
 
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
-    /**
-     * EmailDataFactory constructor.
-     *
-     * @param array $config
-     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
-     * @param \eZ\Publish\Core\Helper\FieldHelper $fieldHelper
-     * @param \Twig\Environment $twig
-     */
     public function __construct(
         ConfigResolverInterface $configResolver,
         TranslationHelper $translationHelper,

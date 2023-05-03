@@ -6,170 +6,98 @@ namespace Netgen\InformationCollection\Doctrine\Entity;
 
 class EzInfoCollectionAttribute
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private int $id;
 
-    /**
-     * @var int
-     */
-    private $contentClassAttributeId;
+    private int $contentClassAttributeId;
 
-    /**
-     * @var int
-     */
-    private $contentObjectAttributeId;
+    private int $contentObjectAttributeId;
 
-    /**
-     * @var int
-     */
-    private $contentObjectId;
+    private int $contentObjectId;
 
-    /**
-     * @var float
-     */
-    private $dataFloat;
+    private float $dataFloat;
 
-    /**
-     * @var int
-     */
-    private $dataInt;
+    private int $dataInt;
 
-    /**
-     * @var string
-     */
-    private $dataText;
+    private string $dataText;
 
-    /**
-     * @var int
-     */
-    private $informationCollectionId;
+    private int $informationCollectionId;
 
-    /**
-     * @param int $id
-     */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @param int $contentClassAttributeId
-     */
-    public function setContentClassAttributeId($contentClassAttributeId)
+    public function setContentClassAttributeId(int $contentClassAttributeId): void
     {
         $this->contentClassAttributeId = $contentClassAttributeId;
     }
 
-    /**
-     * @param int $contentObjectAttributeId
-     */
-    public function setContentObjectAttributeId($contentObjectAttributeId)
+    public function setContentObjectAttributeId(int $contentObjectAttributeId): void
     {
         $this->contentObjectAttributeId = $contentObjectAttributeId;
     }
 
-    /**
-     * @param int $contentObjectId
-     */
-    public function setContentObjectId($contentObjectId)
+    public function setContentObjectId(int $contentObjectId): void
     {
         $this->contentObjectId = $contentObjectId;
     }
 
-    /**
-     * @param float $dataFloat
-     */
-    public function setDataFloat($dataFloat)
+    public function setDataFloat(float $dataFloat): void
     {
         $this->dataFloat = $dataFloat;
     }
 
-    /**
-     * @param int $dataInt
-     */
-    public function setDataInt($dataInt)
+    public function setDataInt(int $dataInt): void
     {
         $this->dataInt = $dataInt;
     }
 
-    /**
-     * @param string $dataText
-     */
-    public function setDataText($dataText)
+    public function setDataText(string $dataText): void
     {
         $this->dataText = $dataText;
     }
 
-    /**
-     * @param int $informationCollectionId
-     */
-    public function setInformationCollectionId($informationCollectionId)
+    public function setInformationCollectionId(int $informationCollectionId): void
     {
         $this->informationCollectionId = $informationCollectionId;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getContentClassAttributeId()
+    public function getContentClassAttributeId(): int
     {
         return $this->contentClassAttributeId;
     }
 
-    /**
-     * @return int
-     */
-    public function getContentObjectAttributeId()
+    public function getContentObjectAttributeId(): int
     {
         return $this->contentObjectAttributeId;
     }
 
-    /**
-     * @return int
-     */
-    public function getContentObjectId()
+    public function getContentObjectId(): int
     {
         return $this->contentObjectId;
     }
 
-    /**
-     * @return float
-     */
-    public function getDataFloat()
+    public function getDataFloat(): float
     {
         return $this->dataFloat;
     }
 
-    /**
-     * @return int
-     */
-    public function getDataInt()
+    public function getDataInt(): int
     {
         return $this->dataInt;
     }
 
-    /**
-     * @return string
-     */
-    public function getDataText()
+    public function getDataText(): string
     {
         return $this->dataText;
     }
 
-    /**
-     * @return int
-     */
-    public function getInformationCollectionId()
+    public function getInformationCollectionId(): int
     {
         return $this->informationCollectionId;
     }

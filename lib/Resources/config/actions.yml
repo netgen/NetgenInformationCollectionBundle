@@ -3,36 +3,32 @@ services:
         class: Netgen\InformationCollection\Core\Action\ActionRegistry
         arguments:
             - !tagged_iterator netgen_information_collection.action
-            - "@netgen_information_collection.action.config_utility"
+            - '@Netgen\InformationCollection\Core\Action\ConfigurationUtility'
             - "@logger"
             - "@event_dispatcher"
         calls:
             - [setDebug, ['%kernel.debug%']]
 
-    netgen_information_collection.action.config_utility:
-        class: Netgen\InformationCollection\Core\Action\ConfigurationUtility
+    Netgen\InformationCollection\Core\Action\ConfigurationUtility:
         arguments:
-            - "@ezpublish.config.resolver"
+            - '@ibexa.config.resolver'
 
-    netgen_information_collection.action.db:
-        class: Netgen\InformationCollection\Core\Action\DatabaseAction
+    Netgen\InformationCollection\Core\Action\DatabaseAction:
         arguments:
             - '@netgen_information_collection.api.service'
         tags:
             - { name: netgen_information_collection.action, priority: 300 }
 
-    netgen_information_collection.action.email:
-        class: Netgen\InformationCollection\Core\Action\EmailAction
+    Netgen\InformationCollection\Core\Action\EmailAction:
         arguments:
-            - '@netgen_information_collection.mailer'
-            - '@netgen_information_collection.factory.email_data'
+            - '@Netgen\InformationCollection\API\MailerInterface'
+            - '@Netgen\InformationCollection\Core\EmailDataProvider\DefaultProvider'
         tags:
             - { name: netgen_information_collection.action }
 
-#    netgen_information_collection.action.auto_responder:
-#        class: Netgen\InformationCollection\Core\Action\AutoResponderAction
-#        arguments:
-#            - '@netgen_information_collection.factory.auto_responder_data'
-#            - '@netgen_information_collection.mailer'
-#        tags:
-#            - { name: netgen_information_collection.action, alias: auto_responder }
+    Netgen\InformationCollection\Core\Action\AutoResponderAction:
+        arguments:
+            - '@Netgen\InformationCollection\API\MailerInterface'
+            - '@Netgen\InformationCollection\Core\EmailDataProvider\AutoResponderProvider'
+        tags:
+            - { name: netgen_information_collection.action }

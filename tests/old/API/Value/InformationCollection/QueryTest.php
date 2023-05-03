@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class QueryTest extends TestCase
 {
-    public function testWithContent()
+    public function testWithContent(): void
     {
         $query = Query::withContent(12);
 
@@ -17,7 +17,7 @@ class QueryTest extends TestCase
         $this->assertEmpty($query->fields);
     }
 
-    public function testCount()
+    public function testCount(): void
     {
         $query = Query::count();
 
@@ -25,7 +25,7 @@ class QueryTest extends TestCase
         $this->assertEquals(0, $query->offset);
     }
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $values = [
             'offset' => 15,

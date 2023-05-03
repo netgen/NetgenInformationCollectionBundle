@@ -10,11 +10,19 @@
 {% block ezboolean_field %}
     {% apply spaceless %}
         {% set field_value = attribute.value %}
-        {% if field_value %}
+        {% if field_value.dataInt %}
             {{ 'field_value.yes'|trans }}
         {% else %}
             {{ 'field_value.no'|trans }}
         {% endif %}
+    {% endapply %}
+{% endblock %}
+
+{% block enhancedezbinaryfile_field %}
+    {% apply spaceless %}
+        <a href={{ path('netgen_enhancedezbinaryfile.route.download_binary_file', {infocollectionAttributeId: attribute.id}) }}>
+            Download
+        </a>
     {% endapply %}
 {% endblock %}
 

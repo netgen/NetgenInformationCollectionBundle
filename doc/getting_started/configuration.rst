@@ -5,7 +5,7 @@ Set siteaccess aware configuration
 ----------------------------------
 
 Here is sample configuration for actions, the developer will need to define a list of actions to be run depending on the content type.
-Configuration needs to be added in `app/config/config.yml` or `app/config/ezplatform.yml`:
+Configuration needs to be added to your `config/packages/` folder:
 
 
 .. code-block:: yaml
@@ -31,7 +31,7 @@ Don't forget to create default email template.
 Clear the caches
 ----------------
 
-Clear the eZ Publish caches with the following command:
+Clear the Ibexa Platform caches with the following command:
 
 .. code-block:: bash
 

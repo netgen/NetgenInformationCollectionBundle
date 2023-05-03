@@ -2,26 +2,21 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Listener;
 
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Action\ActionRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Events;
 use Netgen\Bundle\InformationCollectionBundle\Listener\InformationCollectedListener;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class InformationCollectedListenerTest extends TestCase
 {
-    /**
-     * @var InformationCollectedListener
-     */
-    protected $listener;
+    protected InformationCollectedListener $listener;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $registry;
+    protected MockObject $registry;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->registry = $this->getMockBuilder(ActionRegistry::class)
             ->disableOriginalConstructor()
@@ -33,7 +28,7 @@ class InformationCollectedListenerTest extends TestCase
         parent::setUp();
     }
 
-    public function testListenerConfiguration()
+    public function testListenerConfiguration(): void
     {
         $this->assertEquals(
             array(Events::INFORMATION_COLLECTED => 'onInformationCollected'),
@@ -41,7 +36,7 @@ class InformationCollectedListenerTest extends TestCase
         );
     }
 
-    public function testItRunsActions()
+    public function testItRunsActions(): void
     {
         $event = new InformationCollected(new DataWrapper('payload'));
 

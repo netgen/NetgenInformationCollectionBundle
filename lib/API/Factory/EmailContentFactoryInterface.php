@@ -9,12 +9,5 @@ use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 
 interface EmailContentFactoryInterface
 {
-    /**
-     * Factory method.
-     *
-     * @param InformationCollected $value
-     *
-     * @return EmailContent
-     */
     public function build(InformationCollected $value): EmailContent;
 }

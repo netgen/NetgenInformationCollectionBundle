@@ -1,18 +1,23 @@
 services:
     netgen_information_collection.factory.email_data:
-        class: Netgen\InformationCollection\Core\Factory\EmailDataFactory
+        alias: Netgen\InformationCollection\Core\Factory\EmailDataFactory
+
+    Netgen\InformationCollection\Core\Factory\EmailDataFactory:
         arguments:
-            - '@ezpublish.config.resolver'
-            - '@ezpublish.translation_helper'
-            - '@ezpublish.field_helper'
+            - '@ibexa.config.resolver'
+            - '@Ibexa\Core\Helper\TranslationHelper'
+            - '@Ibexa\Core\Helper\FieldHelper'
             - '@twig'
 
+
     netgen_information_collection.factory.auto_responder_data:
-        class: Netgen\InformationCollection\Core\Factory\AutoResponderDataFactory
+        alias: Netgen\InformationCollection\Core\Factory\AutoResponderDataFactory
+
+    Netgen\InformationCollection\Core\Factory\AutoResponderDataFactory:
         arguments:
-            - '@ezpublish.config.resolver'
-            - '@ezpublish.translation_helper'
-            - '@ezpublish.field_helper'
+            - '@ibexa.config.resolver'
+            - '@Ibexa\Core\Helper\TranslationHelper'
+            - '@Ibexa\Core\Helper\FieldHelper'
             - '@twig'
 
     netgen_information_collection.factory.field_data:

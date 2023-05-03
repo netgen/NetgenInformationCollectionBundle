@@ -9,12 +9,9 @@ class ContentsWithCollections extends ValueObject
     /**
      * @var \Netgen\InformationCollection\API\Value\Content[]
      */
-    protected $contents;
+    protected array $contents;
 
-    /**
-     * @var int
-     */
-    protected $count;
+    protected int $count;
 
     public function __construct(array $contents, int $count)
     {
@@ -30,9 +27,6 @@ class ContentsWithCollections extends ValueObject
         return $this->contents;
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->count;

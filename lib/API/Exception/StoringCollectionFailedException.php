@@ -8,12 +8,6 @@ use RuntimeException;
 
 class StoringCollectionFailedException extends RuntimeException
 {
-    /**
-     * PersistingFailedException constructor.
-     *
-     * @param string $action
-     * @param string $reason
-     */
     public function __construct(string $action, string $reason)
     {
         $message = "Persisting of {$action} failed with reason {$reason}";

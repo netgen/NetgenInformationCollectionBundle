@@ -2,40 +2,37 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\FieldHandler\Custom;
 
-use eZ\Publish\Core\FieldType\Float\Value as FloatValue;
-use eZ\Publish\Core\FieldType\Integer\Value as IntegerValue;
-use eZ\Publish\Core\FieldType\Checkbox\Value as CheckboxValue;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
+use Ibexa\Core\FieldType\Float\Value as FloatValue;
+use Ibexa\Core\FieldType\Integer\Value as IntegerValue;
+use Ibexa\Core\FieldType\Checkbox\Value as CheckboxValue;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\Repository\Values\ContentType\FieldDefinition as CoreFieldDefinition;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\FloatFieldHandler;
 use PHPUnit\Framework\TestCase;
 use Netgen\Bundle\InformationCollectionBundle\FieldHandler\Custom\CustomLegacyFieldHandlerInterface;
 
 class FloatFieldHandlerTest extends TestCase
 {
-    /**
-     * @var CustomLegacyFieldHandlerInterface
-     */
-    protected $handler;
+    protected CustomLegacyFieldHandlerInterface $handler;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->handler = new FloatFieldHandler();
     }
 
-    public function testInstanceOfCustomLegacyFieldHandler()
+    public function testInstanceOfCustomLegacyFieldHandler(): void
     {
         $this->assertInstanceOf(CustomLegacyFieldHandlerInterface::class, $this->handler);
     }
 
-    public function testSupportsHasValidBehaviour()
+    public function testSupportsHasValidBehaviour(): void
     {
         $this->assertFalse($this->handler->supports(new CheckboxValue(true)));
         $this->assertFalse($this->handler->supports(new IntegerValue(1)));
         $this->assertTrue($this->handler->supports(new FloatValue(2.0)));
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $fieldDefinition = $this->createMock(FieldDefinition::class);
 
@@ -43,7 +40,7 @@ class FloatFieldHandlerTest extends TestCase
         $this->assertEquals('55.7', $this->handler->toString(new FloatValue(55.7), $fieldDefinition));
     }
 
-    public function testGetLegacyValue()
+    public function testGetLegacyValue(): void
     {
         $fieldDefinition = new CoreFieldDefinition([
             'id' => 123,

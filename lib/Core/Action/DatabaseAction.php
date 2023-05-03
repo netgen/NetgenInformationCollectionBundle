@@ -13,21 +13,15 @@ use Netgen\InformationCollection\API\Value\Event\InformationCollected;
 
 final class DatabaseAction implements ActionInterface, CrucialActionInterface
 {
-    public static $defaultName = 'database';
+    public static string $defaultName = 'database';
 
-    /**
-     * @var InformationCollection
-     */
-    private $informationCollection;
+    private InformationCollection $informationCollection;
 
     public function __construct(InformationCollection $informationCollection)
     {
         $this->informationCollection = $informationCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function act(InformationCollected $event): void
     {
         $struct = $event->getInformationCollectionStruct();

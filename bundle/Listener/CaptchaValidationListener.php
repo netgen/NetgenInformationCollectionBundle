@@ -15,20 +15,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CaptchaValidationListener implements EventSubscriberInterface
 {
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    private $requestStack;
+    private RequestStack $requestStack;
 
-    /**
-     * @var \Netgen\InformationCollection\Core\Service\CaptchaService
-     */
-    private $captchaService;
+    private CaptchaService $captchaService;
 
-    /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
-     */
-    private $translator;
+    private TranslatorInterface $translator;
 
     public function __construct(RequestStack $requestStack, CaptchaService $captchaService, TranslatorInterface $translator)
     {
@@ -37,21 +28,24 @@ class CaptchaValidationListener implements EventSubscriberInterface
         $this->translator = $translator;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             FormEvents::POST_SUBMIT => 'onPostSubmit',
         ];
     }
 
-    public function onPostSubmit(FormEvent $event)
+    public function onPostSubmit(FormEvent $event): void
     {
         $captchaValue = $event->getForm()
             ->getConfig()
             ->getOption('captcha_value');
 
-//        $request = $this->requestStack->getCurrentRequest();
-        $request = Request::createFromGlobals();
+        $request = $this->requestStack->getCurrentRequest();
+//        $request = Request::createFromGlobals();
+
+        $submittedHostName = $request->getHost();
+        $captchaValue->getInnerCaptcha()->setExpectedHostname($submittedHostName);
 
         $text = 'The captcha is invalid. Please try again.';
 

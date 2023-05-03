@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Netgen\InformationCollection\Core\Mailer\:
+        resource: '../../Core/Mailer/'
+
+    Netgen\InformationCollection\API\MailerInterface: '@Netgen\InformationCollection\Core\Mailer\SymfonyMailerBasedMailer'

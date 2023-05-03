@@ -2,41 +2,29 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Tests\Value;
 
-use eZ\Publish\Core\Repository\Values\Content\Content;
-use Netgen\Bundle\EzFormsBundle\Form\DataWrapper;
+use Ibexa\Core\Repository\Values\Content\Content;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected;
 use Netgen\Bundle\InformationCollectionBundle\Value\TemplateData;
 use PHPUnit\Framework\TestCase;
-use Twig_Environment;
-use Twig_Loader_Array;
-use Twig_TemplateWrapper;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
+use Twig\TemplateWrapper;
 
 class TemplateDataTest extends TestCase
 {
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Value\TemplateData
-     */
-    protected $templateData;
+    protected TemplateData $templateData;
 
-    /**
-     * @var \Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected
-     */
-    protected $event;
+    protected InformationCollected $event;
 
-    /**
-     * @var \eZ\Publish\Core\Repository\Values\Content\Content
-     */
-    protected $content;
+    protected Content $content;
 
-    /**
-     * @var \Twig_TemplateWrapper
-     */
-    protected $templateWrapper;
+    protected TemplateWrapper $templateWrapper;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $twig = new Twig_Environment(
-            new Twig_Loader_Array(
+        $twig = new Environment(
+            new ArrayLoader(
                 array(
                     'index' => '{% block foo %}{% endblock %}',
                 )
@@ -45,12 +33,12 @@ class TemplateDataTest extends TestCase
 
         $this->event = new InformationCollected(new DataWrapper('test', null, null));
         $this->content = new Content();
-        $this->templateWrapper = new Twig_TemplateWrapper($twig, $twig->loadTemplate('index'));
+        $this->templateWrapper = new TemplateWrapper($twig, $twig->loadTemplate('index'));
 
         $this->templateData = new TemplateData($this->event, $this->content, $this->templateWrapper);
     }
 
-    public function testGetters()
+    public function testGetters(): void
     {
         $this->assertEquals($this->event, $this->templateData->getEvent());
         $this->assertEquals($this->content, $this->templateData->getContent());

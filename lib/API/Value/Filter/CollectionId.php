@@ -6,10 +6,7 @@ namespace Netgen\InformationCollection\API\Value\Filter;
 
 final class CollectionId
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private int $id;
 
     public function __construct(int $id)
     {

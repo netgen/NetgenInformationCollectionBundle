@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\EzPlatform\RepositoryForms;
+namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms;
 
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\Bundle\InformationCollectionBundle\Form\CaptchaType;
 use Netgen\InformationCollection\API\Service\CaptchaService;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
@@ -21,33 +21,34 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
 {
     public const FORM_BLOCK_PREFIX = 'information_collection';
 
-    /**
-     * @var \Netgen\InformationCollection\API\Service\CaptchaService
-     */
-    private $captchaService;
+    private CaptchaService $captchaService;
 
-    public function __construct(CaptchaService $captchaService)
+    private ConfigResolverInterface $configResolver;
+
+    public function __construct(CaptchaService $captchaService, ConfigResolverInterface $configResolver)
     {
         $this->captchaService = $captchaService;
+        $this->configResolver = $configResolver;
     }
 
-    public function getName()
+    public function getName(): string
     {
         $this->getBlockPrefix();
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return self::FORM_BLOCK_PREFIX;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var InformationCollectionStruct $struct */
         $struct = $options['data'];
 
         foreach ($struct->getFieldsData() as $fieldsDatum) {
             $builder->add($fieldsDatum->fieldDefinition->identifier, InformationCollectionFieldType::class, [
+                //'label' => false,
                 'languageCode' => $options['languageCode'],
                 'mainLanguageCode' => $options['mainLanguageCode'],
             ]);
@@ -73,20 +74,21 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
         $builder->setDataMapper($this);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['languageCode'] = $options['languageCode'];
         $view->vars['mainLanguageCode'] = $options['mainLanguageCode'];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setDefaults(['translation_domain' => 'ezplatform_content_forms_content'])
-            ->setRequired(['languageCode', 'mainLanguageCode']);
+            ->setRequired(['languageCode', 'mainLanguageCode'])
+            ->setDefault('translation_domain', 'ezplatform_content_forms_content')
+            ->setDefault('csrf_protection', $this->configResolver->getParameter('form.use_csrf', 'netgen_information_collection'));
     }
 
-    public function mapDataToForms($viewData, iterable $forms)
+    public function mapDataToForms($viewData, iterable $forms): void
     {
         if (null === $viewData) {
             return;
@@ -104,7 +106,7 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
         }
     }
 
-    public function mapFormsToData(iterable $forms, &$viewData)
+    public function mapFormsToData(iterable $forms, &$viewData): void
     {
 
     }

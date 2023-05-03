@@ -25,102 +25,58 @@ use Netgen\InformationCollection\API\Value\SearchCount;
 interface InformationCollection
 {
     /**
-     * @param \Netgen\InformationCollection\API\Value\InformationCollectionStruct $struct
-     *
      * @throws \Netgen\InformationCollection\API\Exception\PersistingFailedException
      */
     public function createCollection(InformationCollectionStruct $struct): void;
 
-    /**
-     * @return \Netgen\InformationCollection\API\Value\ObjectCount
-     */
     public function getObjectsWithCollectionsCount(): ObjectCount;
 
-    /**
-     * @param \Netgen\InformationCollection\API\Value\Filter\Query $query
-     *
-     * @return \Netgen\InformationCollection\API\Value\ContentsWithCollections
-     */
     public function getObjectsWithCollections(Query $query): ContentsWithCollections;
 
-    /**
-     * @param \Netgen\InformationCollection\API\Value\Filter\ContentId $contentId
-     *
-     * @return \Netgen\InformationCollection\API\Value\CollectionCount
-     */
     public function getCollectionsCount(ContentId $contentId): CollectionCount;
 
     /**
      * Returns collections for given content object.
-     *
-     * @param \Netgen\InformationCollection\API\Value\Filter\ContentId $contentId
-     *
-     * @return \Netgen\InformationCollection\API\Value\Collections
      */
     public function getCollections(ContentId $contentId): Collections;
 
     /**
      * Returns collections for given content object.
-     *
-     * @param \Netgen\InformationCollection\API\Value\Filter\ContentId $contentId
-     *
-     * @return \Netgen\InformationCollection\API\Value\Collections
      */
     public function filterCollections(FilterCriteria $criteria): Collections;
 
     /**
      * Returns single collection.
-     *
-     * @param \Netgen\InformationCollection\API\Value\Filter\CollectionId $collectionId
-     *
-     * @return \Netgen\InformationCollection\API\Value\Collection
      */
     public function getCollection(CollectionId $collectionId): Collection;
 
     /**
      * Returns collection based on search criteria.
-     *
-     * @param \Netgen\InformationCollection\API\Value\Filter\SearchQuery $query
-     *
-     * @return \Netgen\InformationCollection\API\Value\Collections
      */
     public function search(SearchQuery $query): Collections;
 
     /**
      * Returns collection count based on search criteria.
-     *
-     * @param \Netgen\InformationCollection\API\Value\Filter\SearchCountQuery $query
-     *
-     * @return \Netgen\InformationCollection\API\Value\SearchCount
      */
     public function searchCount(SearchCountQuery $query): SearchCount;
 
     /**
      * Removes selected collection fields.
-     *
-     * @param \Netgen\InformationCollection\API\Value\Filter\CollectionFields $collectionFields
      */
     public function deleteCollectionFields(CollectionFields $collectionFields): void;
 
     /**
      * Removes whole collections.
-     *
-     * @param \Netgen\InformationCollection\API\Value\Filter\Collections $collections
      */
     public function deleteCollections(FilterCollections $collections): void;
 
     /**
      * Removes whole collections per content.
-     *
-     * @param \Netgen\InformationCollection\API\Value\Filter\Contents $contents
      */
     public function deleteCollectionByContent(Contents $contents): void;
 
     /**
      * Updates Attribute value for given Attribute.
-     *
-     * @param \Netgen\InformationCollection\API\Value\Filter\CollectionId $collectionId
-     * @param \Netgen\InformationCollection\API\Value\Attribute $attribute
      */
     public function updateCollectionAttribute(CollectionId $collectionId, Attribute $attribute): void;
 }

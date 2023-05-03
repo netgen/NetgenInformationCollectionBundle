@@ -5,7 +5,7 @@ services:
         arguments:
             - "@netgen_information_collection.repository.ez_info_collection"
             - "@netgen_information_collection.repository.ez_info_collection_attribute"
-            - "@ezpublish.api.repository"
+            - "@ibexa.api.repository"
             - "@netgen_information_collection.core.persistence.gateway.doctrine"
             - "@netgen_information_collection.factory.field_data"
             - "@netgen_information_collection.domain_object_mapper"
@@ -14,7 +14,7 @@ services:
         class: Netgen\Bundle\InformationCollectionBundle\Templating\Twig\AdminGlobalVariable
         public: true
         arguments:
-            - "@ezpublish.config.resolver"
+            - "@ibexa.config.resolver"
 
     netgen_information_collection.core.persistence.gateway.doctrine:
         class: Netgen\InformationCollection\Core\Persistence\Gateway\DoctrineDatabase
@@ -22,11 +22,10 @@ services:
         arguments:
             - '@database_connection'
 
-    netgen_information_collection.pagerfanta.view.eztags_admin:
+    netgen_information_collection.pagerfanta.view.information_collection_admin:
         class: Netgen\InformationCollection\Core\Pagination\Pagerfanta\View\InformationCollectionAdminView
         public: false
-        # Not being lazy results in out of memory exceptions on eZ Platform 2.0,
-        # probably due to @twig dependency
+        # Not being lazy results in out of memory exceptions, probably due to @twig dependency
         lazy: true
         arguments:
             - "@twig"
@@ -45,8 +44,8 @@ services:
     netgen_information_collection.utils.content_type:
         class: Netgen\InformationCollection\Core\Persistence\ContentTypeUtils
         arguments:
-            - "@ezpublish.api.service.content_type"
-            - "@ezpublish.api.service.content"
+            - "@ibexa.api.service.content_type"
+            - "@ibexa.api.service.content"
 
     netgen_information_collection.core.export.registry:
         class: Netgen\InformationCollection\Core\Export\ExportResponseFormatterRegistry

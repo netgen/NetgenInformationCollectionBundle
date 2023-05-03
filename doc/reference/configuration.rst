@@ -252,7 +252,7 @@ The following lists all available design configuration options:
 
 .. tip::
 
-    In eZ Platform integration, currently active design is siteaccess aware,
+    In Ibexa Platform integration, currently active design is siteaccess aware,
     meaning, you can use configuration similar to this:
 
     .. code-block:: yaml
