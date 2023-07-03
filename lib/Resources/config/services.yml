@@ -2,6 +2,7 @@ imports:
     - { resource: actions.yml }
     - { resource: core/persistence.yml }
     - { resource: factories.yml }
+    - { resource: forms.yml }
     - { resource: legacy_handlers.yml }
     - { resource: admin.yml }
     - { resource: anonymizers.yml }

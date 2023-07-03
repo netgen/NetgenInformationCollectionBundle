@@ -1,0 +1,5 @@
+services:
+    netgen_information_collection.form.ezcountry_placeholder_extension:
+        class: Netgen\InformationCollection\Form\Type\FieldType\CountryFieldTypePlaceholderExtension
+        tags:
+            - { name: form.type_extension }
