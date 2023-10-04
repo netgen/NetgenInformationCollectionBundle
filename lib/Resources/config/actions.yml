@@ -29,12 +29,12 @@ services:
         tags:
             - { name: netgen_information_collection.action }
 
-    Netgen\InformationCollection\API\Factory\EmailContentFactoryInterface: '@netgen_information_collection.factory.email_data'
+    netgen_information_collection.action.auto_responder:
+        class: Netgen\InformationCollection\Core\Action\AutoResponderAction
+        arguments:
+            - '@mailer.mailer'
+            - '@netgen_information_collection.factory.auto_responder_data'
+        tags:
+            - { name: netgen_information_collection.action, alias: auto_responder }
 
-#    netgen_information_collection.action.auto_responder:
-#        class: Netgen\InformationCollection\Core\Action\AutoResponderAction
-#        arguments:
-#            - '@netgen_information_collection.factory.auto_responder_data'
-#            - '@netgen_information_collection.mailer'
-#        tags:
-#            - { name: netgen_information_collection.action, alias: auto_responder }
+    Netgen\InformationCollection\API\Factory\EmailContentFactoryInterface: '@netgen_information_collection.factory.email_data'
