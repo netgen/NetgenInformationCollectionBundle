@@ -30,8 +30,8 @@ trait InformationCollectionTrait
         /** @var RequestStack $requestStack */
         $requestStack = $this->container->get('request_stack');
 
-        $form = $handler->getForm($view->getContent(), $view->getLocation());
         $request = $requestStack->getCurrentRequest();
+        $form = $handler->getForm($view->getContent(), $view->getLocation(), $request);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
