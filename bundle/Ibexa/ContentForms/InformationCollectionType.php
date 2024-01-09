@@ -45,6 +45,7 @@ class InformationCollectionType extends AbstractType implements DataMapperInterf
             $builder->add($fieldsDatum->fieldDefinition->identifier, InformationCollectionFieldType::class, [
                 'languageCode' => $options['languageCode'],
                 'mainLanguageCode' => $options['mainLanguageCode'],
+                'error_bubbling' => false,
             ]);
         }
 
