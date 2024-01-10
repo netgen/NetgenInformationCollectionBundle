@@ -10,7 +10,7 @@
 {% block ezboolean_field %}
     {% apply spaceless %}
         {% set field_value = attribute.value %}
-        {% if field_value %}
+        {% if field_value.dataInt == 1 %}
             {{ 'field_value.yes'|trans }}
         {% else %}
             {{ 'field_value.no'|trans }}
