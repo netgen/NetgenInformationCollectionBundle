@@ -7,18 +7,23 @@ use Ibexa\Core\MVC\Symfony\Security\Authorization\Attribute;
 use Ibexa\Bundle\Core\Controller;
 use Ibexa\Contracts\Core\Repository\ContentService;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\InformationCollection\API\Service\InformationCollection;
 use Netgen\InformationCollection\API\Value\Collection;
 use Netgen\InformationCollection\API\Value\Filter\CollectionFields;
 use Netgen\InformationCollection\API\Value\Filter\Collections;
+use Netgen\InformationCollection\API\Value\Filter\CollectionId;
 use Netgen\InformationCollection\API\Value\Filter\ContentId;
 use Netgen\InformationCollection\API\Value\Filter\Contents;
 use Netgen\InformationCollection\API\Value\Filter\Query;
 use Netgen\InformationCollection\API\Value\Filter\SearchQuery;
+use Netgen\InformationCollection\Core\Factory\FieldDataFactory;
 use Netgen\InformationCollection\Core\Pagination\InformationCollectionCollectionListAdapter;
 use Netgen\InformationCollection\Core\Pagination\InformationCollectionCollectionListSearchAdapter;
 use Netgen\InformationCollection\Core\Pagination\InformationCollectionContentsAdapter;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
+use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
 use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -36,6 +41,13 @@ class AdminController extends Controller
 
     protected Anonymizer $anonymizer;
 
+    protected FieldDataFactory $factory;
+    protected EzInfoCollectionRepository $infoCollectionRepository;
+
+    protected EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository;
+
+    protected FormBuilder $builder;
+
     private TranslatorInterface $translator;
 
     public function __construct(
@@ -43,7 +55,11 @@ class AdminController extends Controller
         Anonymizer $anonymizer,
         ContentService $contentService,
         ConfigResolverInterface $configResolver,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        FieldDataFactory $factory,
+        EzInfoCollectionRepository $infoCollectionRepository,
+        EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository,
+        FormBuilder $builder
     )
     {
         $this->service = $service;
@@ -51,6 +67,10 @@ class AdminController extends Controller
         $this->configResolver = $configResolver;
         $this->anonymizer = $anonymizer;
         $this->translator = $translator;
+        $this->factory = $factory;
+        $this->infoCollectionRepository = $infoCollectionRepository;
+        $this->infoCollectionAttributeRepository = $infoCollectionAttributeRepository;
+        $this->builder = $builder;
     }
 
     /**
@@ -271,6 +291,82 @@ class AdminController extends Controller
         return $this->redirectToRoute('netgen_information_collection.route.admin.view', ['collectionId' => $collectionId]);
     }
 
+    public function editAction(Request $request, int $collectionId)
+    {
+        $this->checkEditPermissions();
+
+
+        $collection = $this->service->getCollection(new CollectionId($collectionId));
+
+        $locationService = $this->getRepository()->getLocationService();
+
+
+        $location = $locationService->loadLocation($collection->getContent()->contentInfo->mainLocationId);
+
+        $form = $this->builder->createUpdateFormForLocation($location, $collection)->getForm();
+
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $struct = $form->getData()->payload;
+
+            $contentType = $form->getData()->definition;
+
+            $ezInfo = $this->infoCollectionRepository->find($collectionId);
+            $ezInfo->setModified(time());
+
+            $this->infoCollectionRepository->save($ezInfo);
+
+            foreach ($struct->getCollectedFields() as $fieldDefIdentifier => $value) {
+                if ($value === null) {
+                    continue;
+                }
+
+                $fieldDefinition = $contentType->getFieldDefinition($fieldDefIdentifier);
+
+                $legacyValue = $this->factory->getLegacyValue($value, $fieldDefinition);
+
+                $ezInfoAttributes = $this->infoCollectionAttributeRepository->findByCollectionIdAndFieldDefinitionIds(
+                    $collectionId,
+                    [$fieldDefinition->id]
+                );
+
+                if (count($ezInfoAttributes) > 0) {
+                    $ezInfoAttribute = $ezInfoAttributes[0];
+                } else {
+                    $ezInfoAttribute = $this->infoCollectionAttributeRepository->getInstance();
+                    $ezInfoAttribute->setContentObjectId($collection->getContent()->id);
+                    $ezInfoAttribute->setContentObjectAttributeId($collection->getContent()->getField($fieldDefinition->identifier)->id);
+                    $ezInfoAttribute->setContentClassAttributeId($fieldDefinition->id);
+                    $ezInfoAttribute->setInformationCollectionId($collection->entity->getId());
+                }
+
+                $ezInfoAttribute->setDataInt($legacyValue->getDataInt());
+                $ezInfoAttribute->setDataFloat($legacyValue->getDataFloat());
+                $ezInfoAttribute->setDataText($legacyValue->getDataText());
+
+                $this->infoCollectionAttributeRepository->save($ezInfoAttribute);
+            }
+
+            return $this->redirectToRoute(
+                'netgen_information_collection.route.admin.view',
+                [
+                    'contentId' => $location->contentInfo->id,
+                    'collectionId' => $collection->entity->getId(),
+                ]
+            );
+        }
+
+        return $this->render("themes/app/admin/edit.html.twig", [
+            'collection' => $collection,
+            'content' => $location->getContent(),
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
     /**
      * Adds a flash message with specified parameters.
      */
@@ -318,6 +414,12 @@ class AdminController extends Controller
     protected function checkAnonymizePermissions(): void
     {
         $attribute = new Attribute('infocollector', 'anonymize');
+        $this->denyAccessUnlessGranted($attribute);
+    }
+
+    protected function checkEditPermissions(): void
+    {
+        $attribute = new Attribute('infocollector', 'edit');
         $this->denyAccessUnlessGranted($attribute);
     }
 }

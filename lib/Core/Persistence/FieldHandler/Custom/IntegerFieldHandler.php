@@ -29,4 +29,9 @@ class IntegerFieldHandler implements CustomLegacyFieldHandlerInterface
     {
         return FieldValue::withIntValue($fieldDefinition->id, $value->value);
     }
+
+    public function fromLegacyValue(FieldValue $legacyData): IntegerValue
+    {
+        return new IntegerValue($legacyData->getDataInt());
+    }
 }

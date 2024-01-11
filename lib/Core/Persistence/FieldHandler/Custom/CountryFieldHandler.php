@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom;
 
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\FieldType\Checkbox\Value as CheckboxValue;
 use Ibexa\Core\FieldType\Country\Value as CountryValue;
 use Ibexa\Core\FieldType\Value;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
