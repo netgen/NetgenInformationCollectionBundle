@@ -18,7 +18,11 @@ class InformationCollectionUpdateType extends AbstractContentType
 
     public function setLanguages($languages)
     {
-        $this->languages = [];
+        $this->languages = ["ng-GB" ,
+            "cro-HR",
+            "slo-SI",
+            "ser-SR" ,
+            "mkd-MK"];
     }
 
     public function getName(): string
@@ -101,8 +105,12 @@ class InformationCollectionUpdateType extends AbstractContentType
     protected function getLanguageCode(ContentType $contentType)
     {
         $contentTypeLanguages = array_keys($contentType->getNames());
-
-        foreach ($this->languages as $languageCode) {
+        $languages = ["ng-GB" ,
+            "cro-HR",
+            "slo-SI",
+            "ser-SR" ,
+            "mkd-MK"];
+        foreach ($languages as $languageCode) {
             if (in_array($languageCode, $contentTypeLanguages, true)) {
                 return $languageCode;
             }

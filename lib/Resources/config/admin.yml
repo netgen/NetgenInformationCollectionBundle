@@ -58,3 +58,12 @@ services:
             - "@netgen_information_collection.core.export.registry"
         tags:
             - { name: form.type }
+
+    netgen_information_collection.form.type.information_collection_update:
+        class: Netgen\Bundle\InformationCollectionBundle\Form\InformationCollectionUpdateType
+        #        public: false
+        arguments:
+            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+            - "@netgen.ibexa_forms.form.data_mapper.info_collection"
+        tags:
+            - { name: form.type, alias: ibexaforms_information_collection_update }

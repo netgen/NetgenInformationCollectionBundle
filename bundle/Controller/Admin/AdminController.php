@@ -293,7 +293,7 @@ class AdminController extends Controller
 
     public function editAction(Request $request, int $collectionId)
     {
-        $this->checkEditPermissions();
+        //$this->checkEditPermissions();
 
 
         $collection = $this->service->getCollection(new CollectionId($collectionId));
@@ -358,7 +358,7 @@ class AdminController extends Controller
             );
         }
 
-        return $this->render("themes/app/admin/edit.html.twig", [
+        return $this->render("@NetgenInformationCollection/admin/edit.html.twig", [
             'collection' => $collection,
             'content' => $location->getContent(),
             'form' => $form->createView(),

@@ -58,7 +58,7 @@ class FormBuilder
         $data = new DataWrapper($struct, $contentType, $location);
 
         $useCsrf = $this->configResolver->getParameter('information_collection.form.use_csrf', 'netgen');
-        dd('here');
+
         return $this->formFactory
             ->createNamedBuilder(
                 $contentType->identifier . '_' . $location->id,
