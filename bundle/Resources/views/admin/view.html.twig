@@ -16,6 +16,10 @@
     <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_collection') }}">
 
         <div class="ng-ui-btn-group mb-3">
+            <a class="ng-ui-btn" href="{{ path("netgen_information_collection.route.admin.edit", {"collectionId": collection.id}) }}">
+                {{ 'netgen_information_collection_admin_collection_edit'|trans }}
+            </a>
+
             <button type="submit" name="DeleteFieldAction" class="ng-ui-btn" data-enabler="Item">{{ 'netgen_information_collection_admin_view_delete_field'|trans }}</button>
             <button type="submit" name="AnonymizeFieldAction" class="ng-ui-btn" data-enabler="Item">{{ 'netgen_information_collection_admin_view_anonymize_field'|trans }}</button>
 
