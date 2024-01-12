@@ -36,7 +36,7 @@ class EnhancedSelectionFieldHandler implements CustomLegacyFieldHandlerInterface
             $identifier = $value->identifiers[0];
         }
 
-        return new FieldValue($fieldDefinition->id, 0, 0, $identifier);
+        return new FieldValue($fieldDefinition->id, $identifier, 0, 0);
     }
 
     /**

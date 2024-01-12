@@ -43,3 +43,8 @@ services:
         class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\EmailAddressFieldHandler
         tags:
             - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.enhanced_selection:
+        class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\EnhancedSelectionFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
