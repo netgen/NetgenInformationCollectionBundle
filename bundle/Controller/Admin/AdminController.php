@@ -305,7 +305,6 @@ class AdminController extends Controller
 
         $form = $this->builder->createUpdateFormForLocation($location, $collection)->getForm();
 
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -339,7 +338,7 @@ class AdminController extends Controller
                     $ezInfoAttribute->setContentObjectId($collection->getContent()->id);
                     $ezInfoAttribute->setContentObjectAttributeId($collection->getContent()->getField($fieldDefinition->identifier)->id);
                     $ezInfoAttribute->setContentClassAttributeId($fieldDefinition->id);
-                    $ezInfoAttribute->setInformationCollectionId($collection->entity->getId());
+                    $ezInfoAttribute->setInformationCollectionId($collection->getId());
                 }
 
                 $ezInfoAttribute->setDataInt($legacyValue->getDataInt());
@@ -353,7 +352,7 @@ class AdminController extends Controller
                 'netgen_information_collection.route.admin.view',
                 [
                     'contentId' => $location->contentInfo->id,
-                    'collectionId' => $collection->entity->getId(),
+                    'collectionId' => $collection->getId(),
                 ]
             );
         }

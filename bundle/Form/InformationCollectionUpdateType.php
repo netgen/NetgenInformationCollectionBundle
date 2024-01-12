@@ -18,7 +18,7 @@ class InformationCollectionUpdateType extends AbstractContentType
 
     public function setLanguages($languages)
     {
-        $this->languages = ["ng-GB" ,
+        $this->languages = ["ng-GB",
             "cro-HR",
             "slo-SI",
             "ser-SR" ,
@@ -53,7 +53,7 @@ class InformationCollectionUpdateType extends AbstractContentType
         /** @var DataWrapper $dataWrapper */
         $dataWrapper = $options['data'];
         $collection = $options['collection'];
-
+        
         if (!$dataWrapper instanceof DataWrapper) {
             throw new RuntimeException(
                 'Data must be an instance of Netgen\\EzFormsBundle\\Form\\DataWrapper'
@@ -105,7 +105,7 @@ class InformationCollectionUpdateType extends AbstractContentType
     protected function getLanguageCode(ContentType $contentType)
     {
         $contentTypeLanguages = array_keys($contentType->getNames());
-        $languages = ["ng-GB" ,
+        $languages = ["ng-GB",
             "cro-HR",
             "slo-SI",
             "ser-SR" ,

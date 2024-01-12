@@ -2,10 +2,10 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form\Builder;
 
-use Ibexa\Contracts\Core\Repository\Values\Content\Field;
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Ibexa\Core\Repository\SiteAccessAware\ContentTypeService;
+use Ibexa\Core\Repository\Values\ContentType\FieldDefinition;
 use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Form\InformationCollectionUpdateType;
@@ -47,7 +47,7 @@ class FormBuilder
                     $attribute->getValue()->getDataFloat()
 
                 ),
-                $attribute->getField()
+                $attribute->getFieldDefinition()
             );
 
             if ($fieldValue !== null) {
@@ -71,10 +71,9 @@ class FormBuilder
             );
     }
 
-    private function fromLegacyValue(FieldValue $legacyData, Field $field)
+    private function fromLegacyValue(FieldValue $legacyData, FieldDefinition $field)
     {
-        $handler = $this->registry->handle($field->value);
-
+        $handler = $this->registry->handle($field->defaultValue);
         if (!$handler instanceof CustomLegacyFieldHandlerInterface) {
             return null;
         }

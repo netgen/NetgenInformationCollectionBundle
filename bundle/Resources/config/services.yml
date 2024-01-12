@@ -42,3 +42,4 @@ services:
             - '@ibexa.config.resolver'
             - '@netgen_information_collection.factory.field_data'
             - '@netgen_information_collection.field_handler.registry'
+
