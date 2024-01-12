@@ -2,7 +2,7 @@
 
 {% trans_default_domain 'netgen_information_collection_admin' %}
 
-{% form_theme form 'themes/app/admin/form.html.twig' %}
+{% form_theme form '@NetgenInformationCollection/admin/form.html.twig' %}
 
 {% block content %} {% dump(form) %}
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
