@@ -4,7 +4,7 @@
 
 {% form_theme form '@NetgenInformationCollection/admin/form.html.twig' %}
 
-{% block content %} {% dump(form) %}
+{% block content %}
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
     {% for child in form.children %}
         {{ form_row(child) }}
