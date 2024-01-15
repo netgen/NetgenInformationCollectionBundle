@@ -14,9 +14,9 @@ use Netgen\InformationCollection\API\Value\Collection;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 use Netgen\InformationCollection\Core\Factory\FieldDataFactory;
 use Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegistry;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\RouterInterface;
-
 
 class FormBuilder
 {
@@ -27,11 +27,10 @@ class FormBuilder
         protected readonly ConfigResolverInterface $configResolver,
         protected readonly FieldDataFactory        $legacyFactory,
         protected readonly FieldHandlerRegistry    $registry
-    )
-    {
+    ) {
     }
 
-    public function createUpdateFormForLocation(Location $location, Collection $collection)
+    public function createUpdateFormForLocation(Location $location, Collection $collection): FormBuilderInterface
     {
         $contentInfo = $location->contentInfo;
         $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
