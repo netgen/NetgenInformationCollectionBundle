@@ -13,14 +13,12 @@ use Symfony\Component\PropertyAccess\PropertyPathInterface;
 class InformationCollectionUpdateMapper extends DataMapper
 {
 
-
     protected function mapToForm(
         FormInterface         $form,
         DataWrapper           $data,
         PropertyPathInterface $propertyPath
     ): void
     {
-        /** @var ContentType $contentType */
         $contentType = $data->definition;
 
         $fieldDefinitionIdentifier = (string)$propertyPath;
@@ -35,7 +33,6 @@ class InformationCollectionUpdateMapper extends DataMapper
         $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;
 
         $handler = $this->fieldTypeHandlerRegistry->get($fieldTypeIdentifier);
-
 
         $struct = $data->payload;
 
@@ -58,9 +55,7 @@ class InformationCollectionUpdateMapper extends DataMapper
         PropertyPathInterface $propertyPath
     ): void
     {
-        /** @var InformationCollectionStruct $payload */
         $payload = $data->payload;
-        /** @var ContentType $contentType */
         $contentType = $data->definition;
 
         $fieldDefinitionIdentifier = (string)$propertyPath;
