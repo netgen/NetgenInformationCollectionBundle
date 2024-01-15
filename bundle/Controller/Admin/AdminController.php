@@ -293,13 +293,11 @@ class AdminController extends Controller
 
     public function editAction(Request $request, int $collectionId)
     {
-        //$this->checkEditPermissions();
-
+        $this->checkEditPermissions();
 
         $collection = $this->service->getCollection(new CollectionId($collectionId));
 
         $locationService = $this->getRepository()->getLocationService();
-
 
         $location = $locationService->loadLocation($collection->getContent()->contentInfo->mainLocationId);
 
