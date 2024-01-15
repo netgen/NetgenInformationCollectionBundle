@@ -71,5 +71,6 @@ services:
         arguments:
             - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
             - "@netgen_information_collection.form.data_mapper.info_collection_update"
+            - "@ibexa.config.resolver"
         tags:
             - { name: form.type, alias: ibexaforms_information_collection_update }

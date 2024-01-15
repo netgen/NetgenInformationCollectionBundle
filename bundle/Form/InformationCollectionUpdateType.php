@@ -3,26 +3,32 @@
 namespace Netgen\Bundle\InformationCollectionBundle\Form;
 
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandlerRegistry;
 use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\IbexaFormsBundle\Form\Type\AbstractContentType;
 use Netgen\InformationCollection\API\Value\Collection;
 use RuntimeException;
+use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InformationCollectionUpdateType extends AbstractContentType
 {
+    protected FieldTypeHandlerRegistry $fieldTypeHandlerRegistry;
 
-    protected array $languages;
+    protected DataMapperInterface $dataMapper;
 
-    public function setLanguages($languages)
-    {
-        $this->languages = ["ng-GB",
-            "cro-HR",
-            "slo-SI",
-            "ser-SR" ,
-            "mkd-MK"];
+    protected ConfigResolverInterface $configResolver;
+
+    public function __construct(
+        FieldTypeHandlerRegistry $fieldTypeHandlerRegistry,
+        DataMapperInterface      $dataMapper,
+        ConfigResolverInterface  $configResolver
+    ) {
+        parent::__construct($fieldTypeHandlerRegistry, $dataMapper);
+        $this->configResolver = $configResolver;
     }
 
     public function getName(): string
@@ -48,12 +54,12 @@ class InformationCollectionUpdateType extends AbstractContentType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var DataWrapper $dataWrapper */
         $dataWrapper = $options['data'];
         $collection = $options['collection'];
-        
+
         if (!$dataWrapper instanceof DataWrapper) {
             throw new RuntimeException(
                 'Data must be an instance of Netgen\\EzFormsBundle\\Form\\DataWrapper'
@@ -102,14 +108,11 @@ class InformationCollectionUpdateType extends AbstractContentType
      *
      * @return string
      */
-    protected function getLanguageCode(ContentType $contentType)
+    protected function getLanguageCode(ContentType $contentType): string
     {
         $contentTypeLanguages = array_keys($contentType->getNames());
-        $languages = ["ng-GB",
-            "cro-HR",
-            "slo-SI",
-            "ser-SR" ,
-            "mkd-MK"];
+        $languages = $this->configResolver->getParameter('languages');
+
         foreach ($languages as $languageCode) {
             if (in_array($languageCode, $contentTypeLanguages, true)) {
                 return $languageCode;
