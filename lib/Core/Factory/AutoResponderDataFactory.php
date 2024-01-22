@@ -147,7 +147,7 @@ class AutoResponderDataFactory implements EmailContentFactoryInterface
         }
 
         if (array_key_exists($field, $fields)) {
-            return [$fields[$field]->email];
+            return [$fields[$field]->value->email];
         }
 
         throw new MissingValueException($field);
