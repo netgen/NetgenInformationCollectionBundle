@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom;
 
-use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
-use Ibexa\Core\FieldType\Value;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 use Ibexa\Core\FieldType\TextLine\Value as TextLineValue;
+use Ibexa\Core\FieldType\Value;
+use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 
 class StringFieldHandler implements CustomLegacyFieldHandlerInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function supports(Value $value): bool
     {
@@ -19,15 +21,15 @@ class StringFieldHandler implements CustomLegacyFieldHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function toString(Value $value, FieldDefinition $fieldDefinition): string
     {
-        return (string)$value;
+        return (string) $value;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {

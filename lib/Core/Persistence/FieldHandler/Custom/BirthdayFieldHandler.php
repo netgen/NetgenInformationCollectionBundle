@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom;
 
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\FieldType\Value;
+use Netgen\Bundle\BirthdayBundle\Core\FieldType\Birthday\Value as BirthdayValue;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
-use Ibexa\Core\FieldType\Value;
-use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Netgen\Bundle\BirthdayBundle\Core\FieldType\Birthday\Value as BirthdayValue;
 
 class BirthdayFieldHandler implements CustomLegacyFieldHandlerInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function supports(Value $value): bool
     {
@@ -19,7 +21,7 @@ class BirthdayFieldHandler implements CustomLegacyFieldHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function toString(Value $value, FieldDefinition $fieldDefinition): string
     {
@@ -27,7 +29,7 @@ class BirthdayFieldHandler implements CustomLegacyFieldHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {
@@ -35,7 +37,7 @@ class BirthdayFieldHandler implements CustomLegacyFieldHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function fromLegacyValue(FieldValue $legacyData)
     {

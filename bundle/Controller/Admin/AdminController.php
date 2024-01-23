@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
-use Ibexa\Contracts\Core\Repository\Values\Content\Content;
-use Ibexa\Core\MVC\Symfony\Security\Authorization\Attribute;
 use Ibexa\Bundle\Core\Controller;
 use Ibexa\Contracts\Core\Repository\ContentService;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Core\MVC\Symfony\Security\Authorization\Attribute;
 use Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder;
 use Netgen\InformationCollection\API\Persistence\Anonymizer\Anonymizer;
 use Netgen\InformationCollection\API\Service\InformationCollection;
 use Netgen\InformationCollection\API\Value\Collection;
 use Netgen\InformationCollection\API\Value\Filter\CollectionFields;
-use Netgen\InformationCollection\API\Value\Filter\Collections;
 use Netgen\InformationCollection\API\Value\Filter\CollectionId;
+use Netgen\InformationCollection\API\Value\Filter\Collections;
 use Netgen\InformationCollection\API\Value\Filter\ContentId;
 use Netgen\InformationCollection\API\Value\Filter\Contents;
 use Netgen\InformationCollection\API\Value\Filter\Query;
@@ -30,6 +32,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
+
+use function array_merge;
+use function count;
+use function time;
 
 class AdminController extends Controller
 {
@@ -60,8 +66,7 @@ class AdminController extends Controller
         EzInfoCollectionRepository $infoCollectionRepository,
         EzInfoCollectionAttributeRepository $infoCollectionAttributeRepository,
         FormBuilder $builder
-    )
-    {
+    ) {
         $this->service = $service;
         $this->contentService = $contentService;
         $this->configResolver = $configResolver;
@@ -74,7 +79,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Displays overview page
+     * Displays overview page.
      */
     public function overviewAction(Request $request): Response
     {
@@ -83,27 +88,27 @@ class AdminController extends Controller
         $adapter = new InformationCollectionContentsAdapter($this->service, Query::countQuery());
         $pager = $this->getPager($adapter, (int) $request->query->get('page'));
 
-        return $this->render("@NetgenInformationCollection/admin/overview.html.twig", ['objects' => $pager]);
+        return $this->render('@NetgenInformationCollection/admin/overview.html.twig', ['objects' => $pager]);
     }
 
     /**
-     * Displays list of collection for selected Content
+     * Displays list of collection for selected Content.
      */
     public function collectionListAction(Request $request, Content $content): Response
     {
         $this->checkReadPermissions();
 
         $adapter = new InformationCollectionCollectionListAdapter($this->service, ContentId::withContentId($content->id));
-        $pager = $this->getPager($adapter, (int)$request->query->get('page'));
+        $pager = $this->getPager($adapter, (int) $request->query->get('page'));
 
-        return $this->render("@NetgenInformationCollection/admin/collection_list.html.twig", [
+        return $this->render('@NetgenInformationCollection/admin/collection_list.html.twig', [
             'objects' => $pager,
             'content' => $content,
         ]);
     }
 
     /**
-     * Handles collection search
+     * Handles collection search.
      */
     public function searchAction(Request $request, Content $content): Response
     {
@@ -112,9 +117,10 @@ class AdminController extends Controller
         $query = SearchQuery::withContentAndSearchText($content->id, $request->query->get('searchText'));
 
         $adapter = new InformationCollectionCollectionListSearchAdapter($this->service, $query);
-        $pager = $this->getPager($adapter, (int)$request->query->get('page'));
+        $pager = $this->getPager($adapter, (int) $request->query->get('page'));
 
-        return $this->render("@NetgenInformationCollection/admin/collection_list.html.twig",
+        return $this->render(
+            '@NetgenInformationCollection/admin/collection_list.html.twig',
             [
                 'objects' => $pager,
                 'content' => $content,
@@ -123,20 +129,20 @@ class AdminController extends Controller
     }
 
     /**
-     * Displays individual collection details
+     * Displays individual collection details.
      */
     public function viewAction(Collection $collection): Response
     {
         $this->checkReadPermissions();
 
-        return $this->render("@NetgenInformationCollection/admin/view.html.twig", [
+        return $this->render('@NetgenInformationCollection/admin/view.html.twig', [
             'collection' => $collection,
             'content' => $collection->getContent(),
         ]);
     }
 
     /**
-     * Handles actions performed on overview page
+     * Handles actions performed on overview page.
      */
     public function handleContentsAction(Request $request): RedirectResponse
     {
@@ -152,7 +158,6 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('DeleteCollectionByContentAction')) {
-
             $this->checkDeletePermissions();
 
             $query = new Contents($contents);
@@ -170,7 +175,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Handles actions performed on collection list page
+     * Handles actions performed on collection list page.
      */
     public function handleCollectionListAction(Request $request): RedirectResponse
     {
@@ -187,7 +192,6 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('DeleteCollectionAction')) {
-
             $this->checkDeletePermissions();
 
             $query = new Collections($contentId, $collections);
@@ -200,7 +204,6 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('AnonymizeCollectionAction')) {
-
             $this->checkAnonymizePermissions();
 
             foreach ($collections as $collection) {
@@ -218,7 +221,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Handles action on collection details page
+     * Handles action on collection details page.
      */
     public function handleCollectionAction(Request $request): RedirectResponse
     {
@@ -239,7 +242,6 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('DeleteFieldAction')) {
-
             $this->checkDeletePermissions();
 
             $query = new CollectionFields($contentId, $collectionId, $fields);
@@ -252,7 +254,6 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('AnonymizeFieldAction')) {
-
             $this->checkAnonymizePermissions();
 
             $this->anonymizer->anonymizeCollection($collectionId, $fields);
@@ -263,25 +264,22 @@ class AdminController extends Controller
         }
 
         if ($request->request->has('DeleteCollectionAction')) {
-
             $this->checkDeletePermissions();
 
             $query = new Collections($contentId, [$collectionId]);
             $this->service->deleteCollections($query);
 
-            $this->addFlashMessage("success", "collection_removed");
+            $this->addFlashMessage('success', 'collection_removed');
 
             return $this->redirectToRoute('netgen_information_collection.route.admin.collection_list', ['contentId' => $contentId]);
-
         }
 
         if ($request->request->has('AnonymizeCollectionAction')) {
-
             $this->checkAnonymizePermissions();
 
             $this->anonymizer->anonymizeCollection($collectionId);
 
-            $this->addFlashMessage("success", "collection_anonymized");
+            $this->addFlashMessage('success', 'collection_anonymized');
 
             return $this->redirectToRoute('netgen_information_collection.route.admin.view', ['collectionId' => $collectionId]);
         }
@@ -355,19 +353,17 @@ class AdminController extends Controller
             );
         }
 
-        return $this->render("@NetgenInformationCollection/admin/edit.html.twig", [
+        return $this->render('@NetgenInformationCollection/admin/edit.html.twig', [
             'collection' => $collection,
             'content' => $location->getContent(),
             'form' => $form->createView(),
         ]);
     }
 
-
-
     /**
      * Adds a flash message with specified parameters.
      */
-    protected function addFlashMessage(string $messageType, string $message, int $count = 1, array $parameters = array()): void
+    protected function addFlashMessage(string $messageType, string $message, int $count = 1, array $parameters = []): void
     {
         $parameters = array_merge($parameters, ['count' => $count]);
 
@@ -382,7 +378,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Returns configured instance of Pagerfanta
+     * Returns configured instance of Pagerfanta.
      */
     protected function getPager(AdapterInterface $adapter, int $currentPage): Pagerfanta
     {

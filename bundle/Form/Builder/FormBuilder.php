@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\InformationCollectionBundle\Form\Builder;
 
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
@@ -21,12 +23,12 @@ use Symfony\Component\Routing\RouterInterface;
 class FormBuilder
 {
     public function __construct(
-        protected readonly FormFactoryInterface    $formFactory,
-        protected readonly ContentTypeService      $contentTypeService,
-        protected readonly RouterInterface         $router,
+        protected readonly FormFactoryInterface $formFactory,
+        protected readonly ContentTypeService $contentTypeService,
+        protected readonly RouterInterface $router,
         protected readonly ConfigResolverInterface $configResolver,
-        protected readonly FieldDataFactory        $legacyFactory,
-        protected readonly FieldHandlerRegistry    $registry
+        protected readonly FieldDataFactory $legacyFactory,
+        protected readonly FieldHandlerRegistry $registry
     ) {
     }
 
@@ -37,14 +39,12 @@ class FormBuilder
         $struct = new InformationCollectionStruct();
 
         foreach ($collection->getAttributes() as $attribute) {
-
             $fieldValue = $this->fromLegacyValue(
                 new FieldValue(
                     $attribute->getField()->id,
                     $attribute->getValue()->getDataText(),
                     $attribute->getValue()->getDataInt(),
                     $attribute->getValue()->getDataFloat()
-
                 ),
                 $attribute->getFieldDefinition()
             );

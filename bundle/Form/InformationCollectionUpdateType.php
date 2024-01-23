@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\InformationCollectionBundle\Form;
 
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
@@ -14,6 +16,9 @@ use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function array_keys;
+use function in_array;
+
 class InformationCollectionUpdateType extends AbstractContentType
 {
     protected FieldTypeHandlerRegistry $fieldTypeHandlerRegistry;
@@ -24,8 +29,8 @@ class InformationCollectionUpdateType extends AbstractContentType
 
     public function __construct(
         FieldTypeHandlerRegistry $fieldTypeHandlerRegistry,
-        DataMapperInterface      $dataMapper,
-        ConfigResolverInterface  $configResolver
+        DataMapperInterface $dataMapper,
+        ConfigResolverInterface $configResolver
     ) {
         parent::__construct($fieldTypeHandlerRegistry, $dataMapper);
         $this->configResolver = $configResolver;
@@ -38,7 +43,6 @@ class InformationCollectionUpdateType extends AbstractContentType
 
     /**
      * Returns the prefix of the template block name for this type.
-     *
      */
     public function getBlockPrefix(): string
     {
@@ -122,5 +126,3 @@ class InformationCollectionUpdateType extends AbstractContentType
         return $contentType->mainLanguageCode;
     }
 }
-
-
