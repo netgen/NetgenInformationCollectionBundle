@@ -157,11 +157,10 @@ class DataAnonymizerCommand extends Command
         return false;
     }
 
-    protected function getDateFromPeriod()
+    protected function getDateFromPeriod(): \DateTimeImmutable
     {
-        $dt = new DateTime();
-        $dt->sub($this->period);
+        $dt = new \DateTimeImmutable();
 
-        return $dt;
+        return $dt->sub($this->period);
     }
 }
