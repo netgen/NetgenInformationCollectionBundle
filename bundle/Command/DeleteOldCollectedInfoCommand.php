@@ -114,7 +114,9 @@ class DeleteOldCollectedInfoCommand extends Command
             );
             $collections = $this->infoCollection->filterCollections($filterCriteria);
 
-            $extractIdFunction = static fn ($collection) => $collection->getId();
+            $extractIdFunction = function($collection) {
+                return $collection->getId();
+            };
 
             $collectionsIds = array_map($extractIdFunction, $collections->getCollections());
             $filterCollections = new Value\Filter\Collections($contentId, $collectionsIds);
