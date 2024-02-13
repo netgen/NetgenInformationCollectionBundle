@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\InformationCollectionBundle\Command;
 
 use DateInterval;
+use DateTimeImmutable;
 use Exception;
 use Netgen\InformationCollection\API\Service\InformationCollection;
 use Netgen\InformationCollection\API\Value;
@@ -196,9 +197,9 @@ class DeleteOldCollectedInfoCommand extends Command
         return false;
     }
 
-    protected function getDateFromPeriod(): \DateTimeImmutable
+    protected function getDateFromPeriod(): DateTimeImmutable
     {
-        $dt = new \DateTimeImmutable();
+        $dt = new DateTimeImmutable();
 
         return $dt->sub($this->period);
     }
