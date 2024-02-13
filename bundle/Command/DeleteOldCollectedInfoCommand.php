@@ -30,7 +30,7 @@ use function sprintf;
 
 use const PHP_INT_MAX;
 
-class DeleteOldCollectedInfoCommand extends Command
+final class DeleteOldCollectedInfoCommand extends Command
 {
     protected static $defaultName = 'nginfocollector:delete';
 
