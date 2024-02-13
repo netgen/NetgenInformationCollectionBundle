@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Command;
 
+use DateTimeImmutable;
 use Netgen\InformationCollection\Core\Persistence\Anonymizer\AnonymizerServiceFacade;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\HelpCommand;
@@ -11,7 +12,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use DateInterval;
-use DateTime;
 use Exception;
 
 class DataAnonymizerCommand extends Command
@@ -159,7 +159,7 @@ class DataAnonymizerCommand extends Command
 
     protected function getDateFromPeriod(): \DateTimeImmutable
     {
-        $dt = new \DateTimeImmutable();
+        $dt = new DateTimeImmutable();
 
         return $dt->sub($this->period);
     }
