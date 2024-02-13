@@ -37,7 +37,7 @@ class DeleteOldCollectedInfoCommand extends Command
     /**
      * @var DateInterval
      */
-    protected $period;
+    private $period;
 
     /**
      * @var InformationCollection
