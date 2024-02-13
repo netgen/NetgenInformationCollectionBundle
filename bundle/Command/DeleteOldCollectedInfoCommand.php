@@ -150,7 +150,7 @@ final class DeleteOldCollectedInfoCommand extends Command
         }
     }
 
-    protected function displayHelp(InputInterface $input, OutputInterface $output)
+    private function displayHelp(InputInterface $input, OutputInterface $output)
     {
         $help = new HelpCommand();
         $help->setCommand($this);
@@ -158,7 +158,7 @@ final class DeleteOldCollectedInfoCommand extends Command
         return $help->run($input, $output);
     }
 
-    protected function getFields(InputInterface $input)
+    private function getFields(InputInterface $input)
     {
         if (!empty($input->getOption('all'))) {
             return [];
@@ -182,7 +182,7 @@ final class DeleteOldCollectedInfoCommand extends Command
         return [];
     }
 
-    protected function proceedWithAction(InputInterface $input, OutputInterface $output)
+    private function proceedWithAction(InputInterface $input, OutputInterface $output)
     {
         if ($input->getOption('neglect')) {
             return true;
@@ -197,7 +197,7 @@ final class DeleteOldCollectedInfoCommand extends Command
         return false;
     }
 
-    protected function getDateFromPeriod(): DateTimeImmutable
+    private function getDateFromPeriod(): DateTimeImmutable
     {
         $dt = new DateTimeImmutable();
 
