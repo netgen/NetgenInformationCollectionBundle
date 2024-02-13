@@ -9,6 +9,14 @@ services:
         tags:
             - { name: console.command }
 
+    netgen_information_collection.command.delete:
+        class: Netgen\Bundle\InformationCollectionBundle\Command\DeleteOldCollectedInfoCommand
+        arguments:
+            - '@netgen_information_collection.api.service'
+        tags:
+            - { name: console.command }
+
+
     netgen_information_collection.param_converter.collection:
         class: Netgen\Bundle\InformationCollectionBundle\ParamConverter\CollectionParamConverter
         arguments:

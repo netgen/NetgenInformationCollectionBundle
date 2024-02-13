@@ -7,7 +7,9 @@ namespace Netgen\InformationCollection\API\Value\Filter;
 final class Collections
 {
     /**
-     * @var array
+     * @var array<int, int>
+     *
+     * Array of ids of collections.
      */
     private $collections;
 
