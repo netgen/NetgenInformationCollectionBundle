@@ -157,7 +157,7 @@ class DataAnonymizerCommand extends Command
         return false;
     }
 
-    protected function getDateFromPeriod(): \DateTimeImmutable
+    protected function getDateFromPeriod(): DateTimeImmutable
     {
         $dt = new DateTimeImmutable();
 
