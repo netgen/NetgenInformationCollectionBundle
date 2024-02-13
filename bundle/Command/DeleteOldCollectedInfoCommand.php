@@ -110,7 +110,7 @@ final class DeleteOldCollectedInfoCommand extends Command
 
             $filterCriteria = new Value\Filter\FilterCriteria(
                 new ContentId($contentId, 0, PHP_INT_MAX),
-                new \DateTimeImmutable('@0'),
+                new DateTimeImmutable('@0'),
                 $this->getDateFromPeriod(),
             );
             $collections = $this->infoCollection->filterCollections($filterCriteria);
