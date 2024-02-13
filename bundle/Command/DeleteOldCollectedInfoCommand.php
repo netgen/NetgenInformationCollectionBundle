@@ -42,7 +42,7 @@ final class DeleteOldCollectedInfoCommand extends Command
     /**
      * @var InformationCollection
      */
-    private  $infoCollection;
+    private $infoCollection;
 
     public function __construct(InformationCollection $infoCollection)
     {
