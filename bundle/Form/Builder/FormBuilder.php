@@ -39,7 +39,7 @@ class FormBuilder
         $struct = new InformationCollectionStruct();
 
         foreach ($collection->getAttributes() as $attribute) {
-            $fieldValue = $this->fromLegacyValue($attribute);
+            $fieldValue = $this->fromAttribute($attribute);
 
             if ($fieldValue !== null) {
                 $struct->setCollectedFieldValue($attribute->getField()->getFieldDefinitionIdentifier(), $fieldValue);
@@ -62,7 +62,7 @@ class FormBuilder
             );
     }
 
-    private function fromLegacyValue(Attribute $attribute)
+    private function fromAttribute(Attribute $attribute)
     {
         $legacyData = new FieldValue(
             $attribute->getField()->id,
