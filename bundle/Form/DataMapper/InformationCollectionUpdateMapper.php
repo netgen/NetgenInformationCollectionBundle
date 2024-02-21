@@ -1,27 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\Bundle\InformationCollectionBundle\Form\DataMapper;
 
-use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
 use Netgen\Bundle\IbexaFormsBundle\Form\DataMapper;
 use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
-use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
 use RuntimeException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PropertyAccess\PropertyPathInterface;
 
 class InformationCollectionUpdateMapper extends DataMapper
 {
-
     protected function mapToForm(
-        FormInterface         $form,
-        DataWrapper           $data,
+        FormInterface $form,
+        DataWrapper $data,
         PropertyPathInterface $propertyPath
-    ): void
-    {
+    ): void {
         $contentType = $data->definition;
 
-        $fieldDefinitionIdentifier = (string)$propertyPath;
+        $fieldDefinitionIdentifier = (string) $propertyPath;
         $fieldDefinition = $contentType->getFieldDefinition($fieldDefinitionIdentifier);
 
         if (null === $fieldDefinition) {
@@ -50,15 +48,14 @@ class InformationCollectionUpdateMapper extends DataMapper
     }
 
     protected function mapFromForm(
-        FormInterface         $form,
-        DataWrapper           $data,
+        FormInterface $form,
+        DataWrapper $data,
         PropertyPathInterface $propertyPath
-    ): void
-    {
+    ): void {
         $payload = $data->payload;
         $contentType = $data->definition;
 
-        $fieldDefinitionIdentifier = (string)$propertyPath;
+        $fieldDefinitionIdentifier = (string) $propertyPath;
         $fieldDefinition = $contentType->getFieldDefinition($fieldDefinitionIdentifier);
 
         if (null === $fieldDefinition) {
