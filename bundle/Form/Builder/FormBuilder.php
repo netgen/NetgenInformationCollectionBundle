@@ -7,11 +7,11 @@ namespace Netgen\Bundle\InformationCollectionBundle\Form\Builder;
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Ibexa\Core\Repository\SiteAccessAware\ContentTypeService;
-use Ibexa\Core\Repository\Values\ContentType\FieldDefinition;
 use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
 use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
 use Netgen\Bundle\InformationCollectionBundle\Form\InformationCollectionUpdateType;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
+use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\Collection;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 use Netgen\InformationCollection\Core\Factory\FieldDataFactory;
@@ -39,15 +39,7 @@ class FormBuilder
         $struct = new InformationCollectionStruct();
 
         foreach ($collection->getAttributes() as $attribute) {
-            $fieldValue = $this->fromLegacyValue(
-                new FieldValue(
-                    $attribute->getField()->id,
-                    $attribute->getValue()->getDataText(),
-                    $attribute->getValue()->getDataInt(),
-                    $attribute->getValue()->getDataFloat()
-                ),
-                $attribute->getFieldDefinition()
-            );
+            $fieldValue = $this->fromLegacyValue($attribute);
 
             if ($fieldValue !== null) {
                 $struct->setCollectedFieldValue($attribute->getField()->getFieldDefinitionIdentifier(), $fieldValue);
@@ -70,9 +62,16 @@ class FormBuilder
             );
     }
 
-    private function fromLegacyValue(FieldValue $legacyData, FieldDefinition $field)
+    private function fromLegacyValue(Attribute $attribute)
     {
-        $handler = $this->registry->handle($field->defaultValue);
+        $legacyData = new FieldValue(
+            $attribute->getField()->id,
+            $attribute->getValue()->getDataText(),
+            $attribute->getValue()->getDataInt(),
+            $attribute->getValue()->getDataFloat()
+        );
+
+        $handler = $this->registry->handle($attribute->getFieldDefinition()->defaultValue);
         if (!$handler instanceof CustomLegacyFieldHandlerInterface) {
             return null;
         }
