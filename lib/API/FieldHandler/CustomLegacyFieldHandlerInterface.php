@@ -15,4 +15,6 @@ interface CustomLegacyFieldHandlerInterface extends CustomFieldHandlerInterface
      * in legacy information collection database structure.
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue;
+
+    public function fromLegacyValue(FieldValue $legacyData);
 }

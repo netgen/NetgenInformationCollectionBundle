@@ -30,7 +30,7 @@ class DateFieldHandler implements CustomLegacyFieldHandlerInterface
         return FieldValue::withIntValue($fieldDefinition->id, $value->date->getTimestamp());
     }
 
-    public function fromLegacyValue(FieldDefinition $legacyData)
+    public function fromLegacyValue(FieldValue $legacyData)
     {
     }
 }

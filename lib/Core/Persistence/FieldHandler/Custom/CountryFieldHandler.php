@@ -6,6 +6,7 @@ namespace Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom;
 
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 use Ibexa\Core\FieldType\Country\Value as CountryValue;
+use Ibexa\Core\FieldType\Country\Type as CountryType;
 use Ibexa\Core\FieldType\Value;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
@@ -19,6 +20,14 @@ use function implode;
  */
 final class CountryFieldHandler implements CustomLegacyFieldHandlerInterface
 {
+
+    private CountryType $countryType;
+
+    public function __construct(CountryType $countryType)
+    {
+        $this->countryType = $countryType;
+    }
+
     public function supports(Value $value): bool
     {
         return $value instanceof CountryValue;
@@ -35,5 +44,10 @@ final class CountryFieldHandler implements CustomLegacyFieldHandlerInterface
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
     {
         return FieldValue::withStringValue($fieldDefinition->id, implode(', ', array_column($value->countries, 'Alpha2')));
+    }
+
+    public function fromLegacyValue(FieldValue $legacyData)
+    {
+        return $this->countryType->fromHash(explode(', ', $legacyData->getDataText()));
     }
 }
