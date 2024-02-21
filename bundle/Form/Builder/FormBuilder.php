@@ -52,7 +52,7 @@ class FormBuilder
 
         return $this->formFactory
             ->createNamedBuilder(
-                $contentType->identifier . '_' . $location->id,
+                sprintf('%s_%d', $contentType->identifier, $location->id),
                 InformationCollectionUpdateType::class,
                 $data,
                 [
