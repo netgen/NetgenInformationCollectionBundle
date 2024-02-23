@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form\Builder;
 
+use Ibexa\Contracts\Core\FieldType\Value as ValueInterface;
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Ibexa\Core\Repository\SiteAccessAware\ContentTypeService;
@@ -63,7 +64,7 @@ class FormBuilder
             );
     }
 
-    private function fromAttribute(Attribute $attribute)
+    private function fromAttribute(Attribute $attribute): ?ValueInterface
     {
         $handler = $this->registry->handle($attribute->getFieldDefinition()->defaultValue);
         if (!$handler instanceof CustomLegacyFieldHandlerInterface) {
