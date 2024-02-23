@@ -20,6 +20,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\RouterInterface;
 
+use function sprintf;
+
 class FormBuilder
 {
     public function __construct(
@@ -29,8 +31,7 @@ class FormBuilder
         protected readonly ConfigResolverInterface $configResolver,
         protected readonly FieldDataFactory $legacyFactory,
         protected readonly FieldHandlerRegistry $registry
-    ) {
-    }
+    ) {}
 
     public function createUpdateFormForLocation(Location $location, Collection $collection): FormBuilderInterface
     {
@@ -64,17 +65,17 @@ class FormBuilder
 
     private function fromAttribute(Attribute $attribute)
     {
+        $handler = $this->registry->handle($attribute->getFieldDefinition()->defaultValue);
+        if (!$handler instanceof CustomLegacyFieldHandlerInterface) {
+            return null;
+        }
+
         $legacyData = new FieldValue(
             $attribute->getField()->id,
             $attribute->getValue()->getDataText(),
             $attribute->getValue()->getDataInt(),
             $attribute->getValue()->getDataFloat()
         );
-
-        $handler = $this->registry->handle($attribute->getFieldDefinition()->defaultValue);
-        if (!$handler instanceof CustomLegacyFieldHandlerInterface) {
-            return null;
-        }
 
         return $handler->fromLegacyValue($legacyData);
     }
