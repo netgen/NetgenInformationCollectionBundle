@@ -18,6 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function array_keys;
 use function in_array;
+use function sprintf;
 
 class InformationCollectionUpdateType extends AbstractContentType
 {
@@ -62,30 +63,23 @@ class InformationCollectionUpdateType extends AbstractContentType
     {
         /** @var DataWrapper $dataWrapper */
         $dataWrapper = $options['data'];
-        $collection = $options['collection'];
 
         if (!$dataWrapper instanceof DataWrapper) {
-            throw new RuntimeException(
-                'Data must be an instance of Netgen\\EzFormsBundle\\Form\\DataWrapper'
-            );
+            throw new RuntimeException(sprintf('Data must be an instance of %s', DataWrapper::class));
         }
 
         /** @var InformationCollectionStruct $payload */
         $payload = $dataWrapper->payload;
 
         if (!$payload instanceof InformationCollectionStruct) {
-            throw new RuntimeException(
-                'Data payload must be an instance of Netgen\\Bundle\\EzFormsBundle\\Form\\Payload\\InformationCollectionStruct'
-            );
+            throw new RuntimeException(sprintf('Data payload must be an instance of %s', InformationCollectionStruct::class));
         }
 
         /** @var ContentType $contentType */
         $contentType = $dataWrapper->definition;
 
         if (!$contentType instanceof ContentType) {
-            throw new RuntimeException(
-                'Data definition must be an instance of eZ\\Publish\\API\\Repository\\Values\\ContentType\\ContentType'
-            );
+            throw new RuntimeException(sprintf('Data definition must be an instance of %s', ContentType::class));
         }
 
         $builder->setDataMapper($this->dataMapper);
@@ -101,12 +95,17 @@ class InformationCollectionUpdateType extends AbstractContentType
 
             $handler = $this->fieldTypeHandlerRegistry->get($fieldDefinition->fieldTypeIdentifier);
 
-            $handler->buildFieldUpdateForm($builder, $fieldDefinition, $dataWrapper->target->content, $this->getLanguageCode($contentType));
+            $handler->buildFieldUpdateForm(
+                $builder,
+                $fieldDefinition,
+                $dataWrapper->target->content,
+                $this->getLanguageCode($contentType)
+            );
         }
     }
 
     /**
-     * If ContentType language code is in languages array then use it, else use first available one.
+     * If ContentType language code is in languages array then use it, else use the main language.
      *
      * @param ContentType $contentType
      *
