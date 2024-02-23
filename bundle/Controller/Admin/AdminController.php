@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin;
 
+use Doctrine\ORM\NonUniqueResultException;
+use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use Ibexa\Bundle\Core\Controller;
 use Ibexa\Contracts\Core\Repository\ContentService;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
@@ -20,6 +22,7 @@ use Netgen\InformationCollection\API\Value\Filter\ContentId;
 use Netgen\InformationCollection\API\Value\Filter\Contents;
 use Netgen\InformationCollection\API\Value\Filter\Query;
 use Netgen\InformationCollection\API\Value\Filter\SearchQuery;
+use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Netgen\InformationCollection\Core\Factory\FieldDataFactory;
 use Netgen\InformationCollection\Core\Pagination\InformationCollectionCollectionListAdapter;
 use Netgen\InformationCollection\Core\Pagination\InformationCollectionCollectionListSearchAdapter;
@@ -31,6 +34,7 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_merge;
@@ -289,29 +293,37 @@ class AdminController extends Controller
         return $this->redirectToRoute('netgen_information_collection.route.admin.view', ['collectionId' => $collectionId]);
     }
 
-    public function editAction(Request $request, int $collectionId)
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function editAction(Request $request, int $collectionId): RedirectResponse|Response
     {
         $this->checkEditPermissions();
 
         $collection = $this->service->getCollection(new CollectionId($collectionId));
 
-        $locationService = $this->getRepository()->getLocationService();
-
-        $location = $locationService->loadLocation($collection->getContent()->contentInfo->mainLocationId);
+        $location = $collection->getContent()->contentInfo->getMainLocation();
 
         $form = $this->builder->createUpdateFormForLocation($location, $collection)->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var InformationCollectionStruct $struct */
             $struct = $form->getData()->payload;
 
+            /** @var ContentType $contentType */
             $contentType = $form->getData()->definition;
 
-            $ezInfo = $this->infoCollectionRepository->find($collectionId);
-            $ezInfo->setModified(time());
+            $ezInfoCollection = $this->infoCollectionRepository->find($collectionId);
 
-            $this->infoCollectionRepository->save($ezInfo);
+            if ($ezInfoCollection === null) {
+                throw new NotFoundHttpException();
+            }
+
+            $ezInfoCollection->setModified(time());
+
+            $this->infoCollectionRepository->save($ezInfoCollection);
 
             foreach ($struct->getCollectedFields() as $fieldDefIdentifier => $value) {
                 if ($value === null) {
@@ -322,14 +334,12 @@ class AdminController extends Controller
 
                 $legacyValue = $this->factory->getLegacyValue($value, $fieldDefinition);
 
-                $ezInfoAttributes = $this->infoCollectionAttributeRepository->findByCollectionIdAndFieldDefinitionIds(
+                $ezInfoAttributes = $this->infoCollectionAttributeRepository->findByCollectionIdAndFieldDefinitionId(
                     $collectionId,
-                    [$fieldDefinition->id]
+                    $fieldDefinition->id
                 );
 
-                if (count($ezInfoAttributes) > 0) {
-                    $ezInfoAttribute = $ezInfoAttributes[0];
-                } else {
+                if ($ezInfoAttributes === null) {
                     $ezInfoAttribute = $this->infoCollectionAttributeRepository->getInstance();
                     $ezInfoAttribute->setContentObjectId($collection->getContent()->id);
                     $ezInfoAttribute->setContentObjectAttributeId($collection->getContent()->getField($fieldDefinition->identifier)->id);
