@@ -334,12 +334,12 @@ class AdminController extends Controller
 
                 $legacyValue = $this->factory->getLegacyValue($value, $fieldDefinition);
 
-                $ezInfoAttributes = $this->infoCollectionAttributeRepository->findByCollectionIdAndFieldDefinitionId(
+                $ezInfoAttribute = $this->infoCollectionAttributeRepository->findByCollectionIdAndFieldDefinitionId(
                     $collectionId,
                     $fieldDefinition->id
                 );
 
-                if ($ezInfoAttributes === null) {
+                if ($ezInfoAttribute === null) {
                     $ezInfoAttribute = $this->infoCollectionAttributeRepository->getInstance();
                     $ezInfoAttribute->setContentObjectId($collection->getContent()->id);
                     $ezInfoAttribute->setContentObjectAttributeId($collection->getContent()->getField($fieldDefinition->identifier)->id);
