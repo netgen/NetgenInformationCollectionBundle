@@ -99,6 +99,22 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
             ->getResult();
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findByCollectionIdAndFieldDefinitionId(int $collectionId, int $fieldDefinitionId): mixed
+    {
+        $qb = $this->createQueryBuilder('eica');
+
+        return $qb->select('eica')
+            ->where('eica.informationCollectionId = :collectionId')
+            ->setParameter('collectionId', $collectionId)
+            ->andWhere('eica.contentClassAttributeId = :fieldId')
+            ->setParameter('fieldId', $fieldDefinitionId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function updateByCollectionId(CollectionId $collectionId, Attribute $attribute): void
     {
         $entity = $this->findOneBy([
