@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form\DataMapper;
 
+use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use Netgen\Bundle\IbexaFormsBundle\Form\DataMapper;
 use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
 use RuntimeException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PropertyAccess\PropertyPathInterface;
+
+use function sprintf;
 
 class InformationCollectionUpdateMapper extends DataMapper
 {
@@ -17,21 +21,21 @@ class InformationCollectionUpdateMapper extends DataMapper
         DataWrapper $data,
         PropertyPathInterface $propertyPath
     ): void {
+        /** @var ContentType $contentType */
         $contentType = $data->definition;
 
         $fieldDefinitionIdentifier = (string) $propertyPath;
         $fieldDefinition = $contentType->getFieldDefinition($fieldDefinitionIdentifier);
 
-        if (null === $fieldDefinition) {
-            throw new RuntimeException(
-                "Data definition does not contain expected FieldDefinition '{$fieldDefinitionIdentifier}'"
-            );
+        if ($fieldDefinition === null) {
+            throw new RuntimeException(sprintf('Data definition does not contain expected FieldDefinition %s', $fieldDefinitionIdentifier));
         }
 
         $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;
 
         $handler = $this->fieldTypeHandlerRegistry->get($fieldTypeIdentifier);
 
+        /** @var InformationCollectionStruct $struct */
         $struct = $data->payload;
 
         $collectedFieldValue = $struct->getCollectedFieldValue($fieldDefinitionIdentifier);
@@ -58,10 +62,8 @@ class InformationCollectionUpdateMapper extends DataMapper
         $fieldDefinitionIdentifier = (string) $propertyPath;
         $fieldDefinition = $contentType->getFieldDefinition($fieldDefinitionIdentifier);
 
-        if (null === $fieldDefinition) {
-            throw new RuntimeException(
-                "Data definition does not contain expected FieldDefinition '{$fieldDefinitionIdentifier}'"
-            );
+        if ($fieldDefinition === null) {
+            throw new RuntimeException(sprintf('Data definition does not contain expected FieldDefinition %s', $fieldDefinitionIdentifier));
         }
 
         $fieldTypeIdentifier = $fieldDefinition->fieldTypeIdentifier;
