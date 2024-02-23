@@ -48,6 +48,7 @@ final class CountryFieldHandler implements CustomLegacyFieldHandlerInterface
 
     public function fromLegacyValue(FieldValue $legacyData)
     {
-        return $this->countryType->fromHash(explode(', ', $legacyData->getDataText()));
+        $countryCodes = explode(',', $legacyData->getDataText());
+        return $this->countryType->fromHash(array_map(fn($code) => trim($code), $countryCodes));
     }
 }

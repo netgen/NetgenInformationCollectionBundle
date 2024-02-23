@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom;
 
+use Ibexa\Contracts\Core\FieldType\Value as ValueInterface;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 use Ibexa\Core\FieldType\DateAndTime\Value as DateAndTimeValue;
 use Ibexa\Core\FieldType\Value;
@@ -32,7 +33,7 @@ class DateAndTimeFieldHandler implements CustomLegacyFieldHandlerInterface
         return FieldValue::withIntValue($fieldDefinition->id, $value->value->getTimestamp());
     }
 
-    public function fromLegacyValue(FieldValue $legacyData)
+    public function fromLegacyValue(FieldValue $legacyData): ?ValueInterface
     {
     }
 }

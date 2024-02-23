@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom;
 
+use Ibexa\Contracts\Core\FieldType\Value as ValueInterface;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 use Ibexa\Core\FieldType\Value;
 use Netgen\Bundle\EnhancedSelectionBundle\Core\FieldType\EnhancedSelection\Value as EnhancedSelectionValue;
@@ -44,7 +45,7 @@ class EnhancedSelectionFieldHandler implements CustomLegacyFieldHandlerInterface
     /**
      * {@inheritDoc}
      */
-    public function fromLegacyValue(FieldValue $legacyData)
+    public function fromLegacyValue(FieldValue $legacyData): ValueInterface
     {
         return new EnhancedSelectionValue([$legacyData->getDataText()]);
     }
