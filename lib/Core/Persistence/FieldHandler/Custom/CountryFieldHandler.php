@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom;
 
+use Ibexa\Contracts\Core\FieldType\Value as ValueInterface;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 use Ibexa\Core\FieldType\Country\Value as CountryValue;
 use Ibexa\Core\FieldType\Country\Type as CountryType;
@@ -46,7 +47,7 @@ final class CountryFieldHandler implements CustomLegacyFieldHandlerInterface
         return FieldValue::withStringValue($fieldDefinition->id, implode(', ', array_column($value->countries, 'Alpha2')));
     }
 
-    public function fromLegacyValue(FieldValue $legacyData)
+    public function fromLegacyValue(FieldValue $legacyData): ?ValueInterface
     {
         $countryCodes = explode(',', $legacyData->getDataText());
         return $this->countryType->fromHash(array_map(fn($code) => trim($code), $countryCodes));
