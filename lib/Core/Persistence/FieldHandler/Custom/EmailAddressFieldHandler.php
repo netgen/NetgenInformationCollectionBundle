@@ -7,7 +7,6 @@ namespace Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom;
 use Ibexa\Contracts\Core\FieldType\Value as ValueInterface;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 use Ibexa\Core\FieldType\EmailAddress\Value as EmailAddressValue;
-use Ibexa\Core\FieldType\Value;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 
@@ -16,7 +15,7 @@ class EmailAddressFieldHandler implements CustomLegacyFieldHandlerInterface
     /**
      * {@inheritDoc}
      */
-    public function supports(Value $value): bool
+    public function supports(ValueInterface $value): bool
     {
         return $value instanceof EmailAddressValue;
     }
@@ -24,7 +23,7 @@ class EmailAddressFieldHandler implements CustomLegacyFieldHandlerInterface
     /**
      * {@inheritDoc}
      */
-    public function toString(Value $value, FieldDefinition $fieldDefinition): string
+    public function toString(ValueInterface $value, FieldDefinition $fieldDefinition): string
     {
         return (string) $value;
     }
@@ -32,7 +31,7 @@ class EmailAddressFieldHandler implements CustomLegacyFieldHandlerInterface
     /**
      * {@inheritDoc}
      */
-    public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
+    public function getLegacyValue(ValueInterface $value, FieldDefinition $fieldDefinition): FieldValue
     {
         return new FieldValue($fieldDefinition->id, $value->email, 0, 0);
     }
