@@ -318,7 +318,7 @@ class AdminController extends Controller
             $ezInfoCollection = $this->infoCollectionRepository->find($collectionId);
 
             if ($ezInfoCollection === null) {
-                throw new NotFoundHttpException();
+               $this->createNotFoundException();
             }
 
             $ezInfoCollection->setModified(time());
