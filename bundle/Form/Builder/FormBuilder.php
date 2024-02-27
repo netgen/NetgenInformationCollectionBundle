@@ -41,7 +41,7 @@ class FormBuilder
         $struct = new InformationCollectionStruct();
 
         foreach ($collection->getAttributes() as $attribute) {
-            $fieldValue = $this->fromAttribute($attribute);
+            $fieldValue = $this->getFieldValueFromAttribute($attribute);
 
             if ($fieldValue !== null) {
                 $struct->setCollectedFieldValue($attribute->getField()->getFieldDefinitionIdentifier(), $fieldValue);
