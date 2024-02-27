@@ -303,6 +303,10 @@ class AdminController extends Controller
 
         $location = $collection->getContent()->contentInfo->getMainLocation();
 
+        if ($location === null) {
+            $this->createNotFoundException();
+        }
+
         $form = $this->builder->createUpdateFormForLocation($location, $collection)->getForm();
 
         $form->handleRequest($request);
