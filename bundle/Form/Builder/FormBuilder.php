@@ -64,7 +64,7 @@ class FormBuilder
             );
     }
 
-    private function fromAttribute(Attribute $attribute): ?ValueInterface
+    private function getFieldValueFromAttribute(Attribute $attribute): ?ValueInterface
     {
         $handler = $this->registry->handle($attribute->getFieldDefinition()->defaultValue);
         if (!$handler instanceof CustomLegacyFieldHandlerInterface) {
