@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Core\Factory;
 
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Core\FieldType\Value;
+use Ibexa\Contracts\Core\Repository\Values\ValueObject;
 use Netgen\InformationCollection\API\Factory\FieldValueFactoryInterface;
 use Netgen\InformationCollection\API\FieldHandler\CustomFieldHandlerInterface;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
@@ -24,7 +24,7 @@ class FieldDataFactory implements FieldValueFactoryInterface
     /**
      * Returns value object that represents legacy value.
      */
-    public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue
+    public function getLegacyValue(ValueObject $value, FieldDefinition $fieldDefinition): FieldValue
     {
         /** @var CustomFieldHandlerInterface $handler */
         $handler = $this->registry->handle($value);

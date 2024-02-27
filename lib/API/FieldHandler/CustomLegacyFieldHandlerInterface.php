@@ -6,7 +6,7 @@ namespace Netgen\InformationCollection\API\FieldHandler;
 
 use Ibexa\Contracts\Core\FieldType\Value as ValueInterface;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Core\FieldType\Value;
+use Ibexa\Contracts\Core\Repository\Values\ValueObject;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 
 interface CustomLegacyFieldHandlerInterface extends CustomFieldHandlerInterface
@@ -15,7 +15,7 @@ interface CustomLegacyFieldHandlerInterface extends CustomFieldHandlerInterface
      * Transforms Ibexa field value to object persistable
      * in legacy information collection database structure.
      */
-    public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): FieldValue;
+    public function getLegacyValue(ValueObject $value, FieldDefinition $fieldDefinition): FieldValue;
 
     public function fromLegacyValue(FieldValue $legacyData): ?ValueInterface;
 }

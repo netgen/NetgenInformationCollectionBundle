@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Persistence\FieldHandler;
 
-use Ibexa\Core\FieldType\Value;
+use Ibexa\Contracts\Core\Repository\Values\ValueObject;
 use Netgen\InformationCollection\API\FieldHandler\CustomFieldHandlerInterface;
 
 final class FieldHandlerRegistry
@@ -24,7 +24,7 @@ final class FieldHandlerRegistry
         $this->handlers[] = $handler;
     }
 
-    public function handle(Value $value): ?CustomFieldHandlerInterface
+    public function handle(ValueObject $value): ?CustomFieldHandlerInterface
     {
         /** @var CustomFieldHandlerInterface $handler */
         foreach ($this->handlers as $handler) {
