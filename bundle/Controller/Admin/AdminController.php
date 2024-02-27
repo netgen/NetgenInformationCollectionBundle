@@ -34,7 +34,6 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_merge;
@@ -318,7 +317,7 @@ class AdminController extends Controller
             $ezInfoCollection = $this->infoCollectionRepository->find($collectionId);
 
             if ($ezInfoCollection === null) {
-               $this->createNotFoundException();
+                $this->createNotFoundException();
             }
 
             $ezInfoCollection->setModified(time());
@@ -331,6 +330,10 @@ class AdminController extends Controller
                 }
 
                 $fieldDefinition = $contentType->getFieldDefinition($fieldDefIdentifier);
+
+                if ($fieldDefinition === null) {
+                    continue;
+                }
 
                 $legacyValue = $this->factory->getLegacyValue($value, $fieldDefinition);
 
