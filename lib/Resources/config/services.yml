@@ -116,3 +116,6 @@ services:
             - '@netgen_information_collection.captcha.service'
         tags:
             - { name: twig.runtime }
+
+    netgen_information_collection.form.fieldtype_handler_registry:
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandlerRegistry

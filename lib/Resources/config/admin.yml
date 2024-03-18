@@ -63,13 +63,13 @@ services:
         class: Netgen\Bundle\InformationCollectionBundle\Form\DataMapper\InformationCollectionUpdateMapper
         public: false
         arguments:
-            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+            - "@netgen_information_collection.form.fieldtype_handler_registry"
 
     netgen_information_collection.form.type.information_collection_update:
         class: Netgen\Bundle\InformationCollectionBundle\Form\InformationCollectionUpdateType
         #        public: false
         arguments:
-            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+            - "@netgen_information_collection.form.fieldtype_handler_registry"
             - "@netgen_information_collection.form.data_mapper.info_collection_update"
             - "@ibexa.config.resolver"
         tags:
