@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Netgen\Bundle\InformationCollectionBundle\Form\DataMapper;
 
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use Netgen\Bundle\IbexaFormsBundle\Form\DataMapper;
-use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
-use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\Bundle\InformationCollectionBundle\Form\DataMapper;
+use Netgen\Bundle\InformationCollectionBundle\Form\DataWrapper;
+use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
 use RuntimeException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PropertyAccess\PropertyPathInterface;

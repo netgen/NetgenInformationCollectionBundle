@@ -6,10 +6,8 @@ namespace Netgen\Bundle\InformationCollectionBundle\Form;
 
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
-use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
-use Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandlerRegistry;
-use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
-use Netgen\Bundle\IbexaFormsBundle\Form\Type\AbstractContentType;
+use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\Bundle\InformationCollectionBundle\Form\Type\AbstractContentType;
 use Netgen\InformationCollection\API\Value\Collection;
 use RuntimeException;
 use Symfony\Component\Form\DataMapperInterface;

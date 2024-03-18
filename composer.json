@@ -29,7 +29,6 @@
         "ibexa/admin-ui": "^4.0",
         "ibexa/content-forms": "^4.0",
         "ibexa/core": "^4.0",
-        "netgen/ibexa-forms-bundle": "^4.0",
         "symfony/swiftmailer-bundle": "^3.4",
         "twig/twig": "^3.0",
         "google/recaptcha": "^1.2",
