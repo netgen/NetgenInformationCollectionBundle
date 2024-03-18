@@ -304,7 +304,7 @@ class AdminController extends Controller
         $location = $collection->getContent()->contentInfo->getMainLocation();
 
         if ($location === null) {
-            $this->createNotFoundException();
+            throw $this->createNotFoundException();
         }
 
         $form = $this->builder->createUpdateFormForLocation($location, $collection)->getForm();
@@ -321,7 +321,7 @@ class AdminController extends Controller
             $ezInfoCollection = $this->infoCollectionRepository->find($collectionId);
 
             if ($ezInfoCollection === null) {
-                $this->createNotFoundException();
+                throw $this->createNotFoundException();
             }
 
             $ezInfoCollection->setModified(time());
