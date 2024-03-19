@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints;
 
 final class BinaryFile extends FieldTypeHandler
 {
-    public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): void
+    public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): mixed
     {
     }
 
