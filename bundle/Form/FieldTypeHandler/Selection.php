@@ -15,7 +15,7 @@ use function array_flip;
 
 final class Selection extends FieldTypeHandler
 {
-    public function convertFieldValueFromForm($value): SelectionValue\Value
+    public function convertFieldValueFromForm(mixed $value): SelectionValue\Value
     {
         return new SelectionValue\Value((array) $value);
     }
@@ -36,6 +36,7 @@ final class Selection extends FieldTypeHandler
             return $value->selection[0];
         }
 
+        /** @var $value SelectionValue\Value */
         return $value->selection;
     }
 
