@@ -14,9 +14,9 @@ use Symfony\Component\Validator\Constraints;
 
 abstract class FieldTypeHandler implements FieldTypeHandlerInterface
 {
-    abstract public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null);
+    abstract public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): mixed;
 
-    public function convertFieldValueFromForm($data)
+    public function convertFieldValueFromForm(mixed $data): mixed
     {
         return $data;
     }
@@ -90,23 +90,5 @@ abstract class FieldTypeHandler implements FieldTypeHandlerInterface
         }
 
         return $options;
-    }
-
-    /**
-     * Adds a hidden field to the from, indicating that empty value passed
-     * for update should be ignored.
-     */
-    protected function skipEmptyUpdate(FormBuilderInterface $formBuilder, string $fieldDefinitionIdentifier): void
-    {
-        $options = [
-            'mapped' => false,
-            'data' => 'yes',
-        ];
-
-        $formBuilder->add(
-            "ibexa_forms_skip_empty_update_{$fieldDefinitionIdentifier}",
-            HiddenType::class,
-            $options
-        );
     }
 }
