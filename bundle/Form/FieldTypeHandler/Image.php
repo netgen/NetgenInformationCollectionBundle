@@ -52,9 +52,6 @@ final class Image extends FieldTypeHandler
             );
         }
 
-        // Image should not be erased (updated as empty) if nothing is selected in file input
-        $this->skipEmptyUpdate($formBuilder, $fieldDefinition->identifier);
-
         $options['block_name'] = 'ibexa_forms_image';
 
         $formBuilder->add($fieldDefinition->identifier, FileType::class, $options);

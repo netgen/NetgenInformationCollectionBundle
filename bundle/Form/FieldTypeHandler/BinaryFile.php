@@ -54,8 +54,6 @@ final class BinaryFile extends FieldTypeHandler
             );
         }
 
-        // File should not be erased (updated as empty) if nothing is selected in file input
-        $this->skipEmptyUpdate($formBuilder, $fieldDefinition->identifier);
         // Used with update for displaying current file
         $options['block_name'] = 'ibexa_forms_binary_file';
 

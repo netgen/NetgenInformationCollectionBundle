@@ -18,6 +18,7 @@ final class DateAndTime extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): DateTime
     {
+        /** @var $value DTValue\Value */
         return $value->value;
     }
 

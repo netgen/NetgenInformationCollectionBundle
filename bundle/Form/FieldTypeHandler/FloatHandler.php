@@ -26,6 +26,7 @@ final class FloatHandler extends FieldTypeHandler
 
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): float
     {
+        /** @var $value FloatValue */
         return $value->value;
     }
 

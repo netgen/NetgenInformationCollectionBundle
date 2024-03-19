@@ -17,6 +17,7 @@ final class Isbn extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): string
     {
+        /** @var $value IsbnValue */
         return $value->isbn;
     }
 

@@ -17,6 +17,7 @@ final class Email extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): string
     {
+        /** @var $value EmailAddress\Value */
         return $value->email;
     }
 

@@ -26,6 +26,7 @@ final class IntegerHandler extends FieldTypeHandler
 
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): int
     {
+        /** @var $value IntegerValue\Value */
         return (int) $value->value;
     }
 

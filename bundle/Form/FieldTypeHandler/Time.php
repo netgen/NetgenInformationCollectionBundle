@@ -19,6 +19,7 @@ final class Time extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): DateTime
     {
+        /** @var $value TimeValue */
         $time = $value->time;
         if (is_int($time)) {
             return new DateTime("@{$time}");

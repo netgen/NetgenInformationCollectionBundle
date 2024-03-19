@@ -17,6 +17,7 @@ final class Url extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): array
     {
+        /** @var $value UrlValue\Value */
         return ['url' => $value->link, 'text' => $value->text];
     }
 

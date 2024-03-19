@@ -16,6 +16,7 @@ final class TextBlock extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): string
     {
+        /** @var $value TextBlockValue */
         return $value->text;
     }
 

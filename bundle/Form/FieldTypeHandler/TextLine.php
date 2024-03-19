@@ -17,6 +17,7 @@ final class TextLine extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): string
     {
+        /** @var $value TextLineValue */
         return $value->text;
     }
 
