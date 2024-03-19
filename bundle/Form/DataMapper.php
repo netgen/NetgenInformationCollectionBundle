@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form;
 
-use DateTime;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\PropertyAccess\PropertyPathInterface;
+
 use function is_array;
 use function is_object;
 
@@ -34,7 +34,7 @@ abstract class DataMapper implements DataMapperInterface
         $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
     }
 
-    public function mapDataToForms($data, $forms): void
+    public function mapDataToForms($data, \Traversable $forms): void
     {
         $empty = null === $data || [] === $data;
 
@@ -57,7 +57,7 @@ abstract class DataMapper implements DataMapperInterface
         }
     }
 
-    public function mapFormsToData($forms, &$data): void
+    public function mapFormsToData(\Traversable $forms, &$data): void
     {
         if (null === $data) {
             return;
@@ -86,7 +86,6 @@ abstract class DataMapper implements DataMapperInterface
             // If $data is out ContentCreateStruct, we need to map it to the corresponding field
             // in the struct
             if ($data instanceof DataWrapper) {
-                /* @var $data \Netgen\Bundle\InformationCollectionBundle\Form\DataWrapper */
                 $this->mapFromForm($form, $data, $propertyPath);
 
                 continue;
@@ -95,7 +94,7 @@ abstract class DataMapper implements DataMapperInterface
             // If the field is of type DateTime and the data is the same skip the update to
             // keep the original object hash
             if (
-                $form->getData() instanceof DateTime
+                $form->getData() instanceof \DateTimeImmutable
                 && $form->getData() === $this->propertyAccessor->getValue($data, $propertyPath)
             ) {
                 continue;
@@ -132,20 +131,4 @@ abstract class DataMapper implements DataMapperInterface
         DataWrapper $data,
         PropertyPathInterface $propertyPath
     ): void;
-
-    /**
-     * Returns if the update should be skipped for empty value.
-     *
-     * @param mixed $value
-     */
-    protected function shouldSkipForEmptyUpdate(FormInterface $form, $value, string $fieldDefinitionIdentifier): bool
-    {
-        return
-            $value === null
-            && (
-                $form->getRoot()->has("ibexa_forms_skip_empty_update_{$fieldDefinitionIdentifier}")
-                && $form->getRoot()->get("ibexa_forms_skip_empty_update_{$fieldDefinitionIdentifier}")->getData() === 'yes'
-            )
-        ;
-    }
 }
