@@ -38,7 +38,7 @@ final class Country extends FieldTypeHandler
         }
     }
 
-    public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null)
+    public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): mixed
     {
         $isMultiple = true;
         if ($fieldDefinition !== null) {
@@ -56,6 +56,7 @@ final class Country extends FieldTypeHandler
             return reset($keys);
         }
 
+        /** @var $value CountryValue */
         return array_keys($value->countries);
     }
 
