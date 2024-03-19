@@ -20,9 +20,8 @@ interface FieldTypeHandlerInterface
      * @see buildFieldCreateForm
      * @see buildFieldUpdateForm
      *
-     * @return mixed
      */
-    public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null);
+    public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): mixed;
 
     /**
      * Converts the form data to a format that can be accepted by Ibexa Platform FieldType.
@@ -30,11 +29,8 @@ interface FieldTypeHandlerInterface
      * @see buildFieldCreateForm
      * @see buildFieldUpdateForm
      *
-     * @param mixed $data
-     *
-     * @return mixed
      */
-    public function convertFieldValueFromForm($data);
+    public function convertFieldValueFromForm(mixed $data): mixed;
 
     /**
      * Builds the form the given $fieldDefinition and $languageCode for creating.
