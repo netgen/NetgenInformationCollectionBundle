@@ -14,11 +14,6 @@ services:
         tags:
             - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: eztext }
 
-    netgen_information_collection.form.fieldtype_handler.ezuser:
-        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\User
-        tags:
-            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezuser }
-
     netgen_information_collection.form.fieldtype_handler.ezemail:
         class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Email
         tags:
