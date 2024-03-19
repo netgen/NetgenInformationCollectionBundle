@@ -7,6 +7,7 @@ imports:
     - { resource: admin.yml }
     - { resource: anonymizers.yml }
     - { resource: ibexa_admin.yml }
+    - { resource: form_fieldtype_handlers.yaml }
 
 parameters:
 

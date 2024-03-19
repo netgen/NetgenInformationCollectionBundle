@@ -1,104 +1,104 @@
 services:
     netgen_information_collection.form.fieldtype_handler.ezimage:
-        class: Netgen\Bundle\InformationCollection\Form\FieldTypeHandler\Image
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Image
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezimage }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezimage }
 
     netgen_information_collection.form.fieldtype_handler.ezstring:
-        class: Netgen\Bundle\InformationCollection\Form\FieldTypeHandler\TextLine
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\TextLine
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezstring }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezstring }
 
     netgen_information_collection.form.fieldtype_handler.eztext:
-        class: Netgen\Bundle\InformationCollection\Form\FieldTypeHandler\TextBlock
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\TextBlock
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: eztext }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: eztext }
 
     netgen_information_collection.form.fieldtype_handler.ezuser:
-        class: Netgen\Bundle\InformationCollection\Form\FieldTypeHandler\User
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\User
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezuser }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezuser }
 
     netgen_information_collection.form.fieldtype_handler.ezemail:
-        class: Netgen\Bundle\InformationCollection\Form\FieldTypeHandler\Email
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Email
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezemail }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezemail }
 
     netgen_information_collection.form.fieldtype_handler.ezselection:
-        class: Netgen\Bundle\InformationCollection\Form\FieldTypeHandler\Selection
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Selection
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezselection }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezselection }
 
     netgen_information_collection.form.fieldtype_handler.ezboolean:
-        class: Netgen\Bundle\InformationCollection\Form\FieldTypeHandler\Checkbox
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Checkbox
         arguments: [ "@Ibexa\\Core\\Helper\\FieldHelper" ]
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezboolean }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezboolean }
 
     netgen_information_collection.form.fieldtype_handler.ezdate:
-        class: Netgen\Bundle\InformationCollection\Form\FieldTypeHandler\Date
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Date
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezdate }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezdate }
 
     netgen_information_collection.form.fieldtype_handler.ezdatetime:
-        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\DateAndTime
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\DateAndTime
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezdatetime }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezdatetime }
 
     netgen_information_collection.form.fieldtype_handler.ezinteger:
-        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\IntegerHandler
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\IntegerHandler
         arguments: [ "@Ibexa\\Core\\Helper\\FieldHelper" ]
         tags:
-            - {name: netgen_information_collection.form.fieldtype_handler, alias: ezinteger}
+            - {name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezinteger}
 
     netgen_information_collection.form.fieldtype_handler.ezfloat:
-        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\FloatHandler
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\FloatHandler
         arguments: [ "@Ibexa\\Core\\Helper\\FieldHelper" ]
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezfloat }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezfloat }
 
     netgen_information_collection.form.fieldtype_handler.ezurl:
-        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Url
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Url
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezurl }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezurl }
 
     netgen_information_collection.form.fieldtype_handler.ezcountry:
-        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Country
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Country
         arguments:
             - "%ibexa.field_type.country.data%"
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezcountry }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezcountry }
 
     netgen_information_collection.form.fieldtype_handler.eztime:
-        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Time
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Time
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: eztime }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: eztime }
 
     netgen_information_collection.form.fieldtype_handler.ezisbn:
-        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Isbn
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Isbn
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezisbn }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezisbn }
 
     netgen_information_collection.form.fieldtype_handler.ezbinaryfile:
-        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\BinaryFile
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\BinaryFile
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezbinaryfile }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezbinaryfile }
 
     netgen_information_collection.form.fieldtype_handler.ezgmaplocation:
-        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\MapLocation
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\MapLocation
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezgmaplocation }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezgmaplocation }
 
     netgen_information_collection.form.fieldtype_handler.ezobjectrelation:
-        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Relation
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Relation
         arguments:
-          - "@ibexa.api.repository"
+            - "@ibexa.api.repository"
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezobjectrelation }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezobjectrelation }
 
     netgen_information_collection.form.fieldtype_handler.ezobjectrelationlist:
-        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\RelationList
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\RelationList
         arguments:
-          - "@ibexa.api.repository"
+            - "@ibexa.api.repository"
         tags:
-            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezobjectrelationlist }
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ezobjectrelationlist }

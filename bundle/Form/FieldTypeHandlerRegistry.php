@@ -43,12 +43,13 @@ final class FieldTypeHandlerRegistry
      * @throws \OutOfBoundsException
      * @throws \RuntimeException When type is not a FieldTypeHandlerInterface instance nor a callable factory
      */
-    public function get(string $identifier): FieldTypeHandlerInterface
+    public function get(string $identifier): FieldTypeHandlerInterface|\Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandlerInterface
     {
         if (!isset($this->map[$identifier])) {
             throw new OutOfBoundsException("No handler registered for FieldType '{$identifier}'.");
         }
-        if (!$this->map[$identifier] instanceof FieldTypeHandlerInterface) {
+        if (!$this->map[$identifier] instanceof FieldTypeHandlerInterface && !$this->map[$identifier] instanceof \Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandlerInterface) {
+
             if (!is_callable($this->map[$identifier])) {
                 throw new RuntimeException("FieldTypeHandler '{$identifier}' is not callable nor instance");
             }
@@ -56,7 +57,7 @@ final class FieldTypeHandlerRegistry
             $factory = $this->map[$identifier];
             $this->map[$identifier] = $factory();
 
-            if (!$this->map[$identifier] instanceof FieldTypeHandlerInterface) {
+            if (!$this->map[$identifier] instanceof FieldTypeHandlerInterface && !$this->map[$identifier] instanceof \Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandlerInterface) {
                 throw new RuntimeException(
                     "FieldTypeHandler '{$identifier}' callable did not return a FieldTypeHandlerInterface instance, " .
                     'instead: ' . gettype($this->map[$identifier])
