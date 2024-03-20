@@ -13,10 +13,8 @@ final class InformationCollectionStruct
 
     /**
      * Returns value for $fieldDefIdentifier.
-     *
-     * @return mixed
      */
-    public function getCollectedFieldValue(string $fieldDefIdentifier)
+    public function getCollectedFieldValue(string $fieldDefIdentifier): mixed
     {
         return $this->collectedData[$fieldDefIdentifier] ?? null;
     }
