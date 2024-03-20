@@ -22,7 +22,7 @@ final class BinaryFile extends FieldTypeHandler
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null $data
      */
-    public function convertFieldValueFromForm($data): ?FileValue
+    public function convertFieldValueFromForm(mixed $data): ?FileValue
     {
         if ($data === null) {
             return null;

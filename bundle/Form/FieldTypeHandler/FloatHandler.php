@@ -32,7 +32,7 @@ final class FloatHandler extends FieldTypeHandler
         return $value->value;
     }
 
-    public function convertFieldValueFromForm($data): FloatValue
+    public function convertFieldValueFromForm(mixed $data): FloatValue
     {
         if (!is_numeric($data)) {
             $data = null;

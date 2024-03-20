@@ -40,7 +40,7 @@ final class RelationList extends FieldTypeHandler
         return $value->destinationContentIds;
     }
 
-    public function convertFieldValueFromForm($data): RelationListValue
+    public function convertFieldValueFromForm(mixed $data): RelationListValue
     {
         return new RelationListValue($data);
     }

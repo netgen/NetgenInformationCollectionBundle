@@ -23,7 +23,7 @@ final class TextLine extends FieldTypeHandler
         return $value->text;
     }
 
-    public function convertFieldValueFromForm($data): TextLineValue
+    public function convertFieldValueFromForm(mixed $data): TextLineValue
     {
         if (empty($data)) {
             $data = '';

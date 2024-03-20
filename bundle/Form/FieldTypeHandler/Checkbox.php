@@ -31,7 +31,7 @@ final class Checkbox extends FieldTypeHandler
         return $value->bool;
     }
 
-    public function convertFieldValueFromForm($data): CheckboxValue
+    public function convertFieldValueFromForm(mixed $data): CheckboxValue
     {
         return new CheckboxValue($data);
     }

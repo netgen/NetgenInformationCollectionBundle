@@ -22,7 +22,7 @@ final class TextBlock extends FieldTypeHandler
         return $value->text;
     }
 
-    public function convertFieldValueFromForm($data): TextBlockValue
+    public function convertFieldValueFromForm(mixed $data): TextBlockValue
     {
         if (empty($data)) {
             $data = '';

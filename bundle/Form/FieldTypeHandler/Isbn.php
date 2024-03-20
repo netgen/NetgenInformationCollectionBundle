@@ -23,7 +23,7 @@ final class Isbn extends FieldTypeHandler
         return $value->isbn;
     }
 
-    public function convertFieldValueFromForm($data): IsbnValue
+    public function convertFieldValueFromForm(mixed $data): IsbnValue
     {
         if (empty($data)) {
             $data = '';

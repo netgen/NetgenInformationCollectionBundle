@@ -31,7 +31,7 @@ final class Time extends FieldTypeHandler
         return new DateTime();
     }
 
-    public function convertFieldValueFromForm($data): TimeValue
+    public function convertFieldValueFromForm(mixed $data): TimeValue
     {
         if ($data instanceof DateTime) {
             return TimeValue::fromDateTime($data);

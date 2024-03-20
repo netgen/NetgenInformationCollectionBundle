@@ -24,7 +24,7 @@ final class MapLocation extends FieldTypeHandler
         ];
     }
 
-    public function convertFieldValueFromForm($data): ?MapLocationValue
+    public function convertFieldValueFromForm(mixed $data): ?MapLocationValue
     {
         if (!is_array($data)) {
             return null;

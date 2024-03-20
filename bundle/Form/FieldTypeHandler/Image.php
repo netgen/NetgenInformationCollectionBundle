@@ -19,7 +19,7 @@ final class Image extends FieldTypeHandler
     {
     }
 
-    public function convertFieldValueFromForm($data): ?ImageValue
+    public function convertFieldValueFromForm(mixed $data): ?ImageValue
     {
         if ($data === null) {
             return null;

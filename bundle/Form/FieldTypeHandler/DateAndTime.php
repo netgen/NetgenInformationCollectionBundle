@@ -24,7 +24,7 @@ final class DateAndTime extends FieldTypeHandler
         return $value->value;
     }
 
-    public function convertFieldValueFromForm($data): DTValue
+    public function convertFieldValueFromForm(mixed $data): DTValue
     {
         return new DTValue($data);
     }

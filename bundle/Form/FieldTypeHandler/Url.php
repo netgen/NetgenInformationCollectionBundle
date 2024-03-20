@@ -23,7 +23,7 @@ final class Url extends FieldTypeHandler
         return ['url' => $value->link, 'text' => $value->text];
     }
 
-    public function convertFieldValueFromForm($data): UrlValue
+    public function convertFieldValueFromForm(mixed $data): UrlValue
     {
         if (!is_array($data)) {
             $data = [];

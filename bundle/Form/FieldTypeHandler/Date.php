@@ -24,7 +24,7 @@ final class Date extends FieldTypeHandler
         return $value->date;
     }
 
-    public function convertFieldValueFromForm($data): DateValue
+    public function convertFieldValueFromForm(mixed $data): DateValue
     {
         return new DateValue($data);
     }

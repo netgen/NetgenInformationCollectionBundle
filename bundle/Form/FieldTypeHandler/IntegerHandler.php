@@ -32,7 +32,7 @@ final class IntegerHandler extends FieldTypeHandler
         return (int) $value->value;
     }
 
-    public function convertFieldValueFromForm($data): IntegerValue
+    public function convertFieldValueFromForm(mixed $data): IntegerValue
     {
         if (!is_int($data)) {
             $data = null;

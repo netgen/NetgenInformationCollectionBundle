@@ -62,7 +62,7 @@ final class Country extends FieldTypeHandler
         return array_keys($value->countries);
     }
 
-    public function convertFieldValueFromForm($data): CountryValue
+    public function convertFieldValueFromForm(mixed $data): CountryValue
     {
         $country = [];
 

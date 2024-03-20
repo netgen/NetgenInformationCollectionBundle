@@ -23,7 +23,7 @@ final class Email extends FieldTypeHandler
         return $value->email;
     }
 
-    public function convertFieldValueFromForm($data): EmailAddressValue
+    public function convertFieldValueFromForm(mixed $data): EmailAddressValue
     {
         return new EmailAddressValue($data);
     }

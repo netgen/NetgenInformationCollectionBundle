@@ -34,7 +34,7 @@ abstract class DataMapper implements DataMapperInterface
         $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
     }
 
-    public function mapDataToForms($viewData, \Traversable $forms): void
+    public function mapDataToForms(mixed $viewData, \Traversable $forms): void
     {
         $empty = null === $viewData || [] === $viewData;
 
@@ -57,7 +57,7 @@ abstract class DataMapper implements DataMapperInterface
         }
     }
 
-    public function mapFormsToData(\Traversable $forms, &$viewData): void
+    public function mapFormsToData(\Traversable $forms, mixed &$viewData): void
     {
         if (null === $viewData) {
             return;
