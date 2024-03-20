@@ -10,7 +10,7 @@ use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Ibexa\Core\Repository\SiteAccessAware\ContentTypeService;
 use Netgen\Bundle\InformationCollectionBundle\Form\DataWrapper;
 use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
-use Netgen\Bundle\InformationCollectionBundle\Form\InformationCollectionUpdateType;
+use Netgen\Bundle\InformationCollectionBundle\Form\Type\InformationCollectionUpdateType;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
 use Netgen\InformationCollection\API\Value\Attribute;
 use Netgen\InformationCollection\API\Value\Collection;
@@ -20,7 +20,6 @@ use Netgen\InformationCollection\Core\Persistence\FieldHandler\FieldHandlerRegis
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\RouterInterface;
-
 use function sprintf;
 
 class FormBuilder

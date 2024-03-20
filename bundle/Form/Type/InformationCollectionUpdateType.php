@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\InformationCollectionBundle\Form;
+namespace Netgen\Bundle\InformationCollectionBundle\Form\Type;
 
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Netgen\Bundle\InformationCollectionBundle\Form\DataWrapper;
+use Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandlerRegistry;
 use Netgen\Bundle\InformationCollectionBundle\Form\Payload\InformationCollectionStruct;
-use Netgen\Bundle\InformationCollectionBundle\Form\Type\AbstractContentType;
 use Netgen\InformationCollection\API\Value\Collection;
 use RuntimeException;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use function array_keys;
 use function in_array;
 use function sprintf;
