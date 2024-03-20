@@ -57,14 +57,14 @@ abstract class DataMapper implements DataMapperInterface
         }
     }
 
-    public function mapFormsToData(\Traversable $forms, &$data): void
+    public function mapFormsToData(\Traversable $forms, &$viewData): void
     {
-        if (null === $data) {
+        if (null === $viewData) {
             return;
         }
 
-        if (!is_array($data) && !is_object($data)) {
-            throw new UnexpectedTypeException($data, 'object, array or empty');
+        if (!is_array($viewData) && !is_object($viewData)) {
+            throw new UnexpectedTypeException($viewData, 'object, array or empty');
         }
 
         foreach ($forms as $form) {
@@ -85,8 +85,8 @@ abstract class DataMapper implements DataMapperInterface
 
             // If $data is out ContentCreateStruct, we need to map it to the corresponding field
             // in the struct
-            if ($data instanceof DataWrapper) {
-                $this->mapFromForm($form, $data, $propertyPath);
+            if ($viewData instanceof DataWrapper) {
+                $this->mapFromForm($form, $viewData, $propertyPath);
 
                 continue;
             }
@@ -95,7 +95,7 @@ abstract class DataMapper implements DataMapperInterface
             // keep the original object hash
             if (
                 $form->getData() instanceof \DateTimeImmutable
-                && $form->getData() === $this->propertyAccessor->getValue($data, $propertyPath)
+                && $form->getData() === $this->propertyAccessor->getValue($viewData, $propertyPath)
             ) {
                 continue;
             }
@@ -103,14 +103,14 @@ abstract class DataMapper implements DataMapperInterface
             // If the data is identical to the value in $data, we are
             // dealing with a reference
             if (
-                is_object($data)
+                is_object($viewData)
                 && $config->getByReference()
-                && $form->getData() === $this->propertyAccessor->getValue($data, $propertyPath)
+                && $form->getData() === $this->propertyAccessor->getValue($viewData, $propertyPath)
             ) {
                 continue;
             }
 
-            $this->propertyAccessor->setValue($data, $propertyPath, $form->getData());
+            $this->propertyAccessor->setValue($viewData, $propertyPath, $form->getData());
         }
     }
 
