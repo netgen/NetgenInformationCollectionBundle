@@ -29,10 +29,8 @@ final class InformationCollectionStruct
 
     /**
      * Sets value for $fieldDefIdentifier.
-     *
-     * @param mixed $value
      */
-    public function setCollectedFieldValue(string $fieldDefIdentifier, $value): void
+    public function setCollectedFieldValue(string $fieldDefIdentifier, mixed $value): void
     {
         $this->collectedData[$fieldDefIdentifier] = $value;
     }
