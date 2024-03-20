@@ -97,3 +97,8 @@ services:
             - "@ibexa.api.repository"
         tags:
             - { name: netgen_information_collections.form.fieldtype_handler, alias: ezobjectrelationlist }
+
+    netgen_birthday.field_type.form_handler:
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Birthday
+        tags:
+            - { name: netgen_information_collections.form.fieldtype_handler, alias: ezbirthday }
