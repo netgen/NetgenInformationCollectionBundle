@@ -69,7 +69,6 @@ final class RelationList extends FieldTypeHandler
 
                 $choices = [];
 
-                /** @var \Ibexa\Contracts\Core\Repository\Values\Content\Location $child */
                 foreach ($locationList->locations as $child) {
                     $choices[$child->getContent()->getName()] = $child->contentInfo->id;
                 }
