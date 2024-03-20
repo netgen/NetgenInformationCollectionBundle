@@ -7,7 +7,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler;
 use Ibexa\Contracts\Core\FieldType\Value;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Core\FieldType\Checkbox as CheckboxValue;
+use Ibexa\Core\FieldType\Checkbox\Value as CheckboxValue;
 use Ibexa\Core\Helper\FieldHelper;
 use Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -24,13 +24,13 @@ final class Checkbox extends FieldTypeHandler
 
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): bool
     {
-        /** @var $value CheckboxValue\Value */
+        /** @var $value \Ibexa\Core\FieldType\Checkbox\Value */
         return $value->bool;
     }
 
-    public function convertFieldValueFromForm($data): CheckBoxValue\Value
+    public function convertFieldValueFromForm($data): CheckboxValue
     {
-        return new CheckboxValue\Value($data);
+        return new CheckboxValue($data);
     }
 
     protected function buildFieldForm(
@@ -41,7 +41,7 @@ final class Checkbox extends FieldTypeHandler
     ): void {
         $options = $this->getDefaultFieldOptions($fieldDefinition, $languageCode, $content);
 
-        if (!$content instanceof Content && $fieldDefinition->defaultValue instanceof CheckboxValue\Value) {
+        if (!$content instanceof Content && $fieldDefinition->defaultValue instanceof CheckboxValue) {
             $options['data'] = $fieldDefinition->defaultValue->bool;
         }
 
