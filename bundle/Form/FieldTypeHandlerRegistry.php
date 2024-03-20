@@ -30,7 +30,7 @@ final class FieldTypeHandlerRegistry
     /**
      * Register a $service for FieldType $identifier.
      *
-     * @param \Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandlerInterface|callable $handler
+     * @param \Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandlerInterface $handler
      */
     public function register(string $identifier, $handler): void
     {
