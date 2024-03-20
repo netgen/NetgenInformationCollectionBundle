@@ -15,9 +15,9 @@ use function array_flip;
 
 final class Selection extends FieldTypeHandler
 {
-    public function convertFieldValueFromForm(mixed $value): SelectionValue
+    public function convertFieldValueFromForm(mixed $data): SelectionValue
     {
-        return new SelectionValue((array) $value);
+        return new SelectionValue((array) $data);
     }
 
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): mixed
