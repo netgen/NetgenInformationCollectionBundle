@@ -34,19 +34,19 @@ abstract class DataMapper implements DataMapperInterface
         $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
     }
 
-    public function mapDataToForms($data, \Traversable $forms): void
+    public function mapDataToForms($viewData, \Traversable $forms): void
     {
-        $empty = null === $data || [] === $data;
+        $empty = null === $viewData || [] === $viewData;
 
-        if (!$empty && !is_array($data) && !is_object($data)) {
-            throw new UnexpectedTypeException($data, 'object, array or empty');
+        if (!$empty && !is_array($viewData) && !is_object($viewData)) {
+            throw new UnexpectedTypeException($viewData, 'object, array or empty');
         }
 
         foreach ($forms as $form) {
             $propertyPath = $form->getPropertyPath();
             $config = $form->getConfig();
 
-            if ($data instanceof DataWrapper && null !== $propertyPath && $config->getMapped()) {
+            if ($viewData instanceof DataWrapper && null !== $propertyPath && $config->getMapped()) {
                 /* @var $data \Netgen\Bundle\InformationCollectionBundle\Form\DataWrapper */
                 $this->mapToForm($form, $data, $propertyPath);
             } elseif (!$empty && null !== $propertyPath && $config->getMapped()) {
