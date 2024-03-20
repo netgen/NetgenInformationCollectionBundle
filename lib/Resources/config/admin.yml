@@ -53,7 +53,7 @@ services:
             - !tagged_iterator netgen_information_collection.export.formatter
 
     netgen_information_collection.form.type.export:
-        class: Netgen\Bundle\InformationCollectionBundle\Form\ExportType
+        class: Netgen\Bundle\InformationCollectionBundle\Form\Type\ExportType
         arguments:
             - "@netgen_information_collection.core.export.registry"
         tags:
@@ -66,7 +66,7 @@ services:
             - "@netgen_information_collection.form.fieldtype_handler_registry"
 
     netgen_information_collection.form.type.information_collection_update:
-        class: Netgen\Bundle\InformationCollectionBundle\Form\InformationCollectionUpdateType
+        class: Netgen\Bundle\InformationCollectionBundle\Form\Type\InformationCollectionUpdateType
         #        public: false
         arguments:
             - "@netgen_information_collection.form.fieldtype_handler_registry"
