@@ -48,10 +48,6 @@ final class FieldTypeHandlerRegistry
         }
         if (!$this->map[$identifier] instanceof FieldTypeHandlerInterface && !$this->map[$identifier] instanceof \Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandlerInterface) {
 
-            if (!is_callable($this->map[$identifier])) {
-                throw new RuntimeException("FieldTypeHandler '{$identifier}' is not callable nor instance");
-            }
-
             $factory = $this->map[$identifier];
             $this->map[$identifier] = $factory();
 
