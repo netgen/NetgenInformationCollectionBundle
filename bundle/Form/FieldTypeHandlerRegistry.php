@@ -29,10 +29,8 @@ final class FieldTypeHandlerRegistry
 
     /**
      * Register a $service for FieldType $identifier.
-     *
-     * @param \Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandlerInterface $handler
      */
-    public function register(string $identifier, $handler): void
+    public function register(string $identifier, FieldTypeHandlerInterface $handler): void
     {
         $this->map[$identifier] = $handler;
     }
