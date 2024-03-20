@@ -24,9 +24,11 @@ final class IntegerHandler extends FieldTypeHandler
         $this->fieldHelper = $fieldHelper;
     }
 
+    /**
+     * @param \Ibexa\Core\FieldType\Integer\Value $value
+     */
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): int
     {
-        /** @var $value \Ibexa\Core\FieldType\Integer\Value */
         return (int) $value->value;
     }
 

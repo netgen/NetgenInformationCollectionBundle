@@ -23,13 +23,15 @@ final class Relation extends FieldTypeHandler
         $this->repository = $repository;
     }
 
+    /**
+     * @param \Ibexa\Core\FieldType\Relation\Value $value
+     */
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): mixed
     {
         if (empty($value->destinationContentId)) {
             return null;
         }
 
-        /** @var $value \Ibexa\Core\FieldType\Relation\Value */
         return $value->destinationContentId;
     }
 

@@ -14,9 +14,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class TextBlock extends FieldTypeHandler
 {
+    /**
+     * @param \Ibexa\Core\FieldType\TextBlock\Value $value
+     */
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): string
     {
-        /** @var $value \Ibexa\Core\FieldType\TextBlock\Value */
         return $value->text;
     }
 

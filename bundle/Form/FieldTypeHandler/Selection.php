@@ -20,6 +20,9 @@ final class Selection extends FieldTypeHandler
         return new SelectionValue((array) $data);
     }
 
+    /**
+     * @param \Ibexa\Core\FieldType\Selection\Value $value
+     */
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): mixed
     {
         $isMultiple = true;
@@ -36,7 +39,6 @@ final class Selection extends FieldTypeHandler
             return $value->selection[0];
         }
 
-        /** @var $value \Ibexa\Core\FieldType\Selection\Value */
         return $value->selection;
     }
 

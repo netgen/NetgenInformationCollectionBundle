@@ -15,9 +15,11 @@ use Symfony\Component\Validator\Constraints;
 
 final class Email extends FieldTypeHandler
 {
+    /**
+     * @param \Ibexa\Core\FieldType\EmailAddress\Value $value
+     */
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): string
     {
-        /** @var $value \Ibexa\Core\FieldType\EmailAddress\Value */
         return $value->email;
     }
 

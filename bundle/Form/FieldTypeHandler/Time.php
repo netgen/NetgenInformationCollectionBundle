@@ -17,6 +17,9 @@ use function is_int;
 
 final class Time extends FieldTypeHandler
 {
+    /**
+     * @param \Ibexa\Core\FieldType\Time\Value $value
+     */
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): DateTime
     {
         /** @var $value TimeValue */

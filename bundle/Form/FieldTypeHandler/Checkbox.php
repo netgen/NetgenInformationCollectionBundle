@@ -22,9 +22,12 @@ final class Checkbox extends FieldTypeHandler
         $this->fieldHelper = $fieldHelper;
     }
 
+
+    /**
+     * @param \Ibexa\Core\FieldType\Checkbox\Value $value
+     */
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): bool
     {
-        /** @var $value \Ibexa\Core\FieldType\Checkbox\Value */
         return $value->bool;
     }
 

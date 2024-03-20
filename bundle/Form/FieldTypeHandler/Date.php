@@ -16,9 +16,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class Date extends FieldTypeHandler
 {
+    /**
+     * @param \Ibexa\Core\FieldType\Date\Value $value
+     */
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): DateTime
     {
-        /** @var $value DateValue */
         return $value->date;
     }
 

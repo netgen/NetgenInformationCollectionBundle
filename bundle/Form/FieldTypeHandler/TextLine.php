@@ -15,9 +15,11 @@ use Symfony\Component\Validator\Constraints;
 
 final class TextLine extends FieldTypeHandler
 {
+    /**
+     * @param \Ibexa\Core\FieldType\TextLine\Value $value
+     */
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): string
     {
-        /** @var $value \Ibexa\Core\FieldType\TextLine\Value */
         return $value->text;
     }
 

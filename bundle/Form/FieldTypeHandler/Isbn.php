@@ -15,9 +15,11 @@ use Symfony\Component\Validator\Constraints;
 
 final class Isbn extends FieldTypeHandler
 {
+    /**
+     * @param \Ibexa\Core\FieldType\ISBN\Value $value
+     */
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): string
     {
-        /** @var $value \Ibexa\Core\FieldType\ISBN\Value */
         return $value->isbn;
     }
 

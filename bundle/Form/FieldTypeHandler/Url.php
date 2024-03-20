@@ -15,9 +15,11 @@ use function is_array;
 
 final class Url extends FieldTypeHandler
 {
+    /**
+     * @param \Ibexa\Core\FieldType\Url\Value $value
+     */
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): array
     {
-        /** @var $value \Ibexa\Core\FieldType\Url\Value */
         return ['url' => $value->link, 'text' => $value->text];
     }
 
