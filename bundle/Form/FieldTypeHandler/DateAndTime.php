@@ -8,7 +8,7 @@ use DateTime;
 use Ibexa\Contracts\Core\FieldType\Value;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Core\FieldType\DateAndTime\Value as DTValue;
+use Ibexa\Core\FieldType\DateAndTime\Value as DateTimeValue;
 use Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,9 +24,9 @@ final class DateAndTime extends FieldTypeHandler
         return $value->value;
     }
 
-    public function convertFieldValueFromForm(mixed $data): DTValue
+    public function convertFieldValueFromForm(mixed $data): DateTimeValue
     {
-        return new DTValue($data);
+        return new DateTimeValue($data);
     }
 
     protected function buildFieldForm(
