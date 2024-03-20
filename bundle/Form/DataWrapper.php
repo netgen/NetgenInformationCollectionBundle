@@ -7,20 +7,20 @@ namespace Netgen\Bundle\InformationCollectionBundle\Form;
 final class DataWrapper
 {
     /**
-     * One of the Ibexa Platform structs, like ContentCreateStruct, UserUpdateStruct and so on.
+     * One of the Ibexa Platform structs, like ContentCreateStruct and so on.
      */
     public mixed $payload;
 
     /**
      * Definition of the target.
      *
-     * In case of Content or User target, this must be the corresponding ContentType.
+     * In case of Content target, this must be the corresponding ContentType.
      *
      */
     public mixed $definition;
 
     /**
-     * The target struct that applies to. E.g. Content, User, Section object and so on.
+     * The target struct that applies to. E.g. Content, Section object and so on.
      *
      * This target makes sense only in update context, when creating target does not
      * exist (yet to be created).
