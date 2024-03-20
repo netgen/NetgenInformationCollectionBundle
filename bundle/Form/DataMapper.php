@@ -50,7 +50,7 @@ abstract class DataMapper implements DataMapperInterface
                 /* @var $viewData \Netgen\Bundle\InformationCollectionBundle\Form\DataWrapper */
                 $this->mapToForm($form, $viewData, $propertyPath);
             } elseif (!$empty && null !== $propertyPath && $config->getMapped()) {
-                $form->setData($this->propertyAccessor->getValue($data, $propertyPath));
+                $form->setData($this->propertyAccessor->getValue($viewData, $propertyPath));
             } else {
                 $form->setData($form->getConfig()->getData());
             }
