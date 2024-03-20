@@ -7,7 +7,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler;
 use Ibexa\Contracts\Core\FieldType\Value;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Core\FieldType\MapLocation as MapLocationValue;
+use Ibexa\Core\FieldType\MapLocation\Value as MapLocationValue;
 use Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler;
 use Netgen\Bundle\InformationCollectionBundle\Form\Type\MapType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,13 +24,13 @@ final class MapLocation extends FieldTypeHandler
         ];
     }
 
-    public function convertFieldValueFromForm($data): ?MapLocationValue\Value
+    public function convertFieldValueFromForm($data): ?MapLocationValue
     {
         if (!is_array($data)) {
             return null;
         }
 
-        return new MapLocationValue\Value(
+        return new MapLocationValue(
             [
                 'latitude' => $data['latitude'],
                 'longitude' => $data['longitude'],

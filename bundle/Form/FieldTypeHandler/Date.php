@@ -8,7 +8,7 @@ use DateTime;
 use Ibexa\Contracts\Core\FieldType\Value;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Core\FieldType\Date as DateValue;
+use Ibexa\Core\FieldType\Date\Value as DateValue;
 use Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,13 +18,13 @@ final class Date extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): DateTime
     {
-        /** @var $value DateValue\Value */
+        /** @var $value DateValue */
         return $value->date;
     }
 
-    public function convertFieldValueFromForm($data): DateValue\Value
+    public function convertFieldValueFromForm($data): DateValue
     {
-        return new DateValue\Value($data);
+        return new DateValue($data);
     }
 
     protected function buildFieldForm(

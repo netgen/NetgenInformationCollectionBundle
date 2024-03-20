@@ -16,7 +16,7 @@ final class TextBlock extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): string
     {
-        /** @var $value TextBlockValue */
+        /** @var $value \Ibexa\Core\FieldType\TextBlock\Value */
         return $value->text;
     }
 

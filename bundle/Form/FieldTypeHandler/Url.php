@@ -7,7 +7,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler;
 use Ibexa\Contracts\Core\FieldType\Value;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Core\FieldType\Url as UrlValue;
+use Ibexa\Core\FieldType\Url\Value as UrlValue;
 use Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler;
 use Netgen\Bundle\InformationCollectionBundle\Form\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,11 +17,11 @@ final class Url extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): array
     {
-        /** @var $value UrlValue\Value */
+        /** @var $value \Ibexa\Core\FieldType\Url\Value */
         return ['url' => $value->link, 'text' => $value->text];
     }
 
-    public function convertFieldValueFromForm($data): UrlValue\Value
+    public function convertFieldValueFromForm($data): UrlValue
     {
         if (!is_array($data)) {
             $data = [];
@@ -29,7 +29,7 @@ final class Url extends FieldTypeHandler
             $data['text'] = null;
         }
 
-        return new UrlValue\Value($data['url'], $data['text']);
+        return new UrlValue($data['url'], $data['text']);
     }
 
     protected function buildFieldForm(

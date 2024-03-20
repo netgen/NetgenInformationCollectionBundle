@@ -17,7 +17,7 @@ final class TextLine extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): string
     {
-        /** @var $value TextLineValue */
+        /** @var $value \Ibexa\Core\FieldType\TextLine\Value */
         return $value->text;
     }
 

@@ -7,7 +7,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler;
 use Ibexa\Contracts\Core\FieldType\Value;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Core\FieldType\Integer as IntegerValue;
+use Ibexa\Core\FieldType\Integer\Value as IntegerValue;
 use Ibexa\Core\Helper\FieldHelper;
 use Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -26,17 +26,17 @@ final class IntegerHandler extends FieldTypeHandler
 
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): int
     {
-        /** @var $value IntegerValue\Value */
+        /** @var $value \Ibexa\Core\FieldType\Integer\Value */
         return (int) $value->value;
     }
 
-    public function convertFieldValueFromForm($data): IntegerValue\Value
+    public function convertFieldValueFromForm($data): IntegerValue
     {
         if (!is_int($data)) {
             $data = null;
         }
 
-        return new IntegerValue\Value($data);
+        return new IntegerValue($data);
     }
 
     protected function buildFieldForm(
@@ -47,7 +47,7 @@ final class IntegerHandler extends FieldTypeHandler
     ): void {
         $options = $this->getDefaultFieldOptions($fieldDefinition, $languageCode, $content);
 
-        if (!$content instanceof Content && $fieldDefinition->defaultValue instanceof IntegerValue\Value) {
+        if (!$content instanceof Content && $fieldDefinition->defaultValue instanceof IntegerValue) {
             $options['data'] = (int) $fieldDefinition->defaultValue->value;
         }
 

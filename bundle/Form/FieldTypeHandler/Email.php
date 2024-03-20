@@ -7,7 +7,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler;
 use Ibexa\Contracts\Core\FieldType\Value;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Core\FieldType\EmailAddress;
+use Ibexa\Core\FieldType\EmailAddress\Value as EmailAddressValue;
 use Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,13 +17,13 @@ final class Email extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): string
     {
-        /** @var $value EmailAddress\Value */
+        /** @var $value \Ibexa\Core\FieldType\EmailAddress\Value */
         return $value->email;
     }
 
-    public function convertFieldValueFromForm($data): EmailAddress\Value
+    public function convertFieldValueFromForm($data): EmailAddressValue
     {
-        return new EmailAddress\Value($data);
+        return new EmailAddressValue($data);
     }
 
     protected function buildFieldForm(

@@ -36,6 +36,7 @@ final class RelationList extends FieldTypeHandler
             return null;
         }
 
+        /** @var $value \Ibexa\Core\FieldType\RelationList\Value */
         return $value->destinationContentIds;
     }
 

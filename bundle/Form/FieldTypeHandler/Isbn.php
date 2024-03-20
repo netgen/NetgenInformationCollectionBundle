@@ -17,7 +17,7 @@ final class Isbn extends FieldTypeHandler
 {
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): string
     {
-        /** @var $value IsbnValue */
+        /** @var $value \Ibexa\Core\FieldType\ISBN\Value */
         return $value->isbn;
     }
 

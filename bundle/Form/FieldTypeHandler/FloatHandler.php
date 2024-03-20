@@ -26,7 +26,7 @@ final class FloatHandler extends FieldTypeHandler
 
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): float
     {
-        /** @var $value FloatValue */
+        /** @var $value \Ibexa\Core\FieldType\Float\Value */
         return $value->value;
     }
 

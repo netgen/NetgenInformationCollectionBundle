@@ -56,7 +56,7 @@ final class Country extends FieldTypeHandler
             return reset($keys);
         }
 
-        /** @var $value CountryValue */
+        /** @var $value \Ibexa\Core\FieldType\Country\Value */
         return array_keys($value->countries);
     }
 
