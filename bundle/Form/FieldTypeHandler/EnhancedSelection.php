@@ -14,6 +14,9 @@ use function is_array;
 
 final class EnhancedSelection extends FieldTypeHandler
 {
+    /**
+     * @param \Netgen\InformationCollection\Form\Type\FieldType\EnhancedSelection\Value $value
+     */
     public function convertFieldValueToForm(Value $value, ?FieldDefinition $fieldDefinition = null): mixed
     {
         $isMultiple = true;
@@ -33,7 +36,7 @@ final class EnhancedSelection extends FieldTypeHandler
         return $value->identifiers;
     }
 
-    public function convertFieldValueFromForm($data): EnhancedSelectionValue
+    public function convertFieldValueFromForm(mixed $data): EnhancedSelectionValue
     {
         if ($data === null) {
             return new EnhancedSelectionValue();

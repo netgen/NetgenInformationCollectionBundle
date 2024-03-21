@@ -22,7 +22,7 @@ class Birthday extends FieldTypeHandler
         return $value->date;
     }
 
-    public function convertFieldValueFromForm($data): BirthdayValue
+    public function convertFieldValueFromForm(mixed $data): BirthdayValue
     {
         if (empty($data)) {
             $data = null;
