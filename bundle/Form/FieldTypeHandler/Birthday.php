@@ -11,6 +11,7 @@ use Netgen\InformationCollection\Form\Type\FieldType\Birthday\Value as BirthdayV
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+
 class Birthday extends FieldTypeHandler
 {
     /**

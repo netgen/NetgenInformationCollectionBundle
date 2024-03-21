@@ -96,9 +96,14 @@ services:
         arguments:
             - "@ibexa.api.repository"
         tags:
-            - { name: netgen_information_collections.form.fieldtype_handler, alias: ezobjectrelationlist }
+            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezobjectrelationlist }
 
-    netgen_birthday.field_type.form_handler:
+    netgen_information_collection.form.fieldtype_handler.ezbirthday:
         class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\Birthday
         tags:
-            - { name: netgen_information_collections.form.fieldtype_handler, alias: ezbirthday }
+            - { name: netgen_information_collection.form.fieldtype_handler, alias: ezbirthday }
+
+    netgen_information_collection.form.fieldtype_handler.sckenhancedselection:
+        class: Netgen\Bundle\InformationCollectionBundle\Form\FieldTypeHandler\EnhancedSelection
+        tags:
+            - { name: netgen_information_collection.form.fieldtype_handler, alias: sckenhancedselection }
