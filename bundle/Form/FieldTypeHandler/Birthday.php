@@ -39,9 +39,8 @@ class Birthday extends FieldTypeHandler
     ): void {
         $options = $this->getDefaultFieldOptions($fieldDefinition, $languageCode, $content);
 
-        $options['input'] = 'datetime';
+        $options['input'] = 'datetime_immutable';
         $options['widget'] = 'choice';
-        $options['constraints'][] = new Assert\Date();
 
         $formBuilder->add(
             $fieldDefinition->identifier,
