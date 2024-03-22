@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Factory;
 
+use Ibexa\Contracts\Core\FieldType\Value;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Core\FieldType\Value;
 use Netgen\InformationCollection\API\Factory\FieldValueFactoryInterface;
 use Netgen\InformationCollection\API\FieldHandler\CustomFieldHandlerInterface;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
