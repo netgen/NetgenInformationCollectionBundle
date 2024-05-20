@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\InformationCollection\Doctrine\Repository;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -156,7 +157,7 @@ class EzInfoCollectionRepository extends EntityRepository
         }
     }
 
-    public function filterByIntervalOfCreation(int $contentId, \DateTimeInterface $startDate, \DateTimeInterface $endDate): array
+    public function filterByIntervalOfCreation(int $contentId, DateTimeInterface $startDate, DateTimeInterface $endDate): array
     {
 
         $qb = $this->createQueryBuilder('ezc');
