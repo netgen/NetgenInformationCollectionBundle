@@ -64,7 +64,6 @@ final class DeleteOldCollectedInfoCommand extends Command
                     new InputOption('field-identifiers', 'f', InputOption::VALUE_REQUIRED, 'Field definition identifiers list.'),
                     new InputOption('period', 'p', InputOption::VALUE_REQUIRED, 'Attributes older that this period will be deleted.'),
                     new InputOption('all', 'a', InputOption::VALUE_NONE, 'Delete all fields.'),
-                    new InputOption('neglect', 'nn', InputOption::VALUE_NONE, 'Do not ask for confirmation.'),
                 ],
             ),
         );
