@@ -126,23 +126,21 @@ final class DeleteOldCollectedInfoCommand extends Command
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        if (!empty($input->getOption('period'))) {
-            try {
-                $period = $input->getOption('period');
-                if (is_string($period)) {
-                    $this->period = new DateInterval($period);
-                }
-            } catch (Exception $exception) {
-                $output->writeln('Please enter valid DateInterval string.');
-
-                exit(0);
+        try {
+            $period = $input->getOption('period');
+            if (is_string($period)) {
+                $this->period = new DateInterval($period);
             }
+        } catch (Exception $exception) {
+            $output->writeln('Please enter valid DateInterval string.');
+
+            exit(0);
         }
     }
 
     private function getFields(InputInterface $input)
     {
-        if (!empty($input->getOption('all'))) {
+        if ($input->getOption('all')) {
             return [];
         }
 
