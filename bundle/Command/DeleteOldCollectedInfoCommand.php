@@ -97,7 +97,7 @@ final class DeleteOldCollectedInfoCommand extends Command
         $contentId = (int) $input->getOption('content-id');
         $fields = $this->getFields($input);
 
-        $info = sprintf('Command will delete %s fields for content #%d', empty($fields) ? 'all' : implode(', ', $fields), $contentId);
+        $info = sprintf('Command will delete %s fields for content #%d', count($fields) === 0 ? 'all' : implode(', ', $fields), $contentId);
         $this->io->info($info);
 
         if ($this->io->confirm('Continue with this action? y/n ', false)){
