@@ -146,7 +146,7 @@ final class DeleteOldCollectedInfoCommand extends Command
             return [];
         }
 
-        if (null !== $input->getOption('field-identifiers')) {
+        if ($input->getOption('field-identifiers') !== null) {
             $ids = [];
             $fieldIdentifiers = $input->getOption('field-identifiers');
 
