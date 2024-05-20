@@ -55,7 +55,6 @@ class DataAnonymizerCommand extends Command
         );
 
         $this->addUsage("--content-id=123 --field-identifiers=title,name,last_name");
-        $this->addUsage("--info-collection-id=456 --field-identifiers=title,name,last_name");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
