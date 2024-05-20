@@ -18,6 +18,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
+use Symfony\Component\Console\Style\StyleInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use function array_filter;
 use function array_map;
 use function array_unique;
@@ -43,6 +45,11 @@ final class DeleteOldCollectedInfoCommand extends Command
      * @var InformationCollection
      */
     private $infoCollection;
+
+    /**
+     * @var StyleInterface
+     */
+    private $io;
 
     public function __construct(InformationCollection $infoCollection)
     {
@@ -71,40 +78,30 @@ final class DeleteOldCollectedInfoCommand extends Command
         $this->addUsage('--content-id=123 --field-identifiers=title,name,last_name');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        if ($input->getOption('content-id') === null) {
-            $output->writeln('<error>                                       </error>');
-            $output->writeln('<error>     Missing content-id parameter.     </error>');
-            $output->writeln('<error>                                       </error>');
+        $this->io = new SymfonyStyle($input, $output);
 
-            return $this->displayHelp($input, $output);
+        if ($input->getOption('content-id') === null) {
+            $this->io->error('Missing content-id parameter.');
         }
 
         if ($input->getOption('field-identifiers') === null && !$input->getOption('all')) {
-            $output->writeln('<error>                                              </error>');
-            $output->writeln('<error>     Missing field-identifiers parameter.     </error>');
-            $output->writeln('<error>                                              </error>');
-
-            return $this->displayHelp($input, $output);
+            $this->io->error('Missing field-identifiers parameter.');
         }
 
         if ($input->getOption('period') === null) {
-            $output->writeln('<error>                                       </error>');
-            $output->writeln('<error>     Missing period parameter.         </error>');
-            $output->writeln('<error>                                       </error>');
-
-            return $this->displayHelp($input, $output);
+            $this->io->error('Missing period parameter.');
         }
 
         $contentId = (int) $input->getOption('content-id');
         $fields = $this->getFields($input);
 
-        $info = sprintf('Command will delete <info>%s</info> fields for content #%d', empty($fields) ? 'all' : implode(', ', $fields), $contentId);
-        $output->writeln($info);
+        $info = sprintf('Command will delete %s fields for content #%d', empty($fields) ? 'all' : implode(', ', $fields), $contentId);
+        $this->io->info($info);
 
-        if ($this->proceedWithAction($input, $output)) {
-            $output->write('<info>Running.... </info>');
+        if ($this->io->confirm('Continue with this action? y/n ', false)){
+            $this->io->info('Running....');
 
             $filterCriteria = new Value\Filter\FilterCriteria(
                 new ContentId($contentId, 0, PHP_INT_MAX),
@@ -122,14 +119,11 @@ final class DeleteOldCollectedInfoCommand extends Command
 
             $this->infoCollection->deleteCollections($filterCollections);
             $count = count($filterCollections->getCollectionIds());
-            $output->writeln('<info>Done.</info>');
-            $output->writeln("<info>Deleted #{$count} collections.</info>");
-
-            return 0;
+            $this->io->info('Done.');
+            $this->io->info("Deleted #{$count} collections.");
         }
 
-        $output->writeln('<info>Canceled.</info>');
-        return 0;
+        $this->io->info('Canceled.');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -146,14 +140,6 @@ final class DeleteOldCollectedInfoCommand extends Command
                 exit(0);
             }
         }
-    }
-
-    private function displayHelp(InputInterface $input, OutputInterface $output)
-    {
-        $help = new HelpCommand();
-        $help->setCommand($this);
-
-        return $help->run($input, $output);
     }
 
     private function getFields(InputInterface $input)
@@ -178,21 +164,6 @@ final class DeleteOldCollectedInfoCommand extends Command
         }
 
         return [];
-    }
-
-    private function proceedWithAction(InputInterface $input, OutputInterface $output)
-    {
-        if ($input->getOption('neglect')) {
-            return true;
-        }
-        $helper = $this->getHelper('question');
-        $question = new ConfirmationQuestion('Continue with this action? y/n ', false, '/^(y|j)/i');
-
-        if ($helper->ask($input, $output, $question)) {
-            return true;
-        }
-
-        return false;
     }
 
     private function getDateFromPeriod(): DateTimeImmutable
