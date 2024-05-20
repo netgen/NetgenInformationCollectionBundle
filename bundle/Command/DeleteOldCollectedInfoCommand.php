@@ -73,7 +73,7 @@ final class DeleteOldCollectedInfoCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null === $input->getOption('content-id')) {
+        if ($input->getOption('content-id') === null) {
             $output->writeln('<error>                                       </error>');
             $output->writeln('<error>     Missing content-id parameter.     </error>');
             $output->writeln('<error>                                       </error>');
@@ -81,7 +81,7 @@ final class DeleteOldCollectedInfoCommand extends Command
             return $this->displayHelp($input, $output);
         }
 
-        if (null === $input->getOption('field-identifiers') && !$input->getOption('all')) {
+        if ($input->getOption('field-identifiers') === null && !$input->getOption('all')) {
             $output->writeln('<error>                                              </error>');
             $output->writeln('<error>     Missing field-identifiers parameter.     </error>');
             $output->writeln('<error>                                              </error>');
@@ -89,7 +89,7 @@ final class DeleteOldCollectedInfoCommand extends Command
             return $this->displayHelp($input, $output);
         }
 
-        if (null === $input->getOption('period')) {
+        if ($input->getOption('period') === null) {
             $output->writeln('<error>                                       </error>');
             $output->writeln('<error>     Missing period parameter.         </error>');
             $output->writeln('<error>                                       </error>');
