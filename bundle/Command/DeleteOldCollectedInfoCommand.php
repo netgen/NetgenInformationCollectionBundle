@@ -76,7 +76,7 @@ final class DeleteOldCollectedInfoCommand extends Command
         $this->addUsage('--content-id=123 --field-identifiers=title,name,last_name');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);
 
@@ -117,9 +117,13 @@ final class DeleteOldCollectedInfoCommand extends Command
             $count = count($filterCollections->getCollectionIds());
             $this->io->info('Done.');
             $this->io->info("Deleted #{$count} collections.");
+
+            return 0;
         }
 
         $this->io->info('Canceled.');
+
+        return 0;
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
