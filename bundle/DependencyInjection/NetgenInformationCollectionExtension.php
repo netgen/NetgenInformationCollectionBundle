@@ -173,8 +173,8 @@ class NetgenInformationCollectionExtension extends Extension implements PrependE
             $xlsxExportFormatter->setAutowired(false);
             $xlsxExportFormatter->setAutoconfigured(false);
 
-            $definitions[] = $xlsExportFormatter;
-            $definitions[] = $xlsxExportFormatter;
+            $definitions[$xlsExportFormatter->getClass()] = $xlsExportFormatter;
+            $definitions[$xlsxExportFormatter->getClass()] = $xlsxExportFormatter;
         }
 
         if (!empty($definitions)) {
