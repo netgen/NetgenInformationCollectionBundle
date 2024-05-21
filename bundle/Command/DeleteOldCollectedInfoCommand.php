@@ -58,7 +58,7 @@ final class DeleteOldCollectedInfoCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('nginfocollector:delete');
         $this->setDescription('Deletes collected data that is older than specified period.');
@@ -124,7 +124,7 @@ final class DeleteOldCollectedInfoCommand extends Command
         $this->io->info('Canceled.');
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         try {
             $period = $input->getOption('period');
@@ -138,7 +138,7 @@ final class DeleteOldCollectedInfoCommand extends Command
         }
     }
 
-    private function getFields(InputInterface $input)
+    private function getFields(InputInterface $input): array
     {
         if ($input->getOption('all')) {
             return [];
