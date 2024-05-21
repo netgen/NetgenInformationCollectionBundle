@@ -6,7 +6,6 @@ namespace Netgen\InformationCollection\Core\Service;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Values\User\UserReference;
 use Netgen\InformationCollection\API\Exception\PersistingFailedException;
 use Netgen\InformationCollection\API\Exception\StoringAttributeFailedException;
 use Netgen\InformationCollection\API\Exception\StoringCollectionFailedException;
@@ -191,7 +190,14 @@ class InformationCollectionService implements InformationCollection
 
     public function filterCollections(FilterCriteria $criteria): Collections
     {
-        // TODO: Implement filterCollections() method.
+        $collections = $this->ezInfoCollectionRepository->filterByIntervalOfCreation($criteria->getContentId()->getContentId(), $criteria->getFrom(), $criteria->getTo());
+
+        $objects = [];
+        foreach ($collections as $collection) {
+            $objects[] = $this->loadCollection($collection['id']);
+        }
+
+        return new Collections($objects, count($objects));
     }
 
     public function searchCount(SearchCountQuery $query): SearchCount

@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Command;
 
+use DateTimeImmutable;
 use Netgen\InformationCollection\Core\Persistence\Anonymizer\AnonymizerServiceFacade;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\HelpCommand;
@@ -11,7 +12,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use DateInterval;
-use DateTime;
 use Exception;
 
 class DataAnonymizerCommand extends Command
@@ -55,7 +55,6 @@ class DataAnonymizerCommand extends Command
         );
 
         $this->addUsage("--content-id=123 --field-identifiers=title,name,last_name");
-        $this->addUsage("--info-collection-id=456 --field-identifiers=title,name,last_name");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -157,11 +156,10 @@ class DataAnonymizerCommand extends Command
         return false;
     }
 
-    protected function getDateFromPeriod()
+    protected function getDateFromPeriod(): DateTimeImmutable
     {
-        $dt = new DateTime();
-        $dt->sub($this->period);
+        $dt = new DateTimeImmutable();
 
-        return $dt;
+        return $dt->sub($this->period);
     }
 }
