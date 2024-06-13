@@ -6,6 +6,11 @@ namespace Netgen\InformationCollection\API\Value\Filter;
 
 final class Collections
 {
+    /**
+     * @var array<int, int>
+     *
+     * Array of ids of collections.
+     */
     private array $collections;
 
     private int $contentId;
