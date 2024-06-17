@@ -161,8 +161,14 @@ class InformationCollectionService implements InformationCollection
 
     public function filterCollections(FilterCriteria $criteria): Collections
     {
-        // TODO: Implement filterCollections() method.
-        return new Collections([], 0);
+        $collections = $this->ezInfoCollectionRepository->filterByIntervalOfCreation($criteria->getContentId()->getContentId(), $criteria->getFrom(), $criteria->getTo());
+
+        $objects = [];
+        foreach ($collections as $collection) {
+            $objects[] = $this->loadCollection($collection['id']);
+        }
+
+        return new Collections($objects, count($objects));
     }
 
     public function searchCount(SearchCountQuery $query): SearchCount
