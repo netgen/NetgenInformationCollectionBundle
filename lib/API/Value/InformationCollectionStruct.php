@@ -11,36 +11,33 @@ use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
 
 final class InformationCollectionStruct extends ValueObject
 {
-    /**
-     * The language code of the version.
-     */
-    protected string $languageCode;
+    private Content $content;
 
-    protected Content $content;
-
-    protected ContentType $contentType;
+    private ContentType $contentType;
 
     /**
      * @var \Ibexa\Contracts\ContentForms\Data\Content\FieldData[]
      */
-    protected array $fields;
+    private array $fieldsData;
 
     private Location $location;
 
-    public function __construct(Content $content, Location $location, ContentType $contentType, array $fields)
-    {
+    /**
+     * @param \Ibexa\Contracts\ContentForms\Data\Content\FieldData[] $fieldsData
+     */
+    public function __construct(
+        Content $content,
+        Location $location,
+        ContentType $contentType,
+        array $fieldsData
+    ) {
         $this->content = $content;
+        $this->location = $location;
         $this->contentType = $contentType;
 
-        foreach ($fields as $field) {
-            $this->addFieldData($field);
+        foreach ($fieldsData as $fieldData) {
+            $this->addFieldData($fieldData);
         }
-        $this->location = $location;
-    }
-
-    public function getLanguageCode(): string
-    {
-        return $this->content->contentInfo->mainLanguageCode;
     }
 
     public function getContent(): Content
@@ -63,7 +60,7 @@ final class InformationCollectionStruct extends ValueObject
      */
     public function getFieldsData(): array
     {
-        return $this->fields;
+        return $this->fieldsData;
     }
 
     /**
@@ -71,11 +68,11 @@ final class InformationCollectionStruct extends ValueObject
      */
     public function getCollectedFields(): array
     {
-        return $this->fields;
+        return $this->fieldsData;
     }
 
-    protected function addFieldData(FieldData $fieldData): void
+    private function addFieldData(FieldData $fieldData): void
     {
-        $this->fields[$fieldData->fieldDefinition->identifier] = $fieldData;
+        $this->fieldsData[$fieldData->fieldDefinition->identifier] = $fieldData;
     }
 }

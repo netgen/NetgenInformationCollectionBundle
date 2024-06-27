@@ -7,11 +7,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Contracts\Core\Repository\Values\Content\Location;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType;
-use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Contracts\Core\Repository\Values\ValueObject;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Ibexa\ContentForms\Data\Mapper\FormDataMapperInterface;
 use Ibexa\Contracts\ContentForms\Data\Content\FieldData;
 
 final class InformationCollectionMapper
@@ -21,23 +17,17 @@ final class InformationCollectionMapper
      */
     public function mapToFormData(Content $content, Location $location, ContentType $contentType): InformationCollectionStruct
     {
-        $fields = $content->getFieldsByLanguage();
+        $fieldsData = [];
 
-        $informationCollectionFields = [];
+        /** @var \Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition $fieldDefinition */
+        foreach ($contentType->fieldDefinitions as $fieldDefinition) {
+            if ($fieldDefinition->isInfoCollector) {
+                $field = $content->getField($fieldDefinition->identifier);
 
-        /** @var FieldDefinition $fieldDef */
-        foreach ($contentType->fieldDefinitions as $fieldDef) {
-            if ($fieldDef->isInfoCollector) {
-                $field = $fields[$fieldDef->identifier];
-
-                $fieldData = new FieldData(
-                    [
-                        'fieldDefinition' => $fieldDef,
-                        'field' => $field,
-                    ]
-                );
-
-                $informationCollectionFields[] = $fieldData;
+                $fieldsData[] = new FieldData([
+                    'fieldDefinition' => $fieldDefinition,
+                    'field' => $field,
+                ]);
             }
         }
 
@@ -45,7 +35,7 @@ final class InformationCollectionMapper
             $content,
             $location,
             $contentType,
-            $informationCollectionFields
+            $fieldsData
         );
     }
 }
