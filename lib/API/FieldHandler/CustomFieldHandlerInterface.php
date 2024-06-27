@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\API\FieldHandler;
 
+use Ibexa\Contracts\Core\FieldType\Value;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Core\FieldType\Value;
 
 interface CustomFieldHandlerInterface
 {

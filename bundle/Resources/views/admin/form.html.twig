@@ -1,0 +1,21 @@
+{%- block form_row -%}
+    <div class="{% if errors|length > 0 %} error-input{% endif %}">
+        {%- if 'checkbox' in block_prefixes or 'radio' in block_prefixes -%}
+            {{- form_widget(form) -}}
+            {{- form_label(form) -}}
+            {{- form_errors(form) -}}
+        {%- else -%}
+            {{- form_label(form) -}}
+            {{- form_widget(form) -}}
+            {{- form_errors(form) -}}
+        {%- endif -%}
+    </div>
+{%- endblock form_row -%}
+
+{%- block birthday_row -%}
+    <div class="birthday {% if errors|length > 0 %} error-input{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock birthday_row -%}
