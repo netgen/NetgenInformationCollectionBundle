@@ -6,7 +6,7 @@ namespace Netgen\Bundle\InformationCollectionBundle\Controller\Admin\Export;
 
 use Ibexa\Contracts\Core\Repository\ContentService;
 use Ibexa\Core\MVC\Symfony\Security\Authorization\Attribute;
-use Netgen\Bundle\InformationCollectionBundle\Form\ExportType;
+use Netgen\Bundle\InformationCollectionBundle\Form\Type\ExportType;
 use Netgen\InformationCollection\API\Service\Exporter;
 use Netgen\InformationCollection\API\Value\Export\ExportCriteria;
 use Netgen\InformationCollection\Core\Export\ExportResponseFormatterRegistry;

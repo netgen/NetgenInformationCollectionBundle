@@ -39,3 +39,14 @@ services:
             - '@request_stack'
             - '@netgen_information_collection.captcha.service'
             - '@translator'
+
+    netgen_information_collection.form.builder:
+        class: Netgen\Bundle\InformationCollectionBundle\Form\Builder\FormBuilder
+        arguments:
+            - '@form.factory'
+            - '@ibexa.api.service.content_type'
+            - '@router'
+            - '@ibexa.config.resolver'
+            - '@netgen_information_collection.factory.field_data'
+            - '@netgen_information_collection.field_handler.registry'
+

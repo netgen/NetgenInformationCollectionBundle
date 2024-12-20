@@ -28,3 +28,23 @@ services:
         class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\DateFieldHandler
         tags:
             - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.string:
+        class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\StringFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.birthday:
+        class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\BirthdayFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.email_address:
+        class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\EmailAddressFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }
+
+    netgen_information_collection.field_handler.enhanced_selection:
+        class: Netgen\InformationCollection\Core\Persistence\FieldHandler\Custom\EnhancedSelectionFieldHandler
+        tags:
+            - { name: netgen_information_collection.field_handler.custom }

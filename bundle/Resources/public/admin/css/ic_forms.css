@@ -1,0 +1,81 @@
+  .ic-content {
+    margin-bottom: 2em;
+  }
+  .ic-content .row-input {
+    margin-bottom: 1em;
+  }
+  .ic-content label {
+    display: block;
+    font-weight: normal;
+    font-size: 14px;
+    margin: 0;
+  }
+  .ic-content input[type=text],
+  .ic-content input[type=number],
+  .ic-content input[type=url],
+  .ic-content input[type=email],
+  .ic-content textarea,
+  .ic-content select {
+    display: block;
+    margin: 0 0 1em;
+    border-radius: 2px;
+    width: 40%;
+    padding: 0 0.75em;
+    font-size: 14px;
+    height: 44px;
+    border: 1px solid #b3b3b3;
+    background: #fff;
+  }
+  .ic-content input[type=text]::placeholder,
+  .ic-content input[type=number]::placeholder,
+  .ic-content input[type=url]::placeholder,
+  .ic-content input[type=email]::placeholder,
+  .ic-content textarea::placeholder,
+  .ic-content select::placeholder {
+    color: #b3b3b3;
+  }
+  .ic-content input[type=text][disabled],
+  .ic-content input[type=number][disabled],
+  .ic-content input[type=url][disabled],
+  .ic-content input[type=email][disabled],
+  .ic-content textarea[disabled],
+  .ic-content select[disabled] {
+    color: #999999;
+    border-color: #cccccc;
+    cursor: not-allowed;
+  }
+  .ic-content select[multiple] {
+    background-image: none;
+    height: auto;
+    padding: 0.25em 0;
+  }
+  .ic-content select[multiple] option {
+    padding: 0.25em 0.5em;
+  }
+  .ic-content textarea {
+    height: auto;
+    min-height: 120px;
+    padding-top: 0.375em;
+    resize: vertical;
+  }
+  .ic-content .file-input-group .filename {
+    margin-left: 1em;
+    font-size: 0.875em;
+  }
+  .ic-content .birthday div {
+    display: flex;
+  }
+  .ic-content .birthday div select {
+    width: 13%;
+    margin-right: 7px;
+  }
+  .ic-content .error-input ul {
+    margin-left: 0;
+  }
+  .ic-content .error-input ul li {
+    list-style-type: none;
+    color: red;
+  }
+  .ic-content form div {
+    padding: 8px 0;
+  }

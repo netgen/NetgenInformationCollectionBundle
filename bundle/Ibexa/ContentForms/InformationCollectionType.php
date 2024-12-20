@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms;
 
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
-use Netgen\Bundle\InformationCollectionBundle\Form\CaptchaType;
+use Netgen\Bundle\InformationCollectionBundle\Form\Type\CaptchaType;
 use Netgen\InformationCollection\API\Service\CaptchaService;
 use Netgen\InformationCollection\API\Value\InformationCollectionStruct;
 use Symfony\Component\Form\AbstractType;

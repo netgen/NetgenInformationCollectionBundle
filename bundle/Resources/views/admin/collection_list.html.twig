@@ -56,6 +56,7 @@
                     <th>{{ 'netgen_information_collection_admin_collection_created'|trans }}</th>
                     <th>{{ 'netgen_information_collection_admin_collection_modified'|trans }}</th>
                     <th>{{ 'netgen_information_collection_admin_collection_collection_id'|trans }}</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -79,6 +80,11 @@
                         <td class="number" align="right">
                             <a href="{{ path("netgen_information_collection.route.admin.view", {"collectionId": collection_id}) }}">
                                 {{ collection_id }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path("netgen_information_collection.route.admin.edit", {"collectionId": collection_id}) }}">
+                                {{ 'netgen_information_collection_admin_collection_edit'|trans }}
                             </a>
                         </td>
                     </tr>
