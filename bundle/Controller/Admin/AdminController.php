@@ -197,7 +197,7 @@ class AdminController extends Controller
         if ($request->request->has('DeleteCollectionAction')) {
             $this->checkDeletePermissions();
 
-            $query = new Collections($contentId, $collections);
+            $query = new Collections((int)$contentId, $collections);
 
             $this->service->deleteCollections($query);
 
@@ -269,7 +269,7 @@ class AdminController extends Controller
         if ($request->request->has('DeleteCollectionAction')) {
             $this->checkDeletePermissions();
 
-            $query = new Collections($contentId, [$collectionId]);
+            $query = new Collections((int)$contentId, [$collectionId]);
             $this->service->deleteCollections($query);
 
             $this->addFlashMessage('success', 'collection_removed');
