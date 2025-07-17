@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 use function array_unshift;
+use function file_put_contents;
+use function json_encode;
 use function str_ends_with;
 
 class JsonExportResponseFormatter implements ExportResponseFormatter
