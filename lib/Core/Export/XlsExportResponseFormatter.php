@@ -34,7 +34,12 @@ final class XlsExportResponseFormatter implements ExportResponseFormatter
 
     public function format(Export $export, Content $content): Response
     {
+        /*
+         * Ensure valid filename
+         * @see vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Worksheet/Worksheet.php:66
+         */
         $contentName = $this->translationHelper->getTranslatedContentName($content);
+        $contentName = str_replace(['*', ':', '/', '\\', '?', '[', ']'], '-', $contentName);
 
         $spreadsheet = new Spreadsheet();
         $activeSheet = $spreadsheet->getActiveSheet();
