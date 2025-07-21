@@ -14,7 +14,6 @@ use Netgen\InformationCollection\API\Value\Captcha\NullObject;
 use Netgen\InformationCollection\API\Value\Captcha\ReCaptcha;
 use function array_keys;
 use function array_replace;
-use function dump;
 use function in_array;
 
 class CaptchaService implements CaptchaServiceInterface
@@ -70,8 +69,6 @@ class CaptchaService implements CaptchaServiceInterface
 //                    $reCaptcha->setChallengeTimeout($config['options']['challenge_timeout']);
 //                }
             }
-
-            dump($reCaptcha);
 
             return new ReCaptcha($reCaptcha);
         }
