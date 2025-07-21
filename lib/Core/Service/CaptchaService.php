@@ -90,7 +90,6 @@ class CaptchaService implements CaptchaServiceInterface
 //                }
             }
 
-            dump($reCaptcha);
             return new ReCaptcha($reCaptcha);
         }
 
