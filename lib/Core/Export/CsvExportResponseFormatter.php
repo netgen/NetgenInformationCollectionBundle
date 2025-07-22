@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\InformationCollection\Core\Export;
 
+use DateTimeImmutable;
 use Ibexa\Contracts\Core\Repository\Values\Content\Content;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Ibexa\Core\Helper\TranslationHelper;
@@ -11,7 +12,10 @@ use League\Csv\Writer;
 use Netgen\InformationCollection\API\Export\ExportResponseFormatter;
 use Netgen\InformationCollection\API\Value\Export\Export;
 use SplTempFileObject;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Response;
+
+use function str_ends_with;
 
 final class CsvExportResponseFormatter implements ExportResponseFormatter
 {
@@ -48,5 +52,26 @@ final class CsvExportResponseFormatter implements ExportResponseFormatter
         $writer->output($contentName . '.csv');
 
         return new Response('');
+    }
+
+    public function formatToFile(Export $export, Content $content, string $path): File
+    {
+        $contentName = $this->translationHelper->getTranslatedContentName($content);
+
+        $config = $this->configResolver->getParameter('export', 'netgen_information_collection');
+        $config = $config['csv'];
+
+        $path = str_ends_with($path, '/') ? $path : $path . '/';
+        $filePath = $path . $contentName . '-' . (new DateTimeImmutable())->format('YmdHis') . '.csv';
+
+        $writer = Writer::createFromPath($filePath, 'w+');
+        $writer->setDelimiter($config['delimiter']);
+        $writer->setEnclosure($config['enclosure']);
+        $writer->setNewline($config['newline']);
+        $writer->setOutputBOM(Writer::BOM_UTF8); // adding the BOM sequence on output
+        $writer->insertOne($export->getHeader());
+        $writer->insertAll($export->getContents());
+
+        return new File($filePath);
     }
 }
