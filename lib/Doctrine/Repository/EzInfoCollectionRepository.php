@@ -139,14 +139,14 @@ class EzInfoCollectionRepository extends EntityRepository
         }
     }
 
-    public function filterByIntervalOfCreation(int $contentId, DateTimeInterface $startDate, DateTimeInterface $endDate): array
+    public function filterByIntervalOfCreation(int $contentId, DateTimeInterface $startDate, DateTimeInterface $endDate, ?int $limit = null, ?int $offeset = null): array
     {
 
         $qb = $this->createQueryBuilder('ezc');
         $startTimestamp = $startDate->getTimestamp();
         $endTimestamp = $endDate->getTimestamp();
 
-        return $qb->select('ezc.id')
+        $qb->select('ezc.id')
             ->where('ezc.contentObjectId = :contentId')
             ->setParameter('contentId', $contentId)
             ->andWhere($qb->expr()->andX(
@@ -154,8 +154,17 @@ class EzInfoCollectionRepository extends EntityRepository
                 $qb->expr()->lte('ezc.created', ':endTimestamp')
             ))
             ->setParameter('startTimestamp', $startTimestamp)
-            ->setParameter('endTimestamp', $endTimestamp)
-            ->getQuery()
+            ->setParameter('endTimestamp', $endTimestamp);
+
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
+        };
+
+        if ($offeset !== null) {
+            $qb->setFirstResult($offeset);
+        }
+
+        return $qb->getQuery()
             ->getResult();
     }
 }
