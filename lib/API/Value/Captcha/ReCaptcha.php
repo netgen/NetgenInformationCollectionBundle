@@ -7,7 +7,6 @@ namespace Netgen\InformationCollection\API\Value\Captcha;
 use Netgen\InformationCollection\API\Service\CaptchaValue;
 use ReCaptcha\ReCaptcha as BaseReCaptcha;
 use Symfony\Component\HttpFoundation\Request;
-use function dump;
 
 class ReCaptcha implements CaptchaValue
 {
@@ -26,8 +25,6 @@ class ReCaptcha implements CaptchaValue
             $request->request->get('g-recaptcha-response'),
             $clientIp
         );
-
-        dump($response);
 
         return $response->isSuccess();
     }
