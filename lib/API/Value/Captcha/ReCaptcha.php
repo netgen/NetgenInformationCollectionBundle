@@ -37,8 +37,6 @@ class ReCaptcha implements CaptchaValue
             $clientIp
         );
 
-        dump($response);
-
         return $response->isSuccess();
     }
 
