@@ -2,7 +2,6 @@
 
 namespace Netgen\Bundle\InformationCollectionBundle\Form;
 
-use Netgen\Bundle\InformationCollectionBundle\Listener\CaptchaValidationListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -11,11 +10,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CaptchaType extends AbstractType
 {
-    private CaptchaValidationListener $validationListener;
 
-    public function __construct(CaptchaValidationListener $validationListener)
+    public function __construct()
     {
-        $this->validationListener = $validationListener;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
@@ -29,7 +26,6 @@ class CaptchaType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->addEventSubscriber($this->validationListener);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

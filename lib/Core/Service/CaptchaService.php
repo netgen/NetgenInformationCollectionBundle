@@ -54,7 +54,7 @@ class CaptchaService implements CaptchaServiceInterface
 
             if (!empty($config['options'])) {
 //                if (!empty($config['options']['hostname'])) {
-                $reCaptcha->setExpectedHostname('localhost');
+//                $reCaptcha->setExpectedHostname('localhost');
 //                }
 //                if (!empty($config['options']['apk_package_name'])) {
 //                    $reCaptcha->setExpectedApkPackageName($config['options']['apk_package_name']);
