@@ -37,3 +37,6 @@ services:
         class: Netgen\Bundle\InformationCollectionBundle\Listener\CaptchaValidationListener
         arguments:
             - '@translator'
+
+    # Alias Netgen handler class to its service ID so type-based subscription resolves
+    Netgen\InformationCollection\Handler: '@netgen_information_collection.handler'
