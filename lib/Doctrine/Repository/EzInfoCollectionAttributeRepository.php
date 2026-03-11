@@ -19,6 +19,7 @@ use Netgen\InformationCollection\API\Value\Filter\CollectionId;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
+
 use function array_column;
 use function mb_strtolower;
 
@@ -90,12 +91,28 @@ class EzInfoCollectionAttributeRepository extends EntityRepository
         $qb = $this->createQueryBuilder('eica');
 
         return $qb->select('eica')
-            ->where('eica.informationCollectionId = :collection-id')
-            ->setParameter('collection-id', $collectionId)
+            ->where('eica.informationCollectionId = :collectionId')
+            ->setParameter('collectionId', $collectionId)
             ->andWhere($qb->expr()->in('eica.contentClassAttributeId', ':fields'))
             ->setParameter('fields', $fieldDefinitionIds)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findByCollectionIdAndFieldDefinitionId(int $collectionId, int $fieldDefinitionId): mixed
+    {
+        $qb = $this->createQueryBuilder('eica');
+
+        return $qb->select('eica')
+            ->where('eica.informationCollectionId = :collectionId')
+            ->setParameter('collectionId', $collectionId)
+            ->andWhere('eica.contentClassAttributeId = :fieldId')
+            ->setParameter('fieldId', $fieldDefinitionId)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     public function updateByCollectionId(CollectionId $collectionId, Attribute $attribute): void

@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\InformationCollectionBundle\Form;
+namespace Netgen\Bundle\InformationCollectionBundle\Form\Type;
 
 use Netgen\Bundle\InformationCollectionBundle\Listener\CaptchaValidationListener;
 use Symfony\Component\Form\AbstractType;
