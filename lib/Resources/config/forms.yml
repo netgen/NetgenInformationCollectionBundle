@@ -1,5 +1,7 @@
 services:
     netgen_information_collection.form.ibexa_country_placeholder_extension:
         class: Netgen\InformationCollection\Form\Type\FieldType\CountryFieldTypePlaceholderExtension
+        arguments:
+            - "@translator"
         tags:
             - { name: form.type_extension }
