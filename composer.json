@@ -34,7 +34,7 @@
         "google/recaptcha": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "symfony/mailer": "^5.1",
-        "phpoffice/phpspreadsheet": "^1.14",
+        "phpoffice/phpspreadsheet": ">=1.14",
         "symfony/string": "^5.4"
     },
     "require-dev": {
