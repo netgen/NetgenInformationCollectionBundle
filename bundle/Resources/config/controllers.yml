@@ -17,6 +17,10 @@ services:
             - "@ibexa.api.service.content"
             - "@ibexa.config.resolver"
             - "@translator"
+            - '@netgen_information_collection.factory.field_data'
+            - '@netgen_information_collection.repository.ez_info_collection'
+            - '@netgen_information_collection.repository.ez_info_collection_attribute'
+            - '@netgen_information_collection.form.builder'
 
     netgen_information_collection.controller.export.export:
         class: Netgen\Bundle\InformationCollectionBundle\Controller\Admin\Export\Export
