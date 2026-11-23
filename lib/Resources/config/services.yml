@@ -103,8 +103,6 @@ services:
 
     netgen_information_collection.form.captcha_type:
         class: Netgen\Bundle\InformationCollectionBundle\Form\CaptchaType
-        arguments:
-            - '@netgen_information_collection.listener.captcha_validation'
         tags:
             - { name: form.type }
 
