@@ -127,7 +127,7 @@ class AdminController extends Controller
     {
         $this->checkReadPermissions();
 
-        $contents = $request->request->get('ContentId', []);
+        $contents = array_map('intval', $request->request->all('ContentId'));
         $count = count($contents);
 
         if (empty($contents)) {
@@ -160,8 +160,8 @@ class AdminController extends Controller
     {
         $this->checkReadPermissions();
 
-        $contentId = $request->request->get('ContentId');
-        $collections = $request->request->get('CollectionId', []);
+        $contentId = (int) $request->request->get('ContentId');
+        $collections = array_map('intval', $request->request->all('CollectionId'));
         $count = count($collections);
 
         if (empty($collections)) {
@@ -206,9 +206,9 @@ class AdminController extends Controller
     {
         $this->checkReadPermissions();
 
-        $collectionId = $request->request->get('CollectionId');
-        $contentId = $request->request->get('ContentId');
-        $fields = $request->request->get('FieldId', []);
+        $collectionId = (int) $request->request->get('CollectionId');
+        $contentId = (int) $request->request->get('ContentId');
+        $fields = array_map('intval', $request->request->all('FieldId'));
         $count = count($fields);
 
         if (
